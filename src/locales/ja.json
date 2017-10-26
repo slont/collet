@@ -1,7 +1,25 @@
 {
   "title": "Collet",
-  "views": {},
+  "views": {
+    "index": {},
+    "signup": {
+      "email": "メールアドレス"
+    },
+    "signin": {
+      "email": "メールアドレス",
+      "password": "パスワード",
+      "redirectMessage": "ログインしてください。",
+      "passwordReset": "パスワードを忘れた場合"
+    }
+  },
   "components": {},
-  "buttons": {},
-  "formats": {}
+  "buttons": {
+    "signup": "新規登録",
+    "signin": "ログイン"
+  },
+  "formats": {},
+  "locales": {
+    "ja": "日本語",
+    "en": "英語"
+  }
 }

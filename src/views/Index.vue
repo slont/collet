@@ -1,5 +1,6 @@
 <template>
   <div id="index">
+    <header-nav></header-nav>
     <transition name="slide-fade" mode="out-in">
       <router-view></router-view>
     </transition>
@@ -7,10 +8,10 @@
 </template>
 
 <script>
-  import Hello from '@/components/Hello'
+  import HeaderNav from '@/components/HeaderNav'
 
   export default {
-    components: { Hello }
+    components: { HeaderNav }
   }
 </script>
 

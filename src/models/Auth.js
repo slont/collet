@@ -41,7 +41,7 @@ export default class Auth extends Base {
     return localStorage.accessToken
   }
 
-  logout() {
+  signout() {
     return this.postProcess(fetch(`${this.endpoint}/signout`, { method: 'GET' }))
   }
 

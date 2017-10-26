@@ -1,3 +1,8 @@
 @import "~bulma";
 @import "constant";
 @import "transition";
+
+body {
+  font-size: 16px;
+  color: $color;
+}

@@ -1,50 +1,49 @@
 <template>
   <div id="signin">
     <div class="box">
-      <div class="title has-text-centered">{{ $t('views.login.title') }}</div>
-      <div class="subtitle has-text-centered">{{ teamKey }}.reword.com</div>
+      <div class="title has-text-centered">{{ $t('title') }}</div>
       <p v-if="$route.query.redirect">
-        {{ $t('views.login.redirectMessage') }}
+        {{ $t('views.signin.redirectMessage') }}
       </p>
-      <form @submit.prevent="login">
-        <div class="field-email field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">{{ $t('views.login.email') }}</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control is-expanded has-icons-left">
-                <input v-model="email" name="email" class="input" :class="{ 'is-danger': errors.has('email') }"
-                       placeholder="test@syncthought.com" type="text" v-validate="'required|email'">
-                <span class="icon is-small is-left"><i class="material-icons">email</i></span>
-                <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
-              </p>
-            </div>
+      <div class="field-email field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">{{ $t('views.signin.email') }}</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control is-expanded has-icons-left">
+              <input v-model="email" name="email" class="input" :class="{ 'is-danger': errors.has('email') }"
+                     placeholder="test@syncthought.com" type="text" v-validate="'required|email'">
+              <span class="icon is-small is-left"><i class="material-icons">email</i></span>
+              <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
+            </p>
           </div>
         </div>
+      </div>
 
-        <div class="field-password field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">{{ $t('views.signup.password') }}</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control is-expanded has-icons-left">
-                <input v-model="password" name="password" class="input" :class="{ 'is-danger': errors.has('password') }"
-                       placeholder="password" type="password" v-validate="'required|min:6'">
-                <span class="icon is-small is-left"><i class="material-icons">vpn_key</i></span>
-                <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
-              </p>
-            </div>
+      <div class="field-password field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">{{ $t('views.signin.password') }}</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control is-expanded has-icons-left">
+              <input v-model="password" name="password" class="input" :class="{ 'is-danger': errors.has('password') }"
+                     placeholder="password" type="password" v-validate="'required|min:6'">
+              <span class="icon is-small is-left"><i class="material-icons">vpn_key</i></span>
+              <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
+            </p>
           </div>
         </div>
+      </div>
 
-        <button type="submit" class="button is-info" :class="{ 'is-loading': isLoading }">
-          {{ $t('buttons.signIn') }}
+      <div>
+        <button class="button is-info" :class="{ 'is-loading': isLoading }" @click="signin">
+          {{ $t('buttons.signin') }}
         </button>
-        <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
-        <router-link to="/">{{ $t('views.login.passwordReset') }}</router-link>
-      </form>
+      </div>
+      <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
+      <router-link to="/">{{ $t('views.signin.passwordReset') }}</router-link>
     </div>
     <div class="field">
       <p class="control select">
@@ -74,14 +73,16 @@
       }
     },
     methods: {
-      login() {
+      signin() {
         this.$validator.validateAll().then(result => {
+          console.log('aahogeeeeeeeee')
           if (result) {
             this.isLoading = true
             this.$store.dispatch('signin', {
               email: this.email,
-              passwd: this.password
+              password: this.password
             }).then(() => {
+              console.log('aaaa')
               this.isLoading = false
               this.$router.push(this.$route.query.redirect || '/')
             }).catch(err => {

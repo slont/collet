@@ -11,8 +11,7 @@ export default new Vuex.Store({
   state: {
     locale: LOCALES.JA,
     user: {},
-    team: {},
-    teams: []
+    loggedIn: false
   },
   getters: {},
   actions: {
@@ -22,9 +21,11 @@ export default new Vuex.Store({
     setUser({commit}, user) {
       commit(SET_USER, user)
     },
-    login({ commit }, login) {
+    signin({ commit }, signin) {
       const authModel = new AuthModel()
-      return authModel.login(login).then(res => {
+      console.log(signin)
+      return authModel.signin(signin).then(res => {
+        console.log(signin)
         localStorage.accessToken = res.data.accessToken
         commit(SET_LOGGED_IN, true)
         commit(SET_USER, res.data.user)
@@ -38,9 +39,9 @@ export default new Vuex.Store({
         return Promise.reject(err)
       })
     },
-    logout({ commit }) {
+    signout({ commit }) {
       const authModel = new AuthModel()
-      return authModel.logout().then(() => {
+      return authModel.signout().then(() => {
         delete localStorage.accessToken
         commit(SET_LOGGED_IN, false)
         commit(SET_USER, {})

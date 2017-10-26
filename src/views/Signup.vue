@@ -1,15 +1,15 @@
 <template>
   <div id="signup">
     <div class="box">
-      <div class="title has-text-centered">{{ $t('views.login.title') }}</div>
+      <div class="title has-text-centered">{{ $t('views.signup.title') }}</div>
       <div class="subtitle has-text-centered">{{ teamKey }}.reword.com</div>
       <p v-if="$route.query.redirect">
-        {{ $t('views.login.redirectMessage') }}
+        {{ $t('views.signup.redirectMessage') }}
       </p>
       <form @submit.prevent="login">
         <div class="field-email field is-horizontal">
           <div class="field-label is-normal">
-            <label class="label">{{ $t('views.login.email') }}</label>
+            <label class="label">{{ $t('views.signup.email') }}</label>
           </div>
           <div class="field-body">
             <div class="field">
@@ -40,10 +40,10 @@
         </div>
 
         <button type="submit" class="button is-info" :class="{ 'is-loading': isLoading }">
-          {{ $t('buttons.signIn') }}
+          {{ $t('buttons.signup') }}
         </button>
         <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
-        <router-link to="/">{{ $t('views.login.passwordReset') }}</router-link>
+        <router-link to="/">{{ $t('views.signup.passwordReset') }}</router-link>
       </form>
     </div>
     <div class="field">

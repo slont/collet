@@ -1,9 +1,6 @@
 <template>
   <div id="top">
-    <transition name="slide-fade" mode="out-in">
-      <hello></hello>
-      <router-view></router-view>
-    </transition>
+    <hello></hello>
   </div>
 </template>
 
@@ -16,8 +13,11 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-  #index {
+  #top {
+    width: 70%;
     height: 100%;
-    width: 100%;
+    min-width: 600px;
+    margin: 0 auto;
+    padding: 1rem 0;
   }
 </style>
