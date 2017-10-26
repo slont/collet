@@ -1,6 +1,6 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
+  <div id="hello">
+    <h1>{{ $t('title') }}</h1>
     <h2>Essential Links</h2>
     <ul>
       <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
@@ -21,8 +21,7 @@
 
 <script>
 export default {
-  name: 'hello',
-  data () {
+  data() {
     return {
       msg: 'Welcome to Your Vue.js PWA'
     }
@@ -31,22 +30,24 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-h1, h2 {
-  font-weight: normal;
-}
+<style lang="scss" rel="stylesheet/scss">
+  #hello {
+    h1, h2 {
+      font-weight: normal;
+    }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+    ul {
+      list-style-type: none;
+      padding: 0;
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
+      li {
+        display: inline-block;
+        margin: 0 10px;
 
-a {
-  color: #35495E;
-}
+        a {
+          color: #35495E;
+        }
+      }
+    }
+  }
 </style>

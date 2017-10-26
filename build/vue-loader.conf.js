@@ -16,5 +16,10 @@ module.exports = {
     source: 'src',
     img: 'src',
     image: 'xlink:href'
+  },
+  options: {
+    loaders: {
+      scss: 'style-loader!css-loader!sass-loader'
+    }
   }
 }
