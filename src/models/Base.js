@@ -9,15 +9,17 @@ export default class Base {
     return this.postProcess(fetch(`${this.endpoint + (params ? '?' + qs.stringify(params) : '')}`, {
       method: 'GET',
       mode: 'cors',
-      credentials: 'include'
+      credentials: 'include',
+      headers: Base.getHeaders()
     }))
   }
 
-  findOne(key, params = null) {
-    return this.postProcess(fetch(`${this.endpoint}/${key}${(params ? '?' + qs.stringify(params) : '')}`, {
+  findOne(id, params = null) {
+    return this.postProcess(fetch(`${this.endpoint}/${id}${(params ? '?' + qs.stringify(params) : '')}`, {
       method: 'GET',
       mode: 'cors',
-      credentials: 'include'
+      credentials: 'include',
+      headers: Base.getHeaders()
     }))
   }
 
@@ -26,33 +28,27 @@ export default class Base {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',
-      headers: {
-        'X-Requested-By': location.href // for CSRF Filter
-      },
+      headers: Base.getHeaders(),
       body: JSON.stringify(body)
     }))
   }
 
-  update(key, body) {
-    return this.postProcess(fetch(`${this.endpoint}/${key}`, {
+  update(id, body) {
+    return this.postProcess(fetch(`${this.endpoint}/${id}`, {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
-      headers: {
-        'X-Requested-By': location.href // for CSRF Filter
-      },
+      headers: Base.getHeaders(),
       body: JSON.stringify(body)
     }))
   }
 
-  delete(key) {
-    return this.postProcess(fetch(`${this.endpoint}/${key}`, {
+  delete(id) {
+    return this.postProcess(fetch(`${this.endpoint}/${id}`, {
       method: 'DELETE',
       mode: 'cors',
       credentials: 'include',
-      headers: {
-        'X-Requested-By': location.href // for CSRF Filter
-      }
+      headers: Base.getHeaders()
     }))
   }
 
@@ -73,7 +69,7 @@ export default class Base {
         switch (response.status) {
           case 401:
           case 440:
-            window.location.href = `/logout?redirect=${encodeURIComponent(window.location.pathname)}`
+            window.location.href = `/signin?redirect=${encodeURIComponent(window.location.pathname)}`
             break
           default:
             console.log('Network response was not ok.')
@@ -84,6 +80,14 @@ export default class Base {
       console.log(`There has been a problem with your fetch operation: ${error.message}`)
       return Promise.reject({ success: false })
     })
+  }
+
+  static getHeaders() {
+    return {
+      'X-Requested-With': location.href, // for CSRF Filter,
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.authToken
+    }
   }
 
   deserialize(json) {

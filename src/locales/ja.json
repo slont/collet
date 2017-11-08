@@ -2,8 +2,13 @@
   "title": "Collet",
   "views": {
     "index": {},
+    "confirm": {
+      "pleaseInputYourName": "ユーザネームを入力してください",
+      "userName": "ユーザネーム"
+    },
     "signup": {
-      "email": "メールアドレス"
+      "email": "メールアドレス",
+      "password": "パスワード"
     },
     "signin": {
       "email": "メールアドレス",

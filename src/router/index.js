@@ -1,23 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import store from '@/store'
 import Index from '@/views/Index'
 import Signup from '@/views/Signup.vue'
 import Signin from '@/views/Signin.vue'
-import Top from '@/views/top/Index'
+import Confirm from '@/views/Confirm.vue'
+import TopIndex from '@/views/top/Index'
+import TopTop from '@/views/top/Top'
+import MypageIndex from '@/views/mypage/Index'
 
 Vue.use(Router)
-
-function requireAuth(to, from, next) {
-  if (!store.state.loggedIn) {
-    next({
-      path: '/signin',
-      query: { redirect: to.fullPath }
-    })
-  } else {
-    next()
-  }
-}
 
 export default new Router({
   mode: 'history',
@@ -28,16 +19,27 @@ export default new Router({
       children: [
         {
           path: '',
-          component: Top
+          component: TopIndex,
+          children: [
+            {
+              path: '',
+              component: TopTop
+            }
+          ]
+        }, {
+          path: 'mypage',
+          component: MypageIndex
         }
-      ],
-      beforeEnter: requireAuth
+      ]
     }, {
       path: '/signup',
       component: Signup
     }, {
       path: '/signin',
       component: Signin
+    }, {
+      path: '/confirm',
+      component: Confirm
     }
   ]
 })

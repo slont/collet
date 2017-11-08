@@ -1,20 +1,8 @@
 import Base from './Base'
-import qs from 'qs'
 
 export default class Auth extends Base {
   constructor() {
     super('')
-  }
-
-  findOne(key) {
-    return this.postProcess(fetch(`${this.endpoint}/activation/${key}`, {
-      method: 'GET',
-      mode: 'cors',
-      credentials: 'include',
-      headers: {
-        'X-Requested-By': location.href // for CSRF Filter
-      }
-    }))
   }
 
   signup(body) {
@@ -22,27 +10,40 @@ export default class Auth extends Base {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',
-      headers: {
-        'X-Requested-By': location.href // for CSRF Filter
-      },
+      headers: Base.getHeaders(),
       body: JSON.stringify(body)
     }))
   }
 
-  signin(params) {
-    return this.postProcess(fetch(`${this.endpoint}/signin?${qs.stringify(params)}`, {
+  signin(body) {
+    return this.postProcess(fetch(`${this.endpoint}/signin`, {
       method: 'POST',
       mode: 'cors',
-      credentials: 'include'
+      credentials: 'include',
+      headers: Base.getHeaders(),
+      body: JSON.stringify(body)
+    }))
+  }
+
+  signout() {
+    return this.postProcess(fetch(`${this.endpoint}/signout`, {
+      method: 'GET',
+      headers: Base.getHeaders()
+    }))
+  }
+
+  confirm(body) {
+    return this.postProcess(fetch(`${this.endpoint}/confirm`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+      headers: Base.getHeaders(),
+      body: JSON.stringify(body)
     }))
   }
 
   getToken() {
-    return localStorage.accessToken
-  }
-
-  signout() {
-    return this.postProcess(fetch(`${this.endpoint}/signout`, { method: 'GET' }))
+    return localStorage.authToken
   }
 
   onChange() {}

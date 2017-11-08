@@ -1,23 +1,35 @@
 <template>
-  <div id="top">
-    <hello></hello>
+  <div id="top-index">
+    <div class="tabs">
+      <ul>
+        <router-link to="/" tag="li"><a>TOP</a></router-link>
+        <router-link to="/recommend" tag="li"><a>おすすめ</a></router-link>
+      </ul>
+    </div>
+    <transition name="slide-fade" mode="out-in" class="content">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
-  import Hello from '@/components/Hello'
+  const DEFAULT_TAB = 'top'
 
   export default {
-    components: { Hello }
+    data() {
+      return {
+        activeTab: DEFAULT_TAB
+      }
+    }
   }
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-  #top {
-    width: 70%;
-    height: 100%;
-    min-width: 600px;
-    margin: 0 auto;
-    padding: 1rem 0;
+  #top-index {
+    .tabs {
+      .router-link-exact-active {
+        @extend .is-active;
+      }
+    }
   }
 </style>

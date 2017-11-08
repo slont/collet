@@ -21,14 +21,29 @@ export default new Vuex.Store({
     setUser({commit}, user) {
       commit(SET_USER, user)
     },
-    signin({ commit }, signin) {
+    signin({ commit }, params) {
       const authModel = new AuthModel()
-      console.log(signin)
-      return authModel.signin(signin).then(res => {
-        console.log(signin)
-        localStorage.accessToken = res.data.accessToken
+      return authModel.signin(params).then(res => {
+        console.log(res)
+        localStorage.authToken = res.authToken
         commit(SET_LOGGED_IN, true)
-        commit(SET_USER, res.data.user)
+        commit(SET_USER, res.user)
+        authModel.onChange(true)
+        return Promise.resolve(res)
+      }).catch(err => {
+        if (err) {
+          console.log(err)
+        }
+        authModel.onChange(false)
+        return Promise.reject(err)
+      })
+    },
+    confirm({ commit }, params) {
+      const authModel = new AuthModel()
+      return authModel.confirm(params).then(res => {
+        localStorage.authToken = res.authToken
+        commit(SET_LOGGED_IN, true)
+        commit(SET_USER, res.user)
         authModel.onChange(true)
         return Promise.resolve(res)
       }).catch(err => {
@@ -42,7 +57,7 @@ export default new Vuex.Store({
     signout({ commit }) {
       const authModel = new AuthModel()
       return authModel.signout().then(() => {
-        delete localStorage.accessToken
+        delete localStorage.authToken
         commit(SET_LOGGED_IN, false)
         commit(SET_USER, {})
         authModel.onChange(false)

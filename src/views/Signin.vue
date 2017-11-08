@@ -13,7 +13,7 @@
           <div class="field">
             <p class="control is-expanded has-icons-left">
               <input v-model="email" name="email" class="input" :class="{ 'is-danger': errors.has('email') }"
-                     placeholder="test@syncthought.com" type="text" v-validate="'required|email'">
+                     placeholder="slont.maytry@gmail.com" type="text" v-validate="'required|email'">
               <span class="icon is-small is-left"><i class="material-icons">email</i></span>
               <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
             </p>
@@ -38,7 +38,7 @@
       </div>
 
       <div>
-        <button class="button is-info" :class="{ 'is-loading': isLoading }" @click="signin">
+        <button @click="ok" class="button is-info" :class="{ 'is-loading': isLoading }">
           {{ $t('buttons.signin') }}
         </button>
       </div>
@@ -61,7 +61,7 @@
     data() {
       return {
         locale: this.$store.state.locale,
-        email: 'test@syncthought.com',
+        email: 'slont.maytry@gmail.com',
         password: 'password',
         isLoading: false,
         errorMessage: ''
@@ -73,23 +73,22 @@
       }
     },
     methods: {
-      signin() {
+      ok() {
         this.$validator.validateAll().then(result => {
-          console.log('aahogeeeeeeeee')
-          if (result) {
-            this.isLoading = true
-            this.$store.dispatch('signin', {
-              email: this.email,
-              password: this.password
-            }).then(() => {
-              console.log('aaaa')
-              this.isLoading = false
-              this.$router.push(this.$route.query.redirect || '/')
-            }).catch(err => {
-              this.errorMessage = err.message
-              this.isLoading = false
-            })
-          }
+          if (!result) return
+
+          this.isLoading = true
+          this.$store.dispatch('signin', {
+            email: this.email,
+            password: this.password
+          }).then(() => {
+            console.log('aaaa')
+            this.isLoading = false
+            this.$router.push(this.$route.query.redirect || '/')
+          }).catch(err => {
+            this.errorMessage = err.message
+            this.isLoading = false
+          })
         }).catch(() => {
           console.log('Correct them errors!')
         })

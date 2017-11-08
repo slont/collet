@@ -2,7 +2,7 @@
   <div id="index">
     <header-nav></header-nav>
     <transition name="slide-fade" mode="out-in">
-      <router-view></router-view>
+      <router-view class="container"></router-view>
     </transition>
   </div>
 </template>
@@ -18,6 +18,10 @@
 <style lang="scss" rel="stylesheet/scss">
   #index {
     height: 100%;
-    width: 100%;
+
+    .container {
+      width: $width;
+      margin: 0 auto;
+    }
   }
 </style>
