@@ -48,8 +48,8 @@
         </div>
         <div class="field">
           <div class="control">
-            <div class="file-view" v-if="theme.image">
-              <img :src="theme.image"/>
+            <div class="file-view" v-if="theme.image || theme.imageBase64">
+              <img :src="theme.image || theme.imageBase64"/>
               <a @click="removeImage" class="delete"></a>
             </div>
           </div>
@@ -83,7 +83,8 @@
         theme: {
           title: '',
           description: '',
-          image: ''
+          image: '',
+          imageBase64: ''
         },
         errorMessage: ''
       }
@@ -114,6 +115,7 @@
         this.$nextTick(() => this.errors.clear())
       },
       changeImage(e) {
+        this.theme.image = ''
         const files = e.target.files || e.dataTransfer.files
         if (!files.length) return
 
@@ -122,12 +124,13 @@
       createImage(file) {
         const reader = new FileReader()
         reader.onload = e => {
-          this.theme.image = e.target.result
+          this.theme.imageBase64 = e.target.result
         }
         reader.readAsDataURL(file)
       },
       removeImage() {
         this.theme.image = ''
+        this.theme.imageBase64 = ''
       }
     }
   }
