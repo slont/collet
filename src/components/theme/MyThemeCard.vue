@@ -1,5 +1,5 @@
 <template>
-  <div class="card theme-card">
+  <div class="card my-theme-card">
     <div class="card-image">
       <figure class="image is-4by3">
         <img :src="theme.image" v-if="theme.image">
@@ -7,7 +7,6 @@
       </figure>
       <div class="grey-mask">
         <div class="title is-5">{{ theme.title }}</div>
-        <div class="subtitle is-6">{{ theme.createdUser.name }}</div>
         <button class="button is-info is-inverted circle" @click="$emit('open-edit-modal')">
           <span class="icon"><i class="material-icons">edit</i></span>
         </button>
@@ -37,7 +36,7 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-  .theme-card {
+  .my-theme-card {
     .grey-mask {
       display: flex;
       flex-direction: column;
