@@ -133,8 +133,6 @@
     },
     methods: {
       signout() {
-        console.log(localStorage)
-        console.log(localStorage.authToken)
         this.$store.dispatch('signout').then(() => {
           this.$router.push('/')
         })

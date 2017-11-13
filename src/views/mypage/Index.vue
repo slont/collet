@@ -36,7 +36,6 @@
           p: 0,
           s: 20
         }).then(res => {
-          console.log(res)
           this.themes = res
         })
       }

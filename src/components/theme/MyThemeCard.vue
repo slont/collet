@@ -5,12 +5,12 @@
         <img :src="theme.image" v-if="theme.image">
         <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image" v-else>
       </figure>
-      <div class="grey-mask">
+      <div class="dark-mask" @click="$router.push(`/mypage/${theme.id}`)">
         <div class="title is-5">{{ theme.title }}</div>
-        <button class="button is-info is-inverted circle" @click="$emit('open-edit-modal')">
-          <span class="icon"><i class="material-icons">edit</i></span>
-        </button>
       </div>
+      <button class="button open-edit-modal-button is-info is-inverted circle" @click="$emit('open-edit-modal')">
+        <span class="icon"><i class="material-icons">edit</i></span>
+      </button>
     </div>
     <div class="card-content">
       <div class="media">
@@ -37,7 +37,7 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .my-theme-card {
-    .grey-mask {
+    .dark-mask {
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -46,7 +46,6 @@
       width: 100%;
       height: 100%;
       padding: .75rem;
-      background-color: rgba(0, 0, 0, .3);
       transition: all .3s ease;
 
       .title,
@@ -68,19 +67,19 @@
         color: white;
         margin: .3rem 0 0;
       }
-      .button {
-        position: absolute;
-        right: .5rem;
-        bottom: -1rem;
-        width: 2.75rem;
-        height: 2.75rem;
-        padding: 0;
-        border-color: rgba(32, 156, 238, .3);
-      }
       &:hover {
         background-color: rgba(0, 0, 0, .4);
         cursor: pointer;
       }
+    }
+    .open-edit-modal-button {
+      position: absolute;
+      right: .5rem;
+      bottom: -1rem;
+      width: 2.75rem;
+      height: 2.75rem;
+      padding: 0;
+      border-color: rgba(32, 156, 238, .3);
     }
     .content {
       display: inline-flex;

@@ -1,89 +1,100 @@
 <template>
-  <div id="mypage-index">
-    <div class="columns is-multiline">
-      <div v-for="theme in themes" class="column is-one-third-tablet" :key="theme.id">
-        <theme-card :theme="theme"></theme-card>
+  <div id="mypage-items">
+    <div class="theme-image trim" v-if="theme.image">
+      <figure class="image is-4by3">
+        <img :src="theme.image" v-if="theme.image">
+      </figure>
+      <div class="dark-mask" @click="$router.push(`/mypage/${theme.id}`)">
+        <div class="title is-3">{{ theme.title }}</div>
+        <div class="subtitle is-6">{{ theme.description }}</div>
       </div>
     </div>
-    <a class="button button-create is-float is-primary circle">
+    <div v-else>
+      <div class="title is-3">{{ theme.title }}</div>
+      <div class="subtitle is-6">{{ theme.description }}</div>
+    </div>
+
+    <div class="columns is-multiline" v-if="theme.items.length">
+      <div v-for="item in theme.items" class="column is-one-third-tablet" :key="item.id">
+      </div>
+    </div>
+    <div class="box" v-else>
+      まだアイテムが追加されていません
+      右下のボタンからアイテムを追加してみましょう！
+    </div>
+
+    <a @click="$refs.itemCreateModal.open(theme.templates)" class="button button-create is-float is-primary circle">
       <i class="material-icons">add</i>
     </a>
+
+    <item-create-modal ref="itemCreateModal" @refresh="refresh"></item-create-modal>
   </div>
 </template>
 
 <script>
-  import ThemeCard from '@/components/theme/ThemeCard'
+  import ThemeModel from '@/models/Theme'
+  import ItemCreateModal from '@/components/item/ItemCreateModal'
 
   export default {
-    components: { ThemeCard },
+    components: { ItemCreateModal },
     data() {
       return {
-        themes: [
-          {
-            id: 'aaa',
-            name: '1000円台でオススメのワイン',
-            description: '1000円台でオススメのワインを紹介します',
-            image: '',
-            user: {
-              id: 'aaa',
-              image: '',
-              name: 'hogehoge'
-            },
-            item: {
-              name: 'Evodia',
-              elements: []
-            }
-          }, {
-            id: 'bbb',
-            name: 'オススメの日本酒',
-            description: 'オススメの日本酒を紹介します',
-            image: '',
-            user: {
-              id: 'aaa',
-              image: '',
-              name: 'hogehoge'
-            },
-            item: {
-              name: '〆張鶴',
-              elements: []
-            }
-          }, {
-            id: 'ccc',
-            name: 'デートに使えるお店',
-            description: 'デートに使えるお店を紹介します',
-            image: '',
-            user: {
-              id: 'aaa',
-              image: '',
-              name: 'hogehoge'
-            },
-            item: {
-              name: 'マチュリテ',
-              elements: []
-            }
-          }, {
-            id: 'ddd',
-            name: 'デートに使えるお店2',
-            description: 'デートに使えるお店を紹介します',
-            image: '',
-            user: {
-              id: 'aaa',
-              image: '',
-              name: 'hogehoge'
-            },
-            item: {
-              name: 'レトノ',
-              elements: []
-            }
-          }
-        ]
+        theme: {
+          title: '',
+          items: []
+        }
+      }
+    },
+    computed: {
+      themeId() {
+        return this.$route.params.themeId
+      }
+    },
+    created() {
+      this.refresh()
+    },
+    methods: {
+      refresh() {
+        new ThemeModel().findOne(this.themeId).then(res => {
+          this.theme = res
+          console.log(res)
+        })
       }
     }
   }
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-  #mypage-index {
+  #mypage-items {
     padding-top: 1em;
+
+    .theme-image {
+      position: relative;
+      display: flex;
+      align-items: center;
+      max-height: 14rem;
+
+      .image {
+        width: 100%;
+      }
+      .dark-mask {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        padding: .75rem;
+
+        .title {
+          color: white;
+          padding-bottom: 1rem;
+        }
+        .subtitle {
+          color: white;
+        }
+      }
+    }
   }
 </style>

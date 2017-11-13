@@ -1,7 +1,7 @@
 <template>
   <div class="modal" :class="{ 'is-active': active }">
     <div @click="close" class="modal-background"></div>
-    <div class="modal-content box">
+    <div class="modal-card">
       <slot></slot>
     </div>
     <button @click="close" class="modal-close is-large" aria-label="close"></button>
@@ -29,5 +29,9 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .modal {
+    .modal-card-foot {
+      background: white;
+      height: 4rem;
+    }
   }
 </style>
