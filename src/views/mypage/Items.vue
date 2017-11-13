@@ -23,9 +23,30 @@
       右下のボタンからアイテムを追加してみましょう！
     </div>
 
-    <a @click="$refs.itemCreateModal.open(theme.templates)" class="button button-create is-float is-primary circle">
-      <i class="material-icons">add</i>
-    </a>
+    <!--<a class="fixed-action-button button is-float is-primary circle">-->
+      <!--<a @click="$refs.itemCreateModal.open(theme.templates)" class="button button-create is-float is-primary circle">-->
+        <!--<i class="material-icons">add</i>-->
+      <!--</a>-->
+    <!--</a>-->
+
+    <div class="fixed-action-button vertical">
+      <a class="button trigger-button is-float is-primary circle">
+        <i class="material-icons">add</i>
+      </a>
+      <ul>
+        <li>
+          <a class="button button-create is-float is-link circle"
+             @click="$refs.itemCreateModal.open(theme.templates)">
+            <i class="material-icons">insert_chart</i>
+          </a>
+        </li>
+        <li>
+          <a class="button button-create is-float is-info circle">
+            <i class="material-icons">format_quote</i>
+          </a>
+        </li>
+      </ul>
+    </div>
 
     <item-create-modal ref="itemCreateModal" @refresh="refresh"></item-create-modal>
   </div>
@@ -93,6 +114,52 @@
         }
         .subtitle {
           color: white;
+        }
+      }
+    }
+    .fixed-action-button {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+
+      &.vertical ul {
+        position: absolute;
+        display: inline-flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: flex-start;
+        bottom: 0;
+        height: 500px;
+        width: 100%;
+        padding-bottom: 64px;
+        visibility: hidden;
+
+        li {
+          .button {
+            height: 40px;
+            width: 40px;
+            margin: .5rem;
+          }
+        }
+        &:hover {
+          visibility: visible;
+        }
+      }
+      .trigger-button {
+        z-index: 100;
+
+        .material-icons {
+          transition: all .3s;
+        }
+      }
+      &:hover {
+        .trigger-button {
+          .material-icons {
+            transform: rotate(-135deg);
+          }
+          + ul {
+            visibility: visible;
+          }
         }
       }
     }

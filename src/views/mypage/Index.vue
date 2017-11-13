@@ -46,5 +46,11 @@
 <style lang="scss" rel="stylesheet/scss">
   #mypage-index {
     padding-top: 1em;
+
+    .button.is-float {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+    }
   }
 </style>

@@ -1,67 +1,54 @@
 <template>
   <modal id="item-create-modal" class="modal" :class="`page-${pageIndex}`" ref="itemCreateModal" @close="reset">
-    <template v-if="0 === pageIndex">
-      <div class="modal-card-body">
-        <a class="button is-primary is-outlined" @click="pageIndex++">
-          アイテムを追加する
-        </a>
-        <a class="button is-info is-outlined" v-for="template in templates">
-          {{ template }}
-        </a>
-      </div>
-    </template>
-
-    <template v-else-if="1 === pageIndex">
-      <div class="modal-card-body">
-        <div class="title-field field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">タイトル</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control is-expanded">
-                <input v-model.trim="item.title" class="input" type="text" placeholder="Name"
-                       name="title" v-validate="'required|max:255'">
-                <span v-show="errors.has('title')" class="has-text-danger">{{ errors.first('title') }}</span>
-              </p>
-            </div>
+    <div class="modal-card-body">
+      <div class="title-field field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">タイトル</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control is-expanded">
+              <input v-model.trim="item.title" class="input" type="text" placeholder="Name"
+                     name="title" v-validate="'required|max:255'">
+              <span v-show="errors.has('title')" class="has-text-danger">{{ errors.first('title') }}</span>
+            </p>
           </div>
         </div>
+      </div>
 
-        <div class="description-field field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">説明文</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <textarea v-model="item.description" class="textarea"></textarea>
-              </div>
+      <div class="description-field field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">説明文</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <textarea v-model="item.description" class="textarea"></textarea>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="slider">
-        <div class="buttons has-addons is-centered">
-          <text-button></text-button>
-          <image-button></image-button>
-          <location-button></location-button>
-          <datetime-button></datetime-button>
-          <list-button></list-button>
-          <link-button></link-button>
-          <rating-button></rating-button>
-          <tag-button></tag-button>
-          <phone-button></phone-button>
-          <email-button></email-button>
-        </div>
+    <div class="slider">
+      <div class="buttons has-addons is-centered">
+        <text-button></text-button>
+        <image-button></image-button>
+        <location-button></location-button>
+        <datetime-button></datetime-button>
+        <list-button></list-button>
+        <link-button></link-button>
+        <rating-button></rating-button>
+        <tag-button></tag-button>
+        <phone-button></phone-button>
+        <email-button></email-button>
       </div>
+    </div>
 
-      <footer class="modal-card-foot has-right">
-        <button @click="close" class="button">キャンセル</button>
-        <button @click="ok" class="button is-primary">作成</button>
-      </footer>
-    </template>
+    <footer class="modal-card-foot has-right">
+      <button @click="close" class="button">キャンセル</button>
+      <button @click="ok" class="button is-primary">作成</button>
+    </footer>
   </modal>
 </template>
 
@@ -102,13 +89,13 @@
           image: '',
           elements: []
         },
-        templates: [],
+        template: {},
         errorMessage: ''
       }
     },
     methods: {
-      open(templates) {
-        this.templates = templates
+      open(template) {
+        this.template = template
         this.$refs.itemCreateModal.open()
       },
       close() {
@@ -153,63 +140,54 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #item-create-modal {
+    $width: 800px;
+
     .modal-card {
       display: flex;
       flex-direction: column;
-      height: 80px;
-      min-height: 80px;
+      height: 95%;
+      width: $width;
       transition: width .3s, height .3s;
     }
+    .slider {
+      $button-amount: 10;
+      $size: 4.5rem;
+      position: absolute;
+      bottom: calc(4rem - 1px);
+      height: $size * 2;
+      width: 100%;
+      margin-top: auto;
+      padding: 0;
+      border-radius: 0;
+      overflow-x: scroll;
 
-    &.page-0 {
-    }
-    &.page-1 {
-      $width: 800px;
-
-      .modal-card {
-        height: 95%;
-        width: $width;
-      }
-      .slider {
-        $button-amount: 10;
-        $size: 4.5rem;
+      .buttons {
         position: absolute;
-        bottom: calc(4rem - 1px);
-        height: $size * 2;
-        width: 100%;
-        margin-top: auto;
-        padding: 0;
-        border-radius: 0;
-        overflow-x: scroll;
+        bottom: 0;
+        float: left;
+        width: $size * $button-amount;
 
-        .buttons {
-          position: absolute;
-          bottom: 0;
-          float: left;
-          width: $size * $button-amount;
+        .labeled-icon-button {
+          position: relative;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: $size;
+          width: $size;
 
-          .labeled-icon-button {
-            position: relative;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+          .material-icons {
+            font-size: 2rem;
+            height: 2.4rem;
+            line-height: 2.4rem;
+          }
+          .label {
+            font-size: .75rem;
+          }
+          .sub-content {
+            position: absolute;
+            top: -$size;
             height: $size;
-            width: $size;
-
-            .material-icons {
-              font-size: 2rem;
-              height: 2.4rem;
-              line-height: 2.4rem;
-            }
-            .label {
-              font-size: .75rem;
-            }
-            .sub-content {
-              position: absolute;
-              top: -$size;
-              height: $size;
-              display: none;
-            }
+            display: none;
           }
         }
       }
