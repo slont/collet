@@ -1,5 +1,31 @@
 <template>
   <modal id="item-create-modal" class="modal" :class="`page-${pageIndex}`" ref="itemCreateModal" @close="reset">
+    <header class="modal-card-head">
+      <div class="item-name control">
+        <input class="input is-large" type="text" placeholder="Item Name">
+      </div>
+
+      <div class="image-field field is-horizontal">
+        <div class="field-body">
+          <div class="control">
+            <div class="file-view" v-if="item.image || item.imageBase64">
+              <img :src="item.image || item.imageBase64"/>
+              <a @click="removeImage" class="delete"></a>
+            </div>
+            <div class="file">
+              <label class="file-label">
+                <input @change="changeImage" class="file-input" type="file" name="resume">
+                <span class="file-cta">
+                  <span class="file-icon"><i class="material-icons">file_upload</i></span>
+                  <span class="file-label">Choose a file…</span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
     <div class="modal-card-body">
       <div class="title-field field is-horizontal">
         <div class="field-label is-normal">
@@ -87,6 +113,7 @@
           title: '',
           description: '',
           image: '',
+          imageBase64: '',
           elements: []
         },
         template: {},
@@ -148,7 +175,56 @@
       height: 95%;
       width: $width;
       transition: width .3s, height .3s;
+
+      .modal-card-head {
+        height: 86px;
+        padding: 1rem 1.5rem;
+        border-bottom: none;
+
+        .image-field {
+          align-self: flex-start;
+          width: 35%;
+          margin-left: auto;
+
+          .field-body {
+            display: flex;
+            flex-direction: column;
+
+            .file-view {
+              .delete {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                z-index: 10;
+              }
+              + .file {
+                position: absolute;
+                top: 0;
+                opacity: .7;
+              }
+            }
+          }
+        }
+      }
+      .modal-card-body {
+        .input,
+        .textarea {
+          background-color: rgba(255, 255, 255, 0.8);
+        }
+      }
     }
+    .item-name {
+      width: 65%;
+      padding: 0;
+      border-bottom: 1px solid gainsboro;
+
+      .input {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+      }
+    }
+
     .slider {
       $button-amount: 10;
       $size: 4.5rem;

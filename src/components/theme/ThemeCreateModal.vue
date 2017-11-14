@@ -34,25 +34,19 @@
           <label class="label">イメージ</label>
         </div>
         <div class="field-body">
-          <div class="field">
-            <div class="control">
-              <div class="file has-name">
-                <label class="file-label">
-                  <input @change="changeImage" class="file-input" type="file">
-                  <span class="file-cta">
-                  <span class="file-icon"><i class="fa fa-upload"></i></span>
+          <div class="upload-box file">
+            <label class="file-label">
+              <input @change="changeImage" class="file-input" type="file" name="resume">
+              <span class="file-cta">
+                  <span class="file-icon"><i class="material-icons">file_upload</i></span>
                   <span class="file-label">Choose a file…</span>
                 </span>
-                </label>
-              </div>
-            </div>
+            </label>
           </div>
-          <div class="field">
-            <div class="control">
-              <div class="file-view" v-if="theme.image">
-                <img :src="theme.image"/>
-                <a @click="removeImage" class="delete"></a>
-              </div>
+          <div class="control">
+            <div class="file-view" v-if="theme.image || theme.imageBase64">
+              <img :src="theme.image || theme.imageBase64"/>
+              <a @click="removeImage" class="delete"></a>
             </div>
           </div>
         </div>
@@ -78,7 +72,8 @@
         theme: {
           title: '',
           description: '',
-          image: ''
+          image: '',
+          imageBase64: ''
         },
         errorMessage: ''
       }
@@ -130,16 +125,16 @@
 <style lang="scss" rel="stylesheet/scss">
   #theme-create-modal {
     .image-field {
-      .file-view {
-        .delete {
-          position: absolute;
-          top: 5px;
-          right: 5px;
-          opacity: 0;
-        }
-        &:hover {
+      .field-body {
+        display: flex;
+        flex-direction: column;
+
+        .file-view {
           .delete {
-            opacity: 1;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            z-index: 10;
           }
         }
       }

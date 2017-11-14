@@ -29,6 +29,9 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .modal {
+    .modal-card-head {
+      background: white;
+    }
     .modal-card-foot {
       background: white;
       height: 4rem;
