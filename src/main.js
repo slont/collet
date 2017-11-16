@@ -8,6 +8,7 @@ import Vuex from 'vuex'
 import VeeValidate from 'vee-validate'
 import VueI18n from 'vue-i18n'
 import VueMoment from 'vue-moment'
+import Element from 'element-ui'
 import messages from './locales'
 import moment from 'moment'
 import 'moment/min/locales.min'
@@ -20,6 +21,7 @@ Vue.use(Vuex)
 Vue.use(VueI18n)
 Vue.use(VeeValidate, validateConfig)
 Vue.use(VueMoment, { moment })
+Vue.use(Element)
 const i18n = new VueI18n({
   locale: store.state.locale,
   messages
