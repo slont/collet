@@ -24,8 +24,10 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .list-button {
+    $amount: 2;
+
     .sub-content {
-      width: $element-button-size * 2;
+      height: $element-button-size * $amount;
     }
   }
 </style>

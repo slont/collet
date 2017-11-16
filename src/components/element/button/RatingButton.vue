@@ -31,6 +31,11 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .rating-button {
+    $amount: 2;
+
+    .sub-content {
+      height: $element-button-size * $amount;
+    }
     > div {
       letter-spacing: -5px;
 
