@@ -82,7 +82,6 @@
             email: this.email,
             password: this.password
           }).then(() => {
-            console.log('aaaa')
             this.isLoading = false
             this.$router.push(this.$route.query.redirect || '/')
           }).catch(err => {

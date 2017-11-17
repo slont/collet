@@ -78,7 +78,6 @@
       refresh() {
         new ThemeModel().findOne(this.themeId).then(res => {
           this.theme = res
-          console.log(res)
         })
       }
     }
