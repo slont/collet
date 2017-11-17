@@ -1,16 +1,18 @@
 <template>
-  <element class="link-element" :params="params" :editable="editable">
+  <cl-element class="link-element" :params="params" :editable="editable">
     <p class="control">
-      <input v-model.trim="params.valueStr" class="input" type="text">
+      <input v-model.trim="params.valueStr" class="input" type="text" v-if="editable">
+
+      <span class="value" v-else>{{ params.valueStr }}</span>
     </p>
-  </element>
+  </cl-element>
 </template>
 
 <script>
-  import Element from './Element'
+  import ClElement from './ClElement'
 
   export default {
-    components: { Element },
+    components: { ClElement },
     props: {
       params: {
         type: Object,
@@ -28,5 +30,10 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .link-element {
+    .input,
+    .value {
+      color: $link;
+      text-decoration: underline;
+    }
   }
 </style>

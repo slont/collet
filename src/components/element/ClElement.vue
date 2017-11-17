@@ -1,5 +1,5 @@
 <template>
-  <div class="element">
+  <div class="cl-element">
     <label v-if="params.label && !editable">
       {{ params.label }}
     </label>
@@ -25,6 +25,6 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-  .element {
+  .cl-element {
   }
 </style>

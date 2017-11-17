@@ -1,16 +1,16 @@
 <template>
-  <element class="rating-element" :params="params" :editable="editable">
+  <cl-element class="rating-element" :params="params" :editable="editable">
     <p class="control">
-      <input v-model.trim="params.valueStr" class="input" type="text">
+      <el-rate v-model="value.valueNum" :max="Number(valueStr)" :disabled="!editable"></el-rate>
     </p>
-  </element>
+  </cl-element>
 </template>
 
 <script>
-  import Element from './Element'
+  import ClElement from './ClElement'
 
   export default {
-    components: { Element },
+    components: { ClElement },
     props: {
       params: {
         type: Object,

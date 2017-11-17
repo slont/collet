@@ -1,17 +1,19 @@
 <template>
-  <element class="list-element" :params="params" :editable="editable">
+  <cl-element class="list-element" :params="params" :editable="editable">
     <p class="control">
-      <input v-for="str in strs" v-model.trim="str" class="input" type="text">
+      <input v-for="str in strs" v-model.trim="str" class="input" type="text" v-if="editable">
+
+      <span v-for="str in strs" class="value" v-else>{{ str }}</span>
     </p>
-  </element>
+  </cl-element>
 </template>
 
 <script>
-  import Element from './Element'
+  import ClElement from './ClElement'
   const DELIMITER = '- '
 
   export default {
-    components: { Element },
+    components: { ClElement },
     props: {
       params: {
         type: Object,

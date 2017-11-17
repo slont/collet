@@ -1,16 +1,16 @@
 <template>
-  <element class="datetime-element" :params="params" :editable="editable">
+  <cl-element class="datetime-element" :params="params" :editable="editable">
     <p class="control">
       <input v-model.trim="params.valueStr" class="input" type="text">
     </p>
-  </element>
+  </cl-element>
 </template>
 
 <script>
-  import Element from './Element'
+  import ClElement from './ClElement'
 
   export default {
-    components: { Element },
+    components: { ClElement },
     props: {
       params: {
         type: Object,
