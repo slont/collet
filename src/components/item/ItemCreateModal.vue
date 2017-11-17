@@ -250,6 +250,9 @@
                 padding: 0;
               }
             }
+            .element-field:not(:last-child) {
+              margin-bottom: .25rem;
+            }
           }
         }
       }

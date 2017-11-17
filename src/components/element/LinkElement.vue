@@ -2,7 +2,7 @@
   <cl-element class="link-element" :params="params"
               @remove="$emit('remove')" :editable="editable">
     <p class="control">
-      <input v-model.trim="params.valueStr" class="input" type="text" v-if="editable">
+      <input v-model.trim="params.valueStr" class="input value" type="text" v-if="editable">
 
       <span class="value" v-else>{{ params.valueStr }}</span>
     </p>
@@ -31,7 +31,6 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .link-element {
-    .input,
     .value {
       color: $link;
       text-decoration: underline;
