@@ -1,16 +1,12 @@
 <template>
-  <element-button class="text-button" icon="text_fields" label="Text">
-    <div class="buttons sub-content has-addons">
-      <element-button class="photo-button" icon="photo" label="Image">
-      </element-button>
-      <element-button class="photo-button" icon="location_on" label="Location">
-      </element-button>
-    </div>
+  <element-button class="text-button" icon="text_fields" label="Text"
+                  @click.native="addElement">
   </element-button>
 </template>
 
 <script>
   import ElementButton from './ElementButton'
+  import { ELEMENT } from '@/constant'
 
   export default {
     components: { ElementButton },
@@ -18,6 +14,10 @@
       return {}
     },
     methods: {
+      addElement() {
+        const element = Object.assign({}, ELEMENT, { type: 'text' })
+        this.$emit('add', element)
+      }
     }
   }
 </script>

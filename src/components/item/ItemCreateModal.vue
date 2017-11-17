@@ -1,73 +1,58 @@
 <template>
   <modal id="item-create-modal" class="modal" :class="`page-${pageIndex}`" ref="itemCreateModal" @close="reset">
-    <header class="modal-card-head">
-      <div class="item-name control">
-        <input class="input is-large" type="text" placeholder="Item Name">
-      </div>
-
-      <div class="image-field field is-horizontal">
-        <div class="field-body">
-          <div class="control">
-            <div class="file-view" v-if="item.image || item.imageBase64">
-              <img :src="item.image || item.imageBase64"/>
-              <a @click="removeImage" class="delete"></a>
-            </div>
-            <div class="file">
-              <label class="file-label">
-                <input @change="changeImage" class="file-input" type="file" name="resume">
-                <span class="file-cta">
-                  <span class="file-icon"><i class="material-icons">file_upload</i></span>
-                  <span class="file-label">Choose a file…</span>
-                </span>
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-
     <div class="modal-card-body">
-      <div class="title-field field is-horizontal">
-        <div class="field-label is-normal">
-          <label class="label">タイトル</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <p class="control is-expanded">
-              <input v-model.trim="item.title" class="input" type="text" placeholder="Name"
-                     name="title" v-validate="'required|max:255'">
-              <span v-show="errors.has('title')" class="has-text-danger">{{ errors.first('title') }}</span>
-            </p>
+      <div class="columns is-gapless">
+        <div class="side-column column">
+          <div class="image-field field is-horizontal">
+            <div class="field-body">
+              <div class="control">
+                <div class="file-view" v-if="item.image || item.imageBase64">
+                  <img :src="item.image || item.imageBase64"/>
+                  <a @click="removeImage" class="delete"></a>
+                </div>
+                <div class="file">
+                  <label class="file-label">
+                    <input @change="changeImage" class="file-input" type="file" name="resume">
+                    <span class="file-cta">
+                      <span class="file-icon"><i class="material-icons">file_upload</i></span>
+                      <span class="file-label">Choose a file…</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div class="description-field field is-horizontal">
-        <div class="field-label is-normal">
-          <label class="label">説明文</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <div class="control">
-              <textarea v-model="item.description" class="textarea"></textarea>
+          <div class="slider">
+            <div class="buttons has-addons is-centered">
+              <text-button @add="addElement"></text-button>
+              <image-button></image-button>
+              <location-button></location-button>
+              <datetime-button></datetime-button>
+              <list-button></list-button>
+              <link-button></link-button>
+              <rating-button></rating-button>
+              <tag-button></tag-button>
+              <phone-button></phone-button>
+              <email-button></email-button>
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <div class="slider">
-      <div class="buttons has-addons is-centered">
-        <text-button></text-button>
-        <image-button></image-button>
-        <location-button></location-button>
-        <datetime-button></datetime-button>
-        <list-button></list-button>
-        <link-button></link-button>
-        <rating-button></rating-button>
-        <tag-button></tag-button>
-        <phone-button></phone-button>
-        <email-button></email-button>
+        <div class="main-column column">
+          <div class="field">
+            <div class="item-name control">
+              <input class="input is-large" type="text" placeholder="Item Name">
+            </div>
+          </div>
+          <!--<div class="item-name control">-->
+            <!--<textarea class="textarea" type="text" placeholder="Item Name"></textarea>-->
+          <!--</div>-->
+
+          <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
+            <text-element :params="element" @remove="removeElement(i)" editable></text-element>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -91,6 +76,7 @@
   import PhoneButton from '@/components/element/button/PhoneButton'
   import EmailButton from '@/components/element/button/EmailButton'
   import RatingButton from '@/components/element/button/RatingButton'
+  import TextElement from '@/components/element/TextElement'
 
   export default {
     components: {
@@ -104,7 +90,8 @@
       LinkButton,
       PhoneButton,
       EmailButton,
-      RatingButton
+      RatingButton,
+      TextElement
     },
     data() {
       return {
@@ -145,6 +132,12 @@
         Object.assign(this.$data, this.$options.data.call(this))
         this.$nextTick(() => this.errors.clear())
       },
+      addElement(element) {
+        this.item.elements.push(element)
+      },
+      removeElement(i) {
+        this.item.elements.splice(i, 1)
+      },
       changeImage(e) {
         const files = e.target.files || e.dataTransfer.files
         if (!files.length) return
@@ -167,103 +160,70 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #item-create-modal {
-    $width: 800px;
-
     .modal-card {
       display: flex;
       flex-direction: column;
       height: 95%;
-      width: $width;
+      width: 70%;
       transition: width .3s, height .3s;
 
-      .modal-card-head {
-        height: 86px;
-        padding: 1rem 1.5rem;
-        border-bottom: none;
+      .modal-card-body {
+        height: 100%;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
 
-        .image-field {
-          align-self: flex-start;
-          width: 35%;
-          margin-left: auto;
+        .columns {
+          height: 100%;
 
-          .field-body {
-            display: flex;
-            flex-direction: column;
+          .side-column {
+            height: 100%;
+            max-width: $element-button-size * 3;
 
-            .file-view {
-              .delete {
-                position: absolute;
-                top: 5px;
-                right: 5px;
-                z-index: 10;
+            .image-field {
+              .field-body {
+                display: flex;
+                flex-direction: column;
+
+                .file-view {
+                  .delete {
+                    position: absolute;
+                    top: 5px;
+                    right: 5px;
+                    z-index: 10;
+                  }
+                  + .file {
+                    position: absolute;
+                    top: 0;
+                    opacity: .7;
+                  }
+                }
               }
-              + .file {
-                position: absolute;
-                top: 0;
-                opacity: .7;
+            }
+            .slider {
+              height: 100%;
+              padding: 0;
+              overflow-y: scroll;
+
+              > .buttons {
+                flex-direction: column;
+                height: 100%;
+                width: $element-button-size * 2;
               }
             }
           }
-        }
-      }
-      .modal-card-body {
-        .input,
-        .textarea {
-          background-color: rgba(255, 255, 255, 0.8);
-        }
-      }
-    }
-    .item-name {
-      width: 65%;
-      padding: 0;
-      border-bottom: 1px solid gainsboro;
+          .main-column {
+            padding: 0 1rem !important;
 
-      .input {
-        border: none;
-        box-shadow: none;
-        padding: 0;
-      }
-    }
+            .item-name {
+              padding: 0;
+              border-bottom: $border;
 
-    .slider {
-      $button-amount: 10;
-      $size: 4.5rem;
-      position: absolute;
-      bottom: calc(4rem - 1px);
-      height: $size * 2;
-      width: 100%;
-      margin-top: auto;
-      padding: 0;
-      border-radius: 0;
-      overflow-x: scroll;
-
-      .buttons {
-        position: absolute;
-        bottom: 0;
-        float: left;
-        width: $size * $button-amount;
-
-        .labeled-icon-button {
-          position: relative;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: $size;
-          width: $size;
-
-          .material-icons {
-            font-size: 2rem;
-            height: 2.4rem;
-            line-height: 2.4rem;
-          }
-          .label {
-            font-size: .75rem;
-          }
-          .sub-content {
-            position: absolute;
-            top: -$size;
-            height: $size;
-            display: none;
+              .input {
+                border: none;
+                box-shadow: none;
+                padding: 0;
+              }
+            }
           }
         }
       }
