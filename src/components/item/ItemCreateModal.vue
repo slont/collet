@@ -29,7 +29,6 @@
               <image-button></image-button>
               <location-button></location-button>
               <datetime-button></datetime-button>
-              <list-button></list-button>
               <link-button></link-button>
               <rating-button></rating-button>
               <tag-button></tag-button>
@@ -54,7 +53,6 @@
             <image-element :params="element" @remove="removeElement(i)" v-else-if="'image' === element.type" editable></image-element>
             <location-element :params="element" @remove="removeElement(i)" v-else-if="'location' === element.type" editable></location-element>
             <datetime-element :params="element" @remove="removeElement(i)" v-else-if="'datetime' === element.type" editable></datetime-element>
-            <list-element :params="element" @remove="removeElement(i)" v-else-if="'list' === element.type" editable></list-element>
             <tag-element :params="element" @remove="removeElement(i)" v-else-if="'tag' === element.type" editable></tag-element>
             <link-element :params="element" @remove="removeElement(i)" v-else-if="'link' === element.type" editable></link-element>
             <phone-element :params="element" @remove="removeElement(i)" v-else-if="'phone' === element.type" editable></phone-element>
@@ -80,7 +78,6 @@
   import ImageButton from '@/components/element/button/ImageButton'
   import LocationButton from '@/components/element/button/LocationButton'
   import DatetimeButton from '@/components/element/button/DatetimeButton'
-  import ListButton from '@/components/element/button/ListButton'
   import TagButton from '@/components/element/button/TagButton'
   import LinkButton from '@/components/element/button/LinkButton'
   import PhoneButton from '@/components/element/button/PhoneButton'
@@ -91,7 +88,6 @@
   import ImageElement from '@/components/element/ImageElement'
   import LocationElement from '@/components/element/LocationElement'
   import DatetimeElement from '@/components/element/DatetimeElement'
-  import ListElement from '@/components/element/ListElement'
   import TagElement from '@/components/element/TagElement'
   import LinkElement from '@/components/element/LinkElement'
   import PhoneElement from '@/components/element/PhoneElement'
@@ -106,7 +102,6 @@
       ImageButton,
       LocationButton,
       DatetimeButton,
-      ListButton,
       TagButton,
       LinkButton,
       PhoneButton,
@@ -117,7 +112,6 @@
       ImageElement,
       LocationElement,
       DatetimeElement,
-      ListElement,
       TagElement,
       LinkElement,
       PhoneElement,
