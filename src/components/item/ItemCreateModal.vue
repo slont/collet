@@ -50,7 +50,17 @@
           <!--</div>-->
 
           <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
-            <text-element :params="element" @remove="removeElement(i)" editable></text-element>
+            <text-element :params="element" @remove="removeElement(i)" v-if="'text' === element.type" editable></text-element>
+            <image-element :params="element" @remove="removeElement(i)" v-else-if="'image' === element.type" editable></image-element>
+            <location-element :params="element" @remove="removeElement(i)" v-else-if="'location' === element.type" editable></location-element>
+            <datetime-element :params="element" @remove="removeElement(i)" v-else-if="'datetime' === element.type" editable></datetime-element>
+            <list-element :params="element" @remove="removeElement(i)" v-else-if="'list' === element.type" editable></list-element>
+            <tag-element :params="element" @remove="removeElement(i)" v-else-if="'tag' === element.type" editable></tag-element>
+            <link-element :params="element" @remove="removeElement(i)" v-else-if="'link' === element.type" editable></link-element>
+            <phone-element :params="element" @remove="removeElement(i)" v-else-if="'phone' === element.type" editable></phone-element>
+            <email-element :params="element" @remove="removeElement(i)" v-else-if="'email' === element.type" editable></email-element>
+            <rating-element :params="element" @remove="removeElement(i)" v-else-if="'rating' === element.type" editable></rating-element>
+            <switch-element :params="element" @remove="removeElement(i)" v-else-if="'switch' === element.type" editable></switch-element>
           </div>
         </div>
       </div>
@@ -76,7 +86,18 @@
   import PhoneButton from '@/components/element/button/PhoneButton'
   import EmailButton from '@/components/element/button/EmailButton'
   import RatingButton from '@/components/element/button/RatingButton'
+  import SwitchButton from '@/components/element/button/SwitchButton'
   import TextElement from '@/components/element/TextElement'
+  import ImageElement from '@/components/element/ImageElement'
+  import LocationElement from '@/components/element/LocationElement'
+  import DatetimeElement from '@/components/element/DatetimeElement'
+  import ListElement from '@/components/element/ListElement'
+  import TagElement from '@/components/element/TagElement'
+  import LinkElement from '@/components/element/LinkElement'
+  import PhoneElement from '@/components/element/PhoneElement'
+  import EmailElement from '@/components/element/EmailElement'
+  import RatingElement from '@/components/element/RatingElement'
+  import SwitchElement from '@/components/element/SwitchElement'
 
   export default {
     components: {
@@ -91,7 +112,18 @@
       PhoneButton,
       EmailButton,
       RatingButton,
-      TextElement
+      SwitchButton,
+      TextElement,
+      ImageElement,
+      LocationElement,
+      DatetimeElement,
+      ListElement,
+      TagElement,
+      LinkElement,
+      PhoneElement,
+      EmailElement,
+      RatingElement,
+      SwitchElement
     },
     data() {
       return {

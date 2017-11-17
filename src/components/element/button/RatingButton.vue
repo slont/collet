@@ -1,5 +1,6 @@
 <template>
-  <element-button class="rating-button">
+  <element-button class="rating-button"
+                  @click.native="addElement">
     <div>
       <i class="material-icons">star</i>
       <i class="material-icons">star</i>
@@ -18,6 +19,7 @@
 
 <script>
   import ElementButton from './ElementButton'
+  import { ELEMENT } from '@/constant'
 
   export default {
     components: { ElementButton },
@@ -25,6 +27,10 @@
       return {}
     },
     methods: {
+      addElement() {
+        const element = Object.assign({}, ELEMENT, { type: 'rating' })
+        this.$emit('add', element)
+      }
     }
   }
 </script>

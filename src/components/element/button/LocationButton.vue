@@ -1,5 +1,6 @@
 <template>
-  <element-button class="location-button" icon="location_on" label="Location">
+  <element-button class="location-button" icon="location_on" label="Location"
+                  @click.native="addElement">
     <div class="buttons sub-content has-addons">
       <element-button class="photo-button" icon="photo" label="location">
       </element-button>
@@ -11,6 +12,7 @@
 
 <script>
   import ElementButton from './ElementButton'
+  import { ELEMENT } from '@/constant'
 
   export default {
     components: { ElementButton },
@@ -18,6 +20,10 @@
       return {}
     },
     methods: {
+      addElement() {
+        const element = Object.assign({}, ELEMENT, { type: 'location' })
+        this.$emit('add', element)
+      }
     }
   }
 </script>

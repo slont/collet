@@ -1,5 +1,6 @@
 <template>
-  <cl-element class="image-element" :params="params" :editable="editable">
+  <cl-element class="image-element" :params="params"
+              @remove="$emit('remove')" :editable="editable">
     <p class="control file" v-if="editable">
       <label class="file-label">
         <input @change="changeImage" class="file-input" type="file" name="resume">

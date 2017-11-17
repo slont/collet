@@ -1,7 +1,8 @@
 <template>
-  <cl-element class="email-element" :params="params" :editable="editable">
+  <cl-element class="email-element" :params="params"
+              @remove="$emit('remove')" :editable="editable">
     <p class="control">
-      <input v-model.trim="params.valueStr" class="input" type="email">
+      <input v-model.trim="params.valueStr" class="input" type="email" v-if="editable">
 
       <span class="value" v-else>{{ params.valueStr }}</span>
     </p>

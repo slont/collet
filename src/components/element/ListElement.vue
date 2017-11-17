@@ -1,5 +1,6 @@
 <template>
-  <cl-element class="list-element" :params="params" :editable="editable">
+  <cl-element class="list-element" :params="params"
+              @remove="$emit('remove')" :editable="editable">
     <p class="control">
       <input v-for="str in strs" v-model.trim="str" class="input" type="text" v-if="editable">
 

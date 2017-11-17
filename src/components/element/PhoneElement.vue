@@ -1,5 +1,6 @@
 <template>
-  <cl-element class="phone-element" :params="params" :editable="editable">
+  <cl-element class="phone-element" :params="params"
+              @remove="$emit('remove')" :editable="editable">
     <p class="control">
       <input v-model.trim="params.valueStr" class="input" type="text">
     </p>
