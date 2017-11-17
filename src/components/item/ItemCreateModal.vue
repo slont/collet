@@ -26,14 +26,14 @@
           <div class="slider">
             <div class="buttons has-addons is-centered">
               <text-button @add="addElement"></text-button>
-              <image-button></image-button>
-              <location-button></location-button>
-              <datetime-button></datetime-button>
-              <link-button></link-button>
-              <rating-button></rating-button>
-              <tag-button></tag-button>
-              <phone-button></phone-button>
-              <email-button></email-button>
+              <image-button @add="addElement"></image-button>
+              <location-button @add="addElement"></location-button>
+              <datetime-button @add="addElement"></datetime-button>
+              <link-button @add="addElement"></link-button>
+              <rating-button @add="addElement"></rating-button>
+              <tag-button @add="addElement"></tag-button>
+              <phone-button @add="addElement"></phone-button>
+              <email-button @add="addElement"></email-button>
             </div>
           </div>
         </div>
