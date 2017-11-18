@@ -21,10 +21,12 @@ Vue.use(Vuex)
 Vue.use(VueI18n)
 Vue.use(VeeValidate, validateConfig)
 Vue.use(VueMoment, { moment })
-Vue.use(Element)
 const i18n = new VueI18n({
   locale: store.state.locale,
   messages
+})
+Vue.use(Element, {
+  i18n: (key, value) => i18n.t(key, value)
 })
 
 /* eslint-disable no-new */
