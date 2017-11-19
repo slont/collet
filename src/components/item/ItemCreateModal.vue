@@ -2,27 +2,7 @@
   <modal id="item-create-modal" class="modal" :class="`page-${pageIndex}`" ref="itemCreateModal" @close="reset">
     <div class="modal-card-body">
       <div class="columns is-gapless">
-        <div class="side-column column">
-          <div class="image-field field is-horizontal">
-            <div class="field-body">
-              <div class="control">
-                <div class="file-view" v-if="item.image || item.imageBase64">
-                  <img :src="item.image || item.imageBase64"/>
-                  <a @click="removeImage" class="delete"></a>
-                </div>
-                <div class="file">
-                  <label class="file-label">
-                    <input @change="changeImage" class="file-input" type="file" name="resume">
-                    <span class="file-cta">
-                      <span class="file-icon"><i class="material-icons">file_upload</i></span>
-                      <span class="file-label">Choose a file…</span>
-                    </span>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-
+        <div class="left-column column">
           <div class="slider">
             <div class="buttons has-addons is-centered">
               <text-button @add="addElement"></text-button>
@@ -39,19 +19,29 @@
         </div>
 
         <div class="main-column column">
-          <div class="field">
-            <div class="item-name control">
-              <input class="input is-large" type="text" placeholder="Item Name">
+          <article class="media">
+            <div class="media-content">
+              <div class="content">
+                <div class="field">
+                  <div class="item-name control">
+                    <input v-model="item.name" class="input is-large" type="text" placeholder="Item Name" name="itemName"
+                           v-validate="'required'" :class="{ 'is-danger': errors.has('itemName') }">
+                    <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
+                  </div>
+                </div>
+                <div class="item-description">
+                  <textarea v-model="item.description" class="textarea" rows="2" placeholder="Item Name"></textarea>
+                </div>
+              </div>
             </div>
-          </div>
-          <!--<div class="item-name control">-->
-            <!--<textarea class="textarea" type="text" placeholder="Item Name"></textarea>-->
-          <!--</div>-->
+          </article>
 
           <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
             <text-element :params="element" @remove="removeElement(i)" v-if="'text' === element.type" editable></text-element>
             <image-element :params="element" @remove="removeElement(i)" v-else-if="'image' === element.type" editable></image-element>
             <location-element :params="element" @remove="removeElement(i)" v-else-if="'location' === element.type" editable></location-element>
+            <datetime-element :params="element" @remove="removeElement(i)" v-else-if="'date' === element.type" editable></datetime-element>
+            <datetime-element :params="element" @remove="removeElement(i)" v-else-if="'time' === element.type" editable></datetime-element>
             <datetime-element :params="element" @remove="removeElement(i)" v-else-if="'datetime' === element.type" editable></datetime-element>
             <tag-element :params="element" @remove="removeElement(i)" v-else-if="'tag' === element.type" editable></tag-element>
             <link-element :params="element" @remove="removeElement(i)" v-else-if="'link' === element.type" editable></link-element>
@@ -61,6 +51,31 @@
             <switch-element :params="element" @remove="removeElement(i)" v-else-if="'switch' === element.type" editable></switch-element>
           </div>
         </div>
+
+        <div class="right-column column">
+          <figure class="media-right">
+            <div class="image image-field field">
+              <div class="field-body">
+                <div class="control">
+                  <div class="file-view" v-if="item.image || item.imageBase64">
+                    <img :src="item.image || item.imageBase64"/>
+                    <a @click="removeImage" class="delete"></a>
+                  </div>
+                  <div class="file">
+                    <label class="file-label">
+                      <input @change="changeImage" class="file-input" type="file" name="resume">
+                      <span class="file-cta">
+                        <span class="file-icon"><i class="material-icons">file_upload</i></span>
+                        <span class="file-label">メイン画像</span>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </figure>
+        </div>
+
       </div>
     </div>
 
@@ -123,7 +138,7 @@
       return {
         pageIndex: 0,
         item: {
-          title: '',
+          name: '',
           description: '',
           image: '',
           imageBase64: '',
@@ -146,7 +161,7 @@
         this.$validator.validateAll().then(result => {
           if (!result) return
 
-          new ItemModel().create(this.item).then(() => {
+          new ItemModel(this.$route.params.themeId).create(this.item).then(() => {
             this.$emit('refresh')
             this.close()
           }).catch(err => {
@@ -190,23 +205,67 @@
       display: flex;
       flex-direction: column;
       height: 95%;
-      width: 70%;
+      width: 80%;
       transition: width .3s, height .3s;
 
       .modal-card-body {
         height: 100%;
+        padding-bottom: 0;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
 
         .columns {
           height: 100%;
 
-          .side-column {
+          .left-column {
             height: 100%;
-            max-width: $element-button-size * 3;
+            max-width: $element-button-size;
+
+            .slider {
+              height: 100%;
+              width: $element-button-size * 2 + 1;
+              padding: 0;
+              overflow-y: scroll;
+
+              > .buttons {
+                flex-direction: column;
+                width: $element-button-size;
+
+                .button:not(:last-child) {
+                  margin-right: 0;
+                  margin-bottom: -1px;
+                }
+              }
+            }
+          }
+          .main-column {
+            padding: 0 1rem !important;
+            background-color: white;
+            z-index: 0;
+
+            .item-name {
+              padding: 0;
+
+              .input {
+                border-top: none;
+                border-right: none;
+                border-left: none;
+                border-bottom-width: 2px;
+                border-radius: 0;
+                box-shadow: none;
+                padding: 0;
+              }
+            }
+            .element-field:not(:last-child) {
+              margin-bottom: .25rem;
+            }
+          }
+          .right-column {
+            max-width: 256px;
 
             .image-field {
               .field-body {
+                width: 192px;
                 display: flex;
                 flex-direction: column;
 
@@ -224,34 +283,6 @@
                   }
                 }
               }
-            }
-            .slider {
-              height: 100%;
-              padding: 0;
-              overflow-y: scroll;
-
-              > .buttons {
-                flex-direction: column;
-                height: 100%;
-                width: $element-button-size * 2;
-              }
-            }
-          }
-          .main-column {
-            padding: 0 1rem !important;
-
-            .item-name {
-              padding: 0;
-              border-bottom: $border;
-
-              .input {
-                border: none;
-                box-shadow: none;
-                padding: 0;
-              }
-            }
-            .element-field:not(:last-child) {
-              margin-bottom: .25rem;
             }
           }
         }
