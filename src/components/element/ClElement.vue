@@ -49,7 +49,6 @@
         border-top: none;
         border-right: none;
         border-left: none;
-        border-bottom-width: 2px;
         border-radius: 0;
       }
     }

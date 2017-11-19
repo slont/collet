@@ -1,5 +1,5 @@
 <template>
-  <a class="button element-button is-primary is-outlined">
+  <a class="button element-button is-info is-outlined">
     <i class="material-icons" v-if="icon">{{ icon }}</i>
     <span class="element-label" v-if="label">{{ label }}</span>
 
@@ -46,12 +46,23 @@
     }
     .sub-content {
       position: absolute;
+      top: -1px;
       right: -$element-button-size;
       width: $element-button-size;
       display: none;
 
-      &.has-addons .button:not(:last-child) {
-        margin-right: 0;
+      &.has-addons .button {
+        @extend .is-link;
+
+        :not(:last-child) {
+          margin-right: 0;
+        }
+      }
+    }
+    &:last-child {
+      .sub-content {
+        top: initial;
+        bottom: -2px;
       }
     }
     &:hover {

@@ -2,7 +2,7 @@
   <cl-element class="datetime-element" :params="params"
               @remove="$emit('remove')" :editable="editable">
     <p class="control">
-      <input v-model.trim="params.valueStr" class="input" type="text">
+      <el-date-picker v-model="params.valueStr" :type="params.type" placeholder="Select date and time"></el-date-picker>
     </p>
   </cl-element>
 </template>
