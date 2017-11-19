@@ -36,19 +36,28 @@
             </div>
           </article>
 
-          <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
-            <text-element :params="element" @remove="removeElement(i)" v-if="'text' === element.type" editable></text-element>
-            <image-element :params="element" @remove="removeElement(i)" v-else-if="'image' === element.type" editable></image-element>
-            <location-element :params="element" @remove="removeElement(i)" v-else-if="'location' === element.type" editable></location-element>
-            <datetime-element :params="element" @remove="removeElement(i)" v-else-if="'date' === element.type" editable></datetime-element>
-            <datetime-element :params="element" @remove="removeElement(i)" v-else-if="'time' === element.type" editable></datetime-element>
-            <datetime-element :params="element" @remove="removeElement(i)" v-else-if="'datetime' === element.type" editable></datetime-element>
-            <tag-element :params="element" @remove="removeElement(i)" v-else-if="'tag' === element.type" editable></tag-element>
-            <link-element :params="element" @remove="removeElement(i)" v-else-if="'link' === element.type" editable></link-element>
-            <phone-element :params="element" @remove="removeElement(i)" v-else-if="'phone' === element.type" editable></phone-element>
-            <email-element :params="element" @remove="removeElement(i)" v-else-if="'email' === element.type" editable></email-element>
-            <rating-element :params="element" @remove="removeElement(i)" v-else-if="'rating' === element.type" editable></rating-element>
-            <switch-element :params="element" @remove="removeElement(i)" v-else-if="'switch' === element.type" editable></switch-element>
+          <div class="item-elements">
+            <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
+              <div class="sort-buttons">
+                <a class="button up-button is-white" @click="upOrder(i)"><i class="material-icons">arrow_upward</i></a>
+                <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
+              </div>
+
+              <text-element :params="element" v-if="'text' === element.type" editable></text-element>
+              <image-element :params="element" v-else-if="'image' === element.type" editable></image-element>
+              <location-element :params="element" v-else-if="'location' === element.type" editable></location-element>
+              <datetime-element :params="element" v-else-if="'date' === element.type" editable></datetime-element>
+              <datetime-element :params="element" v-else-if="'time' === element.type" editable></datetime-element>
+              <datetime-element :params="element" v-else-if="'datetime' === element.type" editable></datetime-element>
+              <tag-element :params="element" v-else-if="'tag' === element.type" editable></tag-element>
+              <link-element :params="element" v-else-if="'link' === element.type" editable></link-element>
+              <phone-element :params="element" v-else-if="'phone' === element.type" editable></phone-element>
+              <email-element :params="element" v-else-if="'email' === element.type" editable></email-element>
+              <rating-element :params="element" v-else-if="'rating' === element.type" editable></rating-element>
+              <switch-element :params="element" v-else-if="'switch' === element.type" editable></switch-element>
+
+              <a @click="removeElement(i)" class="delete"></a>
+            </div>
           </div>
         </div>
 
@@ -137,6 +146,7 @@
     data() {
       return {
         pageIndex: 0,
+        draggingElement: null,
         item: {
           name: '',
           description: '',
@@ -161,6 +171,7 @@
         this.$validator.validateAll().then(result => {
           if (!result) return
 
+          this.setOrder()
           new ItemModel(this.$route.params.themeId).create(this.item).then(() => {
             this.$emit('refresh')
             this.close()
@@ -175,9 +186,30 @@
       },
       addElement(element) {
         this.item.elements.push(element)
+        this.setOrder()
       },
       removeElement(i) {
         this.item.elements.splice(i, 1)
+        this.setOrder()
+      },
+      setOrder() {
+        let i = 0
+        this.item.elements = this.item.elements.map(element => {
+          element.order = i++
+          return element
+        })
+      },
+      upOrder(i) {
+        const element = this.item.elements[i]
+        this.item.elements.splice(i, 1, this.item.elements[i - 1])
+        this.item.elements.splice(i - 1, 1, element)
+        this.setOrder()
+      },
+      downOrder(i) {
+        const element = this.item.elements[i]
+        this.item.elements.splice(i, 1, this.item.elements[i + 1])
+        this.item.elements.splice(i + 1, 1, element)
+        this.setOrder()
       },
       changeImage(e) {
         const files = e.target.files || e.dataTransfer.files
@@ -256,8 +288,45 @@
                 padding: 0;
               }
             }
-            .element-field:not(:last-child) {
-              margin-bottom: .25rem;
+            .element-field {
+              display: flex;
+              align-items: center;
+
+              .sort-buttons {
+                display: flex;
+                flex: .05;
+                flex-direction: column;
+
+                .button {
+                  width: 2rem;
+                  border: none;
+
+                  .material-icons {
+                    color: gainsboro;
+                  }
+                }
+              }
+              .cl-element {
+                flex: .9;
+                padding: 0 .5rem;
+              }
+              .delete {
+                flex: .05;
+              }
+              &:first-child {
+                .up-button {
+                  visibility: hidden;
+                  background-color: black;
+                }
+              }
+              &:last-child {
+                .down-button {
+                  visibility: hidden;
+                }
+              }
+              &:not(:last-child) {
+                margin-bottom: .25rem;
+              }
             }
           }
           .right-column {

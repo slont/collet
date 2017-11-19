@@ -7,7 +7,6 @@
       <input v-model.trim="params.label" class="input label" type="text" placeholder="Label">
     </div>
     <slot></slot>
-    <a @click="$emit('remove')" class="delete"></a>
   </div>
 </template>
 
@@ -30,14 +29,7 @@
     position: relative;
 
     .control {
-      width: 95%;
-    }
-    .delete {
-      position: absolute;
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
-      width: 95%;
+      width: 100%;
     }
     .label-control {
       display: flex;
