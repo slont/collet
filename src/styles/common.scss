@@ -44,6 +44,16 @@ body {
   }
 }
 
+.control.loading-mask.is-loading {
+  opacity: .75;
+
+  &:after {
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}
+
 .card {
   .card-content {
     padding: 1rem;

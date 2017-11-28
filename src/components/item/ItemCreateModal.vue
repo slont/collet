@@ -65,15 +65,15 @@
           <figure class="media-right">
             <div class="image image-field field">
               <div class="field-body">
-                <div class="control">
-                  <div class="file-view" v-if="item.image || item.imageBase64">
-                    <img :src="item.image || item.imageBase64"/>
-                    <a @click="removeImage" class="delete"></a>
-                  </div>
+                <div class="control loading-mask" :class="{ 'is-loading': item.image.substring(0, 4) === 'data' }">
                   <div class="file">
                     <label class="file-label">
                       <input @change="changeImage" class="file-input" type="file" name="resume">
-                      <span class="file-cta">
+                      <span class="file-view" v-if="item.image">
+                        <img :src="item.image"/>
+                        <a @click.stop.prevent="removeImage" class="delete"></a>
+                      </span>
+                      <span class="file-cta" v-else>
                         <span class="file-icon"><i class="material-icons">file_upload</i></span>
                         <span class="file-label">メイン画像</span>
                       </span>
@@ -84,7 +84,6 @@
             </div>
           </figure>
         </div>
-
       </div>
     </div>
 
@@ -97,6 +96,7 @@
 
 <script>
   import ItemModel from '@/models/Item'
+  import FileModel from '@/models/File'
   import Modal from '@/components/Modal'
   import TextButton from '@/components/element/button/TextButton'
   import ImageButton from '@/components/element/button/ImageButton'
@@ -151,7 +151,6 @@
           name: '',
           description: '',
           image: '',
-          imageBase64: '',
           elements: []
         },
         template: {},
@@ -223,6 +222,9 @@
           this.item.image = e.target.result
         }
         reader.readAsDataURL(file)
+        new FileModel().create(file).then(res => {
+          this.item.image = res.path
+        })
       },
       removeImage() {
         this.item.image = ''
