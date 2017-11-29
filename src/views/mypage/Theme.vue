@@ -1,5 +1,5 @@
 <template>
-  <div id="mypage-items">
+  <div id="mypage-theme">
     <div class="theme-image trim" v-if="theme.image">
       <figure class="image is-4by3">
         <img :src="theme.image" v-if="theme.image">
@@ -84,12 +84,6 @@
       右下のボタンからアイテムを追加してみましょう！
     </div>
 
-    <!--<a class="fixed-action-button button is-float is-primary circle">-->
-      <!--<a @click="$refs.itemCreateModal.open(theme.templates)" class="button button-create is-float is-primary circle">-->
-        <!--<i class="material-icons">add</i>-->
-      <!--</a>-->
-    <!--</a>-->
-
     <div class="fixed-action-button vertical">
       <a class="button trigger-button is-float is-primary circle">
         <i class="material-icons">add</i>
@@ -147,7 +141,7 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-  #mypage-items {
+  #mypage-theme {
     padding-top: 1em;
 
     .theme-image {

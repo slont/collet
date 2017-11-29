@@ -1,5 +1,5 @@
 <template>
-  <div id="mypage-elements">
+  <div id="mypage-item">
     <div class="item-image trim" v-if="item.image">
       <figure class="image is-4by3">
         <img :src="item.image" v-if="item.image">
@@ -12,10 +12,6 @@
     <div v-else>
       <div class="title is-3">{{ item.title }}</div>
       <div class="subtitle is-6">{{ item.description }}</div>
-    </div>
-
-    <div>
-      <input type="text">
     </div>
 
     <div class="item-elements tile is-ancestor">
@@ -34,12 +30,6 @@
         <switch-element :params="element" v-else-if="'switch' === element.type"></switch-element>
       </div>
     </div>
-
-    <!--<a class="fixed-action-button button is-float is-primary circle">-->
-      <!--<a @click="$refs.itemCreateModal.open(item.templates)" class="button button-create is-float is-primary circle">-->
-        <!--<i class="material-icons">add</i>-->
-      <!--</a>-->
-    <!--</a>-->
 
     <div class="fixed-action-button vertical">
       <a class="button trigger-button is-float is-primary circle">
@@ -122,7 +112,7 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-  #mypage-elements {
+  #mypage-item {
     padding-top: 1em;
 
     .item-image {

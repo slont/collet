@@ -7,8 +7,8 @@ import Confirm from '@/views/Confirm.vue'
 import TopIndex from '@/views/top/Index'
 import TopTop from '@/views/top/Top'
 import MypageIndex from '@/views/mypage/Index'
-import MypageItems from '@/views/mypage/Items'
-import MypageElements from '@/views/mypage/Elements'
+import MypageTheme from '@/views/mypage/Theme'
+import MypageItem from '@/views/mypage/Item'
 
 Vue.use(Router)
 
@@ -33,10 +33,10 @@ export default new Router({
           component: MypageIndex
         }, {
           path: 'mypage/:themeId',
-          component: MypageItems
+          component: MypageTheme
         }, {
           path: 'mypage/:themeId/:itemId',
-          component: MypageElements
+          component: MypageItem
         }
       ]
     }, {
