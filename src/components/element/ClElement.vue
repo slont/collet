@@ -4,6 +4,7 @@
       {{ params.label }}
     </label>
     <div class="control label-control" v-else-if="editable">
+      <i class="material-icons label" v-if="editable && icon">{{ icon }}</i>
       <input v-model.trim="params.label" class="input label" type="text" placeholder="Label">
     </div>
     <slot></slot>
@@ -19,6 +20,8 @@
           label: ''
         }
       },
+      icon: String,
+      iconElement: Object,
       editable: Boolean
     }
   }
@@ -36,12 +39,27 @@
       align-items: center;
 
       .label {
+        margin-bottom: -1px;
         padding-bottom: 0;
         box-shadow: none;
         border-top: none;
         border-right: none;
         border-left: none;
         border-radius: 0;
+        z-index: 1;
+      }
+      .material-icons:not(:last-child) {
+        font-size: 1.25rem;
+        margin-bottom: 0;
+      }
+    }
+    .input,
+    .textarea {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+
+      &:focus {
+        z-index: 2;
       }
     }
   }
