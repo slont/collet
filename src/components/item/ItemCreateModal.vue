@@ -63,22 +63,20 @@
 
         <div class="right-column column">
           <figure class="media-right">
-            <div class="image image-field field">
-              <div class="field-body">
-                <div class="control loading-mask" :class="{ 'is-loading': item.image.substring(0, 4) === 'data' }">
-                  <div class="file">
-                    <label class="file-label">
-                      <input @change="changeImage" class="file-input" type="file" name="resume">
-                      <span class="file-view" v-if="item.image">
-                        <img :src="item.image"/>
-                        <a @click.stop.prevent="removeImage" class="delete"></a>
-                      </span>
-                      <span class="file-cta" v-else>
-                        <span class="file-icon"><i class="material-icons">file_upload</i></span>
-                        <span class="file-label">メイン画像</span>
-                      </span>
-                    </label>
-                  </div>
+            <div class="field image-field">
+              <div class="control loading-mask" :class="{ 'is-loading': item.image.substring(0, 4) === 'data' }">
+                <div class="file is-boxed">
+                  <label class="file-label">
+                    <input @change="changeImage" class="file-input" type="file" name="resume">
+                    <span class="file-view" v-if="item.image">
+                      <img :src="item.image"/>
+                      <a @click.stop.prevent="removeImage" class="delete"></a>
+                    </span>
+                    <span class="file-cta" v-else>
+                      <span class="file-icon"><i class="material-icons">file_upload</i></span>
+                      <span class="file-label">メイン画像（オプショナル）</span>
+                    </span>
+                  </label>
                 </div>
               </div>
             </div>
