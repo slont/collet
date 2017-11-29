@@ -1,11 +1,7 @@
 <template>
   <element-button class="rating-button"
                   @click.native="addElement">
-    <div>
-      <i class="material-icons">star</i>
-      <i class="material-icons">star</i>
-      <i class="material-icons">star</i>
-    </div>
+    <rating-icon></rating-icon>
     <span class="element-label">Rating</span>
 
     <div class="buttons sub-content has-addons">
@@ -19,10 +15,11 @@
 
 <script>
   import ElementButton from './ElementButton'
+  import RatingIcon from '@/components/RatingIcon'
   import { ELEMENT } from '@/constant'
 
   export default {
-    components: { ElementButton },
+    components: { ElementButton, RatingIcon },
     data() {
       return {}
     },
@@ -41,13 +38,6 @@
 
     .sub-content {
       height: $element-button-size * $amount;
-    }
-    > div {
-      letter-spacing: -5px;
-
-      > .material-icons {
-        font-size: 1rem;
-      }
     }
   }
 </style>
