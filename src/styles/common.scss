@@ -1,0 +1,87 @@
+@import "~bulma";
+@import "~element-ui/lib/theme-chalk/index.css";
+@import "constant";
+@import "transition";
+
+body {
+  font-size: 16px;
+  color: $color;
+}
+
+.button {
+  transition: color .2s ease, background-color .2s ease;
+
+  &.is-float {
+    box-shadow: 0 1px 5px rgba(0, 0, 0, .2), 0 2px 2px rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .12);
+    transition: box-shadow .3s ease;
+
+    &:hover {
+      box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 5px 8px rgba(0, 0, 0, .14), 0 1px 14px rgba(0, 0, 0, .12);
+    }
+  }
+  &.circle {
+    height: 3.25rem;
+    padding: 12px;
+  }
+}
+
+.buttons {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  &.has-addons {
+    .button:not(:first-child) {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+    }
+    .button:not(:last-child) {
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+      margin-right: -1px;
+    }
+  }
+}
+
+.control.loading-mask.is-loading {
+  opacity: .75;
+
+  &:after {
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}
+
+.card {
+  .card-content {
+    padding: 1rem;
+  }
+}
+
+.dark-mask {
+  background-color: rgba(0, 0, 0, .3);
+}
+
+.trim {
+  overflow: hidden;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.has-right {
+  text-align: right;
+  justify-content: flex-end;
+}
+
+.has-center {
+  text-align: center;
+  justify-content: center;
+}
+
+.has-left {
+  text-align: left;
+}

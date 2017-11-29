@@ -1,23 +1,27 @@
 <template>
   <div id="index">
+    <header-nav></header-nav>
     <transition name="slide-fade" mode="out-in">
-      <hello></hello>
-      <router-view></router-view>
+      <router-view class="container"></router-view>
     </transition>
   </div>
 </template>
 
 <script>
-  import Hello from '@/components/Hello'
+  import HeaderNav from '@/components/HeaderNav'
 
   export default {
-    components: { Hello }
+    components: { HeaderNav }
   }
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
   #index {
     height: 100%;
-    width: 100%;
+
+    .container {
+      width: $width;
+      margin: 0 auto;
+    }
   }
 </style>

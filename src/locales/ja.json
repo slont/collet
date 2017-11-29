@@ -1,7 +1,30 @@
 {
   "title": "Collet",
-  "views": {},
+  "views": {
+    "index": {},
+    "confirm": {
+      "pleaseInputYourName": "ユーザネームを入力してください",
+      "userName": "ユーザネーム"
+    },
+    "signup": {
+      "email": "メールアドレス",
+      "password": "パスワード"
+    },
+    "signin": {
+      "email": "メールアドレス",
+      "password": "パスワード",
+      "redirectMessage": "ログインしてください。",
+      "passwordReset": "パスワードを忘れた場合"
+    }
+  },
   "components": {},
-  "buttons": {},
-  "formats": {}
+  "buttons": {
+    "signup": "新規登録",
+    "signin": "ログイン"
+  },
+  "formats": {},
+  "locales": {
+    "ja": "日本語",
+    "en": "英語"
+  }
 }
