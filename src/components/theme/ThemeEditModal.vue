@@ -1,52 +1,40 @@
 <template>
   <modal id="theme-edit-modal" class="modal" ref="themeEditModal" @close="reset">
-    <div class="modal-card-body">
-      <div class="title-field field is-horizontal">
-        <div class="field-label is-normal">
+    <div class="modal-card-body columns">
+      <div class="column">
+        <div class="field">
           <label class="label">タイトル</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <p class="control is-expanded">
-              <input v-model.trim="theme.title" class="input" type="text" placeholder="Name"
-                     name="title" v-validate="'required|max:255'">
-              <span v-show="errors.has('title')" class="has-text-danger">{{ errors.first('title') }}</span>
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="description-field field is-horizontal">
-        <div class="field-label is-normal">
-          <label class="label">説明文</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <div class="control">
-              <textarea v-model="theme.description" class="textarea"></textarea>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="image-field field is-horizontal">
-        <div class="field-label is-normal">
-          <label class="label">イメージ</label>
-        </div>
-        <div class="field-body">
-          <div class="upload-box file">
-            <label class="file-label">
-              <input @change="changeImage" class="file-input" type="file" name="resume">
-              <span class="file-cta">
-                  <span class="file-icon"><i class="material-icons">file_upload</i></span>
-                  <span class="file-label">Choose a file…</span>
-                </span>
-            </label>
-          </div>
           <div class="control">
-            <div class="file-view" v-if="theme.image || theme.imageBase64">
-              <img :src="theme.image || theme.imageBase64"/>
-              <a @click="removeImage" class="delete"></a>
+            <input v-model.trim="theme.title" class="input" type="text" placeholder="Name"
+                   name="title" v-validate="'required|max:255'">
+            <span v-show="errors.has('title')" class="has-text-danger">{{ errors.first('title') }}</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">説明文</label>
+          <div class="control">
+            <textarea v-model="theme.description" class="textarea"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="field image-field">
+          <label class="label">メイン画像（オプショナル）</label>
+          <div class="control loading-mask" :class="{ 'is-loading': theme.image.substring(0, 4) === 'data' }">
+            <div class="file is-boxed">
+              <label class="file-label">
+                <input @change="changeImage" class="file-input" type="file" name="resume">
+                <span class="file-view" v-if="theme.image">
+                  <img :src="theme.image"/>
+                  <a @click.stop.prevent="removeImage" class="delete"></a>
+                </span>
+                <span class="file-cta" v-else>
+                  <span class="file-icon"><i class="material-icons">file_upload</i></span>
+                  <span class="file-label">Upload Image...</span>
+                </span>
+              </label>
             </div>
           </div>
         </div>
