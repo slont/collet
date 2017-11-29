@@ -273,6 +273,10 @@
             }
           }
           .main-column {
+            $sort-button-size: 2rem;
+            $margin-side: $sort-button-size + .5rem;
+            margin-left: $margin-side;
+            margin-right: $margin-side;
             padding: 0 1rem !important;
             background-color: white;
             z-index: 0;
@@ -290,44 +294,49 @@
                 padding: 0;
               }
             }
-            .element-field {
-              display: flex;
-              align-items: center;
+            .item-elements {
+              margin-left: -$margin-side;
+              margin-right: -$margin-side;
 
-              .sort-buttons {
+              .element-field {
                 display: flex;
-                flex: .05;
-                flex-direction: column;
+                align-items: center;
 
-                .button {
-                  width: 2rem;
-                  border: none;
+                .sort-buttons {
+                  display: flex;
+                  flex: .05;
+                  flex-direction: column;
 
-                  .material-icons {
-                    color: gainsboro;
+                  .button {
+                    width: 2rem;
+                    border: none;
+
+                    .material-icons {
+                      color: gainsboro;
+                    }
                   }
                 }
-              }
-              .cl-element {
-                flex: .9;
-                padding: 0 .5rem;
-              }
-              .delete {
-                flex: .05;
-              }
-              &:first-child {
-                .up-button {
-                  visibility: hidden;
-                  background-color: black;
+                .cl-element {
+                  flex: .9;
+                  padding: 0 .5rem;
                 }
-              }
-              &:last-child {
-                .down-button {
-                  visibility: hidden;
+                .delete {
+                  flex: .05;
                 }
-              }
-              &:not(:last-child) {
-                margin-bottom: .25rem;
+                &:first-child {
+                  .up-button {
+                    visibility: hidden;
+                    background-color: black;
+                  }
+                }
+                &:last-child {
+                  .down-button {
+                    visibility: hidden;
+                  }
+                }
+                &:not(:last-child) {
+                  margin-bottom: .25rem;
+                }
               }
             }
           }
