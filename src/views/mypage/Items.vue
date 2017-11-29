@@ -5,7 +5,12 @@
         <img :src="theme.image" v-if="theme.image">
       </figure>
       <div class="dark-mask" @click="$router.push(`/mypage/${theme.id}`)">
-        <div class="title is-3">{{ theme.title }}</div>
+        <div class="title is-3">
+          {{ theme.title }}
+          <button class="button is-primary is-inverted is-outlined">
+            <span class="icon"><i class="material-icons">edit</i></span>
+          </button>
+        </div>
         <div class="subtitle is-6">{{ theme.description }}</div>
       </div>
     </div>
@@ -14,10 +19,66 @@
       <div class="subtitle is-6">{{ theme.description }}</div>
     </div>
 
-    <div class="columns is-multiline" v-if="theme.items.length">
-      <div v-for="item in theme.items" class="column is-one-third-tablet" :key="item.id">
+    <div class="search-box">
+      <div class="field has-addons">
+        <div class="control">
+          <input class="input" type="text" placeholder="Find a repository">
+        </div>
+        <div class="control">
+          <a class="button is-info">
+            <span class="icon"><i class="material-icons">search</i></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="button" v-if="0 === viewType" @click="viewType = 1">
+          <span class="icon"><i class="material-icons">view_list</i></span>
+        </button>
+        <button class="button" v-else-if="1 === viewType" @click="viewType = 0">
+          <span class="icon"><i class="material-icons">view_module</i></span>
+        </button>
       </div>
     </div>
+
+    <div class="theme-items tile is-ancestor" v-if="theme.items.length && 0 === viewType">
+      <div v-for="item in theme.items" class="tile is-parent is-4" :key="item.id">
+        <div class="item-card card">
+          <div class="card-image trim" @click="$router.push(`/mypage/${theme.id}/${item.id}`)">
+            <figure class="image is-4by3">
+              <img :src="item.image || 'https://bulma.io/images/placeholders/1280x960.png'" alt="Placeholder image">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <router-link :to="`/mypage/${theme.id}/${item.id}`" class="title is-4">{{ item.name }}</router-link>
+              </div>
+            </div>
+            <div class="content">{{ item.description }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <table class="theme-items table" v-else-if="theme.items.length && 1 === viewType">
+      <tbody>
+      <tr v-for="item in theme.items" :key="item.id">
+        <th class="image-cell" @click="$router.push(`/mypage/${theme.id}/${item.id}`)">
+          <img :src="item.image || 'https://bulma.io/images/placeholders/1280x960.png'" alt="Placeholder image">
+        </th>
+        <td class="title-cell">
+          <router-link :to="`/mypage/${theme.id}/${item.id}`" class="title is-4">{{ item.name }}</router-link>
+          <p>{{ item.description }}</p>
+        </td>
+        <td class="action-cell">
+          <span class="icon has-text-primary"><i class="material-icons">edit</i></span>
+          <span class="icon has-text-danger"><i class="material-icons">clear</i></span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
     <div class="box" v-else>
       まだアイテムが追加されていません
       右下のボタンからアイテムを追加してみましょう！
@@ -63,7 +124,8 @@
         theme: {
           title: '',
           items: []
-        }
+        },
+        viewType: 0
       }
     },
     computed: {
@@ -113,6 +175,63 @@
         }
         .subtitle {
           color: white;
+        }
+      }
+    }
+    .search-box {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+
+      .action-buttons {
+        margin-left: auto;
+      }
+    }
+    .theme-items {
+      &.tile {
+        flex-wrap: wrap;
+
+        .item-card {
+          width: 100%;
+
+          .card-image {
+            cursor: pointer;
+
+            .image {
+              img {
+                height: auto;
+              }
+            }
+          }
+        }
+        .media-content {
+          .title:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+      &.table {
+        width: 100%;
+
+        .image-cell {
+          width: 6rem;
+          height: 6rem;
+          padding: 0;
+          vertical-align: middle;
+          cursor: pointer;
+
+          img {
+            margin-bottom: -6px;
+          }
+        }
+        .title-cell {
+          .title:hover {
+            text-decoration: underline;
+          }
+        }
+        .action-cell {
+          width: 6rem;
+          vertical-align: middle;
         }
       }
     }
