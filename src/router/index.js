@@ -8,6 +8,7 @@ import TopIndex from '@/views/top/Index'
 import TopTop from '@/views/top/Top'
 import MypageIndex from '@/views/mypage/Index'
 import MypageItems from '@/views/mypage/Items'
+import MypageElements from '@/views/mypage/Elements'
 
 Vue.use(Router)
 
@@ -33,6 +34,9 @@ export default new Router({
         }, {
           path: 'mypage/:themeId',
           component: MypageItems
+        }, {
+          path: 'mypage/:themeId/:itemId',
+          component: MypageElements
         }
       ]
     }, {
