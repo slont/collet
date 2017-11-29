@@ -1,5 +1,5 @@
 <template>
-  <cl-element class="location-element" :params="params"
+  <cl-element class="location-element" :params="params" placeholder="場所"
               @remove="$emit('remove')" :editable="editable">
     <p class="control">
       <input v-model.trim="params.valueStr" class="input" type="text">

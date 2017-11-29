@@ -1,5 +1,5 @@
 <template>
-  <cl-element class="tag-element" :params="params"
+  <cl-element class="tag-element" :params="params" placeholder="タグ"
               @remove="$emit('remove')" :editable="editable">
     <p class="control">
       <input v-model.trim="params.valueStr" class="input" type="text">

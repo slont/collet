@@ -4,7 +4,7 @@
       {{ params.label }}
     </label>
     <div class="control label-control" v-else-if="editable">
-      <input v-model.trim="params.label" class="input label" type="text" placeholder="Label">
+      <input v-model.trim="params.label" class="input label" type="text" :placeholder="placeholder">
     </div>
     <slot></slot>
   </div>
@@ -23,7 +23,11 @@
         }
       },
       icon: String,
-      editable: Boolean
+      editable: Boolean,
+      placeholder: {
+        type: String,
+        default: 'Label'
+      }
     }
   }
 </script>

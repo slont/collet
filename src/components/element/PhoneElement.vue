@@ -1,5 +1,5 @@
 <template>
-  <cl-element class="phone-element" :params="params"
+  <cl-element class="phone-element" :params="params" placeholder="電話番号"
               @remove="$emit('remove')" :editable="editable">
     <p class="control">
       <input v-model.trim="params.valueStr" class="input" type="text">

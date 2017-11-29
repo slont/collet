@@ -1,5 +1,5 @@
 <template>
-  <cl-element class="email-element" :params="params"
+  <cl-element class="email-element" :params="params" placeholder="メールアドレス"
               @remove="$emit('remove')" :editable="editable">
     <p class="control">
       <input v-model.trim="params.valueStr" class="input" type="email" v-if="editable">

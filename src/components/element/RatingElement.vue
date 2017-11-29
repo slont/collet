@@ -1,5 +1,5 @@
 <template>
-  <cl-element class="rating-element" :params="params"
+  <cl-element class="rating-element" :params="params" placeholder="レーティング"
               @remove="$emit('remove')" :editable="editable">
     <p class="control">
       <el-rate v-model="params.valueNum" :max="Number(params.valueStr)" :disabled="!editable"></el-rate>
