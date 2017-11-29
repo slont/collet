@@ -4,7 +4,6 @@
       {{ params.label }}
     </label>
     <div class="control label-control" v-else-if="editable">
-      <i class="material-icons label" v-if="editable && icon">{{ icon }}</i>
       <input v-model.trim="params.label" class="input label" type="text" placeholder="Label">
     </div>
     <slot></slot>
@@ -12,7 +11,10 @@
 </template>
 
 <script>
+  import RatingIcon from '@/components/RatingIcon'
+
   export default {
+    components: { RatingIcon },
     props: {
       params: {
         type: Object,
@@ -21,7 +23,6 @@
         }
       },
       icon: String,
-      iconElement: Object,
       editable: Boolean
     }
   }
@@ -51,6 +52,13 @@
       .material-icons:not(:last-child) {
         font-size: 1.25rem;
         margin-bottom: 0;
+      }
+      .rating-icon {
+        width: 1.315rem;
+
+        .material-icons {
+          font-size: .4rem !important;
+        }
       }
     }
     .input,

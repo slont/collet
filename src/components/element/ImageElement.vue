@@ -1,5 +1,5 @@
 <template>
-  <cl-element class="image-element" :params="params" icon="photo"
+  <cl-element class="image-element" :params="params"
               @remove="$emit('remove')" :editable="editable">
     <p class="control file" v-if="editable">
       <label class="file-label">

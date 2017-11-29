@@ -2,7 +2,7 @@
   <cl-element class="rating-element" :params="params"
               @remove="$emit('remove')" :editable="editable">
     <p class="control">
-      <el-rate v-model="value.valueNum" :max="Number(valueStr)" :disabled="!editable"></el-rate>
+      <el-rate v-model="params.valueNum" :max="Number(params.valueStr)" :disabled="!editable"></el-rate>
     </p>
   </cl-element>
 </template>

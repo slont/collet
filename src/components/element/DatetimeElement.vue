@@ -1,5 +1,5 @@
 <template>
-  <cl-element class="datetime-element" :params="params" icon="schedule"
+  <cl-element class="datetime-element" :params="params"
               @remove="$emit('remove')" :editable="editable">
     <p class="control">
       <el-date-picker v-model="params.valueStr" :type="params.type" placeholder="Select date and time"></el-date-picker>

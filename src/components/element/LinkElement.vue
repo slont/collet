@@ -1,5 +1,5 @@
 <template>
-  <cl-element class="link-element" :params="params" icon="link"
+  <cl-element class="link-element" :params="params"
               @remove="$emit('remove')" :editable="editable">
     <p class="control">
       <input v-model.trim="params.valueStr" class="input value" type="text" v-if="editable">

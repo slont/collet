@@ -1,5 +1,5 @@
 <template>
-  <cl-element class="text-element" :params="params" icon="text_fields"
+  <cl-element class="text-element" :params="params"
               @remove="$emit('remove')" :editable="editable">
     <p class="control">
       <textarea v-model.trim="params.valueStr" class="textarea" rows="2" placeholder="Text"
