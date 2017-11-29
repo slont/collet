@@ -2,23 +2,32 @@
   <cl-element class="image-element" :params="params"
               @remove="$emit('remove')" :editable="editable">
     <p class="control file" v-if="editable">
-      <label class="file-label">
-        <input @change="changeImage" class="file-input" type="file" name="resume">
-        <span class="file-cta">
-          <span class="file-icon"><i class="material-icons">file_upload</i></span>
-          <span class="file-label">Choose a file…</span>
-        </span>
-      </label>
-    </p>
+    <div class="field image-field">
+      <div class="control loading-mask" :class="{ 'is-loading': params.valueStr.substring(0, 4) === 'data' }">
+        <div class="file is-boxed">
+          <label class="file-label">
+            <input @change="changeImage" class="file-input" type="file" name="resume">
+            <span class="file-view" v-if="params.valueStr">
+              <img :src="params.valueStr"/>
+              <a @click.stop.prevent="removeImage" class="delete"></a>
+            </span>
+            <span class="file-cta" v-else>
+              <span class="file-icon"><i class="material-icons">file_upload</i></span>
+              <span class="file-label">Upload Image</span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
 
-    <div class="file-view" v-if="!editable && (item.image || item.imageBase64)">
-      <img :src="item.image || item.imageBase64"/>
-      <a @click="removeImage" class="delete"></a>
+    <div class="file-view" v-if="!editable && params.valueStr">
+      <img :src="params.valueStr"/>
     </div>
   </cl-element>
 </template>
 
 <script>
+  import FileModel from '@/models/File'
   import ClElement from './ClElement'
 
   export default {
@@ -35,11 +44,6 @@
       },
       editable: Boolean
     },
-    data() {
-      return {
-        imageBase64: ''
-      }
-    },
     methods: {
       changeImage(e) {
         const files = e.target.files || e.dataTransfer.files
@@ -50,13 +54,15 @@
       createImage(file) {
         const reader = new FileReader()
         reader.onload = e => {
-          this.imageBase64 = e.target.result
+          this.params.valueStr = e.target.result
         }
         reader.readAsDataURL(file)
+        new FileModel().create(file).then(res => {
+          this.params.valueStr = res.path
+        })
       },
       removeImage() {
-        this.value.valueStr = ''
-        this.imageBase64 = ''
+        this.params.valueStr = ''
       }
     }
   }
@@ -64,5 +70,18 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .image-element {
+    .file-view {
+      .delete {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        z-index: 10;
+      }
+      + .file {
+        position: absolute;
+        top: 0;
+        opacity: .7;
+      }
+    }
   }
 </style>
