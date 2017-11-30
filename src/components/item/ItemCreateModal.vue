@@ -155,6 +155,11 @@
         errorMessage: ''
       }
     },
+    computed: {
+      themeId() {
+        return this.$route.params.themeId
+      }
+    },
     methods: {
       open(template) {
         this.template = template
@@ -169,7 +174,7 @@
           if (!result) return
 
           this.setOrder()
-          new ItemModel(this.$route.params.themeId).create(this.item).then(() => {
+          new ItemModel(this.themeId).create(this.item).then(() => {
             this.$emit('refresh')
             this.close()
           }).catch(err => {

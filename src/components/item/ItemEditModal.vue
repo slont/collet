@@ -88,7 +88,7 @@
     <footer class="modal-card-foot has-right">
       <button @click="$refs.itemDeleteModal.open(item)" class="button is-danger is-outlined is-left">削除</button>
       <button @click="close" class="button">キャンセル</button>
-      <button @click="ok" class="button is-primary">作成</button>
+      <button @click="ok" class="button is-primary">保存</button>
     </footer>
 
     <item-delete-modal ref="itemDeleteModal" @refresh="refreshClose"></item-delete-modal>
@@ -159,10 +159,20 @@
         errorMessage: ''
       }
     },
+    computed: {
+      themeId() {
+        return this.$route.params.themeId
+      }
+    },
     methods: {
       open(item) {
         this.item = item
-        this.$refs.itemEditModal.open()
+        new ItemModel(this.themeId).findOne(this.item.id).then(res => {
+          this.item = res
+          this.$refs.itemEditModal.open()
+        }).catch(err => {
+          this.errorMessage = err
+        })
       },
       close() {
         this.reset()
@@ -173,7 +183,7 @@
           if (!result) return
 
           this.setOrder()
-          new ItemModel(this.$route.params.themeId).update(this.item.id, this.item).then(() => {
+          new ItemModel(this.themeId).update(this.item.id, this.item).then(() => {
             this.$emit('refresh')
             this.close()
           }).catch(err => {
