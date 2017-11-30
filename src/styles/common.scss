@@ -3,8 +3,12 @@
 @import "constant";
 @import "transition";
 
-body {
+html {
   font-size: 16px;
+}
+
+body {
+  font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',Arial, Helvetica, sans-serif;
   color: $color;
 }
 

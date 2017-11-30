@@ -1,6 +1,6 @@
 <template>
   <div class="cl-element">
-    <label class="label control" v-if="params.label && !editable">
+    <label class="view-label label control" v-if="params.label && !editable">
       {{ params.label }}
     </label>
     <div class="control label-control" v-else-if="editable">
@@ -35,9 +35,16 @@
 <style lang="scss" rel="stylesheet/scss">
   .cl-element {
     position: relative;
+    line-height: 1.75rem;
 
     .control {
       width: 100%;
+    }
+    .label {
+      font-size: 1.5rem;
+    }
+    .view-label {
+      border-bottom: $border;
     }
     .label-control {
       display: flex;
@@ -45,6 +52,7 @@
 
       .label {
         margin-bottom: -1px;
+        padding-left: 0;
         padding-bottom: 0;
         box-shadow: none;
         border-top: none;
