@@ -73,6 +73,19 @@ body {
   }
 }
 
+.image {
+  &.is-square,
+  &.is-1by1,
+  &.is-4by3,
+  &.is-3by2,
+  &.is-16by9,
+  &.is-2by1 {
+    img {
+      height: auto;
+    }
+  }
+}
+
 .dark-mask {
   background-color: rgba(0, 0, 0, .3);
 }
