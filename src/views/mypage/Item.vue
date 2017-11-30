@@ -4,18 +4,14 @@
       <figure class="image is-4by3">
         <img :src="item.image" v-if="item.image">
       </figure>
-      <div class="dark-mask" @click="$router.push(`/mypage/${theme.id}/${item.id}`)">
-        <div class="title is-3">
-          {{ item.name }}
-          <button class="button is-primary is-outlined">
-            <span class="icon"><i class="material-icons">edit</i></span>
-          </button>
-        </div>
-        <div class="subtitle is-6">{{ item.description }}</div>
-      </div>
     </div>
-    <div v-else>
-      <div class="title is-3">{{ item.name }}</div>
+    <div class="item-info">
+      <div class="title is-2">
+        {{ item.name }}
+        <button class="button is-primary is-outlined">
+          <span class="icon"><i class="material-icons">edit</i></span>
+        </button>
+      </div>
       <div class="subtitle is-6">{{ item.description }}</div>
     </div>
 
@@ -34,25 +30,6 @@
         <rating-element :params="element" v-else-if="'rating' === element.type"></rating-element>
         <switch-element :params="element" v-else-if="'switch' === element.type"></switch-element>
       </div>
-    </div>
-
-    <div class="fixed-action-button vertical">
-      <a class="button trigger-button is-float is-primary circle">
-        <i class="material-icons">add</i>
-      </a>
-      <ul>
-        <li>
-          <a class="button button-create is-float is-link circle"
-             @click="$refs.itemCreateModal.open(item.templates)">
-            <i class="material-icons">insert_chart</i>
-          </a>
-        </li>
-        <li>
-          <a class="button button-create is-float is-info circle">
-            <i class="material-icons">format_quote</i>
-          </a>
-        </li>
-      </ul>
     </div>
 
     <item-create-modal ref="itemCreateModal" @refresh="refresh"></item-create-modal>
@@ -126,73 +103,17 @@
       display: flex;
       align-items: center;
       max-height: 14rem;
+      margin-bottom: 2.5rem;
 
       .image {
         width: 100%;
       }
-      .dark-mask {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        padding: .75rem;
-
-        .title {
-          color: white;
-          padding-bottom: 1rem;
-        }
-        .subtitle {
-          color: white;
-        }
-      }
     }
-    .fixed-action-button {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
+    .item-info {
+      margin-bottom: 2rem;
 
-      &.vertical ul {
-        position: absolute;
-        display: inline-flex;
-        flex-direction: column-reverse;
-        align-items: center;
-        justify-content: flex-start;
-        bottom: 0;
-        height: 500px;
-        width: 100%;
-        padding-bottom: 64px;
-        visibility: hidden;
-
-        li {
-          .button {
-            height: 40px;
-            width: 40px;
-            margin: .5rem;
-          }
-        }
-        &:hover {
-          visibility: visible;
-        }
-      }
-      .trigger-button {
-        z-index: 100;
-
-        .material-icons {
-          transition: all .3s;
-        }
-      }
-      &:hover {
-        .trigger-button {
-          .material-icons {
-            transform: rotate(-135deg);
-          }
-          + ul {
-            visibility: visible;
-          }
-        }
+      .title {
+        border-bottom: $border;
       }
     }
   }

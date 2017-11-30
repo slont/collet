@@ -39,49 +39,44 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .my-theme-card {
-    .dark-mask {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      position: absolute;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      padding: .75rem;
-      transition: all .3s ease;
+    .card-image {
+      overflow: hidden;
 
-      .title,
-      .subtitle {
-        color: white;
-        margin: 0;
-      }
-      .title {
-        height: 46px;
+      .dark-mask {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        position: absolute;
+        top: 0;
         width: 100%;
-        margin: 0;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        overflow: hidden;
-        color: white;
+        height: 100%;
+        padding: .75rem;
+        transition: all .3s ease;
+
+        .title,
+        .subtitle {
+          color: white;
+          margin: 0;
+        }
+        .title {
+          height: 46px;
+          width: 100%;
+          margin: 0;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          overflow: hidden;
+          color: white;
+        }
+        .subtitle {
+          color: white;
+          margin: .3rem 0 0;
+        }
+        &:hover {
+          background-color: rgba(0, 0, 0, .4);
+          cursor: pointer;
+        }
       }
-      .subtitle {
-        color: white;
-        margin: .3rem 0 0;
-      }
-      &:hover {
-        background-color: rgba(0, 0, 0, .4);
-        cursor: pointer;
-      }
-    }
-    .open-edit-modal-button {
-      position: absolute;
-      right: .5rem;
-      bottom: -1rem;
-      width: 2.75rem;
-      height: 2.75rem;
-      padding: 0;
-      border-color: rgba(32, 156, 238, .3);
     }
     .content {
       display: inline-flex;
