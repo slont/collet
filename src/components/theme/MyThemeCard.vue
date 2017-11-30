@@ -8,10 +8,8 @@
       <div class="dark-mask" @click="$router.push(`/mypage/${theme.id}`)">
         <div class="title is-5">{{ theme.title }}</div>
       </div>
-      <button class="button open-edit-modal-button is-info is-inverted circle" @click="$emit('open-edit-modal')">
-        <span class="icon"><i class="material-icons">edit</i></span>
-      </button>
     </div>
+
     <div class="card-content">
       <div class="media">
         <div class="media-content">
@@ -26,6 +24,10 @@
         </div>
       </div>
     </div>
+
+    <footer class="card-footer">
+      <a class="edit-button card-footer-item" @click="$emit('open-edit-modal')">Edit</a>
+    </footer>
   </div>
 </template>
 

@@ -5,6 +5,7 @@
         <img :src="item.image || 'https://bulma.io/images/placeholders/1280x960.png'" alt="Placeholder image">
       </figure>
     </div>
+
     <div class="card-content">
       <div class="media">
         <div class="media-content">
@@ -13,9 +14,9 @@
       </div>
       <div class="content">{{ item.description }}</div>
     </div>
+
     <footer class="card-footer">
       <a class="edit-button card-footer-item" @click="$emit('open-edit-modal')">Edit</a>
-      <a class="delete-button card-footer-item">Delete</a>
     </footer>
   </div>
 </template>
@@ -37,11 +38,6 @@
         img {
           height: auto;
         }
-      }
-    }
-    .card-footer {
-      .delete-button {
-        color: $danger;
       }
     }
   }
