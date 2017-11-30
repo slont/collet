@@ -5,16 +5,21 @@
         <img :src="item.image" v-if="item.image">
       </figure>
       <div class="dark-mask" @click="$router.push(`/mypage/${theme.id}/${item.id}`)">
-        <div class="title is-3">{{ item.title }}</div>
+        <div class="title is-3">
+          {{ item.name }}
+          <button class="button is-primary is-outlined">
+            <span class="icon"><i class="material-icons">edit</i></span>
+          </button>
+        </div>
         <div class="subtitle is-6">{{ item.description }}</div>
       </div>
     </div>
     <div v-else>
-      <div class="title is-3">{{ item.title }}</div>
+      <div class="title is-3">{{ item.name }}</div>
       <div class="subtitle is-6">{{ item.description }}</div>
     </div>
 
-    <div class="item-elements tile is-ancestor">
+    <div class="item-elements">
       <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
         <text-element :params="element" v-if="'text' === element.type"></text-element>
         <image-element :params="element" v-else-if="'image' === element.type"></image-element>
@@ -114,6 +119,7 @@
 <style lang="scss" rel="stylesheet/scss">
   #mypage-item {
     padding-top: 1em;
+    width: $item-page-width;
 
     .item-image {
       position: relative;

@@ -5,6 +5,7 @@
         <img :src="item.image || 'https://bulma.io/images/placeholders/1280x960.png'" alt="Placeholder image">
       </figure>
     </div>
+
     <div class="card-content">
       <div class="media">
         <div class="media-content">

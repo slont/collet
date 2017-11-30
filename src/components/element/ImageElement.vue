@@ -1,26 +1,27 @@
 <template>
   <cl-element class="image-element" :params="params" placeholder="画像"
               @remove="$emit('remove')" :editable="editable">
-    <p class="control file" v-if="editable">
-    <div class="field image-field">
-      <div class="control loading-mask" :class="{ 'is-loading': params.valueStr.substring(0, 4) === 'data' }">
-        <div class="file is-boxed">
-          <label class="file-label">
-            <input @change="changeImage" class="file-input" type="file" name="resume">
-            <span class="file-view" v-if="params.valueStr">
-              <img :src="params.valueStr"/>
-              <a @click.stop.prevent="removeImage" class="delete"></a>
-            </span>
-            <span class="file-cta" v-else>
-              <span class="file-icon"><i class="material-icons">file_upload</i></span>
-              <span class="file-label">Upload Image</span>
-            </span>
-          </label>
+    <div class="control file" v-if="editable">
+      <div class="field image-field">
+        <div class="control loading-mask" :class="{ 'is-loading': params.valueStr.substring(0, 4) === 'data' }">
+          <div class="file is-boxed">
+            <label class="file-label">
+              <input @change="changeImage" class="file-input" type="file" name="resume">
+              <span class="file-view" v-if="params.valueStr">
+                <img :src="params.valueStr"/>
+                <a @click.stop.prevent="removeImage" class="delete"></a>
+              </span>
+              <span class="file-cta" v-else>
+                <span class="file-icon"><i class="material-icons">file_upload</i></span>
+                <span class="file-label">Upload Image</span>
+              </span>
+            </label>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="file-view" v-if="!editable && params.valueStr">
+    <div class="file-view" v-else>
       <img :src="params.valueStr"/>
     </div>
   </cl-element>
