@@ -24,13 +24,13 @@
               <div class="content">
                 <div class="field">
                   <div class="item-name control">
-                    <input v-model="item.name" class="input is-large" type="text" placeholder="Item Name" name="itemName"
+                    <input v-model="item.name" class="input title is-2" type="text" placeholder="Item Name" name="itemName"
                            v-validate="'required'" :class="{ 'is-danger': errors.has('itemName') }">
                     <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
                   </div>
                 </div>
                 <div class="item-description">
-                  <textarea v-model="item.description" class="textarea" rows="2" placeholder="Item Name"></textarea>
+                  <textarea v-model="item.description" class="textarea subtitle is-6" rows="2" placeholder="Item Name"></textarea>
                 </div>
               </div>
             </div>
@@ -294,7 +294,10 @@
                 border-bottom-width: 2px;
                 border-radius: 0;
                 box-shadow: none;
+                height: 3rem;
+                margin-bottom: 0;
                 padding: 0;
+                line-height: 3rem;
               }
             }
             .item-elements {
