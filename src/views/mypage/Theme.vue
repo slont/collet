@@ -58,8 +58,9 @@
           <p>{{ item.description }}</p>
         </td>
         <td class="action-cell">
-          <span class="icon has-text-primary"><i class="material-icons">edit</i></span>
-          <span class="icon has-text-danger"><i class="material-icons">clear</i></span>
+          <button class="button is-primary is-outlined" @click="$refs.itemEditModal.open(item)">
+            <span class="icon"><i class="material-icons">edit</i></span>
+          </button>
         </td>
       </tr>
       </tbody>
