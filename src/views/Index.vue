@@ -18,10 +18,5 @@
 <style lang="scss" rel="stylesheet/scss">
   #index {
     height: 100%;
-
-    .container {
-      width: $width;
-      margin: 0 auto;
-    }
   }
 </style>
