@@ -1,5 +1,5 @@
 <template>
-  <div class="card my-theme-card">
+  <div class="my-theme-card card">
     <div class="card-image">
       <figure class="image is-4by3">
         <img :src="theme.image" v-if="theme.image">

@@ -1,5 +1,5 @@
 <template>
-  <div class="card theme-card">
+  <div class="theme-card card">
     <div class="card-image">
       <figure class="image is-4by3">
         <img :src="theme.image || 'https://bulma.io/images/placeholders/1280x960.png'" alt="Placeholder image">
