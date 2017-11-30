@@ -7,7 +7,7 @@
       <div class="dark-mask" @click="$router.push(`/mypage/${theme.id}`)">
         <div class="title is-3">
           {{ theme.title }}
-          <button class="button is-primary is-inverted is-outlined">
+          <button class="button is-primary is-outlined" @click="$refs.themeEditModal.open(theme)">
             <span class="icon"><i class="material-icons">edit</i></span>
           </button>
         </div>
@@ -89,6 +89,7 @@
       </ul>
     </div>
 
+    <theme-edit-modal ref="themeEditModal" @refresh="refresh"></theme-edit-modal>
     <item-create-modal ref="itemCreateModal" @refresh="refresh"></item-create-modal>
     <item-edit-modal ref="itemEditModal" @refresh="refresh"></item-edit-modal>
   </div>
@@ -97,11 +98,12 @@
 <script>
   import ThemeModel from '@/models/Theme'
   import MyItemCard from '@/components/item/MyItemCard'
+  import ThemeEditModal from '@/components/theme/ThemeEditModal'
   import ItemCreateModal from '@/components/item/ItemCreateModal'
   import ItemEditModal from '@/components/item/ItemEditModal'
 
   export default {
-    components: { ItemCreateModal, ItemEditModal, MyItemCard },
+    components: { ThemeEditModal, ItemCreateModal, ItemEditModal, MyItemCard },
     data() {
       return {
         theme: {
