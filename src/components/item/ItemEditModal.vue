@@ -86,9 +86,12 @@
     </div>
 
     <footer class="modal-card-foot has-right">
+      <button @click="$refs.itemDeleteModal.open(item)" class="button is-danger is-outlined is-left">削除</button>
       <button @click="close" class="button">キャンセル</button>
       <button @click="ok" class="button is-primary">作成</button>
     </footer>
+
+    <item-delete-modal ref="itemDeleteModal" @refresh="refreshClose"></item-delete-modal>
   </modal>
 </template>
 
@@ -116,6 +119,7 @@
   import EmailElement from '@/components/element/EmailElement'
   import RatingElement from '@/components/element/RatingElement'
   import SwitchElement from '@/components/element/SwitchElement'
+  import ItemDeleteModal from './ItemDeleteModal'
 
   export default {
     components: {
@@ -139,7 +143,8 @@
       PhoneElement,
       EmailElement,
       RatingElement,
-      SwitchElement
+      SwitchElement,
+      ItemDeleteModal
     },
     data() {
       return {
@@ -168,7 +173,7 @@
           if (!result) return
 
           this.setOrder()
-          new ItemModel(this.$route.params.themeId).create(this.item).then(() => {
+          new ItemModel(this.$route.params.themeId).update(this.item.id, this.item).then(() => {
             this.$emit('refresh')
             this.close()
           }).catch(err => {
@@ -179,6 +184,10 @@
       reset() {
         Object.assign(this.$data, this.$options.data.call(this))
         this.$nextTick(() => this.errors.clear())
+      },
+      refreshClose() {
+        this.$emit('refresh')
+        this.close()
       },
       addElement(element) {
         this.item.elements.push(element)
@@ -232,7 +241,7 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #item-edit-modal {
-    .modal-card {
+    > .modal-card {
       display: flex;
       flex-direction: column;
       height: 95%;
@@ -362,6 +371,11 @@
               }
             }
           }
+        }
+      }
+      .modal-card-foot {
+        .is-left {
+          margin-right: auto;
         }
       }
     }

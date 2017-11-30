@@ -1,6 +1,6 @@
 <template>
   <modal id="item-delete-modal" class="modal" ref="itemDeleteModal" @close="reset">
-    <div class="modal-card-body columns">
+    <div class="modal-card-body">
       <div class="column">
         <div class="field">
           <label class="label">アイテム名</label>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import ItemModel from '@/models/ItemModel'
+  import ItemModel from '@/models/Item'
   import Modal from '@/components/Modal'
 
   export default {
@@ -67,5 +67,10 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #item-delete-modal {
+    .modal-card-body {
+      .is-danger {
+        color: $danger;
+      }
+    }
   }
 </style>
