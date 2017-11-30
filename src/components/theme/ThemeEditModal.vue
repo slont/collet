@@ -43,18 +43,22 @@
 
     <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
     <footer class="modal-card-foot has-right">
+      <button @click="$refs.themeDeleteModal.open(theme)" class="button is-danger is-outlined is-left">削除</button>
       <button @click="close" class="button">キャンセル</button>
       <button @click="ok" class="button is-primary">保存</button>
     </footer>
+
+    <theme-delete-modal ref="themeDeleteModal" @refresh="refreshClose"></theme-delete-modal>
   </modal>
 </template>
 
 <script>
   import ThemeModel from '@/models/Theme'
   import Modal from '@/components/Modal'
+  import ThemeDeleteModal from './ThemeDeleteModal'
 
   export default {
-    components: { Modal },
+    components: { Modal, ThemeDeleteModal },
     data() {
       return {
         theme: {
@@ -92,6 +96,10 @@
         Object.assign(this.$data, this.$options.data.call(this))
         this.$nextTick(() => this.errors.clear())
       },
+      refreshClose() {
+        this.$emit('refresh')
+        this.close()
+      },
       changeImage(e) {
         this.theme.image = ''
         const files = e.target.files || e.dataTransfer.files
@@ -116,18 +124,30 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #theme-edit-modal {
-    .image-field {
-      .field-body {
-        display: flex;
-        flex-direction: column;
+    > .modal-card {
+      .modal-card-body {
+        margin-bottom: 0;
+        padding-bottom: 0;
 
-        .file-view {
-          .delete {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            z-index: 10;
+        .image-field {
+          .field-body {
+            display: flex;
+            flex-direction: column;
+
+            .file-view {
+              .delete {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                z-index: 10;
+              }
+            }
           }
+        }
+      }
+      .modal-card-foot {
+        .is-left {
+          margin-right: auto;
         }
       }
     }

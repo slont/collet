@@ -43,21 +43,7 @@
 
     <div class="theme-items tile is-ancestor" v-if="theme.items.length && 0 === viewType">
       <div v-for="item in theme.items" class="tile is-parent is-4" :key="item.id">
-        <div class="item-card card">
-          <div class="card-image trim" @click="$router.push(`/mypage/${theme.id}/${item.id}`)">
-            <figure class="image is-4by3">
-              <img :src="item.image || 'https://bulma.io/images/placeholders/1280x960.png'" alt="Placeholder image">
-            </figure>
-          </div>
-          <div class="card-content">
-            <div class="media">
-              <div class="media-content">
-                <router-link :to="`/mypage/${theme.id}/${item.id}`" class="title is-4">{{ item.name }}</router-link>
-              </div>
-            </div>
-            <div class="content">{{ item.description }}</div>
-          </div>
-        </div>
+        <my-item-card :theme="theme" :item="item" @open-edit-modal="$refs.itemEditModal.open(item)"></my-item-card>
       </div>
     </div>
 
@@ -104,15 +90,18 @@
     </div>
 
     <item-create-modal ref="itemCreateModal" @refresh="refresh"></item-create-modal>
+    <item-edit-modal ref="itemEditModal" @refresh="refresh"></item-edit-modal>
   </div>
 </template>
 
 <script>
   import ThemeModel from '@/models/Theme'
+  import MyItemCard from '@/components/item/MyItemCard'
   import ItemCreateModal from '@/components/item/ItemCreateModal'
+  import ItemEditModal from '@/components/item/ItemEditModal'
 
   export default {
-    components: { ItemCreateModal },
+    components: { ItemCreateModal, ItemEditModal, MyItemCard },
     data() {
       return {
         theme: {
@@ -185,19 +174,6 @@
       &.tile {
         flex-wrap: wrap;
 
-        .item-card {
-          width: 100%;
-
-          .card-image {
-            cursor: pointer;
-
-            .image {
-              img {
-                height: auto;
-              }
-            }
-          }
-        }
         .media-content {
           .title:hover {
             text-decoration: underline;
