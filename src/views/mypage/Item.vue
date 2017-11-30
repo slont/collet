@@ -8,7 +8,7 @@
     <div class="item-info">
       <div class="title is-2">
         {{ item.name }}
-        <button class="button is-primary is-outlined">
+        <button class="button is-primary is-outlined" @click="$refs.itemEditModal.open(item)">
           <span class="icon"><i class="material-icons">edit</i></span>
         </button>
       </div>
@@ -32,13 +32,13 @@
       </div>
     </div>
 
-    <item-create-modal ref="itemCreateModal" @refresh="refresh"></item-create-modal>
+    <item-edit-modal ref="itemEditModal" @refresh="refresh"></item-edit-modal>
   </div>
 </template>
 
 <script>
   import ItemModel from '@/models/item'
-  import ItemCreateModal from '@/components/item/ItemCreateModal'
+  import ItemEditModal from '@/components/item/ItemEditModal'
   import TextElement from '@/components/element/TextElement'
   import ImageElement from '@/components/element/ImageElement'
   import LocationElement from '@/components/element/LocationElement'
@@ -52,7 +52,7 @@
 
   export default {
     components: {
-      ItemCreateModal,
+      ItemEditModal,
       TextElement,
       ImageElement,
       LocationElement,
