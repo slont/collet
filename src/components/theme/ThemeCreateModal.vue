@@ -115,21 +115,23 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #theme-create-modal {
-    .columns {
-      margin-bottom: 0;
-      padding-bottom: 0;
+    > .modal-card {
+      .modal-card-body {
+        margin-bottom: 0;
+        padding-bottom: 0;
 
-      .image-field {
-        .control {
-          display: flex;
-          flex-direction: column;
+        .image-field {
+          .control {
+            display: flex;
+            flex-direction: column;
 
-          .file-view {
-            .delete {
-              position: absolute;
-              top: 5px;
-              right: 5px;
-              z-index: 10;
+            .file-view {
+              .delete {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                z-index: 10;
+              }
             }
           }
         }
