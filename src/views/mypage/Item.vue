@@ -110,6 +110,8 @@
       }
     }
     .item-info {
+      margin-bottom: 2rem;
+
       .title {
         border-bottom: $border;
       }
