@@ -157,11 +157,11 @@
     methods: {
       open(item) {
         this.item = item
-        this.$refs.itemCreateModal.open()
+        this.$refs.itemEditModal.open()
       },
       close() {
         this.reset()
-        this.$refs.itemCreateModal.close()
+        this.$refs.itemEditModal.close()
       },
       ok() {
         this.$validator.validateAll().then(result => {

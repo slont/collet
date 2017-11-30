@@ -90,6 +90,7 @@
     </div>
 
     <item-create-modal ref="itemCreateModal" @refresh="refresh"></item-create-modal>
+    <item-edit-modal ref="itemEditModal" @refresh="refresh"></item-edit-modal>
   </div>
 </template>
 
@@ -97,9 +98,10 @@
   import ThemeModel from '@/models/Theme'
   import MyItemCard from '@/components/item/MyItemCard'
   import ItemCreateModal from '@/components/item/ItemCreateModal'
+  import ItemEditModal from '@/components/item/ItemEditModal'
 
   export default {
-    components: { ItemCreateModal, MyItemCard },
+    components: { ItemCreateModal, ItemEditModal, MyItemCard },
     data() {
       return {
         theme: {

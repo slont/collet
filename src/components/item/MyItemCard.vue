@@ -13,6 +13,10 @@
       </div>
       <div class="content">{{ item.description }}</div>
     </div>
+    <footer class="card-footer">
+      <a class="edit-button card-footer-item" @click="$emit('open-edit-modal')">Edit</a>
+      <a class="delete-button card-footer-item">Delete</a>
+    </footer>
   </div>
 </template>
 
@@ -33,6 +37,11 @@
         img {
           height: auto;
         }
+      }
+    }
+    .card-footer {
+      .delete-button {
+        color: $danger;
       }
     }
   }
