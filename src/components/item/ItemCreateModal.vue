@@ -189,6 +189,10 @@
       addElement(element) {
         this.item.elements.push(element)
         this.setOrder()
+        this.$nextTick(() => {
+          const container = this.$el.querySelector('.main-column')
+          container.scrollTop = container.scrollHeight
+        })
       },
       removeElement(i) {
         this.item.elements.splice(i, 1)
@@ -278,7 +282,7 @@
           .main-column {
             $sort-button-size: 2rem;
             $margin-side: $sort-button-size + .5rem;
-            padding: 0 3rem 1rem !important;
+            padding: 0 3rem 1.5rem !important;
             background-color: white;
             overflow-y: scroll;
             z-index: 0;
