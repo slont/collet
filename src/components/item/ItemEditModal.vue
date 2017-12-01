@@ -238,7 +238,7 @@
           this.item.image = e.target.result
         }
         reader.readAsDataURL(file)
-        new FileModel().create(file).then(res => {
+        new FileModel().create(file, this.themeId).then(res => {
           this.item.image = res.path
         })
       },

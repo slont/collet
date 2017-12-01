@@ -5,9 +5,12 @@ export default class File extends Base {
     super('/files')
   }
 
-  create(file) {
+  create(file, themeId) {
     const formData = new FormData()
     formData.append('file', file)
+    if (themeId) {
+      formData.append('themeId', themeId)
+    }
     return this.postProcess(fetch(`${this.endpoint}`, {
       method: 'POST',
       mode: 'cors',
