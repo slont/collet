@@ -24,13 +24,13 @@
               <div class="content">
                 <div class="field">
                   <div class="item-name control">
-                    <input v-model="item.name" class="input title is-2" type="text" placeholder="Item Name" name="itemName"
+                    <input v-model.trim="item.name" class="input title is-3" type="text" placeholder="Item Name" name="itemName"
                            v-validate="'required'" :class="{ 'is-danger': errors.has('itemName') }">
                     <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
                   </div>
                 </div>
                 <div class="item-description">
-                  <textarea v-model="item.description" class="textarea subtitle is-6" rows="2" placeholder="Item Name"></textarea>
+                  <textarea v-model="item.description" v-autosize="item.description" class="textarea subtitle is-6" rows="2" placeholder="説明文"></textarea>
                 </div>
               </div>
             </div>
@@ -189,6 +189,10 @@
       addElement(element) {
         this.item.elements.push(element)
         this.setOrder()
+        this.$nextTick(() => {
+          const container = this.$el.querySelector('.main-column')
+          container.scrollTop = container.scrollHeight
+        })
       },
       removeElement(i) {
         this.item.elements.splice(i, 1)
@@ -260,7 +264,7 @@
 
             .slider {
               height: 100%;
-              width: $element-button-size * 2 + 1;
+              width: 100%;
               padding: 0;
               overflow-y: scroll;
 
@@ -278,10 +282,9 @@
           .main-column {
             $sort-button-size: 2rem;
             $margin-side: $sort-button-size + .5rem;
-            margin-left: $margin-side;
-            margin-right: $margin-side;
-            padding: 0 1rem !important;
+            padding: 0 3rem 1.5rem !important;
             background-color: white;
+            overflow-y: scroll;
             z-index: 0;
 
             .item-name {
