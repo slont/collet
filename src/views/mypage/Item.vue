@@ -115,6 +115,9 @@
       .title {
         border-bottom: $border;
       }
+      .subtitle {
+        line-height: inherit;
+      }
     }
   }
 </style>

@@ -32,5 +32,9 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .text-element {
+    .value {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
   }
 </style>
