@@ -2,7 +2,7 @@
   <cl-element class="text-element" :params="params" placeholder="テキスト"
               @remove="$emit('remove')" :editable="editable">
     <p class="control">
-      <textarea v-model.trim="params.valueStr" class="textarea" rows="2" placeholder="Text"
+      <textarea v-model="params.valueStr" v-autosize="params.valueStr" class="textarea" rows="2" placeholder="Text"
                 v-if="editable"></textarea>
 
       <span class="value" v-else>{{ params.valueStr }}</span>

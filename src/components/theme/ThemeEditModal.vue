@@ -5,7 +5,7 @@
         <div class="field">
           <label class="label">タイトル</label>
           <div class="control">
-            <input v-model.trim="theme.title" class="input" type="text" placeholder="Name"
+            <input v-model.trim="theme.title" class="input" type="text" placeholder="タイトル"
                    name="title" v-validate="'required|max:255'">
             <span v-show="errors.has('title')" class="has-text-danger">{{ errors.first('title') }}</span>
           </div>
@@ -14,7 +14,7 @@
         <div class="field">
           <label class="label">説明文</label>
           <div class="control">
-            <textarea v-model="theme.description" class="textarea"></textarea>
+            <textarea v-model="theme.description" v-autosize="theme.description" class="textarea" rows="2" placeholder="説明文"></textarea>
           </div>
         </div>
       </div>

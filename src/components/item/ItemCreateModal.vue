@@ -24,13 +24,13 @@
               <div class="content">
                 <div class="field">
                   <div class="item-name control">
-                    <input v-model="item.name" class="input title is-3" type="text" placeholder="Item Name" name="itemName"
+                    <input v-model.trim="item.name" class="input title is-3" type="text" placeholder="Item Name" name="itemName"
                            v-validate="'required'" :class="{ 'is-danger': errors.has('itemName') }">
                     <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
                   </div>
                 </div>
                 <div class="item-description">
-                  <textarea v-model="item.description" class="textarea subtitle is-6" rows="2" placeholder="Item Name"></textarea>
+                  <textarea v-model="item.description" v-autosize="item.description" class="textarea subtitle is-6" rows="2" placeholder="説明文"></textarea>
                 </div>
               </div>
             </div>
