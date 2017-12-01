@@ -24,7 +24,7 @@
               <div class="content">
                 <div class="field">
                   <div class="item-name control">
-                    <input v-model="item.name" class="input title is-2" type="text" placeholder="Item Name" name="itemName"
+                    <input v-model="item.name" class="input title is-3" type="text" placeholder="Item Name" name="itemName"
                            v-validate="'required'" :class="{ 'is-danger': errors.has('itemName') }">
                     <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
                   </div>
