@@ -260,7 +260,7 @@
 
             .slider {
               height: 100%;
-              width: $element-button-size * 2 + 1;
+              width: 100%;
               padding: 0;
               overflow-y: scroll;
 
@@ -278,10 +278,9 @@
           .main-column {
             $sort-button-size: 2rem;
             $margin-side: $sort-button-size + .5rem;
-            margin-left: $margin-side;
-            margin-right: $margin-side;
-            padding: 0 1rem !important;
+            padding: 0 3rem 1rem !important;
             background-color: white;
+            overflow-y: scroll;
             z-index: 0;
 
             .item-name {
