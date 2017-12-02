@@ -86,20 +86,11 @@
               </div>
               <div class="dropdown-menu" id="dropdown-menu" role="menu">
                 <div class="dropdown-content">
-                  <a href="#" class="dropdown-item">
-                    Dropdown item
-                  </a>
-                  <a class="dropdown-item">
-                    Other dropdown item
-                  </a>
-                  <a href="#" class="dropdown-item is-active">
-                    Active dropdown item
-                  </a>
-                  <a href="#" class="dropdown-item">
-                    Other dropdown item
+                  <a @click="$router.push('/settings/profile')" class="dropdown-item">
+                    設定
                   </a>
                   <hr class="dropdown-divider">
-                  <a @click="signout" href="#" class="dropdown-item">
+                  <a @click="signout" class="dropdown-item">
                     サインアウト
                   </a>
                 </div>
