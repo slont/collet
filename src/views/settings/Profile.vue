@@ -46,7 +46,7 @@
         </div>
 
         <div class="save-button has-right">
-          <button @click="save" class="button is-primary">保存</button>
+          <el-button @click="save" class="button is-primary">保存</el-button>
         </div>
       </div>
 
@@ -108,9 +108,18 @@
             const newUser = Object.assign({}, this.user, body)
             delete newUser.password
             this.$store.dispatch('setUser', newUser)
-            this.close()
+            this.$message({
+              showClose: true,
+              message: '保存されました',
+              type: 'success'
+            })
           }).catch(err => {
-            this.errorMessage = err
+            console.log(err)
+            this.$message({
+              showClose: true,
+              message: '保存に失敗しました',
+              type: 'error'
+            })
           })
         })
       },

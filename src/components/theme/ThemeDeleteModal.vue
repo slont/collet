@@ -19,7 +19,7 @@
 
     <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
     <footer class="modal-card-foot has-right">
-      <button @click="ok" class="button is-danger">削除</button>
+      <el-button @click="ok" class="button is-danger">削除</el-button>
       <button @click="close" class="button">キャンセル</button>
     </footer>
   </modal>
@@ -52,6 +52,11 @@
       ok() {
         new ThemeModel().delete(this.theme.id).then(() => {
           this.$emit('refresh')
+          this.$message({
+            showClose: true,
+            message: '削除されました',
+            type: 'success'
+          })
           this.close()
         }).catch(err => {
           this.errorMessage = err

@@ -87,7 +87,7 @@
 
     <footer class="modal-card-foot has-right">
       <button @click="close" class="button">キャンセル</button>
-      <button @click="ok" class="button is-primary">作成</button>
+      <el-button @click="ok" class="button is-primary">作成</el-button>
     </footer>
   </modal>
 </template>
@@ -176,6 +176,11 @@
           this.setOrder()
           new ItemModel(this.themeId).create(this.item).then(() => {
             this.$emit('refresh')
+            this.$message({
+              showClose: true,
+              message: '作成されました',
+              type: 'success'
+            })
             this.close()
           }).catch(err => {
             this.errorMessage = err
