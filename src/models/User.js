@@ -7,10 +7,16 @@ export default class User extends Base {
   }
 
   deserialize(json) {
-    return Object.assign({}, json, {
-      image: json.image || '',
-      createdAt: moment(json.createdAt),
-      updatedAt: moment(json.createdAt)
-    })
+    if (json instanceof Array) {
+      return json.map(v => Object.assign({}, v, {
+        createdAt: moment(v.createdAt),
+        updatedAt: moment(v.createdAt)
+      }))
+    } else {
+      return Object.assign({}, json, {
+        createdAt: moment(json.createdAt),
+        updatedAt: moment(json.createdAt)
+      })
+    }
   }
 }
