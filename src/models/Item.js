@@ -1,4 +1,5 @@
 import Base from './Base'
+import moment from 'moment'
 
 export default class Item extends Base {
   constructor(themeId) {
@@ -6,7 +7,9 @@ export default class Item extends Base {
   }
 
   deserialize(json) {
-    const result = Object.assign({}, json)
-    return result
+    return Object.assign({}, json, {
+      createdAt: moment(json.createdAt),
+      updatedAt: moment(json.createdAt)
+    })
   }
 }

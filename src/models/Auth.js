@@ -1,4 +1,5 @@
 import Base from './Base'
+import User from './User'
 
 export default class Auth extends Base {
   constructor() {
@@ -49,7 +50,8 @@ export default class Auth extends Base {
   onChange() {}
 
   deserialize(json) {
-    const result = Object.assign({}, json)
-    return result
+    return Object.assign({}, json, {
+      user: (json.user && new User().deserialize(json.user)) || {}
+    })
   }
 }
