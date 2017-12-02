@@ -46,7 +46,7 @@
         </div>
 
         <div class="save-button has-right">
-          <el-button @click="save" class="button is-primary">保存</el-button>
+          <button @click="save" class="button is-primary">保存</button>
         </div>
       </div>
 

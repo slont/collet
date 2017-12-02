@@ -88,7 +88,7 @@
     <footer class="modal-card-foot has-right">
       <button @click="$refs.itemDeleteModal.open(item)" class="button is-danger is-outlined is-left">削除</button>
       <button @click="close" class="button">キャンセル</button>
-      <el-button @click="ok" class="button is-primary">保存</el-button>
+      <button @click="ok" class="button is-primary">保存</button>
     </footer>
 
     <item-delete-modal ref="itemDeleteModal" @refresh="refreshClose"></item-delete-modal>
