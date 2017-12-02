@@ -126,6 +126,13 @@
       refresh() {
         new ThemeModel().findOne(this.themeId).then(res => {
           this.theme = res
+        }).catch(err => {
+          console.log(err)
+          this.$message({
+            showClose: true,
+            message: 'データ取得に失敗しました',
+            type: 'error'
+          })
         })
       }
     }
