@@ -171,7 +171,12 @@
           this.item = res
           this.$refs.itemEditModal.open()
         }).catch(err => {
-          this.errorMessage = err
+          console.log(err)
+          this.$message({
+            showClose: true,
+            message: 'データ取得に失敗しました',
+            type: 'error'
+          })
         })
       },
       close() {
@@ -185,6 +190,11 @@
           this.setOrder()
           new ItemModel(this.themeId).update(this.item.id, this.item).then(() => {
             this.$emit('refresh')
+            this.$message({
+              showClose: true,
+              message: '保存されました',
+              type: 'success'
+            })
             this.close()
           }).catch(err => {
             this.errorMessage = err

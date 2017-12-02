@@ -86,6 +86,11 @@
 
           new ThemeModel().update(this.theme.id, this.theme).then(() => {
             this.$emit('refresh')
+            this.$message({
+              showClose: true,
+              message: '保存されました',
+              type: 'success'
+            })
             this.close()
           }).catch(err => {
             this.errorMessage = err

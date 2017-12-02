@@ -9,6 +9,8 @@ import TopTop from '@/views/top/Top'
 import MypageIndex from '@/views/mypage/Index'
 import MypageTheme from '@/views/mypage/Theme'
 import MypageItem from '@/views/mypage/Item'
+import SettingsIndex from '@/views/settings/Index'
+import SettingsProfile from '@/views/settings/Profile'
 
 Vue.use(Router)
 
@@ -37,6 +39,15 @@ export default new Router({
         }, {
           path: 'mypage/:themeId/:itemId',
           component: MypageItem
+        }, {
+          path: 'settings',
+          component: SettingsIndex,
+          children: [
+            {
+              path: 'profile',
+              component: SettingsProfile
+            }
+          ]
         }
       ]
     }, {

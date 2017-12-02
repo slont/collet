@@ -52,6 +52,11 @@
       ok() {
         new ThemeModel().delete(this.theme.id).then(() => {
           this.$emit('refresh')
+          this.$message({
+            showClose: true,
+            message: '削除されました',
+            type: 'success'
+          })
           this.close()
         }).catch(err => {
           this.errorMessage = err

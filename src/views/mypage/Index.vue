@@ -37,6 +37,13 @@
           s: 20
         }).then(res => {
           this.themes = res
+        }).catch(err => {
+          console.log(err)
+          this.$message({
+            showClose: true,
+            message: 'データ取得に失敗しました',
+            type: 'error'
+          })
         })
       }
     }
