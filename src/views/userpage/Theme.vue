@@ -44,7 +44,7 @@
 
     <div class="theme-items tile is-ancestor" v-if="theme.items.length && 0 === viewType">
       <div v-for="item in theme.items" class="tile is-parent is-4" :key="item.id">
-        <my-item-card :theme="theme" :item="item" @open-edit-modal="$refs.itemEditModal.open(item)"></my-item-card>
+        <item-card :theme="theme" :item="item" @open-edit-modal="$refs.itemEditModal.open(item)"></item-card>
       </div>
     </div>
 
@@ -99,13 +99,13 @@
 
 <script>
   import ThemeModel from '@/models/Theme'
-  import MyItemCard from '@/components/item/MyItemCard'
+  import ItemCard from '@/components/item/ItemCard'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
   import ItemCreateModal from '@/components/item/ItemCreateModal'
   import ItemEditModal from '@/components/item/ItemEditModal'
 
   export default {
-    components: { ThemeEditModal, ItemCreateModal, ItemEditModal, MyItemCard },
+    components: { ThemeEditModal, ItemCreateModal, ItemEditModal, ItemCard },
     data() {
       return {
         theme: {
@@ -116,8 +116,11 @@
       }
     },
     computed: {
+      urlUserName() {
+        return this.$route.params.userName
+      },
       isMyPage() {
-        return this.$store.state.user.name === this.$route.params.userName
+        return this.$store.state.user.name === this.urlUserName
       },
       themeId() {
         return this.$route.params.themeId
