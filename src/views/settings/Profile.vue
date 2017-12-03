@@ -20,6 +20,13 @@
           </div>
         </div>
 
+        <div class="field">
+          <label class="label">自己紹介</label>
+          <div class="control">
+            <textarea v-model="user.biography" v-autosize="user.biography" class="textarea" rows="2"></textarea>
+          </div>
+        </div>
+
         <a class="password-setting-expand" @click="expandedPasswordSetting = !expandedPasswordSetting">
           パスワード再設定
           <span class="icon" v-if="expandedPasswordSetting"><i class="material-icons">keyboard_arrow_up</i></span>
@@ -95,6 +102,7 @@
           id: '',
           name: '',
           email: '',
+          biography: '',
           image: '',
           password: ''
         },
