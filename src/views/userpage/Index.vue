@@ -1,5 +1,5 @@
 <template>
-  <div id="mypage-index">
+  <div id="userpage-index">
     <div class="columns is-multiline">
       <div v-for="theme in themes" class="column is-one-third-tablet" :key="theme.id">
         <my-theme-card :theme="theme" @open-edit-modal="$refs.themeEditModal.open(theme)"></my-theme-card>
@@ -51,7 +51,7 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-  #mypage-index {
+  #userpage-index {
     padding-top: 1em;
 
     .button.is-float {

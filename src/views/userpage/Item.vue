@@ -1,5 +1,5 @@
 <template>
-  <div id="mypage-item">
+  <div id="userpage-item">
     <div class="item-image trim" v-if="item.image">
       <figure class="image is-4by3">
         <img :src="item.image" v-if="item.image">
@@ -101,7 +101,7 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-  #mypage-item {
+  #userpage-item {
     padding-top: 1em;
     width: $item-page-width;
 

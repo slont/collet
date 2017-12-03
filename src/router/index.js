@@ -6,9 +6,9 @@ import Signin from '@/views/Signin.vue'
 import Confirm from '@/views/Confirm.vue'
 import TopIndex from '@/views/top/Index'
 import TopTop from '@/views/top/Top'
-import MypageIndex from '@/views/mypage/Index'
-import MypageTheme from '@/views/mypage/Theme'
-import MypageItem from '@/views/mypage/Item'
+import UserpageIndex from '@/views/userpage/Index'
+import UserpageTheme from '@/views/userpage/Theme'
+import UserpageItem from '@/views/userpage/Item'
 import SettingsIndex from '@/views/settings/Index'
 import SettingsProfile from '@/views/settings/Profile'
 
@@ -31,14 +31,14 @@ export default new Router({
             }
           ]
         }, {
-          path: 'mypage',
-          component: MypageIndex
+          path: ':userName',
+          component: UserpageIndex
         }, {
-          path: 'mypage/:themeId',
-          component: MypageTheme
+          path: ':userName/:themeId',
+          component: UserpageTheme
         }, {
-          path: 'mypage/:themeId/:itemId',
-          component: MypageItem
+          path: ':userName/:themeId/:itemId',
+          component: UserpageItem
         }, {
           path: 'settings',
           component: SettingsIndex,
