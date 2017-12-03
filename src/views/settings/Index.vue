@@ -20,7 +20,8 @@
     padding: 1.5rem;
 
     .settings-menu {
-      width: 300px;
+      width: 200px;
+      min-width: 200px;
       margin-right: 1rem;
 
       .menu-list {

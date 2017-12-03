@@ -165,6 +165,11 @@
             .user-name {
               margin-right: .25rem;
             }
+            img {
+              height: 2.25rem;
+              max-height: 2.25rem;
+              width: 2.25rem;
+            }
           }
         }
       }
