@@ -1,13 +1,14 @@
 <template>
-  <div id="mypage-theme">
+  <div id="userpage-theme">
     <div class="theme-image trim" v-if="theme.image">
       <figure class="image is-4by3">
         <img :src="theme.image" v-if="theme.image">
       </figure>
-      <div class="dark-mask" @click="$router.push(`/mypage/${theme.id}`)">
+      <div class="dark-mask" @click="$router.push(`/userpage/${theme.id}`)">
         <div class="title is-3">
           {{ theme.title }}
-          <button class="button is-primary is-outlined" @click="$refs.themeEditModal.open(theme)">
+          <button class="button is-primary is-outlined" @click="$refs.themeEditModal.open(theme)"
+                  v-if="isMyPage">
             <span class="icon"><i class="material-icons">edit</i></span>
           </button>
         </div>
@@ -50,11 +51,11 @@
     <table class="theme-items table" v-else-if="theme.items.length && 1 === viewType">
       <tbody>
       <tr v-for="item in theme.items" :key="item.id">
-        <th class="image-cell" @click="$router.push(`/mypage/${theme.id}/${item.id}`)">
+        <th class="image-cell" @click="$router.push(`/userpage/${theme.id}/${item.id}`)">
           <img :src="item.image || 'https://bulma.io/images/placeholders/1280x960.png'" alt="Placeholder image">
         </th>
         <td class="title-cell">
-          <router-link :to="`/mypage/${theme.id}/${item.id}`" class="title is-4">{{ item.name }}</router-link>
+          <router-link :to="`/userpage/${theme.id}/${item.id}`" class="title is-4">{{ item.name }}</router-link>
           <p>{{ item.description }}</p>
         </td>
         <td class="action-cell">
@@ -115,6 +116,9 @@
       }
     },
     computed: {
+      isMyPage() {
+        return this.$store.state.user.name === this.$route.params.userName
+      },
       themeId() {
         return this.$route.params.themeId
       }
@@ -140,7 +144,7 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-  #mypage-theme {
+  #userpage-theme {
     padding-top: 1em;
 
     .theme-image {

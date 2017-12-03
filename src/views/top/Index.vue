@@ -1,6 +1,6 @@
 <template>
   <div id="top-index">
-    <div class="tabs">
+    <div class="tabs header-shadow">
       <ul>
         <router-link to="/" tag="li"><a>TOP</a></router-link>
         <router-link to="/recommend" tag="li"><a>おすすめ</a></router-link>
@@ -27,8 +27,26 @@
 <style lang="scss" rel="stylesheet/scss">
   #top-index {
     .tabs {
-      .router-link-exact-active {
-        @extend .is-active;
+      background-color: white;
+
+      > ul {
+        max-width: $width;
+        margin-left: auto;
+        margin-right: auto;
+        border-bottom-color: transparent;
+
+        li {
+          a {
+            border-bottom-width: 0;
+          }
+          &.router-link-exact-active {
+            @extend .is-active;
+
+            a {
+              border-bottom-width: 2px;
+            }
+          }
+        }
       }
     }
   }

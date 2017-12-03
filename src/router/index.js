@@ -6,9 +6,9 @@ import Signin from '@/views/Signin.vue'
 import Confirm from '@/views/Confirm.vue'
 import TopIndex from '@/views/top/Index'
 import TopTop from '@/views/top/Top'
-import MypageIndex from '@/views/mypage/Index'
-import MypageTheme from '@/views/mypage/Theme'
-import MypageItem from '@/views/mypage/Item'
+import UserpageIndex from '@/views/userpage/Index'
+import UserpageTheme from '@/views/userpage/Theme'
+import UserpageItem from '@/views/userpage/Item'
 import SettingsIndex from '@/views/settings/Index'
 import SettingsProfile from '@/views/settings/Profile'
 
@@ -17,6 +17,16 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   routes: [
+    {
+      path: '/signup',
+      component: Signup
+    }, {
+      path: '/signin',
+      component: Signin
+    }, {
+      path: '/confirm',
+      component: Confirm
+    },
     {
       path: '/',
       component: Index,
@@ -31,15 +41,6 @@ export default new Router({
             }
           ]
         }, {
-          path: 'mypage',
-          component: MypageIndex
-        }, {
-          path: 'mypage/:themeId',
-          component: MypageTheme
-        }, {
-          path: 'mypage/:themeId/:itemId',
-          component: MypageItem
-        }, {
           path: 'settings',
           component: SettingsIndex,
           children: [
@@ -48,17 +49,17 @@ export default new Router({
               component: SettingsProfile
             }
           ]
+        }, {
+          path: ':userName',
+          component: UserpageIndex
+        }, {
+          path: ':userName/:themeId',
+          component: UserpageTheme
+        }, {
+          path: ':userName/:themeId/:itemId',
+          component: UserpageItem
         }
       ]
-    }, {
-      path: '/signup',
-      component: Signup
-    }, {
-      path: '/signin',
-      component: Signin
-    }, {
-      path: '/confirm',
-      component: Confirm
     }
   ]
 })

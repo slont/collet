@@ -2,9 +2,9 @@
   <div id="header-nav">
     <nav class="navbar is-info">
       <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
+        <router-link class="navbar-item" to="/">
           <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
-        </a>
+        </router-link>
 
         <a class="navbar-item is-hidden-desktop" href="https://github.com/jgthms/bulma" target="_blank">
           <span class="icon" style="color: #333;">
@@ -71,31 +71,27 @@
               </div>
             </div>
           </div>
-          <router-link to="/mypage" class="navbar-item">
+          <router-link :to="`/${user.name}`" class="navbar-item">
             マイページ
           </router-link>
         </div>
 
         <div class="navbar-end">
-          <div class="navbar-item" v-if="$store.state.loggedIn">
-            <div class="dropdown is-hoverable">
-              <div class="dropdown-trigger">
-                <button class="button is-info is-inverted is-outlined">
-                  <i class="material-icons">person_outline</i>
-                </button>
-              </div>
-              <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                <div class="dropdown-content">
-                  <a @click="$router.push('/settings/profile')" class="dropdown-item">
-                    設定
-                  </a>
-                  <hr class="dropdown-divider">
-                  <a @click="signout" class="dropdown-item">
-                    サインアウト
-                  </a>
-                </div>
-              </div>
-            </div>
+          <div class="account-item navbar-item" v-if="$store.state.loggedIn">
+            <dropdown ref="accountDropdown">
+              <template slot="trigger">
+                <span class="user-name is-size-7">{{ user.name }}</span>
+                <img :src="user.image" class="circle"/>
+              </template>
+
+              <a @click="$router.push('/settings/profile')" class="dropdown-item">
+                設定
+              </a>
+              <hr class="dropdown-divider">
+              <a @click="signout" class="dropdown-item">
+                サインアウト
+              </a>
+            </dropdown>
           </div>
           <div class="navbar-item" v-else>
             <div class="field is-grouped">
@@ -116,10 +112,18 @@
 </template>
 
 <script>
+  import Dropdown from '@/components/Dropdown'
+
   export default {
+    components: { Dropdown },
     data() {
       return {
         activeNavbarMenu: false
+      }
+    },
+    computed: {
+      user() {
+        return this.$store.state.user
       }
     },
     methods: {
@@ -143,11 +147,28 @@
       .navbar-end {
         .breadcrumb {
           $color: white;
+
           a {
             color: $color;
 
             &:hover {
               color: darken($color, 15%);
+            }
+          }
+        }
+        .account-item {
+          .dropdown-trigger {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+
+            .user-name {
+              margin-right: .25rem;
+            }
+            img {
+              height: 2.25rem;
+              max-height: 2.25rem;
+              width: 2.25rem;
             }
           }
         }

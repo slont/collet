@@ -20,6 +20,13 @@
           </div>
         </div>
 
+        <div class="field">
+          <label class="label">自己紹介</label>
+          <div class="control">
+            <textarea v-model="user.biography" v-autosize="user.biography" class="textarea" rows="2"></textarea>
+          </div>
+        </div>
+
         <a class="password-setting-expand" @click="expandedPasswordSetting = !expandedPasswordSetting">
           パスワード再設定
           <span class="icon" v-if="expandedPasswordSetting"><i class="material-icons">keyboard_arrow_up</i></span>
@@ -27,7 +34,7 @@
         </a>
         <div class="password-setting-area" v-if="expandedPasswordSetting">
           <div class="field">
-            <label class="label">パスワード</label>
+            <label class="label">現在のパスワード</label>
             <div class="control">
               <input v-model.trim="user.password" class="input" type="password"
                      name="password" v-validate="'required'">
@@ -36,15 +43,25 @@
           </div>
 
           <div class="field">
-            <label class="label">確認パスワード</label>
+            <label class="label">新しいパスワード</label>
+            <div class="control">
+              <input v-model.trim="newPassword" class="input" type="password"
+                     name="newPassword" v-validate="'required'">
+              <span v-show="errors.has('newPassword')" class="has-text-danger">{{ errors.first('newPassword') }}</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">新しいパスワードの確認</label>
             <div class="control">
               <input v-model.trim="confirmPassword" class="input" type="password"
-                     name="confirmPassword" v-validate="'required|confirmed:password'">
+                     name="confirmPassword" v-validate="'required|confirmed:newPassword'">
               <span v-show="errors.has('confirmPassword')" class="has-text-danger">{{ errors.first('confirmPassword') }}</span>
             </div>
           </div>
         </div>
 
+        <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
         <div class="save-button has-right">
           <button @click="save" class="button is-primary">保存</button>
         </div>
@@ -85,11 +102,14 @@
           id: '',
           name: '',
           email: '',
+          biography: '',
           image: '',
           password: ''
         },
         expandedPasswordSetting: false,
-        confirmPassword: ''
+        newPassword: '',
+        confirmPassword: '',
+        errorMessage: ''
       }
     },
     created() {
@@ -100,13 +120,17 @@
         this.$validator.validateAll().then(result => {
           if (!result) return
 
-          const body = Object.assign({}, this.user)
+          const body = Object.assign({}, this.user, {
+            newPassword: this.newPassword
+          })
           if (!this.expandedPasswordSetting) {
             delete body.password
+            delete body.newPassword
           }
-          new UserModel().update(this.user.id, this.user).then(() => {
+          new UserModel().update(this.user.id, body).then(() => {
             const newUser = Object.assign({}, this.user, body)
             delete newUser.password
+            delete newUser.newPassword
             this.$store.dispatch('setUser', newUser)
             this.$message({
               showClose: true,
@@ -115,11 +139,7 @@
             })
           }).catch(err => {
             console.log(err)
-            this.$message({
-              showClose: true,
-              message: '保存に失敗しました',
-              type: 'error'
-            })
+            this.errorMessage = err.message
           })
         })
       },
@@ -148,7 +168,8 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #settings-profile {
-    margin-top: .75rem;
+    margin-top: -.75rem;
+    margin-left: .75rem;
 
     .password-setting-expand {
       display: flex;

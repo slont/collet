@@ -23,10 +23,7 @@
 </template>
 
 <script>
-  import Hello from '@/components/Hello'
-
   export default {
-    components: { Hello },
     data() {
       return {
         themes: [
@@ -95,6 +92,10 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #top-top {
+    width: $width;
+    margin-left: auto;
+    margin-right: auto;
+
     .meta-data {
       display: inline-flex;
       font-size: $size-small;

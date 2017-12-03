@@ -14,6 +14,7 @@ export default {
 
 <style lang="scss" rel="stylesheet/scss">
   #app {
-    height: 100vh;
+    min-height: 100vh;
+    background-color: #f4f4f4;
   }
 </style>
