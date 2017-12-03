@@ -18,6 +18,16 @@ export default new Router({
   mode: 'history',
   routes: [
     {
+      path: '/signup',
+      component: Signup
+    }, {
+      path: '/signin',
+      component: Signin
+    }, {
+      path: '/confirm',
+      component: Confirm
+    },
+    {
       path: '/',
       component: Index,
       children: [
@@ -31,15 +41,6 @@ export default new Router({
             }
           ]
         }, {
-          path: ':userName',
-          component: UserpageIndex
-        }, {
-          path: ':userName/:themeId',
-          component: UserpageTheme
-        }, {
-          path: ':userName/:themeId/:itemId',
-          component: UserpageItem
-        }, {
           path: 'settings',
           component: SettingsIndex,
           children: [
@@ -48,17 +49,17 @@ export default new Router({
               component: SettingsProfile
             }
           ]
+        }, {
+          path: ':userName',
+          component: UserpageIndex
+        }, {
+          path: ':userName/:themeId',
+          component: UserpageTheme
+        }, {
+          path: ':userName/:themeId/:itemId',
+          component: UserpageItem
         }
       ]
-    }, {
-      path: '/signup',
-      component: Signup
-    }, {
-      path: '/signin',
-      component: Signin
-    }, {
-      path: '/confirm',
-      component: Confirm
     }
   ]
 })

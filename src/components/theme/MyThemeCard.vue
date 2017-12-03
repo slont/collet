@@ -5,7 +5,7 @@
         <img :src="theme.image" v-if="theme.image">
         <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image" v-else>
       </figure>
-      <div class="dark-mask" @click="$router.push(`/mypage/${theme.id}`)">
+      <div class="dark-mask" @click="$router.push(`/${urlUserName}/${theme.id}`)">
         <div class="title is-5">{{ theme.title }}</div>
       </div>
     </div>
@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <footer class="card-footer">
+    <footer class="card-footer" v-if="isMyPage">
       <a class="edit-button card-footer-item" @click="$emit('open-edit-modal')">Edit</a>
     </footer>
   </div>
@@ -33,7 +33,15 @@
 
 <script>
   export default {
-    props: ['theme']
+    props: ['theme'],
+    computed: {
+      urlUserName() {
+        return this.$route.params.userName
+      },
+      isMyPage() {
+        return this.$store.state.user.name === this.urlUserName
+      }
+    }
   }
 </script>
 

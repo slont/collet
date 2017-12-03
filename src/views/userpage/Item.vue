@@ -8,7 +8,8 @@
     <div class="item-info">
       <div class="title is-2">
         {{ item.name }}
-        <button class="button is-primary is-outlined" @click="$refs.itemEditModal.open(item)">
+        <button class="button is-primary is-outlined" @click="$refs.itemEditModal.open(item)"
+                v-if="isMyPage">
           <span class="icon"><i class="material-icons">edit</i></span>
         </button>
       </div>
@@ -73,6 +74,9 @@
       }
     },
     computed: {
+      isMyPage() {
+        return this.$store.state.user.name === this.$route.params.userName
+      },
       themeId() {
         return this.$route.params.themeId
       },

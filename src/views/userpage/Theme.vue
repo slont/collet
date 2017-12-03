@@ -7,7 +7,8 @@
       <div class="dark-mask" @click="$router.push(`/userpage/${theme.id}`)">
         <div class="title is-3">
           {{ theme.title }}
-          <button class="button is-primary is-outlined" @click="$refs.themeEditModal.open(theme)">
+          <button class="button is-primary is-outlined" @click="$refs.themeEditModal.open(theme)"
+                  v-if="isMyPage">
             <span class="icon"><i class="material-icons">edit</i></span>
           </button>
         </div>
@@ -115,6 +116,9 @@
       }
     },
     computed: {
+      isMyPage() {
+        return this.$store.state.user.name === this.$route.params.userName
+      },
       themeId() {
         return this.$route.params.themeId
       }

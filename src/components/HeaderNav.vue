@@ -71,7 +71,7 @@
               </div>
             </div>
           </div>
-          <router-link to="/mypage" class="navbar-item">
+          <router-link :to="`/${user.name}`" class="navbar-item">
             マイページ
           </router-link>
         </div>
