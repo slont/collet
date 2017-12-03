@@ -160,7 +160,8 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #settings-profile {
-    margin-top: .75rem;
+    margin-top: -.75rem;
+    margin-left: .75rem;
 
     .password-setting-expand {
       display: flex;
