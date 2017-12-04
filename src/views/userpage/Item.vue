@@ -65,6 +65,14 @@
       RatingElement,
       SwitchElement
     },
+    props: {
+      currentItem: {
+        type: Object,
+        default: () => ({
+          id: ''
+        })
+      }
+    },
     data() {
       return {
         item: {
@@ -81,10 +89,10 @@
         return this.$route.params.themeId
       },
       itemId() {
-        return this.$route.params.itemId
+        return this.currentItem.id || this.$route.params.itemId
       }
     },
-    created() {
+    mounted() {
       this.refresh()
     },
     methods: {

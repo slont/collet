@@ -1,75 +1,96 @@
 <template>
   <div id="userpage-theme">
-    <div class="theme-image trim" v-if="theme.image">
-      <figure class="image is-4by3">
-        <img :src="theme.image" v-if="theme.image">
-      </figure>
-      <div class="dark-mask" @click="$router.push(`/userpage/${theme.id}`)">
-        <div class="title is-3">
-          {{ theme.title }}
-          <button class="button is-primary is-outlined" @click="$refs.themeEditModal.open(theme)"
-                  v-if="isMyPage">
-            <span class="icon"><i class="material-icons">edit</i></span>
-          </button>
+    <header class="theme-header">
+      <div class="theme-image theme-header-content trim" v-if="theme.image">
+        <figure class="image is-4by3">
+          <img :src="theme.image" v-if="theme.image">
+        </figure>
+        <div class="dark-mask" @click="$router.push(`/userpage/${theme.id}`)">
+          <div class="title is-3">
+            {{ theme.title }}
+            <button class="button is-primary is-outlined" @click="$refs.themeEditModal.open(theme)"
+                    v-if="isMyPage">
+              <span class="icon"><i class="material-icons">edit</i></span>
+            </button>
+          </div>
+          <div class="subtitle is-6">{{ theme.description }}</div>
         </div>
+      </div>
+      <div class="theme-profile theme-header-content" v-else>
+        <div class="title is-3">{{ theme.title | truncate(10) }}</div>
         <div class="subtitle is-6">{{ theme.description }}</div>
       </div>
-    </div>
-    <div v-else>
-      <div class="title is-3">{{ theme.title }}</div>
-      <div class="subtitle is-6">{{ theme.description }}</div>
-    </div>
+    </header>
 
-    <div class="search-box">
-      <div class="field has-addons">
-        <div class="control">
-          <input class="input" type="text" placeholder="Find a repository">
+    <div class="theme-sub-header header-shadow">
+      <div class="search-box">
+        <div class="field has-addons">
+          <div class="control">
+            <input class="input" type="text" placeholder="Find a repository">
+          </div>
+          <div class="control">
+            <a class="button is-info">
+              <span class="icon"><i class="material-icons">search</i></span>
+            </a>
+          </div>
         </div>
-        <div class="control">
-          <a class="button is-info">
-            <span class="icon"><i class="material-icons">search</i></span>
-          </a>
-        </div>
-      </div>
 
-      <div class="action-buttons">
-        <button class="button" v-if="0 === viewType" @click="viewType = 1">
-          <span class="icon"><i class="material-icons">view_list</i></span>
-        </button>
-        <button class="button" v-else-if="1 === viewType" @click="viewType = 0">
-          <span class="icon"><i class="material-icons">view_module</i></span>
-        </button>
-      </div>
-    </div>
-
-    <div class="theme-items tile is-ancestor" v-if="theme.items.length && 0 === viewType">
-      <div v-for="item in theme.items" class="tile is-parent is-4" :key="item.id">
-        <item-card :theme="theme" :item="item" @open-edit-modal="$refs.itemEditModal.open(item)"></item-card>
-      </div>
-    </div>
-
-    <table class="theme-items table" v-else-if="theme.items.length && 1 === viewType">
-      <tbody>
-      <tr v-for="item in theme.items" :key="item.id">
-        <th class="image-cell" @click="$router.push(`/userpage/${theme.id}/${item.id}`)">
-          <img :src="item.image || 'https://bulma.io/images/placeholders/1280x960.png'" alt="Placeholder image">
-        </th>
-        <td class="title-cell">
-          <router-link :to="`/userpage/${theme.id}/${item.id}`" class="title is-4">{{ item.name }}</router-link>
-          <p>{{ item.description }}</p>
-        </td>
-        <td class="action-cell">
-          <button class="button is-primary is-outlined" @click="$refs.itemEditModal.open(item)">
-            <span class="icon"><i class="material-icons">edit</i></span>
+        <div class="action-buttons">
+          <button class="button" @click="viewType = 0" v-if="0 !== viewType">
+            <span class="icon"><i class="material-icons">chrome_reader_mode</i></span>
           </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+          <button class="button" @click="viewType = 1" v-if="1 !== viewType">
+            <span class="icon"><i class="material-icons">view_module</i></span>
+          </button>
+          <button class="button" @click="viewType = 2" v-if="2 !== viewType">
+            <span class="icon"><i class="material-icons">view_list</i></span>
+          </button>
+        </div>
+      </div>
+    </div>
 
-    <div class="box" v-else>
-      まだアイテムが追加されていません
-      右下のボタンからアイテムを追加してみましょう！
+    <div class="theme-content">
+      <div class="theme-items columns" v-if="theme.items.length && 0 === viewType">
+        <div class="column is-4">
+          <div v-for="item in theme.items" :key="item.id">
+            <item-card :theme="theme" :item="item" @open-edit-modal="$refs.itemEditModal.open(item)"></item-card>
+          </div>
+        </div>
+        <div class="column is-8">
+          <img :src="currentItem.image"/>
+          <item-page :current-item="currentItem"></item-page>
+        </div>
+      </div>
+
+      <div class="theme-items tile is-ancestor" v-if="theme.items.length && 1 === viewType">
+        <div v-for="item in theme.items" class="tile is-parent is-4" :key="item.id">
+          <item-card :theme="theme" :item="item" @open-edit-modal="$refs.itemEditModal.open(item)"></item-card>
+        </div>
+      </div>
+
+      <table class="theme-items table" v-else-if="theme.items.length && 2 === viewType">
+        <tbody>
+        <tr v-for="item in theme.items" :key="item.id">
+          <th class="image-cell" @click="$router.push(`/userpage/${theme.id}/${item.id}`)">
+            <img :src="item.image || 'https://bulma.io/images/placeholders/1280x960.png'" alt="Placeholder image">
+          </th>
+          <td class="title-cell">
+            <router-link :to="`/userpage/${theme.id}/${item.id}`" class="title is-4">{{ item.name }}</router-link>
+            <p>{{ item.description }}</p>
+          </td>
+          <td class="action-cell">
+            <button class="button is-primary is-outlined" @click="$refs.itemEditModal.open(item)">
+              <span class="icon"><i class="material-icons">edit</i></span>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div class="box" v-else>
+        まだアイテムが追加されていません
+        右下のボタンからアイテムを追加してみましょう！
+      </div>
     </div>
 
     <div class="fixed-action-button vertical">
@@ -103,16 +124,20 @@
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
   import ItemCreateModal from '@/components/item/ItemCreateModal'
   import ItemEditModal from '@/components/item/ItemEditModal'
+  import ItemPage from './Item'
 
   export default {
-    components: { ThemeEditModal, ItemCreateModal, ItemEditModal, ItemCard },
+    components: { ThemeEditModal, ItemCreateModal, ItemEditModal, ItemCard, ItemPage },
     data() {
       return {
         theme: {
           title: '',
           items: []
         },
-        viewType: 0
+        viewType: 0,
+        currentItem: {
+          id: ''
+        }
       }
     },
     computed: {
@@ -133,6 +158,9 @@
       refresh() {
         new ThemeModel().findOne(this.themeId).then(res => {
           this.theme = res
+          if (this.theme.items.length) {
+            this.currentItem = this.theme.items[0]
+          }
         }).catch(err => {
           console.log(err)
           this.$message({
@@ -148,77 +176,100 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-theme {
-    padding-top: 1em;
+    background-color: white;
 
-    .theme-image {
-      position: relative;
-      display: flex;
-      align-items: center;
-      max-height: 14rem;
+    .theme-header {
+      .theme-header-content {
+        width: $width;
+        margin: 0 auto;
+        position: relative;
+        max-height: 14rem;
 
-      .image {
-        width: 100%;
+        .image {
+          width: 100%;
+        }
+        .dark-mask {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          position: absolute;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          padding: .75rem;
+
+          .title {
+            color: white;
+            padding-bottom: 1rem;
+          }
+          .subtitle {
+            color: white;
+          }
+        }
+        &.theme-image {
+          display: flex;
+          align-items: center;
+        }
+        &.theme-profile {
+          padding: .75rem 0;
+        }
       }
-      .dark-mask {
+    }
+    .theme-sub-header {
+      .search-box {
+        width: $width;
+        margin: 0 auto;
         display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        padding: .75rem;
+        align-items: center;
+        padding: 1rem 0;
 
-        .title {
-          color: white;
-          padding-bottom: 1rem;
+        .field {
+          margin-bottom: 0;
         }
-        .subtitle {
-          color: white;
+        .action-buttons {
+          margin-left: auto;
         }
       }
     }
-    .search-box {
-      display: flex;
-      align-items: center;
-      padding: 1rem;
+    .theme-content {
+      width: 80%;
+      min-width: $width;
+      margin: 0 auto;
+      padding-top: 1rem;
 
-      .action-buttons {
-        margin-left: auto;
-      }
-    }
-    .theme-items {
-      &.tile {
-        flex-wrap: wrap;
+      .theme-items {
+        &.tile {
+          flex-wrap: wrap;
 
-        .media-content {
-          .title:hover {
-            text-decoration: underline;
+          .media-content {
+            .title:hover {
+              text-decoration: underline;
+            }
           }
         }
-      }
-      &.table {
-        width: 100%;
+        &.table {
+          width: 100%;
 
-        .image-cell {
-          width: 6rem;
-          height: 6rem;
-          padding: 0;
-          vertical-align: middle;
-          cursor: pointer;
+          .image-cell {
+            width: 6rem;
+            height: 6rem;
+            padding: 0;
+            vertical-align: middle;
+            cursor: pointer;
 
-          img {
-            margin-bottom: -6px;
+            img {
+              margin-bottom: -6px;
+            }
           }
-        }
-        .title-cell {
-          .title:hover {
-            text-decoration: underline;
+          .title-cell {
+            .title:hover {
+              text-decoration: underline;
+            }
           }
-        }
-        .action-cell {
-          width: 6rem;
-          vertical-align: middle;
+          .action-cell {
+            width: 6rem;
+            vertical-align: middle;
+          }
         }
       }
     }
