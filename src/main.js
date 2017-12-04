@@ -31,6 +31,8 @@ Vue.use(Element, {
   i18n: (key, value) => i18n.t(key, value)
 })
 
+Vue.filter('truncate', (text, stop) => text.slice(0, stop) + (stop < text.length ? '...' : ''))
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
