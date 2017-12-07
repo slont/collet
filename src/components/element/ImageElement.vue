@@ -21,9 +21,9 @@
       </div>
     </div>
 
-    <div class="file-view" v-else>
+    <figure class="image file-view" v-else>
       <img :src="params.valueStr"/>
-    </div>
+    </figure>
   </cl-element>
 </template>
 
@@ -82,6 +82,10 @@
         position: absolute;
         top: 0;
         opacity: .7;
+      }
+      img {
+        width: 70%;
+        margin: auto;
       }
     }
   }

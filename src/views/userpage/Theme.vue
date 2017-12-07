@@ -9,14 +9,13 @@
                 <img :src="theme.image" v-if="theme.image">
               </figure>
               <div class="dark-mask" @click="$router.push(`/userpage/${theme.id}`)">
-                <div class="title is-3">
+                <div class="title is-5">
                   {{ theme.title }}
-                  <button class="button is-primary is-outlined" @click="$refs.themeEditModal.open(theme)"
-                          v-if="isMyPage">
-                    <span class="icon"><i class="material-icons">edit</i></span>
-                  </button>
                 </div>
                 <div class="subtitle is-6">{{ theme.description }}</div>
+                <button class="button is-primary is-outlined" @click="$refs.themeEditModal.open(theme)" v-if="isMyPage">
+                  <span class="icon"><i class="material-icons">edit</i></span>
+                </button>
               </div>
             </div>
             <div class="theme-profile theme-header-content" v-else>
@@ -27,7 +26,7 @@
           <div class="theme-sub-header">
             <div class="search-box">
               <div class="field has-addons">
-                <div class="control">
+                <div class="input-control control">
                   <input class="input" type="text" placeholder="Find a repository">
                 </div>
                 <div class="control">
@@ -41,15 +40,13 @@
 
           <div>
             <div v-for="item in theme.items" :key="item.id">
-              <item-card :theme="theme" :item="item" @open-edit-modal="$refs.itemEditModal.open(item)"></item-card>
+              <item-card :theme="theme" :item="item" @click.native="currentItem = item"
+                         @open-edit-modal="$refs.itemEditModal.open(item)"></item-card>
             </div>
           </div>
         </div>
         <div class="column is-8">
-          <div>
-            <img :src="currentItem.image"/>
-            <item-page :current-item="currentItem"></item-page>
-          </div>
+          <item-page :current-item="currentItem"></item-page>
         </div>
       </div>
 
@@ -118,11 +115,7 @@
       }
     },
     created() {
-      window.addEventListener('scroll', this.handleScroll)
       this.refresh()
-    },
-    destroyed() {
-      window.removeEventListener('scroll', this.handleScroll)
     },
     methods: {
       refresh() {
@@ -180,11 +173,21 @@
                 padding: .75rem;
 
                 .title {
+                  height: 2.75rem;
                   color: white;
-                  padding-bottom: 1rem;
+                  overflow: hidden;
                 }
                 .subtitle {
+                  height: 3.75rem;
+                  margin-bottom: 0;
                   color: white;
+                  overflow: hidden;
+                }
+                .button {
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  margin: .3rem;
                 }
               }
               &.theme-image {
@@ -210,7 +213,7 @@
                 width: 100%;
                 margin-bottom: 0;
 
-                .control {
+                .input-control {
                   width: 100%;
                 }
               }
