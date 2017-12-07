@@ -1,12 +1,7 @@
 <template>
   <div id="userpage-item">
-    <div class="item-image trim" v-if="item.image">
-      <figure class="image is-4by3">
-        <img :src="item.image" v-if="item.image">
-      </figure>
-    </div>
     <div class="item-info">
-      <div class="title is-2">
+      <div class="title is-3">
         {{ item.name }}
         <button class="button is-primary is-outlined" @click="$refs.itemEditModal.open(item)"
                 v-if="isMyPage">
@@ -14,6 +9,10 @@
         </button>
       </div>
       <div class="subtitle is-6">{{ item.description }}</div>
+
+      <figure class="image">
+        <img :src="item.image" v-if="item.image">
+      </figure>
     </div>
 
     <div class="item-elements">
@@ -65,6 +64,14 @@
       RatingElement,
       SwitchElement
     },
+    props: {
+      currentItem: {
+        type: Object,
+        default: () => ({
+          id: ''
+        })
+      }
+    },
     data() {
       return {
         item: {
@@ -81,10 +88,13 @@
         return this.$route.params.themeId
       },
       itemId() {
-        return this.$route.params.itemId
+        return this.currentItem.id || this.$route.params.itemId
       }
     },
-    created() {
+    watch: {
+      'currentItem.id': 'refresh'
+    },
+    mounted() {
       this.refresh()
     },
     methods: {
@@ -106,20 +116,6 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-item {
-    padding-top: 1em;
-    width: $item-page-width;
-
-    .item-image {
-      position: relative;
-      display: flex;
-      align-items: center;
-      max-height: 14rem;
-      margin-bottom: 2.5rem;
-
-      .image {
-        width: 100%;
-      }
-    }
     .item-info {
       margin-bottom: 2rem;
 
@@ -128,6 +124,12 @@
       }
       .subtitle {
         line-height: inherit;
+      }
+      .image {
+        img {
+          width: 70%;
+          margin: auto;
+        }
       }
     }
   }

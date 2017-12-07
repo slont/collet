@@ -3,17 +3,14 @@
     <header class="userpage-header header-shadow">
       <article class="user-profile media">
         <figure class="media-left">
-          <p class="image is-128x128">
+          <p class="image is-64x64">
             <img :src="user.image" class="circle">
           </p>
         </figure>
         <div class="media-content">
           <div class="content">
-            <p>
-              <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
-              <br>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
-            </p>
+            <div class="title is-4">{{ urlUserName }}</div>
+            <p>{{ user.biography }}</p>
           </div>
           <nav class="level is-mobile">
             <div class="level-left">
@@ -41,10 +38,11 @@
     <div class="themes">
       <div class="columns is-multiline">
         <div v-for="theme in themes" class="column is-one-third-tablet" :key="theme.id">
-          <my-theme-card :theme="theme" @open-edit-modal="$refs.themeEditModal.open(theme)"></my-theme-card>
+          <theme-card :theme="theme" @open-edit-modal="$refs.themeEditModal.open(theme)"></theme-card>
         </div>
       </div>
     </div>
+
     <a @click="$refs.themeCreateModal.open()" class="button button-create is-float is-primary circle">
       <i class="material-icons">add</i>
     </a>
@@ -55,24 +53,28 @@
 </template>
 
 <script>
+  import UserModel from '@/models/User'
   import ThemeModel from '@/models/Theme'
-  import MyThemeCard from '@/components/theme/MyThemeCard'
+  import ThemeCard from '@/components/theme/ThemeCard'
   import ThemeCreateModal from '@/components/theme/ThemeCreateModal'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
 
   export default {
-    components: { MyThemeCard, ThemeCreateModal, ThemeEditModal },
+    components: { ThemeCard, ThemeCreateModal, ThemeEditModal },
     data() {
       return {
+        user: {
+          id: '',
+          name: '',
+          biography: '',
+          image: ''
+        },
         themes: []
       }
     },
     computed: {
       urlUserName() {
         return this.$route.params.userName
-      },
-      user() {
-        return this.$store.state.user
       }
     },
     created() {
@@ -80,9 +82,13 @@
     },
     methods: {
       refresh() {
-        new ThemeModel().find({
-          p: 0,
-          s: 20
+        new UserModel().findOne(this.urlUserName).then(res => {
+          this.user = res
+          return new ThemeModel().find({
+            userId: this.user.id,
+            p: 0,
+            s: 20
+          })
         }).then(res => {
           this.themes = res
         }).catch(err => {
@@ -107,8 +113,16 @@
         width: $width;
         margin-left: auto;
         margin-right: auto;
-        padding: 1rem;
+        padding: 1rem .5rem .5rem;
         border-bottom: $border;
+
+        .content {
+          margin-bottom: 0;
+
+          .title {
+            margin-bottom: .25rem;
+          }
+        }
       }
       .tabs {
         width: $width;
@@ -127,9 +141,10 @@
       }
     }
     .themes {
+      width: $width;
+      margin: 0 auto;
+
       > .columns {
-        width: $width;
-        margin: 0 auto;
         padding-top: 1em;
       }
     }

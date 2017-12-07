@@ -1,75 +1,76 @@
 <template>
   <div id="userpage-theme">
-    <div class="theme-image trim" v-if="theme.image">
-      <figure class="image is-4by3">
-        <img :src="theme.image" v-if="theme.image">
-      </figure>
-      <div class="dark-mask" @click="$router.push(`/userpage/${theme.id}`)">
-        <div class="title is-3">
-          {{ theme.title }}
-          <button class="button is-primary is-outlined" @click="$refs.themeEditModal.open(theme)"
-                  v-if="isMyPage">
-            <span class="icon"><i class="material-icons">edit</i></span>
-          </button>
+    <div class="theme-content">
+      <div class="theme-columns columns" v-if="theme.items.length">
+        <div class="column is-4">
+          <div class="theme-card card">
+            <header class="theme-header">
+              <div class="theme-image theme-header-content trim" v-if="theme.image">
+                <figure class="theme-image image is-4by3">
+                  <img :src="theme.image" v-if="theme.image">
+                </figure>
+                <div class="dark-mask">
+                  <button class="button is-primary is-outlined" @click="$refs.themeEditModal.open(theme)" v-if="isMyPage">
+                    <span class="icon"><i class="material-icons">edit</i></span>
+                  </button>
+                  <div class="title is-5">{{ theme.title }}</div>
+                  <div class="user-profile" @click="$router.push(`/${user.name}`)">
+                    <figure class="image is-16x16" v-if="user.image">
+                      <img class="circle" :src="user.image">
+                    </figure>
+                    <span class="user-name">{{ user.name }}</span>
+                    <span class="updated-at">- {{ theme.updatedAt.format('YYYY/MM/DD') }}</span>
+                  </div>
+                  <div class="theme-tags" v-if="theme.tags.length">
+                    <span v-for="tag in theme.tags" class="tag is-info">{{ tag.name }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="theme-profile theme-header-content" v-else>
+                <div class="title is-5">{{ theme.title }}</div>
+              </div>
+            </header>
+            <div class="theme-description card-content">
+              <div class="subtitle is-6" :class="{ 'is-opened': openedThemeDescription }">{{ theme.description }}</div>
+              <a class="button is-text is-small" @click="openedThemeDescription = !openedThemeDescription">
+                {{ openedThemeDescription ? '閉じる' : '詳しく見る' }}
+              </a>
+            </div>
+          </div>
+
+          <div class="theme-sub-header">
+            <div class="search-box">
+              <div class="field has-addons">
+                <div class="input-control control">
+                  <input class="input" type="text" placeholder="Find a repository">
+                </div>
+                <div class="control">
+                  <a class="button is-info">
+                    <span class="icon"><i class="material-icons">search</i></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="theme-items">
+            <div class="subtitle is-7">アイテム一覧</div>
+            <div v-for="item in theme.items" :key="item.id">
+              <item-card :theme="theme" :item="item" @click.native="currentItem = item"
+                         @open-edit-modal="$refs.itemEditModal.open(item)"></item-card>
+            </div>
+          </div>
         </div>
-        <div class="subtitle is-6">{{ theme.description }}</div>
-      </div>
-    </div>
-    <div v-else>
-      <div class="title is-3">{{ theme.title }}</div>
-      <div class="subtitle is-6">{{ theme.description }}</div>
-    </div>
 
-    <div class="search-box">
-      <div class="field has-addons">
-        <div class="control">
-          <input class="input" type="text" placeholder="Find a repository">
-        </div>
-        <div class="control">
-          <a class="button is-info">
-            <span class="icon"><i class="material-icons">search</i></span>
-          </a>
+        <div class="column is-8">
+          <item-page :current-item="currentItem"></item-page>
         </div>
       </div>
 
-      <div class="action-buttons">
-        <button class="button" v-if="0 === viewType" @click="viewType = 1">
-          <span class="icon"><i class="material-icons">view_list</i></span>
-        </button>
-        <button class="button" v-else-if="1 === viewType" @click="viewType = 0">
-          <span class="icon"><i class="material-icons">view_module</i></span>
-        </button>
+      <div class="box" v-else>
+        まだアイテムが追加されていません
+        右下のボタンからアイテムを追加してみましょう！
       </div>
-    </div>
-
-    <div class="theme-items tile is-ancestor" v-if="theme.items.length && 0 === viewType">
-      <div v-for="item in theme.items" class="tile is-parent is-4" :key="item.id">
-        <my-item-card :theme="theme" :item="item" @open-edit-modal="$refs.itemEditModal.open(item)"></my-item-card>
-      </div>
-    </div>
-
-    <table class="theme-items table" v-else-if="theme.items.length && 1 === viewType">
-      <tbody>
-      <tr v-for="item in theme.items" :key="item.id">
-        <th class="image-cell" @click="$router.push(`/userpage/${theme.id}/${item.id}`)">
-          <img :src="item.image || 'https://bulma.io/images/placeholders/1280x960.png'" alt="Placeholder image">
-        </th>
-        <td class="title-cell">
-          <router-link :to="`/userpage/${theme.id}/${item.id}`" class="title is-4">{{ item.name }}</router-link>
-          <p>{{ item.description }}</p>
-        </td>
-        <td class="action-cell">
-          <button class="button is-primary is-outlined" @click="$refs.itemEditModal.open(item)">
-            <span class="icon"><i class="material-icons">edit</i></span>
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-
-    <div class="box" v-else>
-      まだアイテムが追加されていません
-      右下のボタンからアイテムを追加してみましょう！
     </div>
 
     <div class="fixed-action-button vertical">
@@ -98,26 +99,38 @@
 </template>
 
 <script>
+  import UserModel from '@/models/User'
   import ThemeModel from '@/models/Theme'
-  import MyItemCard from '@/components/item/MyItemCard'
+  import ItemCard from '@/components/item/ItemCard'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
   import ItemCreateModal from '@/components/item/ItemCreateModal'
   import ItemEditModal from '@/components/item/ItemEditModal'
+  import ItemPage from './Item'
 
   export default {
-    components: { ThemeEditModal, ItemCreateModal, ItemEditModal, MyItemCard },
+    components: { ThemeEditModal, ItemCreateModal, ItemEditModal, ItemCard, ItemPage },
     data() {
       return {
         theme: {
           title: '',
           items: []
         },
-        viewType: 0
+        user: {
+          name: '',
+          image: ''
+        },
+        currentItem: {
+          id: ''
+        },
+        openedThemeDescription: false
       }
     },
     computed: {
+      urlUserName() {
+        return this.$route.params.userName
+      },
       isMyPage() {
-        return this.$store.state.user.name === this.$route.params.userName
+        return this.$store.state.user.name === this.urlUserName
       },
       themeId() {
         return this.$route.params.themeId
@@ -128,8 +141,21 @@
     },
     methods: {
       refresh() {
+        new UserModel().findOne(this.urlUserName).then(res => {
+          this.user = res
+        }).catch(err => {
+          console.log(err)
+          this.$message({
+            showClose: true,
+            message: 'データ取得に失敗しました',
+            type: 'error'
+          })
+        })
         new ThemeModel().findOne(this.themeId).then(res => {
           this.theme = res
+          if (this.theme.items.length) {
+            this.currentItem = this.theme.items[0]
+          }
         }).catch(err => {
           console.log(err)
           this.$message({
@@ -145,77 +171,126 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-theme {
-    padding-top: 1em;
+    background-color: white;
 
-    .theme-image {
-      position: relative;
-      display: flex;
-      align-items: center;
-      max-height: 14rem;
+    .theme-content {
+      height: 100vh;
+      width: 90%;
+      margin: 0 auto;
 
-      .image {
-        width: 100%;
-      }
-      .dark-mask {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        position: absolute;
-        top: 0;
-        width: 100%;
+      .theme-columns {
         height: 100%;
-        padding: .75rem;
-
-        .title {
-          color: white;
-          padding-bottom: 1rem;
-        }
-        .subtitle {
-          color: white;
-        }
-      }
-    }
-    .search-box {
-      display: flex;
-      align-items: center;
-      padding: 1rem;
-
-      .action-buttons {
-        margin-left: auto;
-      }
-    }
-    .theme-items {
-      &.tile {
-        flex-wrap: wrap;
-
-        .media-content {
-          .title:hover {
-            text-decoration: underline;
-          }
-        }
-      }
-      &.table {
         width: 100%;
+        margin: 0;
 
-        .image-cell {
-          width: 6rem;
-          height: 6rem;
-          padding: 0;
-          vertical-align: middle;
-          cursor: pointer;
+        > div {
+          overflow: scroll;
 
-          img {
-            margin-bottom: -6px;
+          .theme-header {
+            .theme-header-content {
+              position: relative;
+              max-height: 14rem;
+
+              .theme-image {
+                width: 100%;
+              }
+              .dark-mask {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                position: absolute;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                padding: .75rem;
+
+                > :not(:last-child) {
+                  margin-bottom: .5rem;
+                }
+                .title {
+                  max-height: 6.25rem;
+                  line-height: 1.25;
+                  color: white;
+                  overflow: hidden;
+                }
+                .user-profile {
+                  font-size: .75rem;
+                  display: flex;
+                  align-items: center;
+                  cursor: pointer;
+
+                  > :not(:last-child) {
+                    margin-right: .3rem;
+                  }
+                  .user-name,
+                  .updated-at {
+                    color: white;
+                  }
+                }
+                .button {
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  margin: .3rem;
+                }
+              }
+              &.theme-image {
+                display: flex;
+                align-items: center;
+              }
+              &.theme-profile {
+                padding: .75rem 0;
+              }
+            }
+          }
+          .theme-description {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-bottom: .5rem;
+
+            .subtitle {
+              max-height: 3.75rem;
+              margin-bottom: 0;
+              line-height: 1.25;
+              overflow: hidden;
+              transition: max-height .3s;
+            }
+            .is-opened {
+              max-height: 100vh;
+              transition: max-height .5s;
+            }
+            .button {
+              margin: auto;
+            }
+          }
+          .theme-sub-header {
+            .search-box {
+              width: 100%;
+              margin: 0 auto;
+              display: flex;
+              align-items: center;
+              padding: .5rem 0;
+
+              .field {
+                width: 100%;
+                margin-bottom: 0;
+
+                .input-control {
+                  width: 100%;
+                }
+              }
+              .action-buttons {
+                margin-left: auto;
+              }
+            }
           }
         }
-        .title-cell {
-          .title:hover {
-            text-decoration: underline;
+        .theme-items {
+          .subtitle {
+            text-align: center;
+            margin: .5rem auto;
           }
-        }
-        .action-cell {
-          width: 6rem;
-          vertical-align: middle;
         }
       }
     }
