@@ -54,6 +54,7 @@
 
 <script>
   import ThemeModel from '@/models/Theme'
+  import FileModel from '@/models/File'
   import Modal from '@/components/Modal'
   import ThemeDeleteModal from './ThemeDeleteModal'
 
@@ -65,7 +66,6 @@
           title: '',
           description: '',
           image: '',
-          imageBase64: '',
           createdUser: this.$store.state.user
         },
         errorMessage: ''
@@ -115,13 +115,15 @@
       createImage(file) {
         const reader = new FileReader()
         reader.onload = e => {
-          this.theme.imageBase64 = e.target.result
+          this.theme.image = e.target.result
         }
         reader.readAsDataURL(file)
+        new FileModel().create(file).then(res => {
+          this.theme.image = res.path
+        })
       },
       removeImage() {
         this.theme.image = ''
-        this.theme.imageBase64 = ''
       }
     }
   }
