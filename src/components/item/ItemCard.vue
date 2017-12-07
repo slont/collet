@@ -36,6 +36,7 @@
     cursor: pointer;
 
     .media {
+      align-items: center;
       $size: 3rem;
       height: $size;
 
@@ -46,8 +47,8 @@
       .media-right {
         display: flex;
         align-items: center;
-        max-height: $size;
-        width: $size * 2;
+        max-height: 4rem;
+        width: 7rem;
         margin: auto 0 auto .5rem;
         overflow: hidden;
       }

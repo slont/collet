@@ -3,26 +3,38 @@
     <div class="theme-content">
       <div class="theme-items columns" v-if="theme.items.length">
         <div class="column is-4">
-          <header class="theme-header">
-            <div class="theme-image theme-header-content trim" v-if="theme.image">
-              <figure class="image is-4by3">
-                <img :src="theme.image" v-if="theme.image">
-              </figure>
-              <div class="dark-mask" @click="$router.push(`/userpage/${theme.id}`)">
-                <div class="title is-5">
-                  {{ theme.title }}
+          <div class="theme-card card">
+            <header class="theme-header">
+              <div class="theme-image theme-header-content trim" v-if="theme.image">
+                <figure class="theme-image image is-4by3">
+                  <img :src="theme.image" v-if="theme.image">
+                </figure>
+                <div class="dark-mask">
+                  <button class="button is-primary is-outlined" @click="$refs.themeEditModal.open(theme)" v-if="isMyPage">
+                    <span class="icon"><i class="material-icons">edit</i></span>
+                  </button>
+                  <div class="title is-5">{{ theme.title }}</div>
+                  <div class="user-profile">
+                    <figure class="image is-16x16" v-if="user.image">
+                      <img class="circle" :src="user.image">
+                    </figure>
+                    <router-link class="user-name" :to="`/${user.name}`">{{ user.name }}</router-link>
+                    <span class="updated-at">- {{ theme.updatedAt.format('YYYY/MM/DD') }}</span>
+                  </div>
+                  <div class="theme-tags" v-if="theme.tags.length">
+                    <span v-for="tag in theme.tags" class="tag is-info">{{ tag.name }}</span>
+                  </div>
                 </div>
-                <div class="subtitle is-6">{{ theme.description }}</div>
-                <button class="button is-primary is-outlined" @click="$refs.themeEditModal.open(theme)" v-if="isMyPage">
-                  <span class="icon"><i class="material-icons">edit</i></span>
-                </button>
               </div>
-            </div>
-            <div class="theme-profile theme-header-content" v-else>
-              <div class="title is-3">{{ theme.title | truncate(10) }}</div>
+              <div class="theme-profile theme-header-content" v-else>
+                <div class="title is-5">{{ theme.title }}</div>
+              </div>
+            </header>
+            <div class="card-content">
               <div class="subtitle is-6">{{ theme.description }}</div>
             </div>
-          </header>
+          </div>
+
           <div class="theme-sub-header">
             <div class="search-box">
               <div class="field has-addons">
@@ -82,6 +94,7 @@
 </template>
 
 <script>
+  import UserModel from '@/models/User'
   import ThemeModel from '@/models/Theme'
   import ItemCard from '@/components/item/ItemCard'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
@@ -96,6 +109,10 @@
         theme: {
           title: '',
           items: []
+        },
+        user: {
+          name: '',
+          image: ''
         },
         viewType: 0,
         currentItem: {
@@ -119,6 +136,16 @@
     },
     methods: {
       refresh() {
+        new UserModel().findOne(this.urlUserName).then(res => {
+          this.user = res
+        }).catch(err => {
+          console.log(err)
+          this.$message({
+            showClose: true,
+            message: 'データ取得に失敗しました',
+            type: 'error'
+          })
+        })
         new ThemeModel().findOne(this.themeId).then(res => {
           this.theme = res
           if (this.theme.items.length) {
@@ -159,7 +186,7 @@
               position: relative;
               max-height: 14rem;
 
-              .image {
+              .theme-image {
                 width: 100%;
               }
               .dark-mask {
@@ -172,16 +199,26 @@
                 height: 100%;
                 padding: .75rem;
 
+                > :not(:last-child) {
+                  margin-bottom: .5rem;
+                }
                 .title {
                   height: 2.75rem;
                   color: white;
                   overflow: hidden;
                 }
-                .subtitle {
-                  height: 3.75rem;
-                  margin-bottom: 0;
-                  color: white;
-                  overflow: hidden;
+                .user-profile {
+                  font-size: .75rem;
+                  display: flex;
+                  align-items: center;
+
+                  > :not(:last-child) {
+                    margin-right: .3rem;
+                  }
+                  .user-name,
+                  .updated-at {
+                    color: white;
+                  }
                 }
                 .button {
                   position: absolute;
