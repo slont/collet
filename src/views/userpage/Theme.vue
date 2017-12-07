@@ -1,7 +1,7 @@
 <template>
   <div id="userpage-theme">
     <div class="theme-content">
-      <div class="theme-items columns" v-if="theme.items.length">
+      <div class="theme-columns columns" v-if="theme.items.length">
         <div class="column is-4">
           <div class="theme-card card">
             <header class="theme-header">
@@ -14,11 +14,11 @@
                     <span class="icon"><i class="material-icons">edit</i></span>
                   </button>
                   <div class="title is-5">{{ theme.title }}</div>
-                  <div class="user-profile">
+                  <div class="user-profile" @click="$router.push(`/${user.name}`)">
                     <figure class="image is-16x16" v-if="user.image">
                       <img class="circle" :src="user.image">
                     </figure>
-                    <router-link class="user-name" :to="`/${user.name}`">{{ user.name }}</router-link>
+                    <span class="user-name">{{ user.name }}</span>
                     <span class="updated-at">- {{ theme.updatedAt.format('YYYY/MM/DD') }}</span>
                   </div>
                   <div class="theme-tags" v-if="theme.tags.length">
@@ -30,8 +30,11 @@
                 <div class="title is-5">{{ theme.title }}</div>
               </div>
             </header>
-            <div class="card-content">
-              <div class="subtitle is-6">{{ theme.description }}</div>
+            <div class="theme-description card-content">
+              <div class="subtitle is-6" :class="{ 'is-opened': openedThemeDescription }">{{ theme.description }}</div>
+              <a class="button is-text is-small" @click="openedThemeDescription = !openedThemeDescription">
+                {{ openedThemeDescription ? '閉じる' : '詳しく見る' }}
+              </a>
             </div>
           </div>
 
@@ -50,13 +53,15 @@
             </div>
           </div>
 
-          <div>
+          <div class="theme-items">
+            <div class="subtitle is-7">アイテム一覧</div>
             <div v-for="item in theme.items" :key="item.id">
               <item-card :theme="theme" :item="item" @click.native="currentItem = item"
                          @open-edit-modal="$refs.itemEditModal.open(item)"></item-card>
             </div>
           </div>
         </div>
+
         <div class="column is-8">
           <item-page :current-item="currentItem"></item-page>
         </div>
@@ -114,10 +119,10 @@
           name: '',
           image: ''
         },
-        viewType: 0,
         currentItem: {
           id: ''
-        }
+        },
+        openedThemeDescription: false
       }
     },
     computed: {
@@ -173,7 +178,7 @@
       width: 90%;
       margin: 0 auto;
 
-      .theme-items {
+      .theme-columns {
         height: 100%;
         width: 100%;
         margin: 0;
@@ -203,7 +208,8 @@
                   margin-bottom: .5rem;
                 }
                 .title {
-                  height: 2.75rem;
+                  max-height: 6.25rem;
+                  line-height: 1.25;
                   color: white;
                   overflow: hidden;
                 }
@@ -211,6 +217,7 @@
                   font-size: .75rem;
                   display: flex;
                   align-items: center;
+                  cursor: pointer;
 
                   > :not(:last-child) {
                     margin-right: .3rem;
@@ -236,9 +243,28 @@
               }
             }
           }
-          .theme-sub-header {
-            border-bottom: $border;
+          .theme-description {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-bottom: .5rem;
 
+            .subtitle {
+              max-height: 3.75rem;
+              margin-bottom: 0;
+              line-height: 1.25;
+              overflow: hidden;
+              transition: max-height .3s;
+            }
+            .is-opened {
+              max-height: 100vh;
+              transition: max-height .5s;
+            }
+            .button {
+              margin: auto;
+            }
+          }
+          .theme-sub-header {
             .search-box {
               width: 100%;
               margin: 0 auto;
@@ -258,6 +284,12 @@
                 margin-left: auto;
               }
             }
+          }
+        }
+        .theme-items {
+          .subtitle {
+            text-align: center;
+            margin: .5rem auto;
           }
         }
       }

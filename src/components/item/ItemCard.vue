@@ -35,6 +35,9 @@
     width: 100%;
     cursor: pointer;
 
+    &.card .media:not(:last-child) {
+      margin-bottom: 1rem;
+    }
     .media {
       align-items: center;
       $size: 3rem;
