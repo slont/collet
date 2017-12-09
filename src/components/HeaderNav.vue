@@ -1,6 +1,6 @@
 <template>
   <div id="header-nav">
-    <nav class="navbar is-info">
+    <nav class="navbar is-primary">
       <div class="navbar-brand">
         <router-link class="navbar-item" to="/">
           <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
@@ -138,7 +138,7 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #header-nav {
-    background-color: $info;
+    background-color: $primary;
 
     .navbar {
       max-width: $width;

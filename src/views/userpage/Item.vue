@@ -3,7 +3,7 @@
     <div class="item-info">
       <div class="title is-3">
         {{ item.name }}
-        <button class="button is-primary is-outlined" @click="$refs.itemEditModal.open(item)"
+        <button class="button is-info is-outlined" @click="$refs.itemEditModal.open(item)"
                 v-if="isMyPage">
           <span class="icon"><i class="material-icons">edit</i></span>
         </button>

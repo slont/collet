@@ -10,7 +10,7 @@
                   <img :src="theme.image" v-if="theme.image">
                 </figure>
                 <div class="dark-mask">
-                  <button class="button is-primary is-outlined" @click="$refs.themeEditModal.open(theme)" v-if="isMyPage">
+                  <button class="button is-info is-outlined" @click="$refs.themeEditModal.open(theme)" v-if="isMyPage">
                     <span class="icon"><i class="material-icons">edit</i></span>
                   </button>
                   <div class="title is-5">{{ theme.title }}</div>
@@ -55,10 +55,9 @@
 
           <div class="theme-items">
             <div class="subtitle is-7">アイテム一覧</div>
-            <div v-for="item in theme.items" :key="item.id">
-              <item-card :theme="theme" :item="item" @click.native="currentItem = item"
-                         @open-edit-modal="$refs.itemEditModal.open(item)"></item-card>
-            </div>
+            <item-card  v-for="item in theme.items" :key="item.id" :theme="theme" :item="item"
+                        :class="{ 'is-active': currentItem.id === item.id }"
+                        @click.native="currentItem = item" @open-edit-modal="$refs.itemEditModal.open(item)"></item-card>
           </div>
         </div>
 
@@ -290,6 +289,18 @@
           .subtitle {
             text-align: center;
             margin: .5rem auto;
+          }
+          .item-card {
+            &.is-active {
+              .card-content {
+                padding: calc(1rem - 3px);
+                border: 3px solid $primary;
+              }
+            }
+            &:hover {
+              transform: scale(1.03);
+              z-index: 1;
+            }
           }
         }
       }

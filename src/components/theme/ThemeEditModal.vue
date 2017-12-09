@@ -38,6 +38,27 @@
             </div>
           </div>
         </div>
+
+        <div class="field image-field">
+          <label class="label">メイン画像（オプショナル）</label>
+          <div class="control loading-mask" :class="{ 'is-loading': theme.image.substring(0, 4) === 'data' }">
+            <div class="file is-boxed">
+              <el-select
+                  v-model="value10"
+                  multiple
+                  filterable
+                  allow-create
+                  placeholder="Choose tags for your article">
+                <el-option
+                    v-for="item in options5"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -45,7 +66,7 @@
     <footer class="modal-card-foot has-right">
       <button @click="$refs.themeDeleteModal.open(theme)" class="button is-danger is-outlined is-left">削除</button>
       <button @click="close" class="button">キャンセル</button>
-      <button @click="ok" class="button is-primary">保存</button>
+      <button @click="ok" class="button is-info">保存</button>
     </footer>
 
     <theme-delete-modal ref="themeDeleteModal" @refresh="refreshClose"></theme-delete-modal>
@@ -66,9 +87,21 @@
           title: '',
           description: '',
           image: '',
+          tags: [],
           createdUser: this.$store.state.user
         },
-        errorMessage: ''
+        errorMessage: '',
+        options5: [{
+          value: 'HTML',
+          label: 'HTML'
+        }, {
+          value: 'CSS',
+          label: 'CSS'
+        }, {
+          value: 'JavaScript',
+          label: 'JavaScript'
+        }],
+        value10: []
       }
     },
     methods: {
