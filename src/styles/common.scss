@@ -1,6 +1,8 @@
+@import "~bulma/sass/utilities/initial-variables";
+@import "~bulma/sass/utilities/functions";
+@import "constant";
 @import "~bulma";
 @import "~element-ui/lib/theme-chalk/index.css";
-@import "constant";
 @import "transition";
 
 html {
@@ -9,7 +11,7 @@ html {
 
 body {
   font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', Arial, Helvetica, sans-serif;
-  color: $color;
+  color: $text-color;
 }
 
 .container {

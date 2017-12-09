@@ -114,7 +114,7 @@
         margin-left: auto;
         margin-right: auto;
         padding: 1rem .5rem .5rem;
-        border-bottom: $border;
+        border-bottom: $border-style;
 
         .content {
           margin-bottom: 0;

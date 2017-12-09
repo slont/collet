@@ -44,7 +44,7 @@
       font-size: 1.5rem;
     }
     .view-label {
-      border-bottom: $border;
+      border-bottom: $border-style;
     }
     .label-control {
       display: flex;

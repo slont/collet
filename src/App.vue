@@ -15,6 +15,6 @@ export default {
 <style lang="scss" rel="stylesheet/scss">
   #app {
     min-height: 100vh;
-    background-color: #f4f4f4;
+    background-color: $bg-color;
   }
 </style>

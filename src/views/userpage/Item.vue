@@ -120,7 +120,7 @@
       margin-bottom: 2rem;
 
       .title {
-        border-bottom: $border;
+        border-bottom: $border-style;
       }
       .subtitle {
         line-height: inherit;
