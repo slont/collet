@@ -20,6 +20,29 @@
       </div>
 
       <div class="column">
+        <div class="field tags-field">
+          <label class="label">タグ</label>
+          <div class="control loading-mask" :class="{ 'is-loading': theme.image.substring(0, 4) === 'data' }">
+            <el-select
+                v-model="tags"
+                multiple
+                filterable
+                allow-create
+                default-first-option
+                remote
+                :loading="loading"
+                :remote-method="remoteMethod"
+                placeholder="Choose tags for your article">
+              <el-option
+                  v-for="item in suggests"
+                  :key="item"
+                  :label="item"
+                  :value="item">
+              </el-option>
+            </el-select>
+          </div>
+        </div>
+
         <div class="field image-field">
           <label class="label">メイン画像（オプショナル）</label>
           <div class="control loading-mask" :class="{ 'is-loading': theme.image.substring(0, 4) === 'data' }">
@@ -38,32 +61,11 @@
             </div>
           </div>
         </div>
-
-        <div class="field image-field">
-          <label class="label">メイン画像（オプショナル）</label>
-          <div class="control loading-mask" :class="{ 'is-loading': theme.image.substring(0, 4) === 'data' }">
-            <div class="file is-boxed">
-              <el-select
-                  v-model="value10"
-                  multiple
-                  filterable
-                  allow-create
-                  placeholder="Choose tags for your article">
-                <el-option
-                    v-for="item in options5"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                </el-option>
-              </el-select>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
-    <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
     <footer class="modal-card-foot has-right">
+      <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
       <button @click="$refs.themeDeleteModal.open(theme)" class="button is-danger is-outlined is-left">削除</button>
       <button @click="close" class="button">キャンセル</button>
       <button @click="ok" class="button is-info">保存</button>
@@ -90,23 +92,16 @@
           tags: [],
           createdUser: this.$store.state.user
         },
+        tags: [],
         errorMessage: '',
-        options5: [{
-          value: 'HTML',
-          label: 'HTML'
-        }, {
-          value: 'CSS',
-          label: 'CSS'
-        }, {
-          value: 'JavaScript',
-          label: 'JavaScript'
-        }],
-        value10: []
+        loading: false,
+        suggests: []
       }
     },
     methods: {
       open(theme) {
         Object.assign(this.theme, theme)
+        this.tags = theme.tags.map(tag => tag.name)
         this.$refs.themeEditModal.open()
       },
       close() {
@@ -117,7 +112,10 @@
         this.$validator.validateAll().then(result => {
           if (!result) return
 
-          new ThemeModel().update(this.theme.id, this.theme).then(() => {
+          const body = Object.assign({}, this.theme, {
+            tags: this.tags
+          })
+          new ThemeModel().update(this.theme.id, body).then(() => {
             this.$emit('refresh')
             this.$message({
               showClose: true,
@@ -137,6 +135,17 @@
       refreshClose() {
         this.$emit('refresh')
         this.close()
+      },
+      remoteMethod(query) {
+        if ('' !== query) {
+          this.suggests = [
+              query,
+              query.substring(0, 1).toUpperCase() + query.substring(1),
+              query.toUpperCase()
+          ]
+        } else {
+          this.suggests = []
+        }
       },
       changeImage(e) {
         this.theme.image = ''
@@ -181,6 +190,19 @@
                 right: 5px;
                 z-index: 10;
               }
+            }
+          }
+        }
+        .tags-field {
+          .el-select {
+            width: 100%;
+
+            .el-tag {
+              @extend .tag;
+              @extend .is-primary;
+            }
+            .el-tag__close.el-icon-close {
+              background-color: transparent;
             }
           }
         }

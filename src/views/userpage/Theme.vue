@@ -6,7 +6,7 @@
           <div class="theme-card card">
             <header class="theme-header">
               <div class="theme-image theme-header-content trim" v-if="theme.image">
-                <figure class="theme-image image is-4by3">
+                <figure class="theme-image image is-16by9">
                   <img :src="theme.image" v-if="theme.image">
                 </figure>
                 <div class="dark-mask">
@@ -21,8 +21,8 @@
                     <span class="user-name">{{ user.name }}</span>
                     <span class="updated-at">- {{ theme.updatedAt.format('YYYY/MM/DD') }}</span>
                   </div>
-                  <div class="theme-tags" v-if="theme.tags.length">
-                    <span v-for="tag in theme.tags" class="tag is-info">{{ tag.name }}</span>
+                  <div class="theme-tags tags" v-if="theme.tags.length">
+                    <span v-for="tag in theme.tags" class="tag is-primary">{{ tag.name }}</span>
                   </div>
                 </div>
               </div>
@@ -207,7 +207,7 @@
                   margin-bottom: .5rem;
                 }
                 .title {
-                  max-height: 6.25rem;
+                  max-height: 4.75rem;
                   line-height: 1.25;
                   color: white;
                   overflow: hidden;

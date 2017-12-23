@@ -20,6 +20,29 @@
       </div>
 
       <div class="column">
+        <div class="field tags-field">
+          <label class="label">タグ</label>
+          <div class="control loading-mask" :class="{ 'is-loading': theme.image.substring(0, 4) === 'data' }">
+            <el-select
+                v-model="theme.tags"
+                multiple
+                filterable
+                allow-create
+                default-first-option
+                remote
+                :loading="loading"
+                :remote-method="remoteMethod"
+                placeholder="Choose tags for your article">
+              <el-option
+                  v-for="item in suggests"
+                  :key="item"
+                  :label="item"
+                  :value="item">
+              </el-option>
+            </el-select>
+          </div>
+        </div>
+
         <div class="field image-field">
           <label class="label">メイン画像（オプショナル）</label>
           <div class="control loading-mask" :class="{ 'is-loading': theme.image.substring(0, 4) === 'data' }">
@@ -41,8 +64,8 @@
       </div>
     </div>
 
-    <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
     <footer class="modal-card-foot has-right">
+      <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
       <button @click="close" class="button">キャンセル</button>
       <button @click="ok" class="button is-info">作成</button>
     </footer>
@@ -61,8 +84,12 @@
         theme: {
           title: '',
           description: '',
-          image: ''
+          image: '',
+          tags: [],
+          createdUser: this.$store.state.user
         },
+        suggests: [],
+        loading: false,
         errorMessage: ''
       }
     },
@@ -94,6 +121,21 @@
       reset() {
         Object.assign(this.$data, this.$options.data.call(this))
         this.$nextTick(() => this.errors.clear())
+      },
+      refreshClose() {
+        this.$emit('refresh')
+        this.close()
+      },
+      remoteMethod(query) {
+        if ('' !== query) {
+          this.suggests = [
+            query,
+            query.substring(0, 1).toUpperCase() + query.substring(1),
+            query.toUpperCase()
+          ]
+        } else {
+          this.suggests = []
+        }
       },
       changeImage(e) {
         const files = e.target.files || e.dataTransfer.files
@@ -137,6 +179,19 @@
                 right: 5px;
                 z-index: 10;
               }
+            }
+          }
+        }
+        .tags-field {
+          .el-select {
+            width: 100%;
+
+            .el-tag {
+              @extend .tag;
+              @extend .is-primary;
+            }
+            .el-tag__close.el-icon-close {
+              background-color: transparent;
             }
           }
         }
