@@ -7,6 +7,12 @@
       </figure>
       <div class="dark-mask" @click="$router.push(`/${urlUserName}/${theme.id}`)">
         <div class="title is-5">{{ theme.title }}</div>
+
+        <div class="field tags-field" v-if="theme.tags.length">
+          <div class="control tags">
+            <span v-for="tag in theme.tags" class="tag is-primary">{{ tag.name }}</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -17,10 +23,10 @@
         </div>
       </div>
 
-      <div class="content">
-        <div class="favorite-indicator">
-          <span class="icon"><i class="material-icons">favorite_border</i></span>
-          <span class="favorite-count">1</span>
+      <div class="content theme-actions">
+        <div class="favorite-action theme-action">
+          <span class="icon"><i class="material-icons">star_border</i></span>
+          <span class="favorite-count">{{ theme.favoriteCount }}</span>
         </div>
       </div>
     </div>
@@ -67,12 +73,13 @@
           margin: 0;
         }
         .title {
-          height: 46px;
+          max-height: 62px;
           width: 100%;
           margin: 0;
+          line-height: 1.25;
           display: -webkit-box;
           -webkit-box-orient: vertical;
-          -webkit-line-clamp: 2;
+          -webkit-line-clamp: 3;
           overflow: hidden;
           color: white;
         }
@@ -80,18 +87,38 @@
           color: white;
           margin: .3rem 0 0;
         }
+        .tags-field {
+          margin-top: .5rem;
+        }
         &:hover {
           background-color: rgba(0, 0, 0, .4);
           cursor: pointer;
         }
       }
     }
-    .content {
-      display: inline-flex;
+    .card-content {
+      .media {
+        .media-content {
+          height: 6rem;
+          overflow: hidden;
+        }
+      }
+      .theme-actions {
+        display: flex;
 
-      .favorite-indicator {
-        display: inline-flex;
-        align-items: center;
+        .theme-action {
+          display: inline-flex;
+          align-items: center;
+          line-height: 1;
+
+          .icon {
+            margin-right: .3rem;
+
+            i {
+              font-size: $size-4;
+            }
+          }
+        }
       }
     }
   }
