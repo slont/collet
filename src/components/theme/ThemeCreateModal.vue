@@ -6,8 +6,8 @@
           <label class="label">タイトル</label>
           <div class="control">
             <input v-model.trim="theme.title" class="input" type="text" placeholder="タイトル"
-                   name="title" v-validate="'required|max:255'">
-            <span v-show="errors.has('title')" class="has-text-danger">{{ errors.first('title') }}</span>
+                   name="title" :class="{ 'is-danger': errors.has('title') }" v-validate="'required|max:255'">
+            <span v-show="errors.has('title')" class="help is-danger">{{ errors.first('title') }}</span>
           </div>
         </div>
 

@@ -3,7 +3,7 @@
     <div class="card-content">
       <div class="media">
         <div class="media-content">
-          <router-link :to="`/${urlUserName}/${theme.id}/${item.id}`" class="title is-6">{{ item.name }}</router-link>
+          <span class="title is-6">{{ item.name }}</span>
         </div>
         <div class="media-right" v-if="item.image">
           <figure class="image">
@@ -57,7 +57,7 @@
       }
     }
     .content {
-      font-size: $size-7;
+      font-size: $size-small;
       height: 2rem;
       background-color: rgba(255, 255, 255, .8);
       overflow: hidden;

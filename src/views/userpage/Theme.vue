@@ -1,7 +1,7 @@
 <template>
   <div id="userpage-theme">
     <div class="theme-content">
-      <div class="theme-columns columns" v-if="theme.items.length">
+      <div class="theme-columns columns">
         <div class="column is-4">
           <div class="theme-card card">
             <header class="theme-header">
@@ -10,26 +10,39 @@
                   <img :src="theme.image" v-if="theme.image">
                 </figure>
                 <div class="dark-mask">
-                  <button class="button is-info is-outlined" @click="$refs.themeEditModal.open(theme)" v-if="isMyPage">
-                    <span class="icon"><i class="material-icons">edit</i></span>
-                  </button>
                   <div class="title is-5">{{ theme.title }}</div>
                   <div class="user-profile" @click="$router.push(`/${user.name}`)">
                     <figure class="image is-16x16" v-if="user.image">
                       <img class="circle" :src="user.image">
                     </figure>
                     <span class="user-name">{{ user.name }}</span>
-                    <span class="updated-at">- {{ theme.updatedAt.format('YYYY/MM/DD') }}</span>
+                    <span class="updated-at">- {{ theme.updatedAt && theme.updatedAt.format('YYYY/MM/DD') }}</span>
                   </div>
                   <div class="theme-tags tags" v-if="theme.tags.length">
                     <span v-for="tag in theme.tags" class="tag is-primary">{{ tag.name }}</span>
                   </div>
                 </div>
               </div>
+
               <div class="theme-profile theme-header-content" v-else>
                 <div class="title is-5">{{ theme.title }}</div>
+                <div class="user-profile" @click="$router.push(`/${user.name}`)">
+                  <figure class="image is-16x16" v-if="user.image">
+                    <img class="circle" :src="user.image">
+                  </figure>
+                  <span class="user-name">{{ user.name }}</span>
+                  <span class="updated-at">- {{ theme.updatedAt && theme.updatedAt.format('YYYY/MM/DD') }}</span>
+                </div>
+                <div class="theme-tags tags" v-if="theme.tags.length">
+                  <span v-for="tag in theme.tags" class="tag is-primary">{{ tag.name }}</span>
+                </div>
               </div>
+
+              <button class="edit-button button is-info is-outlined" @click="$refs.themeEditModal.open(theme)" v-if="isMyPage">
+                <span class="icon"><i class="material-icons">edit</i></span>
+              </button>
             </header>
+
             <div class="theme-description card-content">
               <div class="subtitle is-6" :class="{ 'is-opened': openedThemeDescription }">{{ theme.description }}</div>
               <a class="button is-text is-small" @click="openedThemeDescription = !openedThemeDescription">
@@ -57,18 +70,21 @@
             <div class="subtitle is-7">アイテム一覧</div>
             <item-card  v-for="item in theme.items" :key="item.id" :theme="theme" :item="item"
                         :class="{ 'is-active': currentItem.id === item.id }"
-                        @click.native="currentItem = item" @open-edit-modal="$refs.itemEditModal.open(item)"></item-card>
+                        @click.native="currentItem = item"
+                        v-if="theme.items.length"></item-card>
           </div>
         </div>
 
-        <div class="column is-8">
+        <div class="column is-8" v-if="theme.items.length">
           <item-page :current-item="currentItem"></item-page>
         </div>
-      </div>
 
-      <div class="box" v-else>
-        まだアイテムが追加されていません
-        右下のボタンからアイテムを追加してみましょう！
+        <div v-else>
+          まだアイテムはありません
+          <template v-if="isMyPage">
+            <br/>右下のボタンからアイテムを追加してみましょう！
+          </template>
+        </div>
       </div>
     </div>
 
@@ -112,7 +128,8 @@
       return {
         theme: {
           title: '',
-          items: []
+          items: [],
+          tags: []
         },
         user: {
           name: '',
@@ -186,12 +203,32 @@
           overflow: scroll;
 
           .theme-header {
+            position: relative;
+
             .theme-header-content {
               position: relative;
               max-height: 14rem;
 
               .theme-image {
                 width: 100%;
+              }
+              .title {
+                max-height: 4.75rem;
+                line-height: 1.25;
+                overflow: hidden;
+              }
+              .user-profile {
+                font-size: .75rem;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+
+                > :not(:last-child) {
+                  margin-right: .3rem;
+                }
+              }
+              > :not(:last-child) {
+                margin-bottom: .5rem;
               }
               .dark-mask {
                 display: flex;
@@ -207,30 +244,13 @@
                   margin-bottom: .5rem;
                 }
                 .title {
-                  max-height: 4.75rem;
-                  line-height: 1.25;
                   color: white;
-                  overflow: hidden;
                 }
                 .user-profile {
-                  font-size: .75rem;
-                  display: flex;
-                  align-items: center;
-                  cursor: pointer;
-
-                  > :not(:last-child) {
-                    margin-right: .3rem;
-                  }
                   .user-name,
                   .updated-at {
                     color: white;
                   }
-                }
-                .button {
-                  position: absolute;
-                  top: 0;
-                  right: 0;
-                  margin: .3rem;
                 }
               }
               &.theme-image {
@@ -238,8 +258,13 @@
                 align-items: center;
               }
               &.theme-profile {
-                padding: .75rem 0;
+                padding: .75rem .75rem 0;
               }
+            }
+            .edit-button {
+              position: absolute;
+              bottom: -15px;
+              right: .75rem;
             }
           }
           .theme-description {
