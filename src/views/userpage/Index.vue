@@ -55,6 +55,7 @@
 <script>
   import UserModel from '@/models/User'
   import ThemeModel from '@/models/Theme'
+  import FavoriteModel from '@/models/Favorite'
   import ThemeCard from '@/components/theme/ThemeCard'
   import ThemeCreateModal from '@/components/theme/ThemeCreateModal'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
@@ -91,6 +92,14 @@
           })
         }).then(res => {
           this.themes = res
+          return new FavoriteModel().find({
+            themeIds: res.map(theme => theme.id),
+            userId: this.user.id
+          })
+        }).then(res => {
+          this.themes.forEach((theme, i) => Object.assign(theme, {
+            favorite: !!res[i].themeId
+          }))
         }).catch(err => {
           console.log(err)
           this.$message({

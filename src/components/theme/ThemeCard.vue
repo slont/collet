@@ -25,7 +25,10 @@
 
       <div class="content theme-actions">
         <div class="favorite-action theme-action">
-          <span class="icon"><i class="material-icons">star_border</i></span>
+          <span class="icon">
+            <i class="favorite material-icons" v-if="theme.favorite">star</i>
+            <i class="material-icons" v-else>star_border</i>
+          </span>
           <span class="favorite-count">{{ theme.favoriteCount }}</span>
         </div>
       </div>
@@ -117,6 +120,13 @@
             i {
               font-size: $size-4;
             }
+          }
+        }
+        .favorite-action {
+          cursor: pointer;
+
+          .favorite {
+            color: #ebeb00;
           }
         }
       }
