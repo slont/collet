@@ -9,17 +9,17 @@ export default class Theme extends Base {
 
   deserialize(json) {
     if (json instanceof Array) {
-      return json.map(v => Object.assign({}, v, {
-        items: (v.items && new Item().deserialize(v.items)) || [],
-        createdAt: moment(v.createdAt),
-        updatedAt: moment(v.createdAt)
-      }))
+      return json.map(v => Theme._deserialize(v))
     } else {
-      return Object.assign({}, json, {
-        items: (json.items && new Item().deserialize(json.items)) || [],
-        createdAt: moment(json.createdAt),
-        updatedAt: moment(json.createdAt)
-      })
+      return Theme._deserialize(json)
     }
+  }
+
+  static _deserialize(json) {
+    return Object.assign({}, json, {
+      items: (json.items && new Item().deserialize(json.items)) || [],
+      createdAt: moment(json.createdAt),
+      updatedAt: moment(json.createdAt)
+    })
   }
 }
