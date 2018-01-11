@@ -7,6 +7,15 @@ export default class Theme extends Base {
     super('/themes')
   }
 
+  findOneFavorite(themeId, userId) {
+    return this.postProcess(fetch(`${this.endpoint}/${themeId}/favorites/${userId}`, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
+      headers: Base.getHeaders()
+    }))
+  }
+
   updateFavorite(themeId, userId) {
     return this.postProcess(fetch(`${this.endpoint}/${themeId}/favorites/${userId}`, {
       method: 'PUT',

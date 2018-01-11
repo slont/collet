@@ -38,9 +38,17 @@
                 </div>
               </div>
 
-              <button class="edit-button button is-info is-outlined" @click="$refs.themeEditModal.open(theme)" v-if="isMyPage">
-                <span class="icon"><i class="material-icons">edit</i></span>
-              </button>
+              <div class="favorite-action" @click.stop.prevent="onClickFavorite">
+                <span class="icon">
+                  <i class="favorite material-icons" v-if="theme.favorite">star</i>
+                  <i class="material-icons" v-else>star_border</i>
+                </span>
+                <span class="favorite-count" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
+              </div>
+
+              <div class="edit-action" @click.stop.prevent="$refs.themeEditModal.open(theme)" v-if="isMyPage">
+                <span class="icon"><i class="material-icons">more_horiz</i></span>
+              </div>
             </header>
 
             <div class="theme-description card-content">
@@ -142,6 +150,9 @@
       }
     },
     computed: {
+      user() {
+        return this.$store.state.user
+      },
       urlUserName() {
         return this.$route.params.userName
       },
@@ -167,11 +178,17 @@
             type: 'error'
           })
         })
-        new ThemeModel().findOne(this.themeId).then(res => {
+        const themeModel = new ThemeModel()
+        themeModel.findOne(this.themeId).then(res => {
           this.theme = res
           if (this.theme.items.length) {
             this.currentItem = this.theme.items[0]
           }
+          return themeModel.findOneFavorite(this.theme.id, this.user.id)
+        }).then(res => {
+          this.theme.favorite = !!res.themeId
+        }, () => {
+          // through the NotFound favorite error
         }).catch(err => {
           console.log(err)
           this.$message({
@@ -180,6 +197,19 @@
             type: 'error'
           })
         })
+      },
+      onClickFavorite() {
+        this.clickFavorite().then(res => {
+          this.theme.favoriteCount += this.theme.favorite ? -1 : 1
+          this.theme.favorite = !this.theme.favorite
+        })
+      },
+      clickFavorite() {
+        if (this.theme.favorite) {
+          return new ThemeModel().deleteFavorite(this.theme.id, this.user.id)
+        } else {
+          return new ThemeModel().updateFavorite(this.theme.id, this.user.id)
+        }
       }
     }
   }
@@ -208,12 +238,16 @@
             .theme-header-content {
               position: relative;
               max-height: 14rem;
+              min-height: 11.5rem;
+              flex-direction: column;
+              display: flex;
+              justify-content: flex-end;
 
               .theme-image {
                 width: 100%;
               }
               .title {
-                max-height: 4.75rem;
+                max-height: 4.5rem;
                 line-height: 1.25;
                 overflow: hidden;
               }
@@ -259,12 +293,59 @@
               }
               &.theme-profile {
                 padding: .75rem .75rem 0;
+
+                .theme-tags {
+                  border-bottom: $border-style;
+                }
               }
             }
-            .edit-button {
+            .favorite-action {
+              display: flex;
+              align-items: center;
               position: absolute;
-              bottom: -15px;
-              right: .75rem;
+              top: .5rem;
+              left: 0;
+              padding: .25rem .4rem .25rem .25rem;
+              background-color: rgba(0, 0, 0, .5);
+              border: 1px solid white;
+              border-left: none;
+              border-bottom-right-radius: 5px;
+              border-top-right-radius: 5px;
+              cursor: pointer;
+
+              .material-icons {
+                font-size: 18px;
+                color: rgba(255, 255, 255, .6);
+
+                &.favorite {
+                  color: #ebeb00;
+                }
+              }
+              .favorite-count {
+                margin-bottom: -.25rem;
+                color: white;
+              }
+              &:hover {
+                opacity: .8;
+              }
+            }
+            .edit-action {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              position: absolute;
+              top: 0;
+              right: 0;
+              height: 3rem;
+              width: 3rem;
+              cursor: pointer;
+
+              &:hover {
+                opacity: .65;
+              }
+            }
+            .theme-image + .favorite-action + .edit-action {
+              color: #e8e8e8;
             }
           }
           .theme-description {
