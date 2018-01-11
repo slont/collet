@@ -6,6 +6,18 @@
         <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image" v-else>
       </figure>
       <div class="dark-mask" @click="$router.push(`/${urlUserName}/${theme.id}`)">
+        <div class="favorite-action" @click.stop.prevent="onClickFavorite">
+          <span class="icon">
+            <i class="favorite material-icons" v-if="theme.favorite">star</i>
+            <i class="material-icons" v-else>star_border</i>
+          </span>
+          <span class="favorite-count" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
+        </div>
+
+        <div class="edit-action" @click.stop.prevent="$emit('open-edit-modal')" v-if="isMyPage">
+          <span class="icon"><i class="material-icons">more_horiz</i></span>
+        </div>
+
         <div class="title is-5">{{ theme.title }}</div>
 
         <div class="field tags-field" v-if="theme.tags.length">
@@ -22,21 +34,7 @@
           {{ theme.description }}
         </div>
       </div>
-
-      <div class="content theme-actions">
-        <div class="favorite-action theme-action" @click="onClickFavorite">
-          <span class="icon">
-            <i class="favorite material-icons" v-if="theme.favorite">star</i>
-            <i class="material-icons" v-else>star_border</i>
-          </span>
-          <span class="favorite-count" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
-        </div>
-      </div>
     </div>
-
-    <footer class="card-footer" v-if="isMyPage">
-      <a class="edit-button card-footer-item" @click="$emit('open-edit-modal')">Edit</a>
-    </footer>
   </div>
 </template>
 
@@ -87,9 +85,53 @@
         top: 0;
         width: 100%;
         height: 100%;
-        padding: .75rem;
+        padding: .5rem 1rem;
         transition: all .3s ease;
 
+        .favorite-action {
+          display: flex;
+          align-items: center;
+          position: absolute;
+          top: .5rem;
+          left: 0;
+          padding: .25rem .4rem .25rem .25rem;
+          background-color: rgba(0, 0, 0, .5);
+          border: 1px solid white;
+          border-left: none;
+          border-bottom-right-radius: 5px;
+          border-top-right-radius: 5px;
+
+          .material-icons {
+            font-size: 18px;
+            color: rgba(255, 255, 255, .6);
+
+            &.favorite {
+              color: #ebeb00;
+            }
+          }
+          .favorite-count {
+            margin-bottom: -.25rem;
+            color: white;
+          }
+          &:hover {
+            opacity: .8;
+          }
+        }
+        .edit-action {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          top: 0;
+          right: 0;
+          height: 3rem;
+          width: 3rem;
+          color: #e8e8e8;
+
+          &:hover {
+            opacity: .5;
+          }
+        }
         .title,
         .subtitle {
           color: white;
@@ -123,6 +165,9 @@
       .media {
         .media-content {
           height: 6rem;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 4;
           overflow: hidden;
         }
       }
