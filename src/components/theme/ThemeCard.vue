@@ -24,12 +24,12 @@
       </div>
 
       <div class="content theme-actions">
-        <div class="favorite-action theme-action">
+        <div class="favorite-action theme-action" @click="onClickFavorite">
           <span class="icon">
             <i class="favorite material-icons" v-if="theme.favorite">star</i>
             <i class="material-icons" v-else>star_border</i>
           </span>
-          <span class="favorite-count">{{ theme.favoriteCount }}</span>
+          <span class="favorite-count" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
         </div>
       </div>
     </div>
@@ -41,14 +41,34 @@
 </template>
 
 <script>
+  import ThemeModel from '@/models/Theme'
+
   export default {
     props: ['theme'],
     computed: {
+      user() {
+        return this.$store.state.user
+      },
       urlUserName() {
         return this.$route.params.userName
       },
       isMyPage() {
         return this.$store.state.user.name === this.urlUserName
+      }
+    },
+    methods: {
+      onClickFavorite() {
+        this.clickFavorite().then(res => {
+          this.theme.favoriteCount += this.theme.favorite ? -1 : 1
+          this.theme.favorite = !this.theme.favorite
+        })
+      },
+      clickFavorite() {
+        if (this.theme.favorite) {
+          return new ThemeModel().deleteFavorite(this.theme.id, this.user.id)
+        } else {
+          return new ThemeModel().updateFavorite(this.theme.id, this.user.id)
+        }
       }
     }
   }

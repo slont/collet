@@ -7,6 +7,24 @@ export default class Theme extends Base {
     super('/themes')
   }
 
+  updateFavorite(themeId, userId) {
+    return this.postProcess(fetch(`${this.endpoint}/${themeId}/favorites/${userId}`, {
+      method: 'PUT',
+      mode: 'cors',
+      credentials: 'include',
+      headers: Base.getHeaders()
+    }))
+  }
+
+  deleteFavorite(themeId, userId) {
+    return this.postProcess(fetch(`${this.endpoint}/${themeId}/favorites/${userId}`, {
+      method: 'DELETE',
+      mode: 'cors',
+      credentials: 'include',
+      headers: Base.getHeaders()
+    }))
+  }
+
   deserialize(json) {
     if (json instanceof Array) {
       return json.map(v => Theme._deserialize(v))
