@@ -36,13 +36,10 @@
       </div>
     </header>
 
-    <div class="themes">
-      <div class="columns is-multiline">
-        <div v-for="theme in themes" class="column is-one-third-tablet" :key="theme.id">
-          <theme-card :theme="theme" @open-edit-modal="$refs.themeEditModal.open(theme)"></theme-card>
-        </div>
-      </div>
-    </div>
+    <transition name="slide-fade" mode="out-in">
+      <favorites @open-edit-modal="openEditModal" v-if="$route.path.endsWith('/favorites')"></favorites>
+      <themes @open-edit-modal="openEditModal" v-else></themes>
+    </transition>
 
     <a @click="$refs.themeCreateModal.open()" class="button button-create is-float is-primary circle">
       <i class="material-icons">add</i>
@@ -55,14 +52,14 @@
 
 <script>
   import UserModel from '@/models/User'
-  import ThemeModel from '@/models/Theme'
-  import FavoriteModel from '@/models/Favorite'
   import ThemeCard from '@/components/theme/ThemeCard'
   import ThemeCreateModal from '@/components/theme/ThemeCreateModal'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
+  import Themes from './Themes'
+  import Favorites from './Favorites'
 
   export default {
-    components: { ThemeCard, ThemeCreateModal, ThemeEditModal },
+    components: { ThemeCard, ThemeCreateModal, ThemeEditModal, Themes, Favorites },
     data() {
       return {
         user: {
@@ -70,8 +67,7 @@
           name: '',
           biography: '',
           image: ''
-        },
-        themes: []
+        }
       }
     },
     computed: {
@@ -86,21 +82,6 @@
       refresh() {
         new UserModel().findOne(this.urlUserId).then(res => {
           this.user = res
-          return new ThemeModel().find({
-            userId: this.user.id,
-            p: 0,
-            s: 20
-          })
-        }).then(res => {
-          this.themes = res
-          return new FavoriteModel().find({
-            themeIds: res.map(theme => theme.id),
-            userId: this.user.id
-          })
-        }).then(res => {
-          this.themes.forEach((theme, i) => Object.assign(theme, {
-            favorite: !!res[i].themeId
-          }))
         }).catch(err => {
           console.log(err)
           this.$message({
@@ -109,6 +90,9 @@
             type: 'error'
           })
         })
+      },
+      openEditModal(theme) {
+        this.$refs.themeEditModal.open(theme)
       }
     }
   }
@@ -146,16 +130,11 @@
             a {
               border-bottom-width: 0;
             }
+            &.router-link-active {
+              @extend .is-active;
+            }
           }
         }
-      }
-    }
-    .themes {
-      width: $width;
-      margin: 0 auto;
-
-      > .columns {
-        padding-top: 1em;
       }
     }
     .button.is-float {
