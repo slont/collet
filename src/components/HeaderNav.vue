@@ -81,7 +81,8 @@
             <dropdown ref="accountDropdown">
               <template slot="trigger">
                 <span class="user-name is-size-7">{{ user.name }}</span>
-                <img :src="user.image" class="circle"/>
+                <img :src="user.image" class="circle" v-if="user.image"/>
+                <span class="icon" v-else><i class="material-icons">arrow_drop_down</i></span>
               </template>
 
               <a @click="$router.push('/settings/profile')" class="dropdown-item">

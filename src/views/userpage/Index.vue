@@ -2,7 +2,7 @@
   <div id="userpage-index">
     <header class="userpage-header header-shadow">
       <article class="user-profile media">
-        <figure class="media-left">
+        <figure class="media-left" v-if="user.image">
           <p class="image is-64x64">
             <img :src="user.image" class="circle">
           </p>
@@ -129,7 +129,7 @@
           margin-bottom: 0;
 
           .title {
-            margin-bottom: .25rem;
+            margin-bottom: .5rem;
           }
         }
       }
