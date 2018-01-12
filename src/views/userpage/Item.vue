@@ -82,7 +82,7 @@
     },
     computed: {
       isMyPage() {
-        return this.$store.state.user.name === this.$route.params.userName
+        return this.$store.state.user.id === this.$route.params.userId
       },
       themeId() {
         return this.$route.params.themeId

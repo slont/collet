@@ -50,14 +50,17 @@ export default new Router({
             }
           ]
         }, {
-          path: ':userName',
+          path: ':userId/favorites',
           component: UserpageIndex
         }, {
-          path: ':userName/:themeId',
+          path: ':userId/:themeId/:itemId',
+          component: UserpageItem
+        }, {
+          path: ':userId/:themeId',
           component: UserpageTheme
         }, {
-          path: ':userName/:themeId/:itemId',
-          component: UserpageItem
+          path: ':userId',
+          component: UserpageIndex
         }
       ]
     }

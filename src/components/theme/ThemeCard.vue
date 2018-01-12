@@ -5,7 +5,7 @@
         <img :src="theme.image" v-if="theme.image">
         <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image" v-else>
       </figure>
-      <div class="dark-mask" @click="$router.push(`/${urlUserName}/${theme.id}`)">
+      <div class="dark-mask" @click="$router.push(`/${urlUserId}/${theme.id}`)">
         <div class="favorite-action" @click.stop.prevent="onClickFavorite">
           <span class="icon">
             <i class="favorite material-icons" v-if="theme.favorite">star</i>
@@ -47,11 +47,11 @@
       user() {
         return this.$store.state.user
       },
-      urlUserName() {
-        return this.$route.params.userName
+      urlUserId() {
+        return this.$route.params.userId
       },
       isMyPage() {
-        return this.$store.state.user.name === this.urlUserName
+        return this.$store.state.user.id === this.urlUserId
       }
     },
     methods: {

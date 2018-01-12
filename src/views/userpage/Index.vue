@@ -9,7 +9,8 @@
         </figure>
         <div class="media-content">
           <div class="content">
-            <div class="title is-4">{{ urlUserName }}</div>
+            <div class="title is-4">{{ user.name }}</div>
+            <div class="title is-7">{{ urlUserId }}</div>
             <p>{{ user.biography }}</p>
           </div>
           <nav class="level is-mobile">
@@ -29,8 +30,8 @@
       </article>
       <div class="tabs">
         <ul>
-          <router-link :to="`/${urlUserName}`" tag="li" class="is-active"><a>テーマ一覧</a></router-link>
-          <router-link :to="`/${urlUserName}/fav`" tag="li"><a>お気に入り</a></router-link>
+          <router-link :to="`/${urlUserId}`" tag="li" exact><a>テーマ一覧</a></router-link>
+          <router-link :to="`/${urlUserId}/favorites`" tag="li"><a>お気に入り</a></router-link>
         </ul>
       </div>
     </header>
@@ -74,8 +75,8 @@
       }
     },
     computed: {
-      urlUserName() {
-        return this.$route.params.userName
+      urlUserId() {
+        return this.$route.params.userId
       }
     },
     created() {
@@ -83,7 +84,7 @@
     },
     methods: {
       refresh() {
-        new UserModel().findOne(this.urlUserName).then(res => {
+        new UserModel().findOne(this.urlUserId).then(res => {
           this.user = res
           return new ThemeModel().find({
             userId: this.user.id,

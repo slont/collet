@@ -153,11 +153,11 @@
       user() {
         return this.$store.state.user
       },
-      urlUserName() {
-        return this.$route.params.userName
+      urlUserId() {
+        return this.$route.params.userId
       },
       isMyPage() {
-        return this.$store.state.user.name === this.urlUserName
+        return this.$store.state.user.id === this.urlUserId
       },
       themeId() {
         return this.$route.params.themeId
@@ -168,7 +168,7 @@
     },
     methods: {
       refresh() {
-        new UserModel().findOne(this.urlUserName).then(res => {
+        new UserModel().findOne(this.urlUserId).then(res => {
           this.user = res
         }).catch(err => {
           console.log(err)

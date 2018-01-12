@@ -20,11 +20,11 @@
   export default {
     props: ['theme', 'item'],
     computed: {
-      urlUserName() {
-        return this.$route.params.userName
+      urlUserId() {
+        return this.$route.params.userId
       },
       isMyPage() {
-        return this.$store.state.user.name === this.urlUserName
+        return this.$store.state.user.id === this.urlUserId
       }
     }
   }
