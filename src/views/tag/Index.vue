@@ -1,10 +1,16 @@
 <template>
   <div id="tag-index">
     <header class="tag-header header-shadow">
-      <span class="title is-4">{{ tagName }}</span>
+      <article class="media">
+        <div class="media-content">
+          <div class="content">
+            <div class="title is-4">#{{ tagName }}</div>
+          </div>
+        </div>
+      </article>
     </header>
 
-    <div id="tag-themes">
+    <div class="tag-themes">
       <div class="columns is-multiline">
         <div v-for="theme in themes" class="column is-one-third-tablet" :key="theme.id">
           <theme-card :theme="theme" @open-edit-modal="$emit('open-edit-modal', theme)"></theme-card>
@@ -32,16 +38,13 @@
     components: { ThemeCard, ThemeCreateModal, ThemeEditModal },
     data() {
       return {
-        user: {
-          id: '',
-          name: '',
-          biography: '',
-          image: ''
-        },
         themes: []
       }
     },
     computed: {
+      selfUser() {
+        return this.$store.state.user
+      },
       tagName() {
         return this.$route.query.name
       }
@@ -65,7 +68,7 @@
           })
           return new FavoriteModel().find({
             themeIds: res.map(theme => theme.id),
-            userId: this.user.id
+            userId: this.selfUser.id
           })
         }).then(res => {
           this.themes.forEach((theme, i) => Object.assign(theme, {
@@ -92,24 +95,21 @@
     .tag-header {
       background-color: white;
 
-      .tabs {
+      .media {
         width: $width;
         margin-left: auto;
         margin-right: auto;
+        padding: 1rem .5rem .5rem;
 
-        > ul {
-          border-bottom-color: transparent;
-
-          li {
-            a {
-              border-bottom-width: 0;
-            }
-            &.router-link-active {
-              @extend .is-active;
-            }
-          }
+        .content {
+          margin-bottom: 0;
         }
       }
+    }
+    .tag-themes {
+      width: $width;
+      margin: 0 auto;
+      padding-top: 1em;
     }
     .button.is-float {
       position: fixed;

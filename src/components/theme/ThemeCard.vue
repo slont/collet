@@ -30,7 +30,7 @@
         <div class="field tags-field" v-if="theme.tags.length">
           <div class="control tags">
             <a v-for="tag in theme.tags" class="tag is-primary"
-               @click.stop="$router.push(`/tag?name=${tag.name}`)">{{ tag.name }}</a>
+               @click.stop="$router.push(`/tag?name=${tag.name}`)">#{{ tag.name }}</a>
           </div>
         </div>
       </div>

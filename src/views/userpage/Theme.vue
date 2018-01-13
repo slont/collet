@@ -21,7 +21,7 @@
                   </div>
                   <div class="theme-tags tags" v-if="theme.tags.length">
                     <a v-for="tag in theme.tags" class="tag is-primary"
-                       @click.stop="$router.push(`/tag?name=${tag.name}`)">{{ tag.name }}</a>
+                       @click.stop="$router.push(`/tag?name=${tag.name}`)">#{{ tag.name }}</a>
                   </div>
                 </div>
               </div>
@@ -38,7 +38,7 @@
                 </div>
                 <div class="theme-tags tags" v-if="theme.tags.length">
                   <a v-for="tag in theme.tags" class="tag is-primary"
-                     @click.stop="$router.push(`/tag?name=${tag.name}`)">{{ tag.name }}</a>
+                     @click.stop="$router.push(`/tag?name=${tag.name}`)">#{{ tag.name }}</a>
                 </div>
               </div>
 

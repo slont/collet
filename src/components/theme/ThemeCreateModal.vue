@@ -189,6 +189,10 @@
             .el-tag {
               @extend .tag;
               @extend .is-primary;
+
+              &:before {
+                content: '#';
+              }
             }
             .el-tag__close.el-icon-close {
               background-color: transparent;
