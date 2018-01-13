@@ -14,16 +14,16 @@
           <span class="favorite-count" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
         </div>
 
-        <div class="edit-action" @click.stop.prevent="$emit('open-edit-modal')" v-if="isMyPage">
+        <div class="edit-action" @click.stop.prevent="$emit('open-edit-modal')" v-if="isMyTheme">
           <span class="icon"><i class="material-icons">more_horiz</i></span>
         </div>
 
         <div class="title is-5">{{ theme.title }}</div>
-        <div class="user-profile" @click="$router.push(`/${theme.createdUser.id}`)">
+        <div class="user-profile" @click.stop="$router.push(`/${theme.createdUser.id}`)">
           <figure class="image is-16x16" v-if="theme.createdUser.image">
             <img class="circle" :src="theme.createdUser.image">
           </figure>
-          <span class="user-name">{{ theme.createdUser.name }}</span>
+          <span class="user-name has-text-weight-bold">{{ theme.createdUser.name }}</span><span class="user-id">@{{ theme.createdUser.id }}</span>
           <span class="updated-at">- {{ theme.updatedAt && theme.updatedAt.format('YYYY/MM/DD') }}</span>
         </div>
         <div class="field tags-field" v-if="theme.tags.length">
@@ -56,8 +56,8 @@
       urlUserId() {
         return this.$route.params.userId
       },
-      isMyPage() {
-        return this.$store.state.user.id === this.urlUserId
+      isMyTheme() {
+        return this.$store.state.user.id === this.theme.createdUser.id
       }
     },
     methods: {
@@ -92,8 +92,13 @@
         width: 100%;
         height: 100%;
         padding: .5rem 1rem;
+        background: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .6));
         transition: all .3s ease;
 
+        &:hover {
+          background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .7));
+          cursor: pointer;
+        }
         .favorite-action {
           display: flex;
           align-items: center;
@@ -155,14 +160,20 @@
           color: white;
         }
         .user-profile {
-          font-size: .75rem;
+          font-size: .875rem;
           display: flex;
           align-items: center;
           cursor: pointer;
           color: white;
 
-          > :not(:last-child) {
-            margin-right: .3rem;
+          .user-name:hover {
+            text-decoration: underline;
+          }
+          .user-id {
+            color: gainsboro;
+          }
+          .updated-at {
+            margin-left: .3rem;
           }
         }
         > :not(:last-child) {
@@ -171,10 +182,6 @@
         .subtitle {
           color: white;
           margin: .3rem 0 0;
-        }
-        &:hover {
-          background-color: rgba(0, 0, 0, .4);
-          cursor: pointer;
         }
       }
     }
