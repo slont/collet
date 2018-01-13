@@ -9,9 +9,11 @@
         </figure>
         <div class="media-content">
           <div class="content">
-            <div class="title is-4">{{ user.name }}</div>
-            <div class="title is-7">{{ urlUserId }}</div>
-            <p>{{ user.biography }}</p>
+            <div class="">
+              <span class="title is-4">{{ user.name }}</span>
+              <span class="subtitle is-6">@{{ urlUserId }}</span>
+            </div>
+            <p class="user-bio">{{ user.biography }}</p>
           </div>
           <nav class="level is-mobile">
             <div class="level-left">
@@ -116,8 +118,8 @@
         .content {
           margin-bottom: 0;
 
-          .title {
-            margin-bottom: .5rem;
+          .user-bio {
+            margin-top: .5rem;
           }
         }
       }

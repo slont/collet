@@ -11,30 +11,32 @@
                 </figure>
                 <div class="dark-mask">
                   <div class="title is-5">{{ theme.title }}</div>
-                  <div class="user-profile" @click="$router.push(`/${user.name}`)">
-                    <figure class="image is-16x16" v-if="user.image">
-                      <img class="circle" :src="user.image">
+                  <div class="user-profile" @click="$router.push(`/${theme.createdUser.id}`)">
+                    <figure class="image is-16x16" v-if="theme.createdUser.image">
+                      <img class="circle" :src="theme.createdUser.image">
                     </figure>
-                    <span class="user-name">{{ user.name }}</span>
+                    <span class="user-name has-text-weight-bold">{{ theme.createdUser.name }}</span>
+                    <span class="user-id">@{{ theme.createdUser.id }}</span>
                     <span class="updated-at">- {{ theme.updatedAt && theme.updatedAt.format('YYYY/MM/DD') }}</span>
                   </div>
                   <div class="theme-tags tags" v-if="theme.tags.length">
-                    <span v-for="tag in theme.tags" class="tag is-primary">{{ tag.name }}</span>
+                    <a v-for="tag in theme.tags" class="tag is-primary">{{ tag.name }}</a>
                   </div>
                 </div>
               </div>
 
               <div class="theme-profile theme-header-content" v-else>
                 <div class="title is-5">{{ theme.title }}</div>
-                <div class="user-profile" @click="$router.push(`/${user.id}`)">
-                  <figure class="image is-16x16" v-if="user.image">
-                    <img class="circle" :src="user.image">
+                <div class="user-profile" @click="$router.push(`/${theme.createdUser.id}`)">
+                  <figure class="image is-16x16" v-if="theme.createdUser.image">
+                    <img class="circle" :src="theme.createdUser.image">
                   </figure>
-                  <span class="user-name">{{ user.name }}</span>
+                  <span class="user-name has-text-weight-bold">{{ theme.createdUser.name }}</span>
+                  <span class="user-id">@{{ theme.createdUser.id }}</span>
                   <span class="updated-at">- {{ theme.updatedAt && theme.updatedAt.format('YYYY/MM/DD') }}</span>
                 </div>
                 <div class="theme-tags tags" v-if="theme.tags.length">
-                  <span v-for="tag in theme.tags" class="tag is-primary">{{ tag.name }}</span>
+                  <a v-for="tag in theme.tags" class="tag is-primary">{{ tag.name }}</a>
                 </div>
               </div>
 
@@ -252,13 +254,17 @@
                 overflow: hidden;
               }
               .user-profile {
-                font-size: .75rem;
-                display: flex;
-                align-items: center;
+                font-size: .875rem;
                 cursor: pointer;
 
-                > :not(:last-child) {
-                  margin-right: .3rem;
+                .user-name:hover {
+                  text-decoration: underline;
+                }
+                .user-id {
+                  color: $label-color;
+                }
+                .updated-at {
+                  color: $label-color;
                 }
               }
               > :not(:last-child) {
@@ -281,9 +287,21 @@
                   color: white;
                 }
                 .user-profile {
-                  .user-name,
-                  .updated-at {
+                  font-size: .875rem;
+                  cursor: pointer;
+
+                  .user-name {
                     color: white;
+
+                    &:hover {
+                      text-decoration: underline;
+                    }
+                  }
+                  .user-id {
+                    color: gainsboro;
+                  }
+                  .updated-at {
+                    color: gainsboro;
                   }
                 }
               }

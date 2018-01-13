@@ -29,7 +29,7 @@
         </div>
         <div class="field tags-field" v-if="theme.tags.length">
           <div class="control tags">
-            <span v-for="tag in theme.tags" class="tag is-primary">{{ tag.name }}</span>
+            <a v-for="tag in theme.tags" class="tag is-primary">{{ tag.name }}</a>
           </div>
         </div>
       </div>
