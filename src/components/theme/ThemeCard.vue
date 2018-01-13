@@ -5,7 +5,7 @@
         <img :src="theme.image" v-if="theme.image">
         <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image" v-else>
       </figure>
-      <div class="dark-mask" @click="$router.push(`/${urlUserId}/${theme.id}`)">
+      <div class="dark-mask" @click="$router.push(`/${theme.createdUser.id}/${theme.id}`)">
         <div class="favorite-action" @click.stop.prevent="onClickFavorite">
           <span class="icon">
             <i class="favorite material-icons" v-if="theme.favorite">star</i>
@@ -19,7 +19,13 @@
         </div>
 
         <div class="title is-5">{{ theme.title }}</div>
-
+        <div class="user-profile" @click="$router.push(`/${theme.createdUser.id}`)">
+          <figure class="image is-16x16" v-if="theme.createdUser.image">
+            <img class="circle" :src="theme.createdUser.image">
+          </figure>
+          <span class="user-name">{{ theme.createdUser.name }}</span>
+          <span class="updated-at">- {{ theme.updatedAt && theme.updatedAt.format('YYYY/MM/DD') }}</span>
+        </div>
         <div class="field tags-field" v-if="theme.tags.length">
           <div class="control tags">
             <span v-for="tag in theme.tags" class="tag is-primary">{{ tag.name }}</span>
@@ -148,12 +154,23 @@
           overflow: hidden;
           color: white;
         }
+        .user-profile {
+          font-size: .75rem;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          color: white;
+
+          > :not(:last-child) {
+            margin-right: .3rem;
+          }
+        }
+        > :not(:last-child) {
+          margin-bottom: .25rem;
+        }
         .subtitle {
           color: white;
           margin: .3rem 0 0;
-        }
-        .tags-field {
-          margin-top: .5rem;
         }
         &:hover {
           background-color: rgba(0, 0, 0, .4);

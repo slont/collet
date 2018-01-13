@@ -26,7 +26,7 @@
 
               <div class="theme-profile theme-header-content" v-else>
                 <div class="title is-5">{{ theme.title }}</div>
-                <div class="user-profile" @click="$router.push(`/${user.name}`)">
+                <div class="user-profile" @click="$router.push(`/${user.id}`)">
                   <figure class="image is-16x16" v-if="user.image">
                     <img class="circle" :src="user.image">
                   </figure>
