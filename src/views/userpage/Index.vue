@@ -75,6 +75,9 @@
         return this.$route.params.userId
       }
     },
+    watch: {
+      '$route.params.userId': 'refresh'
+    },
     created() {
       this.refresh()
     },
