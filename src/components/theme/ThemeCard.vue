@@ -23,7 +23,8 @@
           <figure class="image is-16x16" v-if="theme.createdUser.image">
             <img class="circle" :src="theme.createdUser.image">
           </figure>
-          <span class="user-name has-text-weight-bold">{{ theme.createdUser.name }}</span><span class="user-id">@{{ theme.createdUser.id }}</span>
+          <span class="user-name has-text-weight-bold">{{ theme.createdUser.name }}</span>
+          <span class="user-id">@{{ theme.createdUser.id }}</span>
           <span class="updated-at">- {{ theme.updatedAt && theme.updatedAt.format('YYYY/MM/DD') }}</span>
         </div>
         <div class="field tags-field" v-if="theme.tags.length">
@@ -161,19 +162,20 @@
         }
         .user-profile {
           font-size: .875rem;
-          display: flex;
-          align-items: center;
           cursor: pointer;
-          color: white;
 
-          .user-name:hover {
-            text-decoration: underline;
+          .user-name {
+            color: white;
+
+            &:hover {
+              text-decoration: underline;
+            }
           }
           .user-id {
             color: gainsboro;
           }
           .updated-at {
-            margin-left: .3rem;
+            color: gainsboro;
           }
         }
         > :not(:last-child) {
