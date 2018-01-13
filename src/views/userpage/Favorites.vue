@@ -33,10 +33,14 @@
         const userId = this.urlUserId
         new ThemeModel().find({
           userId: userId,
+          favorite: true,
           p: 0,
           s: 20
         }).then(res => {
-          this.themes = res
+          this.themes = res.map(theme => {
+            theme.favorite = false
+            return theme
+          })
           return new FavoriteModel().find({
             themeIds: res.map(theme => theme.id),
             userId: userId
