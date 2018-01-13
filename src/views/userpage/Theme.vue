@@ -139,7 +139,13 @@
         theme: {
           title: '',
           items: [],
-          tags: []
+          tags: [],
+          favorite: false,
+          createdUser: {
+            id: '',
+            name: '',
+            image: ''
+          }
         },
         user: {
           name: '',
@@ -152,7 +158,7 @@
       }
     },
     computed: {
-      user() {
+      selfUser() {
         return this.$store.state.user
       },
       urlUserId() {
@@ -182,11 +188,11 @@
         })
         const themeModel = new ThemeModel()
         themeModel.findOne(this.themeId).then(res => {
-          this.theme = res
+          Object.assign(this.theme, res)
           if (this.theme.items.length) {
             this.currentItem = this.theme.items[0]
           }
-          return themeModel.findOneFavorite(this.theme.id, this.user.id)
+          return themeModel.findOneFavorite(this.theme.id, this.selfUser.id)
         }).then(res => {
           this.theme.favorite = !!res.themeId
         }, () => {
