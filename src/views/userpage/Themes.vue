@@ -21,6 +21,9 @@
       }
     },
     computed: {
+      selfUser() {
+        return this.$store.state.user
+      },
       urlUserId() {
         return this.$route.params.userId
       }
@@ -33,9 +36,8 @@
     },
     methods: {
       refresh() {
-        const userId = this.urlUserId
         new ThemeModel().find({
-          userId: userId,
+          userId: this.urlUserId,
           favorite: false,
           p: 0,
           s: 20
@@ -46,7 +48,7 @@
           })
           return new FavoriteModel().find({
             themeIds: res.map(theme => theme.id),
-            userId: userId
+            userId: this.selfUser.id
           })
         }).then(res => {
           this.themes.forEach((theme, i) => Object.assign(theme, {
