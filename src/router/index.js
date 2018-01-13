@@ -6,6 +6,7 @@ import Signin from '@/views/Signin.vue'
 import Confirm from '@/views/Confirm.vue'
 import TopIndex from '@/views/top/Index'
 import TopTop from '@/views/top/Top'
+import TagIndex from '@/views/tag/Index'
 import UserpageIndex from '@/views/userpage/Index'
 import UserpageTheme from '@/views/userpage/Theme'
 import UserpageItem from '@/views/userpage/Item'
@@ -49,6 +50,9 @@ export default new Router({
               component: SettingsProfile
             }
           ]
+        }, {
+          path: 'tag',
+          component: TagIndex
         }, {
           path: ':userId/favorites',
           component: UserpageIndex
