@@ -20,7 +20,8 @@
                     <span class="updated-at">- {{ theme.updatedAt && theme.updatedAt.format('YYYY/MM/DD') }}</span>
                   </div>
                   <div class="theme-tags tags" v-if="theme.tags.length">
-                    <a v-for="tag in theme.tags" class="tag is-primary">{{ tag.name }}</a>
+                    <a v-for="tag in theme.tags" class="tag is-primary"
+                       @click.stop="$router.push(`/tag?name=${tag.name}`)">{{ tag.name }}</a>
                   </div>
                 </div>
               </div>
@@ -36,7 +37,8 @@
                   <span class="updated-at">- {{ theme.updatedAt && theme.updatedAt.format('YYYY/MM/DD') }}</span>
                 </div>
                 <div class="theme-tags tags" v-if="theme.tags.length">
-                  <a v-for="tag in theme.tags" class="tag is-primary">{{ tag.name }}</a>
+                  <a v-for="tag in theme.tags" class="tag is-primary"
+                     @click.stop="$router.push(`/tag?name=${tag.name}`)">{{ tag.name }}</a>
                 </div>
               </div>
 
