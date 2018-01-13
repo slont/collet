@@ -1,10 +1,10 @@
 <template>
   <div id="userpage-themes">
-    <div class="columns is-multiline">
+    <transition-group name="slide-fade" mode="out-in" class="columns is-multiline">
       <div v-for="theme in themes" class="column is-one-third-tablet" :key="theme.id">
         <theme-card :theme="theme" @open-edit-modal="$emit('open-edit-modal', theme)"></theme-card>
       </div>
-    </div>
+    </transition-group>
   </div>
 </template>
 

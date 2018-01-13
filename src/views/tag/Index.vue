@@ -11,11 +11,11 @@
     </header>
 
     <div class="tag-themes">
-      <div class="columns is-multiline">
+      <transition-group name="slide-fade" mode="out-in" class="columns is-multiline">
         <div v-for="theme in themes" class="column is-one-third-tablet" :key="theme.id">
           <theme-card :theme="theme" @open-edit-modal="$emit('open-edit-modal', theme)"></theme-card>
         </div>
-      </div>
+      </transition-group>
     </div>
 
     <a @click="$refs.themeCreateModal.open()" class="button button-create is-float is-primary circle">
@@ -50,7 +50,7 @@
       }
     },
     watch: {
-      '$route.params.userId': 'refresh'
+      '$route.query.name': 'refresh'
     },
     created() {
       this.refresh()
