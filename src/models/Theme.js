@@ -1,10 +1,29 @@
 import Base from './Base'
 import Item from './Item'
+import qs from 'qs'
 import moment from 'moment'
 
 export default class Theme extends Base {
   constructor() {
     super('/themes')
+  }
+
+  findByFavorite(params) {
+    return this.postProcess(fetch(`${this.endpoint}/_favorite?${qs.stringify(params, { indices: false })}`, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
+      headers: Base.getHeaders()
+    }))
+  }
+
+  findByTagName(params) {
+    return this.postProcess(fetch(`${this.endpoint}/_tag?${qs.stringify(params, { indices: false })}`, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
+      headers: Base.getHeaders()
+    }))
   }
 
   findOneFavorite(themeId, userId) {

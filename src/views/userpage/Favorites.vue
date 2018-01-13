@@ -33,9 +33,8 @@
     },
     methods: {
       refresh() {
-        new ThemeModel().find({
+        new ThemeModel().findByFavorite({
           userId: this.urlUserId,
-          favorite: true,
           p: 0,
           s: 20
         }).then(res => {

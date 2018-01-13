@@ -38,7 +38,6 @@
       refresh() {
         new ThemeModel().find({
           userId: this.urlUserId,
-          favorite: false,
           p: 0,
           s: 20
         }).then(res => {
