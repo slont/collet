@@ -11,13 +11,19 @@
           </figure>
         </div>
       </div>
-      <div class="content">{{ item.description }}</div>
+      <div class="content">
+        <element-view :element="item.elements[0]" v-if="item.elements[0]"></element-view>
+        <div v-else>まだアイテムがありません</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+  import ElementView from '@/components/element/ElementView'
+
   export default {
+    components: { ElementView },
     props: ['theme', 'item'],
     computed: {
       urlUserId() {
@@ -36,7 +42,7 @@
     cursor: pointer;
 
     &.card .media:not(:last-child) {
-      margin-bottom: 1rem;
+      margin-bottom: .5rem;
     }
     .media {
       align-items: center;
@@ -58,9 +64,24 @@
     }
     .content {
       font-size: $size-small;
-      height: 2rem;
       background-color: rgba(255, 255, 255, .8);
       overflow: hidden;
+
+      .cl-element {
+        .view-label {
+          font-size: 1em;
+          line-height: 1.5;
+          color: darkgrey;
+        }
+        figure {
+          margin-top: 0;
+
+          img {
+            height: 10em;
+            width: auto;
+          }
+        }
+      }
     }
   }
 </style>
