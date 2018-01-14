@@ -106,16 +106,20 @@
       </a>
       <ul>
         <li>
-          <a class="button button-create is-float is-link circle"
-             @click="$refs.itemCreateModal.open()">
-            <i class="material-icons">add</i>
-          </a>
+          <el-tooltip content="新規アイテム" placement="left">
+            <a class="button button-create is-float is-link circle"
+               @click="$refs.itemCreateModal.open()">
+              <i class="material-icons">add</i>
+            </a>
+          </el-tooltip>
         </li>
         <li v-for="template in theme.templates">
-          <a class="button button-template is-float is-info circle"
-             @click="$refs.itemCreateModal.open(template)">
-            <i class="material-icons">assignment</i>
-          </a>
+          <el-tooltip content="テンプレート" placement="left">
+            <a class="button button-template is-float is-info circle"
+               @click="$refs.itemCreateModal.open(template)">
+              <i class="material-icons">assignment</i>
+            </a>
+          </el-tooltip>
         </li>
       </ul>
     </div>
