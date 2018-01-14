@@ -22,7 +22,7 @@
       <div class="column">
         <div class="field tags-field">
           <label class="label">タグ</label>
-          <div class="control loading-mask" :class="{ 'is-loading': theme.image.substring(0, 4) === 'data' }">
+          <div class="control">
             <el-select
                 v-model="theme.tags"
                 multiple
@@ -168,17 +168,12 @@
         padding-bottom: 0;
 
         .image-field {
-          .control {
-            display: flex;
-            flex-direction: column;
-
-            .file-view {
-              .delete {
-                position: absolute;
-                top: 5px;
-                right: 5px;
-                z-index: 10;
-              }
+          .file-view {
+            .delete {
+              position: absolute;
+              top: 5px;
+              right: 5px;
+              z-index: 10;
             }
           }
         }

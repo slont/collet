@@ -45,7 +45,7 @@
 
         <div class="field image-field">
           <label class="label">メイン画像（オプショナル）</label>
-          <div class="control loading-mask" :class="{ 'is-loading': theme.image.substring(0, 4) === 'data' }">
+          <div class="control">
             <div class="file is-boxed">
               <label class="file-label">
                 <input @change="changeImage" class="file-input" type="file" name="resume">
@@ -179,17 +179,12 @@
         padding-bottom: 0;
 
         .image-field {
-          .field-body {
-            display: flex;
-            flex-direction: column;
-
-            .file-view {
-              .delete {
-                position: absolute;
-                top: 5px;
-                right: 5px;
-                z-index: 10;
-              }
+          .file-view {
+            .delete {
+              position: absolute;
+              top: 5px;
+              right: 5px;
+              z-index: 10;
             }
           }
         }
