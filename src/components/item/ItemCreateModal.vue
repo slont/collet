@@ -161,7 +161,7 @@
       }
     },
     methods: {
-      open(template) {
+      open(template = {}) {
         this.template = template
         this.$refs.itemCreateModal.open()
       },

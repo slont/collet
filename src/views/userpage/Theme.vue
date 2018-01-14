@@ -107,13 +107,14 @@
       <ul>
         <li>
           <a class="button button-create is-float is-link circle"
-             @click="$refs.itemCreateModal.open(theme.templates)">
-            <i class="material-icons">insert_chart</i>
+             @click="$refs.itemCreateModal.open()">
+            <i class="material-icons">add</i>
           </a>
         </li>
-        <li>
-          <a class="button button-create is-float is-info circle">
-            <i class="material-icons">format_quote</i>
+        <li v-for="template in theme.templates">
+          <a class="button button-template is-float is-info circle"
+             @click="$refs.itemCreateModal.open(template)">
+            <i class="material-icons">assignment</i>
           </a>
         </li>
       </ul>
@@ -126,7 +127,6 @@
 </template>
 
 <script>
-  import UserModel from '@/models/User'
   import ThemeModel from '@/models/Theme'
   import ItemCard from '@/components/item/ItemCard'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
@@ -148,10 +148,6 @@
             name: '',
             image: ''
           }
-        },
-        user: {
-          name: '',
-          image: ''
         },
         currentItem: {
           id: ''
@@ -178,16 +174,6 @@
     },
     methods: {
       refresh() {
-        new UserModel().findOne(this.urlUserId).then(res => {
-          this.user = res
-        }).catch(err => {
-          console.log(err)
-          this.$message({
-            showClose: true,
-            message: 'データ取得に失敗しました',
-            type: 'error'
-          })
-        })
         const themeModel = new ThemeModel()
         themeModel.findOne(this.themeId).then(res => {
           Object.assign(this.theme, res)
@@ -216,9 +202,9 @@
       },
       clickFavorite() {
         if (this.theme.favorite) {
-          return new ThemeModel().deleteFavorite(this.theme.id, this.user.id)
+          return new ThemeModel().deleteFavorite(this.theme.id, this.selfUser.id)
         } else {
-          return new ThemeModel().updateFavorite(this.theme.id, this.user.id)
+          return new ThemeModel().updateFavorite(this.theme.id, this.selfUser.id)
         }
       }
     }
