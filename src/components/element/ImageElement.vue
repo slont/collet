@@ -72,6 +72,8 @@
 <style lang="scss" rel="stylesheet/scss">
   .image-element {
     .file-view {
+      text-align: center;
+
       .delete {
         position: absolute;
         top: 5px;

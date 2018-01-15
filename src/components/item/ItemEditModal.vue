@@ -280,7 +280,7 @@
           .main-column {
             $sort-button-size: 2rem;
             $margin-side: $sort-button-size + .5rem;
-            padding: 0 3rem 1.5rem !important;
+            padding: 0 4rem 1.5rem !important;
             background-color: white;
             overflow-y: scroll;
             z-index: 0;
@@ -311,7 +311,7 @@
 
                 .sort-buttons {
                   display: flex;
-                  flex: .05;
+                  flex: .025;
                   flex-direction: column;
 
                   .button {
