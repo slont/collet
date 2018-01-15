@@ -5,15 +5,10 @@
         <div class="media-content">
           <span class="title is-6">{{ item.name }}</span>
         </div>
-        <div class="media-right" v-if="item.image">
-          <figure class="image">
-            <img :src="item.image" alt="Placeholder image">
-          </figure>
-        </div>
       </div>
       <div class="content">
         <element-view :element="item.elements[0]" v-if="item.elements[0]"></element-view>
-        <div v-else>まだアイテムがありません</div>
+        <div v-else>まだコンテンツがありません</div>
       </div>
     </div>
   </div>

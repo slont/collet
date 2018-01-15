@@ -8,11 +8,6 @@
           <span class="icon"><i class="material-icons">edit</i></span>
         </button>
       </div>
-      <div class="subtitle is-6">{{ item.description }}</div>
-
-      <figure class="image">
-        <img :src="item.image" v-if="item.image">
-      </figure>
     </div>
 
     <div class="item-elements">

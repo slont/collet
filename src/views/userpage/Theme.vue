@@ -2,7 +2,7 @@
   <div id="userpage-theme">
     <div class="theme-content">
       <div class="theme-columns columns">
-        <div class="column is-4">
+        <div class="side-column column is-4">
           <div class="theme-card card">
             <header class="theme-header">
               <div class="theme-image theme-header-content trim" v-if="theme.image">
@@ -87,7 +87,7 @@
           </div>
         </div>
 
-        <div class="column is-8" v-if="theme.items.length">
+        <div class="main-column column is-8" v-if="currentItem.id">
           <item-page :current-item="currentItem"></item-page>
         </div>
 
@@ -229,7 +229,10 @@
         width: 100%;
         margin: 0;
 
-        > div {
+        .main-column {
+          padding-left: 2rem;
+        }
+        > .column {
           overflow: scroll;
 
           .theme-header {
@@ -391,7 +394,7 @@
               margin: 0 auto;
               display: flex;
               align-items: center;
-              padding: .5rem 0;
+              padding: 1rem 0 .5rem;
 
               .field {
                 width: 100%;
