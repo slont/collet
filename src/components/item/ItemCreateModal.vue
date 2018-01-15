@@ -61,6 +61,10 @@
     </div>
 
     <footer class="modal-card-foot has-right">
+      <label class="checkbox">
+        <input v-model="isTemplate" type="checkbox">
+        テンプレート登録
+      </label>
       <button @click="close" class="button">キャンセル</button>
       <button @click="ok" class="button is-info">作成</button>
     </footer>
@@ -125,6 +129,7 @@
           elements: []
         },
         template: {},
+        isTemplate: false,
         errorMessage: ''
       }
     },
@@ -147,7 +152,10 @@
           if (!result) return
 
           this.setOrder()
-          new ItemModel(this.themeId).create(this.item).then(() => {
+          const body = Object.assign({
+            isTemplate: this.isTemplate
+          }, this.item)
+          new ItemModel(this.themeId).create(body).then(() => {
             this.$emit('refresh')
             this.$message({
               showClose: true,
@@ -353,6 +361,11 @@
             }
           }
         }
+      }
+    }
+    .modal-card-foot {
+      .checkbox {
+        margin-right: 1rem;
       }
     }
   }
