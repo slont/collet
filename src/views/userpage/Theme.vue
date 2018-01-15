@@ -82,7 +82,7 @@
             <div class="subtitle is-7">アイテム一覧</div>
             <item-card  v-for="item in theme.items" :key="item.id" :theme="theme" :item="item"
                         :class="{ 'is-active': currentItem.id === item.id }"
-                        @click.native="currentItem = item"
+                        @click.native="$router.push(`/${urlUserId}/${themeId}/${item.id}`)"
                         v-if="theme.items.length"></item-card>
           </div>
         </div>
@@ -132,6 +132,7 @@
 
 <script>
   import ThemeModel from '@/models/Theme'
+  import ItemModel from '@/models/Item'
   import ItemCard from '@/components/item/ItemCard'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
   import ItemCreateModal from '@/components/item/ItemCreateModal'
@@ -166,6 +167,9 @@
       urlUserId() {
         return this.$route.params.userId
       },
+      itemId() {
+        return this.$route.params.itemId
+      },
       isMyPage() {
         return this.$store.state.user.id === this.urlUserId
       },
@@ -173,15 +177,24 @@
         return this.$route.params.themeId
       }
     },
+    watch: {
+      itemId() {
+        this.refreshItem(this.itemId)
+      }
+    },
     created() {
       this.refresh()
     },
     methods: {
       refresh() {
+        const itemId = this.itemId
         const themeModel = new ThemeModel()
         themeModel.findOne(this.themeId).then(res => {
           Object.assign(this.theme, res)
-          if (this.theme.items.length) {
+
+          if (itemId) {
+            this.refreshItem(itemId)
+          } else if (this.theme.items.length) {
             this.currentItem = this.theme.items[0]
           }
           return themeModel.findOneFavorite(this.theme.id, this.selfUser.id)
@@ -196,6 +209,11 @@
             message: 'データ取得に失敗しました',
             type: 'error'
           })
+        })
+      },
+      refreshItem(itemId) {
+        new ItemModel(this.theme.id).findOne(itemId).then(res => {
+          this.currentItem = res
         })
       },
       onClickFavorite() {
