@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import ItemModel from '@/models/item'
+  import ItemModel from '@/models/Item'
   import ItemEditModal from '@/components/item/ItemEditModal'
   import ElementView from '@/components/element/ElementView'
 
