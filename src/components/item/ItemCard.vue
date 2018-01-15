@@ -3,7 +3,7 @@
     <div class="card-content">
       <div class="media">
         <div class="media-content">
-          <router-link :to="`/${urlUserName}/${theme.id}/${item.id}`" class="title is-6">{{ item.name }}</router-link>
+          <span class="title is-6">{{ item.name }}</span>
         </div>
         <div class="media-right" v-if="item.image">
           <figure class="image">
@@ -11,20 +11,26 @@
           </figure>
         </div>
       </div>
-      <div class="content">{{ item.description }}</div>
+      <div class="content">
+        <element-view :element="item.elements[0]" v-if="item.elements[0]"></element-view>
+        <div v-else>まだアイテムがありません</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+  import ElementView from '@/components/element/ElementView'
+
   export default {
+    components: { ElementView },
     props: ['theme', 'item'],
     computed: {
-      urlUserName() {
-        return this.$route.params.userName
+      urlUserId() {
+        return this.$route.params.userId
       },
       isMyPage() {
-        return this.$store.state.user.name === this.urlUserName
+        return this.$store.state.user.id === this.urlUserId
       }
     }
   }
@@ -36,7 +42,7 @@
     cursor: pointer;
 
     &.card .media:not(:last-child) {
-      margin-bottom: 1rem;
+      margin-bottom: .5rem;
     }
     .media {
       align-items: center;
@@ -57,10 +63,25 @@
       }
     }
     .content {
-      font-size: $size-7;
-      height: 2rem;
+      font-size: $size-small;
       background-color: rgba(255, 255, 255, .8);
       overflow: hidden;
+
+      .cl-element {
+        .view-label {
+          font-size: 1em;
+          line-height: 1.5;
+          color: darkgrey;
+        }
+        figure {
+          margin-top: 0;
+
+          img {
+            height: 10em;
+            width: auto;
+          }
+        }
+      }
     }
   }
 </style>

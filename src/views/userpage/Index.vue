@@ -2,15 +2,18 @@
   <div id="userpage-index">
     <header class="userpage-header header-shadow">
       <article class="user-profile media">
-        <figure class="media-left">
+        <figure class="media-left" v-if="user.image">
           <p class="image is-64x64">
             <img :src="user.image" class="circle">
           </p>
         </figure>
         <div class="media-content">
           <div class="content">
-            <div class="title is-4">{{ urlUserName }}</div>
-            <p>{{ user.biography }}</p>
+            <div class="">
+              <span class="title is-4">{{ user.name }}</span>
+              <span class="subtitle is-6">@{{ urlUserId }}</span>
+            </div>
+            <p class="user-bio">{{ user.biography }}</p>
           </div>
           <nav class="level is-mobile">
             <div class="level-left">
@@ -29,19 +32,16 @@
       </article>
       <div class="tabs">
         <ul>
-          <router-link :to="`/${urlUserName}`" tag="li" class="is-active"><a>テーマ一覧</a></router-link>
-          <router-link :to="`/${urlUserName}/fav`" tag="li"><a>お気に入り</a></router-link>
+          <router-link :to="`/${urlUserId}`" tag="li" exact><a>テーマ一覧</a></router-link>
+          <router-link :to="`/${urlUserId}/favorites`" tag="li"><a>お気に入り</a></router-link>
         </ul>
       </div>
     </header>
 
-    <div class="themes">
-      <div class="columns is-multiline">
-        <div v-for="theme in themes" class="column is-one-third-tablet" :key="theme.id">
-          <theme-card :theme="theme" @open-edit-modal="$refs.themeEditModal.open(theme)"></theme-card>
-        </div>
-      </div>
-    </div>
+    <transition name="slide-fade" mode="out-in">
+      <favorites @open-edit-modal="openEditModal" v-if="$route.path.endsWith('/favorites')"></favorites>
+      <themes @open-edit-modal="openEditModal" v-else></themes>
+    </transition>
 
     <a @click="$refs.themeCreateModal.open()" class="button button-create is-float is-primary circle">
       <i class="material-icons">add</i>
@@ -54,13 +54,14 @@
 
 <script>
   import UserModel from '@/models/User'
-  import ThemeModel from '@/models/Theme'
   import ThemeCard from '@/components/theme/ThemeCard'
   import ThemeCreateModal from '@/components/theme/ThemeCreateModal'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
+  import Themes from './Themes'
+  import Favorites from './Favorites'
 
   export default {
-    components: { ThemeCard, ThemeCreateModal, ThemeEditModal },
+    components: { ThemeCard, ThemeCreateModal, ThemeEditModal, Themes, Favorites },
     data() {
       return {
         user: {
@@ -68,29 +69,24 @@
           name: '',
           biography: '',
           image: ''
-        },
-        themes: []
+        }
       }
     },
     computed: {
-      urlUserName() {
-        return this.$route.params.userName
+      urlUserId() {
+        return this.$route.params.userId
       }
+    },
+    watch: {
+      '$route.params.userId': 'refresh'
     },
     created() {
       this.refresh()
     },
     methods: {
       refresh() {
-        new UserModel().findOne(this.urlUserName).then(res => {
+        new UserModel().findOne(this.urlUserId).then(res => {
           this.user = res
-          return new ThemeModel().find({
-            userId: this.user.id,
-            p: 0,
-            s: 20
-          })
-        }).then(res => {
-          this.themes = res
         }).catch(err => {
           console.log(err)
           this.$message({
@@ -99,6 +95,9 @@
             type: 'error'
           })
         })
+      },
+      openEditModal(theme) {
+        this.$refs.themeEditModal.open(theme)
       }
     }
   }
@@ -114,13 +113,13 @@
         margin-left: auto;
         margin-right: auto;
         padding: 1rem .5rem .5rem;
-        border-bottom: $border;
+        border-bottom: $border-style;
 
         .content {
           margin-bottom: 0;
 
-          .title {
-            margin-bottom: .25rem;
+          .user-bio {
+            margin-top: .5rem;
           }
         }
       }
@@ -136,16 +135,11 @@
             a {
               border-bottom-width: 0;
             }
+            &.router-link-active {
+              @extend .is-active;
+            }
           }
         }
-      }
-    }
-    .themes {
-      width: $width;
-      margin: 0 auto;
-
-      > .columns {
-        padding-top: 1em;
       }
     }
     .button.is-float {

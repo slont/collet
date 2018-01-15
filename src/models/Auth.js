@@ -51,13 +51,15 @@ export default class Auth extends Base {
 
   deserialize(json) {
     if (json instanceof Array) {
-      return json.map(v => Object.assign({}, v, {
-        user: (v.user && new User().deserialize(v.user)) || {}
-      }))
+      return json.map(v => Auth._deserialize(v))
     } else {
-      return Object.assign({}, json, {
-        user: (json.user && new User().deserialize(json.user)) || {}
-      })
+      return Auth._deserialize(json)
     }
+  }
+
+  static _deserialize(json) {
+    return Object.assign({}, json, {
+      user: (json.user && new User().deserialize(json.user)) || {}
+    })
   }
 }

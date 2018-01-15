@@ -1,10 +1,24 @@
-$color: #2c3e50;
-$bg-color: white;
-$border-color: #dbdbdb;
-$border: 1px solid $border-color;
+$text-color: #00263e;
+$main-color: #ff7600;
+$sub-color: #069dff;
+$bg-color: #fff7f0;
+$border: #dbdbdb;
+$border-style: 1px solid $border;
 $width: 920px;
 $item-page-width: 620px;
 
 $header-nav-height: 52px;
 
 $element-button-size: 4.5rem;
+
+// for bulma
+$primary: $main-color;
+$primary-invert: findColorInvert($main-color);
+$info: $sub-color;
+$info-invert: findColorInvert($sub-color);
+$file-name-border-color: $text-color;
+$tabs-link-active-border-bottom-color: $primary;
+$tabs-link-active-color: $primary;
+$tabs-toggle-link-active-background-color: $primary;
+$tabs-toggle-link-active-border-color: $primary;
+$tabs-toggle-link-active-color: $primary-invert

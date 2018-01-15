@@ -3,7 +3,7 @@
     <div class="item-info">
       <div class="title is-3">
         {{ item.name }}
-        <button class="button is-primary is-outlined" @click="$refs.itemEditModal.open(item)"
+        <button class="button is-info is-outlined" @click="$refs.itemEditModal.open(item)"
                 v-if="isMyPage">
           <span class="icon"><i class="material-icons">edit</i></span>
         </button>
@@ -17,18 +17,7 @@
 
     <div class="item-elements">
       <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
-        <text-element :params="element" v-if="'text' === element.type"></text-element>
-        <image-element :params="element" v-else-if="'image' === element.type"></image-element>
-        <location-element :params="element" v-else-if="'location' === element.type"></location-element>
-        <datetime-element :params="element" v-else-if="'date' === element.type"></datetime-element>
-        <datetime-element :params="element" v-else-if="'time' === element.type"></datetime-element>
-        <datetime-element :params="element" v-else-if="'datetime' === element.type"></datetime-element>
-        <tag-element :params="element" v-else-if="'tag' === element.type"></tag-element>
-        <link-element :params="element" v-else-if="'link' === element.type"></link-element>
-        <phone-element :params="element" v-else-if="'phone' === element.type"></phone-element>
-        <email-element :params="element" v-else-if="'email' === element.type"></email-element>
-        <rating-element :params="element" v-else-if="'rating' === element.type"></rating-element>
-        <switch-element :params="element" v-else-if="'switch' === element.type"></switch-element>
+        <element-view :element="element"></element-view>
       </div>
     </div>
 
@@ -39,30 +28,12 @@
 <script>
   import ItemModel from '@/models/item'
   import ItemEditModal from '@/components/item/ItemEditModal'
-  import TextElement from '@/components/element/TextElement'
-  import ImageElement from '@/components/element/ImageElement'
-  import LocationElement from '@/components/element/LocationElement'
-  import DatetimeElement from '@/components/element/DatetimeElement'
-  import TagElement from '@/components/element/TagElement'
-  import LinkElement from '@/components/element/LinkElement'
-  import PhoneElement from '@/components/element/PhoneElement'
-  import EmailElement from '@/components/element/EmailElement'
-  import RatingElement from '@/components/element/RatingElement'
-  import SwitchElement from '@/components/element/SwitchElement'
+  import ElementView from '@/components/element/ElementView'
 
   export default {
     components: {
       ItemEditModal,
-      TextElement,
-      ImageElement,
-      LocationElement,
-      DatetimeElement,
-      TagElement,
-      LinkElement,
-      PhoneElement,
-      EmailElement,
-      RatingElement,
-      SwitchElement
+      ElementView
     },
     props: {
       currentItem: {
@@ -82,7 +53,7 @@
     },
     computed: {
       isMyPage() {
-        return this.$store.state.user.name === this.$route.params.userName
+        return this.$store.state.user.id === this.$route.params.userId
       },
       themeId() {
         return this.$route.params.themeId
@@ -120,7 +91,7 @@
       margin-bottom: 2rem;
 
       .title {
-        border-bottom: $border;
+        border-bottom: $border-style;
       }
       .subtitle {
         line-height: inherit;

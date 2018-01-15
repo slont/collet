@@ -87,7 +87,7 @@
 
     <footer class="modal-card-foot has-right">
       <button @click="close" class="button">キャンセル</button>
-      <button @click="ok" class="button is-primary">作成</button>
+      <button @click="ok" class="button is-info">作成</button>
     </footer>
   </modal>
 </template>
@@ -161,7 +161,7 @@
       }
     },
     methods: {
-      open(template) {
+      open(template = {}) {
         this.template = template
         this.$refs.itemCreateModal.open()
       },

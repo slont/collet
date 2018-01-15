@@ -6,7 +6,7 @@ export default class Base {
   }
 
   find(params = null) {
-    return this.postProcess(fetch(`${this.endpoint + (params ? '?' + qs.stringify(params) : '')}`, {
+    return this.postProcess(fetch(`${this.endpoint + (params ? '?' + qs.stringify(params, { indices: false }) : '')}`, {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',
@@ -15,7 +15,7 @@ export default class Base {
   }
 
   findOne(id, params = null) {
-    return this.postProcess(fetch(`${this.endpoint}/${id}${(params ? '?' + qs.stringify(params) : '')}`, {
+    return this.postProcess(fetch(`${this.endpoint}/${id}${(params ? '?' + qs.stringify(params, { indices: false }) : '')}`, {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',

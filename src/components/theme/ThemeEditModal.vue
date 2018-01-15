@@ -6,8 +6,8 @@
           <label class="label">タイトル</label>
           <div class="control">
             <input v-model.trim="theme.title" class="input" type="text" placeholder="タイトル"
-                   name="title" v-validate="'required|max:255'">
-            <span v-show="errors.has('title')" class="has-text-danger">{{ errors.first('title') }}</span>
+                   name="title" :class="{ 'is-danger': errors.has('title') }" v-validate="'required|max:255'">
+            <span v-show="errors.has('title')" class="help is-danger">{{ errors.first('title') }}</span>
           </div>
         </div>
 
@@ -20,9 +20,32 @@
       </div>
 
       <div class="column">
+        <div class="field tags-field">
+          <label class="label">タグ</label>
+          <div class="control loading-mask" :class="{ 'is-loading': theme.image.substring(0, 4) === 'data' }">
+            <el-select
+                v-model="tags"
+                multiple
+                filterable
+                allow-create
+                default-first-option
+                remote
+                :loading="loading"
+                :remote-method="remoteMethod"
+                placeholder="Choose tags for your article">
+              <el-option
+                  v-for="item in suggests"
+                  :key="item"
+                  :label="item"
+                  :value="item">
+              </el-option>
+            </el-select>
+          </div>
+        </div>
+
         <div class="field image-field">
           <label class="label">メイン画像（オプショナル）</label>
-          <div class="control loading-mask" :class="{ 'is-loading': theme.image.substring(0, 4) === 'data' }">
+          <div class="control">
             <div class="file is-boxed">
               <label class="file-label">
                 <input @change="changeImage" class="file-input" type="file" name="resume">
@@ -41,11 +64,11 @@
       </div>
     </div>
 
-    <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
     <footer class="modal-card-foot has-right">
+      <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
       <button @click="$refs.themeDeleteModal.open(theme)" class="button is-danger is-outlined is-left">削除</button>
       <button @click="close" class="button">キャンセル</button>
-      <button @click="ok" class="button is-primary">保存</button>
+      <button @click="ok" class="button is-info">保存</button>
     </footer>
 
     <theme-delete-modal ref="themeDeleteModal" @refresh="refreshClose"></theme-delete-modal>
@@ -54,6 +77,7 @@
 
 <script>
   import ThemeModel from '@/models/Theme'
+  import FileModel from '@/models/File'
   import Modal from '@/components/Modal'
   import ThemeDeleteModal from './ThemeDeleteModal'
 
@@ -65,15 +89,19 @@
           title: '',
           description: '',
           image: '',
-          imageBase64: '',
+          tags: [],
           createdUser: this.$store.state.user
         },
-        errorMessage: ''
+        tags: [],
+        errorMessage: '',
+        loading: false,
+        suggests: []
       }
     },
     methods: {
       open(theme) {
         Object.assign(this.theme, theme)
+        this.tags = theme.tags.map(tag => tag.name)
         this.$refs.themeEditModal.open()
       },
       close() {
@@ -84,7 +112,10 @@
         this.$validator.validateAll().then(result => {
           if (!result) return
 
-          new ThemeModel().update(this.theme.id, this.theme).then(() => {
+          const body = Object.assign({}, this.theme, {
+            tags: this.tags
+          })
+          new ThemeModel().update(this.theme.id, body).then(() => {
             this.$emit('refresh')
             this.$message({
               showClose: true,
@@ -105,6 +136,17 @@
         this.$emit('refresh')
         this.close()
       },
+      remoteMethod(query) {
+        if ('' !== query) {
+          this.suggests = [
+              query,
+              query.substring(0, 1).toUpperCase() + query.substring(1),
+              query.toUpperCase()
+          ]
+        } else {
+          this.suggests = []
+        }
+      },
       changeImage(e) {
         this.theme.image = ''
         const files = e.target.files || e.dataTransfer.files
@@ -115,13 +157,15 @@
       createImage(file) {
         const reader = new FileReader()
         reader.onload = e => {
-          this.theme.imageBase64 = e.target.result
+          this.theme.image = e.target.result
         }
         reader.readAsDataURL(file)
+        new FileModel().create(file).then(res => {
+          this.theme.image = res.path
+        })
       },
       removeImage() {
         this.theme.image = ''
-        this.theme.imageBase64 = ''
       }
     }
   }
@@ -135,17 +179,29 @@
         padding-bottom: 0;
 
         .image-field {
-          .field-body {
-            display: flex;
-            flex-direction: column;
+          .file-view {
+            .delete {
+              position: absolute;
+              top: 5px;
+              right: 5px;
+              z-index: 10;
+            }
+          }
+        }
+        .tags-field {
+          .el-select {
+            width: 100%;
 
-            .file-view {
-              .delete {
-                position: absolute;
-                top: 5px;
-                right: 5px;
-                z-index: 10;
+            .el-tag {
+              @extend .tag;
+              @extend .is-primary;
+
+              &:before {
+                content: '#';
               }
+            }
+            .el-tag__close.el-icon-close {
+              background-color: transparent;
             }
           }
         }

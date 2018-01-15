@@ -1,35 +1,60 @@
 <template>
   <div id="userpage-theme">
     <div class="theme-content">
-      <div class="theme-columns columns" v-if="theme.items.length">
+      <div class="theme-columns columns">
         <div class="column is-4">
           <div class="theme-card card">
             <header class="theme-header">
               <div class="theme-image theme-header-content trim" v-if="theme.image">
-                <figure class="theme-image image is-4by3">
+                <figure class="theme-image image is-16by9">
                   <img :src="theme.image" v-if="theme.image">
                 </figure>
                 <div class="dark-mask">
-                  <button class="button is-primary is-outlined" @click="$refs.themeEditModal.open(theme)" v-if="isMyPage">
-                    <span class="icon"><i class="material-icons">edit</i></span>
-                  </button>
                   <div class="title is-5">{{ theme.title }}</div>
-                  <div class="user-profile" @click="$router.push(`/${user.name}`)">
-                    <figure class="image is-16x16" v-if="user.image">
-                      <img class="circle" :src="user.image">
+                  <div class="user-profile" @click="$router.push(`/${theme.createdUser.id}`)">
+                    <figure class="image is-16x16" v-if="theme.createdUser.image">
+                      <img class="circle" :src="theme.createdUser.image">
                     </figure>
-                    <span class="user-name">{{ user.name }}</span>
-                    <span class="updated-at">- {{ theme.updatedAt.format('YYYY/MM/DD') }}</span>
+                    <span class="user-name has-text-weight-bold">{{ theme.createdUser.name }}</span>
+                    <span class="user-id">@{{ theme.createdUser.id }}</span>
+                    <span class="updated-at">- {{ theme.updatedAt && theme.updatedAt.format('YYYY/MM/DD') }}</span>
                   </div>
-                  <div class="theme-tags" v-if="theme.tags.length">
-                    <span v-for="tag in theme.tags" class="tag is-info">{{ tag.name }}</span>
+                  <div class="theme-tags tags" v-if="theme.tags.length">
+                    <a v-for="tag in theme.tags" class="tag is-primary"
+                       @click.stop="$router.push(`/tag?name=${tag.name}`)">#{{ tag.name }}</a>
                   </div>
                 </div>
               </div>
+
               <div class="theme-profile theme-header-content" v-else>
                 <div class="title is-5">{{ theme.title }}</div>
+                <div class="user-profile" @click="$router.push(`/${theme.createdUser.id}`)">
+                  <figure class="image is-16x16" v-if="theme.createdUser.image">
+                    <img class="circle" :src="theme.createdUser.image">
+                  </figure>
+                  <span class="user-name has-text-weight-bold">{{ theme.createdUser.name }}</span>
+                  <span class="user-id">@{{ theme.createdUser.id }}</span>
+                  <span class="updated-at">- {{ theme.updatedAt && theme.updatedAt.format('YYYY/MM/DD') }}</span>
+                </div>
+                <div class="theme-tags tags" v-if="theme.tags.length">
+                  <a v-for="tag in theme.tags" class="tag is-primary"
+                     @click.stop="$router.push(`/tag?name=${tag.name}`)">#{{ tag.name }}</a>
+                </div>
+              </div>
+
+              <div class="favorite-action" @click.stop.prevent="onClickFavorite">
+                <span class="icon">
+                  <i class="favorite material-icons" v-if="theme.favorite">star</i>
+                  <i class="material-icons" v-else>star_border</i>
+                </span>
+                <span class="favorite-count" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
+              </div>
+
+              <div class="edit-action" @click.stop.prevent="$refs.themeEditModal.open(theme)" v-if="isMyPage">
+                <span class="icon"><i class="material-icons">more_horiz</i></span>
               </div>
             </header>
+
             <div class="theme-description card-content">
               <div class="subtitle is-6" :class="{ 'is-opened': openedThemeDescription }">{{ theme.description }}</div>
               <a class="button is-text is-small" @click="openedThemeDescription = !openedThemeDescription">
@@ -55,21 +80,23 @@
 
           <div class="theme-items">
             <div class="subtitle is-7">アイテム一覧</div>
-            <div v-for="item in theme.items" :key="item.id">
-              <item-card :theme="theme" :item="item" @click.native="currentItem = item"
-                         @open-edit-modal="$refs.itemEditModal.open(item)"></item-card>
-            </div>
+            <item-card  v-for="item in theme.items" :key="item.id" :theme="theme" :item="item"
+                        :class="{ 'is-active': currentItem.id === item.id }"
+                        @click.native="currentItem = item"
+                        v-if="theme.items.length"></item-card>
           </div>
         </div>
 
-        <div class="column is-8">
+        <div class="column is-8" v-if="theme.items.length">
           <item-page :current-item="currentItem"></item-page>
         </div>
-      </div>
 
-      <div class="box" v-else>
-        まだアイテムが追加されていません
-        右下のボタンからアイテムを追加してみましょう！
+        <div v-else>
+          まだアイテムはありません
+          <template v-if="isMyPage">
+            <br/>右下のボタンからアイテムを追加してみましょう！
+          </template>
+        </div>
       </div>
     </div>
 
@@ -79,15 +106,20 @@
       </a>
       <ul>
         <li>
-          <a class="button button-create is-float is-link circle"
-             @click="$refs.itemCreateModal.open(theme.templates)">
-            <i class="material-icons">insert_chart</i>
-          </a>
+          <el-tooltip content="新規アイテム" placement="left">
+            <a class="button button-create is-float is-link circle"
+               @click="$refs.itemCreateModal.open()">
+              <i class="material-icons">add</i>
+            </a>
+          </el-tooltip>
         </li>
-        <li>
-          <a class="button button-create is-float is-info circle">
-            <i class="material-icons">format_quote</i>
-          </a>
+        <li v-for="template in theme.templates">
+          <el-tooltip content="テンプレート" placement="left">
+            <a class="button button-template is-float is-info circle"
+               @click="$refs.itemCreateModal.open(template)">
+              <i class="material-icons">assignment</i>
+            </a>
+          </el-tooltip>
         </li>
       </ul>
     </div>
@@ -99,7 +131,6 @@
 </template>
 
 <script>
-  import UserModel from '@/models/User'
   import ThemeModel from '@/models/Theme'
   import ItemCard from '@/components/item/ItemCard'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
@@ -113,11 +144,14 @@
       return {
         theme: {
           title: '',
-          items: []
-        },
-        user: {
-          name: '',
-          image: ''
+          items: [],
+          tags: [],
+          favorite: false,
+          createdUser: {
+            id: '',
+            name: '',
+            image: ''
+          }
         },
         currentItem: {
           id: ''
@@ -126,11 +160,14 @@
       }
     },
     computed: {
-      urlUserName() {
-        return this.$route.params.userName
+      selfUser() {
+        return this.$store.state.user
+      },
+      urlUserId() {
+        return this.$route.params.userId
       },
       isMyPage() {
-        return this.$store.state.user.name === this.urlUserName
+        return this.$store.state.user.id === this.urlUserId
       },
       themeId() {
         return this.$route.params.themeId
@@ -141,21 +178,17 @@
     },
     methods: {
       refresh() {
-        new UserModel().findOne(this.urlUserName).then(res => {
-          this.user = res
-        }).catch(err => {
-          console.log(err)
-          this.$message({
-            showClose: true,
-            message: 'データ取得に失敗しました',
-            type: 'error'
-          })
-        })
-        new ThemeModel().findOne(this.themeId).then(res => {
-          this.theme = res
+        const themeModel = new ThemeModel()
+        themeModel.findOne(this.themeId).then(res => {
+          Object.assign(this.theme, res)
           if (this.theme.items.length) {
             this.currentItem = this.theme.items[0]
           }
+          return themeModel.findOneFavorite(this.theme.id, this.selfUser.id)
+        }).then(res => {
+          this.theme.favorite = !!res.themeId
+        }, () => {
+          // through the NotFound favorite error
         }).catch(err => {
           console.log(err)
           this.$message({
@@ -164,6 +197,19 @@
             type: 'error'
           })
         })
+      },
+      onClickFavorite() {
+        this.clickFavorite().then(res => {
+          this.theme.favoriteCount += this.theme.favorite ? -1 : 1
+          this.theme.favorite = !this.theme.favorite
+        })
+      },
+      clickFavorite() {
+        if (this.theme.favorite) {
+          return new ThemeModel().deleteFavorite(this.theme.id, this.selfUser.id)
+        } else {
+          return new ThemeModel().updateFavorite(this.theme.id, this.selfUser.id)
+        }
       }
     }
   }
@@ -187,12 +233,40 @@
           overflow: scroll;
 
           .theme-header {
+            position: relative;
+
             .theme-header-content {
               position: relative;
               max-height: 14rem;
+              min-height: 11.5rem;
+              flex-direction: column;
+              display: flex;
+              justify-content: flex-end;
 
               .theme-image {
                 width: 100%;
+              }
+              .title {
+                max-height: 4.5rem;
+                line-height: 1.25;
+                overflow: hidden;
+              }
+              .user-profile {
+                font-size: .875rem;
+                cursor: pointer;
+
+                .user-name:hover {
+                  text-decoration: underline;
+                }
+                .user-id {
+                  color: $label-color;
+                }
+                .updated-at {
+                  color: $label-color;
+                }
+              }
+              > :not(:last-child) {
+                margin-bottom: .5rem;
               }
               .dark-mask {
                 display: flex;
@@ -208,30 +282,25 @@
                   margin-bottom: .5rem;
                 }
                 .title {
-                  max-height: 6.25rem;
-                  line-height: 1.25;
                   color: white;
-                  overflow: hidden;
                 }
                 .user-profile {
-                  font-size: .75rem;
-                  display: flex;
-                  align-items: center;
+                  font-size: .875rem;
                   cursor: pointer;
 
-                  > :not(:last-child) {
-                    margin-right: .3rem;
-                  }
-                  .user-name,
-                  .updated-at {
+                  .user-name {
                     color: white;
+
+                    &:hover {
+                      text-decoration: underline;
+                    }
                   }
-                }
-                .button {
-                  position: absolute;
-                  top: 0;
-                  right: 0;
-                  margin: .3rem;
+                  .user-id {
+                    color: gainsboro;
+                  }
+                  .updated-at {
+                    color: gainsboro;
+                  }
                 }
               }
               &.theme-image {
@@ -239,8 +308,60 @@
                 align-items: center;
               }
               &.theme-profile {
-                padding: .75rem 0;
+                padding: .75rem .75rem 0;
+
+                .theme-tags {
+                  border-bottom: $border-style;
+                }
               }
+            }
+            .favorite-action {
+              display: flex;
+              align-items: center;
+              position: absolute;
+              top: .5rem;
+              left: 0;
+              padding: .25rem .4rem .25rem .25rem;
+              background-color: rgba(0, 0, 0, .5);
+              border: 1px solid white;
+              border-left: none;
+              border-bottom-right-radius: 5px;
+              border-top-right-radius: 5px;
+              cursor: pointer;
+
+              .material-icons {
+                font-size: 18px;
+                color: rgba(255, 255, 255, .6);
+
+                &.favorite {
+                  color: #ebeb00;
+                }
+              }
+              .favorite-count {
+                margin-bottom: -.25rem;
+                color: white;
+              }
+              &:hover {
+                opacity: .8;
+              }
+            }
+            .edit-action {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              position: absolute;
+              top: 0;
+              right: 0;
+              height: 3rem;
+              width: 3rem;
+              cursor: pointer;
+
+              &:hover {
+                opacity: .65;
+              }
+            }
+            .theme-image + .favorite-action + .edit-action {
+              color: #e8e8e8;
             }
           }
           .theme-description {
@@ -290,6 +411,18 @@
           .subtitle {
             text-align: center;
             margin: .5rem auto;
+          }
+          .item-card {
+            &.is-active {
+              .card-content {
+                padding: calc(1rem - 3px);
+                border: 3px solid $primary;
+              }
+            }
+            &:hover {
+              transform: scale(1.03);
+              z-index: 1;
+            }
           }
         }
       }

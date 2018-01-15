@@ -9,17 +9,17 @@ export default class Item extends Base {
 
   deserialize(json) {
     if (json instanceof Array) {
-      return json.map(v => Object.assign({}, v, {
-        elements: (v.elements && new Element().deserialize(v.elements)) || [],
-        createdAt: moment(v.createdAt),
-        updatedAt: moment(v.createdAt)
-      }))
+      return json.map(v => Item._deserialize(v))
     } else {
-      return Object.assign({}, json, {
-        elements: (json.elements && new Element().deserialize(json.elements)) || [],
-        createdAt: moment(json.createdAt),
-        updatedAt: moment(json.createdAt)
-      })
+      return Item._deserialize(json)
     }
+  }
+
+  static _deserialize(json) {
+    return Object.assign({}, json, {
+      elements: (json.elements && new Element().deserialize(json.elements)) || [],
+      createdAt: moment(json.createdAt),
+      updatedAt: moment(json.createdAt)
+    })
   }
 }
