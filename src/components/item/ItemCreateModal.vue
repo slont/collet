@@ -128,7 +128,7 @@
           name: '',
           elements: []
         },
-        template: {},
+        templates: [],
         isTemplate: false,
         errorMessage: ''
       }
@@ -139,8 +139,8 @@
       }
     },
     methods: {
-      open(template = {}) {
-        this.template = template
+      open(templates = []) {
+        this.templates = templates
         this.$refs.itemCreateModal.open()
       },
       close() {

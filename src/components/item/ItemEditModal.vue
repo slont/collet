@@ -136,6 +136,7 @@
           image: '',
           elements: []
         },
+        templates: [],
         isTemplate: false,
         errorMessage: ''
       }
@@ -146,7 +147,8 @@
       }
     },
     methods: {
-      open(item) {
+      open(item, templates = []) {
+        this.templates = templates
         this.item = item
         new ItemModel(this.themeId).findOne(this.item.id).then(res => {
           this.item = res

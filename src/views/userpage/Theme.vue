@@ -100,29 +100,10 @@
       </div>
     </div>
 
-    <div class="fixed-action-button vertical">
-      <a class="button trigger-button is-float is-primary circle">
-        <i class="material-icons">add</i>
-      </a>
-      <ul>
-        <li>
-          <el-tooltip content="新規アイテム" placement="left">
-            <a class="button button-create is-float is-link circle"
-               @click="$refs.itemCreateModal.open()">
-              <i class="material-icons">add</i>
-            </a>
-          </el-tooltip>
-        </li>
-        <li v-for="template in theme.templates">
-          <el-tooltip content="テンプレート" placement="left">
-            <a class="button button-template is-float is-info circle"
-               @click="$refs.itemCreateModal.open(template)">
-              <i class="material-icons">assignment</i>
-            </a>
-          </el-tooltip>
-        </li>
-      </ul>
-    </div>
+
+    <a @click="$refs.itemCreateModal.open(theme.templates)" class="button button-create is-float is-primary circle">
+      <i class="material-icons">add</i>
+    </a>
 
     <theme-edit-modal ref="themeEditModal" @refresh="refresh"></theme-edit-modal>
     <item-create-modal ref="itemCreateModal" @refresh="refresh"></item-create-modal>
@@ -493,6 +474,11 @@
           }
         }
       }
+    }
+    .button.is-float {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
     }
   }
 </style>
