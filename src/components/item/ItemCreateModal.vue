@@ -72,6 +72,7 @@
 </template>
 
 <script>
+  import TemplateModel from '@/models/Template'
   import ItemModel from '@/models/Item'
   import FileModel from '@/models/File'
   import Modal from '@/components/Modal'
@@ -139,9 +140,15 @@
       }
     },
     methods: {
-      open(templates = []) {
-        this.templates = templates
+      open() {
         this.$refs.itemCreateModal.open()
+
+        new TemplateModel(this.themeId).find({
+          p: 0,
+          s: 20
+        }).then(res => {
+          this.templates = res
+        })
       },
       close() {
         this.reset()

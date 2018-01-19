@@ -76,6 +76,7 @@
 </template>
 
 <script>
+  import TemplateModel from '@/models/Template'
   import ItemModel from '@/models/Item'
   import FileModel from '@/models/File'
   import Modal from '@/components/Modal'
@@ -147,8 +148,7 @@
       }
     },
     methods: {
-      open(item, templates = []) {
-        this.templates = templates
+      open(item) {
         this.item = item
         new ItemModel(this.themeId).findOne(this.item.id).then(res => {
           this.item = res
@@ -160,6 +160,13 @@
             message: 'データ取得に失敗しました',
             type: 'error'
           })
+        })
+
+        new TemplateModel(this.themeId).find({
+            p: 0,
+            s: 20
+        }).then(res => {
+          this.templates = res
         })
       },
       close() {
