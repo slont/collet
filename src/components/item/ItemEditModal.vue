@@ -5,6 +5,15 @@
         <div class="left-column column">
           <div class="slider">
             <div class="buttons has-addons is-centered">
+              <template v-if="templates.length">
+                <label class="templates-label subtitle is-7">テンプレート</label>
+                <element-button v-for="(template, i) in templates"
+                                class="template-button" icon="book" :label="`No. ${i + 1}`"
+                                @click.native="addElement">
+                </element-button>
+              </template>
+
+              <label class="buttons-label subtitle is-7">ボタン</label>
               <text-button @add="addElement"></text-button>
               <image-button @add="addElement"></image-button>
               <location-button @add="addElement"></location-button>
@@ -80,6 +89,7 @@
   import ItemModel from '@/models/Item'
   import FileModel from '@/models/File'
   import Modal from '@/components/Modal'
+  import ElementButton from '@/components/element/button/ElementButton'
   import TextButton from '@/components/element/button/TextButton'
   import ImageButton from '@/components/element/button/ImageButton'
   import LocationButton from '@/components/element/button/LocationButton'
@@ -105,6 +115,7 @@
   export default {
     components: {
       Modal,
+      ElementButton,
       TextButton,
       ImageButton,
       LocationButton,
@@ -276,7 +287,7 @@
 
           .left-column {
             height: 100%;
-            max-width: $element-button-size;
+            max-width: calc(#{$element-button-size} + 1rem);
 
             .slider {
               height: 100%;
@@ -292,13 +303,23 @@
                   margin-right: 0;
                   margin-bottom: -1px;
                 }
+                .template-button {
+                  @extend .is-primary;
+                }
+                .subtitle {
+                  margin-bottom: .5em;
+                  color: grey;
+                }
+                .buttons-label {
+                  margin-top: 1.5em;
+                }
               }
             }
           }
           .main-column {
             $sort-button-size: 2rem;
             $margin-side: $sort-button-size + .5rem;
-            padding: 0 4rem 1.5rem !important;
+            padding: 0 3rem 1.5rem !important;
             background-color: white;
             overflow-y: scroll;
             z-index: 0;
