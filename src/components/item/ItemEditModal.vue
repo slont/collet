@@ -8,12 +8,12 @@
               <template v-if="templates.length">
                 <label class="templates-label subtitle is-7">テンプレート</label>
                 <element-button v-for="(template, i) in templates"
-                                class="template-button" icon="book" :label="`No. ${i + 1}`"
+                                class="template-button" icon="book" :label="`No.${i + 1}`"
                                 @click.native="addElement">
                 </element-button>
               </template>
 
-              <label class="buttons-label subtitle is-7">ボタン</label>
+              <label class="buttons-label subtitle is-7">エレメント</label>
               <text-button @add="addElement"></text-button>
               <image-button @add="addElement"></image-button>
               <location-button @add="addElement"></location-button>
@@ -46,6 +46,7 @@
             <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
               <div class="sort-buttons">
                 <a class="button up-button is-white" @click="upOrder(i)"><i class="material-icons">arrow_upward</i></a>
+                <span class="element-order">{{ element.order + 1 }}</span>
                 <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
               </div>
 
@@ -360,6 +361,11 @@
                     .material-icons {
                       color: gainsboro;
                     }
+                  }
+                  .element-order {
+                    font-size: .75em;
+                    color: darkgrey;
+                    text-align: center;
                   }
                 }
                 .cl-element {
