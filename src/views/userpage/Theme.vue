@@ -419,6 +419,7 @@
         }
         .theme-items {
           position: relative;
+          margin-top: 1.5rem;
 
           .add-button {
             position: absolute;

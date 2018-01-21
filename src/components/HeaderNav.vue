@@ -2,9 +2,9 @@
   <div id="header-nav">
     <nav class="navbar is-primary">
       <div class="navbar-brand">
-        <router-link class="navbar-item" to="/">
-          <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
-        </router-link>
+        <span class="navbar-item logo" @click="$router.push('')">
+          <img src="/static/img/colette-logo.png" alt="Colette">
+        </span>
 
         <a class="navbar-item is-hidden-desktop" href="https://github.com/jgthms/bulma" target="_blank">
           <span class="icon" style="color: #333;">
@@ -28,49 +28,6 @@
 
       <div class="navbar-menu" :class="{ 'is-active': activeNavbarMenu }">
         <div class="navbar-start">
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link" href="/documentation/overview/start/">
-              Docs
-            </a>
-            <div class="navbar-dropdown is-boxed">
-              <a class="navbar-item " href="/documentation/overview/start/">
-                Overview
-              </a>
-              <a class="navbar-item " href="https://bulma.io/documentation/modifiers/syntax/">
-                Modifiers
-              </a>
-              <a class="navbar-item " href="https://bulma.io/documentation/columns/basics/">
-                Columns
-              </a>
-              <a class="navbar-item " href="https://bulma.io/documentation/layout/container/">
-                Layout
-              </a>
-              <a class="navbar-item " href="https://bulma.io/documentation/form/general/">
-                Form
-              </a>
-              <a class="navbar-item " href="https://bulma.io/documentation/elements/box/">
-                Elements
-              </a>
-
-              <a class="navbar-item is-active" href="https://bulma.io/documentation/components/breadcrumb/">
-                Components
-              </a>
-
-              <hr class="navbar-divider">
-              <div class="navbar-item">
-                <div>
-                  <p class="is-size-6-desktop">
-                    <strong>0.6.0</strong>
-                  </p>
-
-                  <small>
-                    <a class="bd-view-all-versions" href="https://versions.bulma.io/">View all versions</a>
-                  </small>
-
-                </div>
-              </div>
-            </div>
-          </div>
           <router-link :to="`/${user.name}`" class="navbar-item">
             マイページ
           </router-link>
@@ -145,6 +102,16 @@
       max-width: $width;
       margin: 0 auto;
 
+      .navbar-brand {
+        .logo {
+          padding-left: 0;
+          padding-right: 0;
+
+          img {
+            max-height: 2.25rem;
+          }
+        }
+      }
       .navbar-end {
         .breadcrumb {
           $color: white;
