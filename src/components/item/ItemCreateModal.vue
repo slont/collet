@@ -5,15 +5,6 @@
         <div class="left-column column">
           <div class="slider">
             <div class="buttons has-addons is-centered">
-              <template v-if="templates.length">
-                <label class="templates-label subtitle is-7">テンプレート</label>
-                <element-button v-for="(template, i) in templates"
-                                class="template-button" icon="book" :label="`No.${i + 1}`"
-                                @click.native="addElement">
-                </element-button>
-              </template>
-
-              <label class="buttons-label subtitle is-7">エレメント</label>
               <text-button @add="addElement"></text-button>
               <image-button @add="addElement"></image-button>
               <location-button @add="addElement"></location-button>
@@ -28,6 +19,18 @@
         </div>
 
         <div class="main-column column">
+          <div class="template-tabs tabs is-small" v-if="templates.length">
+            <ul>
+              <li v-for="(template, i) in templates"
+                  :class="{ 'is-active': selectedTemplateNo === i }" @click="changeTemplate(i)">
+                <a><span>{{ `テンプレート ${i + 1}` }}</span></a>
+              </li>
+              <li :class="{ 'is-active': selectedTemplateNo === -1 }" @click="changeTemplate(-1)">
+                <a><span>白紙</span></a>
+              </li>
+            </ul>
+          </div>
+
           <article class="media">
             <div class="media-content">
               <div class="content">
@@ -142,6 +145,7 @@
           elements: []
         },
         templates: [],
+        selectedTemplateNo: 0,
         isTemplate: false,
         errorMessage: ''
       }
@@ -159,7 +163,10 @@
           p: 0,
           s: 20
         }).then(res => {
-          this.templates = res
+          if (res.length) {
+            this.templates = res
+            Object.assign(this.item.elements, this.templates[0].elements)
+          }
         })
       },
       close() {
@@ -190,6 +197,14 @@
       reset() {
         Object.assign(this.$data, this.$options.data.call(this))
         this.$nextTick(() => this.errors.clear())
+      },
+      changeTemplate(index) {
+        this.selectedTemplateNo = index
+        if (-1 === index) {
+          this.item.elements = []
+        } else {
+          this.item.elements = this.templates[index].elements
+        }
       },
       addElement(element) {
         this.item.elements.push(element)
@@ -288,7 +303,7 @@
                   margin-bottom: .5em;
                   color: grey;
                 }
-                .buttons-label {
+                .buttons-label:not(:first-child) {
                   margin-top: 1.5em;
                 }
               }
@@ -302,8 +317,20 @@
             overflow-y: scroll;
             z-index: 0;
 
+            .template-tabs {
+              margin-bottom: 1rem;
+
+              ul {
+                border-bottom: none;
+
+                > a {
+                  margin-top: 0;
+                }
+              }
+            }
             .item-name {
               padding: 0;
+              margin-bottom: 1rem;
 
               .input {
                 border-top: none;

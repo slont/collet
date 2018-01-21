@@ -5,15 +5,6 @@
         <div class="left-column column">
           <div class="slider">
             <div class="buttons has-addons is-centered">
-              <template v-if="templates.length">
-                <label class="templates-label subtitle is-7">テンプレート</label>
-                <element-button v-for="(template, i) in templates"
-                                class="template-button" icon="book" :label="`No.${i + 1}`"
-                                @click.native="addElement">
-                </element-button>
-              </template>
-
-              <label class="buttons-label subtitle is-7">エレメント</label>
               <text-button @add="addElement"></text-button>
               <image-button @add="addElement"></image-button>
               <location-button @add="addElement"></location-button>
@@ -86,7 +77,6 @@
 </template>
 
 <script>
-  import TemplateModel from '@/models/Template'
   import ItemModel from '@/models/Item'
   import FileModel from '@/models/File'
   import Modal from '@/components/Modal'
@@ -172,13 +162,6 @@
             message: 'データ取得に失敗しました',
             type: 'error'
           })
-        })
-
-        new TemplateModel(this.themeId).find({
-            p: 0,
-            s: 20
-        }).then(res => {
-          this.templates = res
         })
       },
       close() {
@@ -311,7 +294,7 @@
                   margin-bottom: .5em;
                   color: grey;
                 }
-                .buttons-label {
+                .buttons-label:not(:first-child) {
                   margin-top: 1.5em;
                 }
               }
@@ -327,6 +310,7 @@
 
             .item-name {
               padding: 0;
+              margin-bottom: 1rem;
 
               .input {
                 border-top: none;
