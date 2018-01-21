@@ -153,7 +153,7 @@
       open(item) {
         this.item = item
         new ItemModel(this.themeId).findOne(this.item.id).then(res => {
-          this.item = res
+          this.item = res.data
           this.$refs.itemEditModal.open()
         }).catch(err => {
           console.log(err)
@@ -241,7 +241,7 @@
         }
         reader.readAsDataURL(file)
         new FileModel().create(file, this.themeId).then(res => {
-          this.item.image = res.path
+          this.item.image = res.data.path
         })
       },
       removeImage() {

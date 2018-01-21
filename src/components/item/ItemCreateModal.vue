@@ -163,8 +163,8 @@
           p: 0,
           s: 20
         }).then(res => {
-          if (res.length) {
-            this.templates = res
+          if (res.data.length) {
+            this.templates = res.data
             Object.assign(this.item.elements, this.templates[0].elements)
           }
         })
@@ -250,7 +250,7 @@
         }
         reader.readAsDataURL(file)
         new FileModel().create(file, this.themeId).then(res => {
-          this.item.image = res.path
+          this.item.image = res.data.path
         })
       },
       removeImage() {

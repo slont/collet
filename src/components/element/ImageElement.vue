@@ -59,7 +59,7 @@
         }
         reader.readAsDataURL(file)
         new FileModel().create(file).then(res => {
-          this.params.valueStr = res.path
+          this.params.valueStr = res.data.path
         })
       },
       removeImage() {

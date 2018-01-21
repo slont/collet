@@ -62,17 +62,17 @@
           p: 0,
           s: 20
         }).then(res => {
-          this.themes = res.map(theme => {
+          this.themes = res.data.map(theme => {
             theme.favorite = false
             return theme
           })
           return new FavoriteModel().find({
-            themeIds: res.map(theme => theme.id),
+            themeIds: res.data.map(theme => theme.id),
             userId: this.selfUser.id
           })
         }).then(res => {
           this.themes.forEach((theme, i) => Object.assign(theme, {
-            favorite: !!res[i].themeId
+            favorite: !!res.data[i].themeId
           }))
         }).catch(err => {
           console.log(err)

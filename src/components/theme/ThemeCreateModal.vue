@@ -161,7 +161,7 @@
         }
         reader.readAsDataURL(file)
         new FileModel().create(file).then(res => {
-          this.theme.image = res.path
+          this.theme.image = res.data.path
         })
       },
       removeImage() {

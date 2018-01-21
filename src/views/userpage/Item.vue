@@ -63,7 +63,7 @@
     methods: {
       refresh() {
         new ItemModel(this.themeId).findOne(this.itemId).then(res => {
-          this.item = res
+          this.item = res.data
         }).catch(err => {
           console.log(err)
           this.$message({

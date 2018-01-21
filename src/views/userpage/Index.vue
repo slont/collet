@@ -32,8 +32,18 @@
       </article>
       <div class="tabs">
         <ul>
-          <router-link :to="`/${urlUserId}`" tag="li" exact><a>テーマ一覧</a></router-link>
-          <router-link :to="`/${urlUserId}/favorites`" tag="li"><a>お気に入り</a></router-link>
+          <router-link :to="`/${urlUserId}`" tag="li" exact>
+            <a>
+              テーマ<br/>
+              テーマ<br/>
+            </a>
+          </router-link>
+          <router-link :to="`/${urlUserId}/favorites`" tag="li">
+            <a>
+              お気に入り<br/>
+              テーマ
+            </a>
+          </router-link>
         </ul>
       </div>
     </header>
@@ -86,7 +96,7 @@
     methods: {
       refresh() {
         new UserModel().findOne(this.urlUserId).then(res => {
-          this.user = res
+          this.user = res.data
         }).catch(err => {
           console.log(err)
           this.$message({

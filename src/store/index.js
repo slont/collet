@@ -24,9 +24,9 @@ export default new Vuex.Store({
     signin({ commit }, params) {
       const authModel = new AuthModel()
       return authModel.signin(params).then(res => {
-        localStorage.authToken = res.authToken
+        localStorage.authToken = res.data.authToken
         commit(SET_LOGGED_IN, true)
-        commit(SET_USER, res.user)
+        commit(SET_USER, res.data.user)
         authModel.onChange(true)
         return Promise.resolve(res)
       }).catch(err => {
@@ -40,9 +40,9 @@ export default new Vuex.Store({
     confirm({ commit }, params) {
       const authModel = new AuthModel()
       return authModel.confirm(params).then(res => {
-        localStorage.authToken = res.authToken
+        localStorage.authToken = res.data.authToken
         commit(SET_LOGGED_IN, true)
-        commit(SET_USER, res.user)
+        commit(SET_USER, res.data.user)
         authModel.onChange(true)
         return Promise.resolve(res)
       }).catch(err => {

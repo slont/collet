@@ -188,7 +188,7 @@
           }
           return themeModel.findOneFavorite(this.theme.id, this.selfUser.id)
         }).then(res => {
-          this.theme.favorite = !!res.themeId
+          this.theme.favorite = !!res.data.themeId
         }, () => {
           // through the NotFound favorite error
         }).catch(err => {
@@ -202,7 +202,7 @@
       },
       refreshItem(itemId) {
         new ItemModel(this.theme.id).findOne(itemId).then(res => {
-          this.currentItem = res
+          this.currentItem = res.data
         })
       },
       onClickFavorite() {
