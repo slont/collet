@@ -10,6 +10,8 @@
         <element-view :element="item.elements[0]" v-if="item.elements[0]"></element-view>
         <div v-else>まだコンテンツがありません</div>
       </div>
+
+      <a class="edit-button button is-primary is-outlined" v-if="isMyPage">編集</a>
     </div>
   </div>
 </template>
@@ -39,42 +41,68 @@
     &.card .media:not(:last-child) {
       margin-bottom: .5rem;
     }
-    .media {
-      align-items: center;
-      $size: 3rem;
-      height: $size;
-
-      .media-content {
-        height: $size;
-        overflow: hidden;
-      }
-      .media-right {
-        display: flex;
+    .card-content {
+      .media {
         align-items: center;
-        max-height: 4rem;
-        width: 7rem;
-        margin: auto 0 auto .5rem;
-        overflow: hidden;
-      }
-    }
-    .content {
-      font-size: $size-small;
-      background-color: rgba(255, 255, 255, .8);
-      overflow: hidden;
+        $size: 3rem;
+        height: $size;
 
-      .cl-element {
-        .view-label {
-          font-size: 1em;
-          line-height: 1.5;
-          color: darkgrey;
+        .media-content {
+          height: $size;
+          overflow: hidden;
         }
-        figure {
-          margin-top: 0;
+        .media-right {
+          display: flex;
+          align-items: center;
+          max-height: 4rem;
+          width: 7rem;
+          margin: auto 0 auto .5rem;
+          overflow: hidden;
+        }
+      }
+      .content {
+        font-size: $size-small;
+        background-color: rgba(255, 255, 255, .8);
+        overflow: hidden;
 
-          img {
-            height: 10em;
-            width: auto;
+        &:not(:last-child) {
+          margin-bottom: 0;
+        }
+        .cl-element {
+          .view-label {
+            font-size: 1em;
+            line-height: 1.5;
+            color: darkgrey;
           }
+          figure {
+            margin-top: 0;
+            margin-bottom: -.75em;
+
+            img {
+              height: 10em;
+              width: auto;
+            }
+          }
+        }
+      }
+      .edit-button {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        border-width: 3px;
+        border-radius: 0;
+        opacity: 0;
+
+        &.is-primary.is-outlined {
+          background-color: white;
+        }
+      }
+      &:hover .edit-button {
+        opacity: 1;
+
+        &:hover.is-primary.is-outlined {
+          background-color: $primary;
         }
       }
     }
