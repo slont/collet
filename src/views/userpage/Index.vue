@@ -32,16 +32,16 @@
       </article>
       <div class="tabs">
         <ul>
-          <router-link :to="`/${urlUserId}`" tag="li" exact>
-            <a>
-              テーマ<br/>
-              テーマ<br/>
+          <router-link :to="`/${urlUserId}`" class="theme-tab" tag="li" exact>
+            <a class="has-text-centered">
+              <span class="label-name is-size-7">テーマ</span><br/>
+              <span class="label-count">{{ user.themeCount }}</span>
             </a>
           </router-link>
-          <router-link :to="`/${urlUserId}/favorites`" tag="li">
-            <a>
-              お気に入り<br/>
-              テーマ
+          <router-link :to="`/${urlUserId}/favorites`" class="favorite-tab" tag="li">
+            <a class="has-text-centered">
+              <span class="label-name is-size-7">お気に入り</span><br/>
+              <span class="label-count">{{ user.favoriteCount }}</span>
             </a>
           </router-link>
         </ul>
@@ -143,7 +143,16 @@
 
           li {
             a {
+              flex-direction: column;
+              line-height: .7;
               border-bottom-width: 0;
+
+              .label-name {
+                font-weight: bold;
+              }
+              .label-count {
+                font-weight: bold;
+              }
             }
             &.router-link-active {
               @extend .is-active;
