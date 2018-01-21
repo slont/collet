@@ -160,6 +160,10 @@
           -webkit-line-clamp: 3;
           overflow: hidden;
           color: white;
+
+          &:hover {
+            text-decoration: underline;
+          }
         }
         .user-profile {
           font-size: .875rem;

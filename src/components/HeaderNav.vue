@@ -2,7 +2,7 @@
   <div id="header-nav">
     <nav class="navbar is-primary">
       <div class="navbar-brand">
-        <span class="navbar-item logo" @click="$router.push(`/${user.id}`)">
+        <span class="navbar-item logo" @click="$router.push(`/`)">
           <img src="/static/img/colette-logo.png" alt="Colette">
         </span>
 

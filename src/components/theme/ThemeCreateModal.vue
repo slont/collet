@@ -20,6 +20,25 @@
       </div>
 
       <div class="column">
+        <div class="field image-field">
+          <label class="label">メイン画像（オプショナル）</label>
+          <div class="control loading-mask" :class="{ 'is-loading': theme.image.substring(0, 4) === 'data' }">
+            <div class="file is-boxed">
+              <label class="file-label">
+                <input @change="changeImage" class="file-input" type="file" name="resume">
+                <span class="file-view" v-if="theme.image">
+                  <img :src="theme.image"/>
+                  <a @click.stop.prevent="removeImage" class="delete"></a>
+                </span>
+                <span class="file-cta" v-else>
+                  <span class="file-icon"><i class="material-icons">file_upload</i></span>
+                  <span class="file-label">Upload Image...</span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+
         <div class="field tags-field">
           <label class="label">タグ</label>
           <div class="control">
@@ -43,22 +62,13 @@
           </div>
         </div>
 
-        <div class="field image-field">
-          <label class="label">メイン画像（オプショナル）</label>
-          <div class="control loading-mask" :class="{ 'is-loading': theme.image.substring(0, 4) === 'data' }">
-            <div class="file is-boxed">
-              <label class="file-label">
-                <input @change="changeImage" class="file-input" type="file" name="resume">
-                <span class="file-view" v-if="theme.image">
-                  <img :src="theme.image"/>
-                  <a @click.stop.prevent="removeImage" class="delete"></a>
-                </span>
-                <span class="file-cta" v-else>
-                  <span class="file-icon"><i class="material-icons">file_upload</i></span>
-                  <span class="file-label">Upload Image...</span>
-                </span>
-              </label>
-            </div>
+        <div class="field tags-field">
+          <label class="label">公開設定</label>
+          <div class="control">
+            <el-switch v-model="theme.private" active-color="#ff4949" inactive-color="#409eff"
+                active-text="非公開"
+                inactive-text="公開">
+            </el-switch>
           </div>
         </div>
       </div>
@@ -85,6 +95,7 @@
           title: '',
           description: '',
           image: '',
+          private: false,
           tags: [],
           createdUser: this.$store.state.user
         },
