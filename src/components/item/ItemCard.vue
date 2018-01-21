@@ -11,7 +11,8 @@
         <div v-else>まだコンテンツがありません</div>
       </div>
 
-      <a class="edit-button button is-primary is-outlined" v-if="isMyPage">編集</a>
+      <a class="edit-button button is-primary is-outlined" v-if="isMyPage"
+         @click.stop="$emit('open-edit-modal')">編集</a>
     </div>
   </div>
 </template>

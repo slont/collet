@@ -83,6 +83,7 @@
             <item-card  v-for="item in theme.items" :key="item.id" :theme="theme" :item="item"
                         :class="{ 'is-active': currentItem.id === item.id }"
                         @click.native="$router.push(`/${urlUserId}/${themeId}/${item.id}`)"
+                        @open-edit-modal="$refs.itemEditModal.open(item)"
                         v-if="theme.items.length"></item-card>
           </div>
         </div>
