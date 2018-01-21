@@ -1,4 +1,5 @@
 import Base from './Base'
+import TemplateElement from './TemplateElement'
 import moment from 'moment'
 
 export default class Template extends Base {
@@ -16,6 +17,7 @@ export default class Template extends Base {
 
   static _deserialize(json) {
     return Object.assign({}, json, {
+      elements: new TemplateElement().deserialize(json.elements),
       createdAt: moment(json.createdAt),
       updatedAt: moment(json.createdAt)
     })
