@@ -50,6 +50,7 @@
                 <span class="favorite-count" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
               </div>
 
+              <span class="private-icon icon" v-if="theme.private"><i class="material-icons">lock</i></span>
               <div class="edit-action" @click.stop.prevent="$refs.themeEditModal.open(theme)" v-if="isMyPage">
                 <span class="icon"><i class="material-icons">more_horiz</i></span>
               </div>
@@ -179,7 +180,7 @@
         const itemId = this.itemId
         const themeModel = new ThemeModel()
         themeModel.findOne(this.themeId).then(res => {
-          Object.assign(this.theme, res)
+          Object.assign(this.theme, res.data)
 
           if (itemId) {
             this.refreshItem(itemId)
@@ -355,6 +356,12 @@
                 opacity: .8;
               }
             }
+            .private-icon {
+              position: absolute;
+              top: 0;
+              right: 3rem;
+              height: 3rem;
+            }
             .edit-action {
               display: flex;
               align-items: center;
@@ -370,7 +377,9 @@
                 opacity: .65;
               }
             }
-            .theme-image + .favorite-action + .edit-action {
+            .theme-image + .favorite-action + .private-icon,
+            .theme-image + .favorite-action + .edit-action,
+            .theme-image + .favorite-action + .private-icon + .edit-action {
               color: #e8e8e8;
             }
           }
