@@ -14,6 +14,7 @@
           <span class="favorite-count" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
         </div>
 
+        <span class="private-icon icon" v-if="theme.private"><i class="material-icons">lock</i></span>
         <div class="edit-action" @click.stop.prevent="$emit('open-edit-modal')" v-if="isMyTheme">
           <span class="icon"><i class="material-icons">more_horiz</i></span>
         </div>
@@ -129,6 +130,13 @@
           &:hover {
             opacity: .8;
           }
+        }
+        .private-icon {
+          position: absolute;
+          top: 0;
+          right: 3rem;
+          height: 3rem;
+          color: #e8e8e8;
         }
         .edit-action {
           display: flex;
