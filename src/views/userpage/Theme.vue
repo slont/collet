@@ -63,7 +63,7 @@
             </div>
           </div>
 
-          <div class="theme-sub-header">
+          <!--<div class="theme-sub-header">
             <div class="search-box">
               <div class="field has-addons">
                 <div class="input-control control">
@@ -76,10 +76,17 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div>-->
 
           <div class="theme-items">
-            <div class="subtitle is-7">アイテム一覧</div>
+            <button class="add-button button is-primary is-outlined is-small" @click="$refs.itemCreateModal.open(theme.templates)"
+                    v-if="isMyPage">
+              <span class="icon"><i class="material-icons">add</i></span>
+              <span>新規アイテム作成</span>
+            </button>
+            <div class="subtitle is-7">
+              <span>アイテム一覧</span>
+            </div>
             <item-card  v-for="item in theme.items" :key="item.id" :theme="theme" :item="item"
                         :class="{ 'is-active': currentItem.id === item.id }"
                         @click.native="$router.push(`/${urlUserId}/${themeId}/${item.id}`)"
@@ -411,6 +418,17 @@
           }
         }
         .theme-items {
+          position: relative;
+
+          .add-button {
+            position: absolute;
+            top: -6px;
+            right: 0;
+
+            .icon i {
+              font-size: $size-6;
+            }
+          }
           .subtitle {
             text-align: center;
             margin: .5rem auto;

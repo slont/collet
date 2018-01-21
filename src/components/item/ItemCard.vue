@@ -12,7 +12,10 @@
       </div>
 
       <a class="edit-button button is-primary is-outlined" v-if="isMyPage"
-         @click.stop="$emit('open-edit-modal')">編集</a>
+         @click.stop="$emit('open-edit-modal')">
+        <span class="icon"><i class="material-icons">edit</i></span>
+        <span>編集</span>
+      </a>
     </div>
   </div>
 </template>
@@ -97,6 +100,9 @@
 
         &.is-primary.is-outlined {
           background-color: white;
+        }
+        .icon i {
+          font-size: $size-5;
         }
       }
       &:hover .edit-button {

@@ -1,13 +1,13 @@
 <template>
   <div id="userpage-item">
+    <button class="edit-button button is-info is-outlined" @click="$refs.itemEditModal.open(item)"
+            v-if="isMyPage">
+      <span class="icon"><i class="material-icons">edit</i></span>
+      <span>編集</span>
+    </button>
+
     <div class="item-info">
-      <div class="title is-3">
-        {{ item.name }}
-        <button class="button is-info is-outlined" @click="$refs.itemEditModal.open(item)"
-                v-if="isMyPage">
-          <span class="icon"><i class="material-icons">edit</i></span>
-        </button>
-      </div>
+      <div class="title is-3">{{ item.name }}</div>
     </div>
 
     <div class="item-elements">
@@ -26,10 +26,7 @@
   import ElementView from '@/components/element/ElementView'
 
   export default {
-    components: {
-      ItemEditModal,
-      ElementView
-    },
+    components: { ItemEditModal, ElementView },
     props: {
       currentItem: {
         type: Object,
@@ -82,6 +79,13 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-item {
+    .edit-button {
+      margin-bottom: .5rem;
+
+      .icon i {
+        font-size: $size-5;
+      }
+    }
     .item-info {
       margin-bottom: 2rem;
 
