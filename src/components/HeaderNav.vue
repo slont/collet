@@ -2,7 +2,7 @@
   <div id="header-nav">
     <nav class="navbar is-primary">
       <div class="navbar-brand">
-        <span class="navbar-item logo" @click="$router.push('')">
+        <span class="navbar-item logo" @click="$router.push(`/${user.id}`)">
           <img src="/static/img/colette-logo.png" alt="Colette">
         </span>
 
@@ -106,6 +106,7 @@
         .logo {
           padding-left: 0;
           padding-right: 0;
+          cursor: pointer;
 
           img {
             max-height: 2.25rem;
