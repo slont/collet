@@ -50,15 +50,15 @@
 
     <transition name="slide-fade" mode="out-in">
       <favorites @open-edit-modal="openEditModal" v-if="$route.path.endsWith('/favorites')"></favorites>
-      <themes @open-edit-modal="openEditModal" v-else></themes>
+      <themes ref="themes" @open-edit-modal="openEditModal" @refresh="refresh" v-else></themes>
     </transition>
 
     <a @click="$refs.themeCreateModal.open()" class="button button-create is-float is-primary circle">
       <i class="material-icons">add</i>
     </a>
 
-    <theme-create-modal ref="themeCreateModal" @refresh="refresh"></theme-create-modal>
-    <theme-edit-modal ref="themeEditModal" @refresh="refresh"></theme-edit-modal>
+    <theme-create-modal ref="themeCreateModal" @refresh="refreshThemes"></theme-create-modal>
+    <theme-edit-modal ref="themeEditModal" @refresh="refreshThemes"></theme-edit-modal>
   </div>
 </template>
 
@@ -105,6 +105,9 @@
             type: 'error'
           })
         })
+      },
+      refreshThemes() {
+        this.$refs.themes.refresh()
       },
       openEditModal(theme) {
         this.$refs.themeEditModal.open(theme)
