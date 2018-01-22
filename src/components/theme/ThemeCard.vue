@@ -21,7 +21,7 @@
 
         <div class="title is-5">{{ theme.title }}</div>
         <div class="user-profile" @click.stop="$router.push(`/${theme.createdUser.id}`)">
-          <figure class="image is-16x16" v-if="theme.createdUser.image">
+          <figure class="image is-24x24" v-if="theme.createdUser.image">
             <img class="circle" :src="theme.createdUser.image">
           </figure>
           <span class="user-name has-text-weight-bold">{{ theme.createdUser.name }}</span>
@@ -175,8 +175,13 @@
         }
         .user-profile {
           font-size: .875rem;
+          display: flex;
+          align-items: center;
           cursor: pointer;
 
+          :not(:last-child) {
+            margin-right: .3em;
+          }
           .user-name {
             color: white;
 
