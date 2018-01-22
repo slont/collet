@@ -124,7 +124,8 @@
           if (!result) return
 
           const body = Object.assign({}, this.theme, {
-            tags: this.tags
+            tags: this.tags,
+            private: false === this.theme.private ? 0 : 1
           })
           new ThemeModel().update(this.theme.id, body).then(() => {
             this.$emit('refresh')

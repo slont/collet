@@ -64,6 +64,7 @@ export default class Theme extends Base {
   static _deserialize(json) {
     return Object.assign({}, json, {
       items: (json.items && new Item().deserialize(json.items)) || [],
+      private: 0 !== json.private,
       createdAt: moment(json.createdAt),
       updatedAt: moment(json.createdAt)
     })

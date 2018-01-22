@@ -116,7 +116,9 @@
         this.$validator.validateAll().then(result => {
           if (!result) return
 
-          new ThemeModel().create(this.theme).then(() => {
+          new ThemeModel().create(Object.assign({}, this.theme, {
+            private: false === this.theme.private ? 0 : 1
+          })).then(() => {
             this.$emit('refresh')
             this.$message({
               showClose: true,
