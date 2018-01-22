@@ -26,6 +26,15 @@ export default class Theme extends Base {
     }))
   }
 
+  findByNew(params) {
+    return this.postProcess(fetch(`${this.endpoint}/_new?${qs.stringify(params, { indices: false })}`, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
+      headers: Base.getHeaders()
+    }))
+  }
+
   findOneFavorite(themeId, userId) {
     return this.postProcess(fetch(`${this.endpoint}/${themeId}/favorites/${userId}`, {
       method: 'GET',
