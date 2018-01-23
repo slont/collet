@@ -47,6 +47,9 @@
       },
       tagName() {
         return this.$route.query.name
+      },
+      loggedIn() {
+        return this.$store.state.loggedIn
       }
     },
     watch: {
@@ -66,14 +69,18 @@
             theme.favorite = false
             return theme
           })
-          return new FavoriteModel().find({
-            themeIds: res.data.map(theme => theme.id),
-            userId: this.selfUser.id
-          })
+          if (this.loggedIn) {
+            return new FavoriteModel().find({
+              themeIds: res.data.map(theme => theme.id),
+              userId: this.selfUser.id
+            })
+          }
         }).then(res => {
-          this.themes.forEach((theme, i) => Object.assign(theme, {
-            favorite: !!res.data[i].themeId
-          }))
+          if (this.loggedIn) {
+            this.themes.forEach((theme, i) => Object.assign(theme, {
+              favorite: !!res.data[i].themeId
+            }))
+          }
         }).catch(err => {
           console.log(err)
           this.$message({
