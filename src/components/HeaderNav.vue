@@ -28,6 +28,9 @@
 
       <div class="navbar-menu" :class="{ 'is-active': activeNavbarMenu }">
         <div class="navbar-start">
+          <router-link to="/" class="navbar-item" exact>
+            トップ
+          </router-link>
           <router-link :to="`/${user.name}`" class="navbar-item" v-if="loggedIn">
             マイページ
           </router-link>
