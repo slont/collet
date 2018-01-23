@@ -28,13 +28,13 @@
 
       <div class="navbar-menu" :class="{ 'is-active': activeNavbarMenu }">
         <div class="navbar-start">
-          <router-link :to="`/${user.name}`" class="navbar-item">
+          <router-link :to="`/${user.name}`" class="navbar-item" v-if="loggedIn">
             マイページ
           </router-link>
         </div>
 
         <div class="navbar-end">
-          <div class="account-item navbar-item" v-if="$store.state.loggedIn">
+          <div class="account-item navbar-item" v-if="loggedIn">
             <dropdown ref="accountDropdown">
               <template slot="trigger">
                 <span class="user-name is-size-7">{{ user.name }}</span>
@@ -56,7 +56,7 @@
               <p class="control">
                 <nav class="breadcrumb">
                   <ul>
-                    <li><router-link to="/signin">ログイン</router-link></li>
+                    <li><router-link :to="`/signin?redirect=${encodeURIComponent($route.path)}`">ログイン</router-link></li>
                     <li><router-link to="/signup">新規登録</router-link></li>
                   </ul>
                 </nav>
@@ -82,6 +82,9 @@
     computed: {
       user() {
         return this.$store.state.user
+      },
+      loggedIn() {
+        return this.$store.state.loggedIn
       }
     },
     methods: {
