@@ -165,6 +165,9 @@
       },
       themeId() {
         return this.$route.params.themeId
+      },
+      loggedIn() {
+        return this.$store.state.loggedIn
       }
     },
     watch: {
@@ -187,9 +190,13 @@
           } else if (this.theme.items.length) {
             this.currentItem = this.theme.items[0]
           }
-          return themeModel.findOneFavorite(this.theme.id, this.selfUser.id)
+          if (this.loggedIn) {
+            return themeModel.findOneFavorite(this.theme.id, this.selfUser.id)
+          }
         }).then(res => {
-          this.theme.favorite = !!res.data.themeId
+          if (this.loggedIn) {
+            this.theme.favorite = !!res.data.themeId
+          }
         }, () => {
           // through the NotFound favorite error
         }).catch(err => {
