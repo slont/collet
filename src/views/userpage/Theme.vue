@@ -214,12 +214,12 @@
         })
       },
       onClickFavorite() {
-        this.clickFavorite().then(res => {
+        this.doFavorite().then(res => {
           this.theme.favoriteCount += this.theme.favorite ? -1 : 1
           this.theme.favorite = !this.theme.favorite
         })
       },
-      clickFavorite() {
+      doFavorite() {
         if (this.theme.favorite) {
           return new ThemeModel().deleteFavorite(this.theme.id, this.selfUser.id)
         } else {

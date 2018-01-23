@@ -61,16 +61,27 @@
       },
       isMyTheme() {
         return this.$store.state.user.id === this.theme.createdUser.id
+      },
+      loggedIn() {
+        return this.$store.state.loggedIn
       }
     },
     methods: {
       onClickFavorite() {
-        this.clickFavorite().then(res => {
-          this.theme.favoriteCount += this.theme.favorite ? -1 : 1
-          this.theme.favorite = !this.theme.favorite
-        })
+        if (this.loggedIn) {
+          this.doFavorite().then(res => {
+            this.theme.favoriteCount += this.theme.favorite ? -1 : 1
+            this.theme.favorite = !this.theme.favorite
+          })
+        } else {
+          this.$confirm('アカウントを作成すると、テーマをお気に入りに追加できるようになります！', '', {
+            type: 'info',
+            showCancelButton: false,
+            showConfirmButton: false
+          })
+        }
       },
-      clickFavorite() {
+      doFavorite() {
         if (this.theme.favorite) {
           return new ThemeModel().deleteFavorite(this.theme.id, this.user.id)
         } else {
