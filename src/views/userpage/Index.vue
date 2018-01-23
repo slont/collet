@@ -53,7 +53,8 @@
       <themes ref="themes" @open-edit-modal="openEditModal" @refresh="refresh" v-else></themes>
     </transition>
 
-    <a @click="$refs.themeCreateModal.open()" class="button button-create is-float is-primary circle">
+    <a @click="$refs.themeCreateModal.open()" class="button button-create is-float is-primary circle"
+       v-if="loggedIn">
       <i class="material-icons">add</i>
     </a>
 
@@ -85,6 +86,9 @@
     computed: {
       urlUserId() {
         return this.$route.params.userId
+      },
+      loggedIn() {
+        return this.$store.state.loggedIn
       }
     },
     watch: {

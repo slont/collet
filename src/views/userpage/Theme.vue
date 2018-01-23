@@ -110,7 +110,8 @@
     </div>
 
 
-    <a @click="$refs.itemCreateModal.open(theme.templates)" class="button button-create is-float is-primary circle">
+    <a @click="$refs.itemCreateModal.open(theme.templates)" class="button button-create is-float is-primary circle"
+        v-if="loggedIn">
       <i class="material-icons">add</i>
     </a>
 

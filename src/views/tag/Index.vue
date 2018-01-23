@@ -18,7 +18,8 @@
       </transition-group>
     </div>
 
-    <a @click="$refs.themeCreateModal.open()" class="button button-create is-float is-primary circle">
+    <a @click="$refs.themeCreateModal.open()" class="button button-create is-float is-primary circle"
+       v-if="loggedIn">
       <i class="material-icons">add</i>
     </a>
 
