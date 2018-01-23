@@ -2,7 +2,7 @@
   <div id="userpage-theme">
     <div class="theme-content">
       <div class="theme-columns columns">
-        <div class="column is-4">
+        <div class="side-column column is-4">
           <div class="theme-card card">
             <header class="theme-header">
               <div class="theme-image theme-header-content trim" v-if="theme.image">
@@ -12,7 +12,7 @@
                 <div class="dark-mask">
                   <div class="title is-5">{{ theme.title }}</div>
                   <div class="user-profile" @click="$router.push(`/${theme.createdUser.id}`)">
-                    <figure class="image is-16x16" v-if="theme.createdUser.image">
+                    <figure class="image is-24x24" v-if="theme.createdUser.image">
                       <img class="circle" :src="theme.createdUser.image">
                     </figure>
                     <span class="user-name has-text-weight-bold">{{ theme.createdUser.name }}</span>
@@ -29,7 +29,7 @@
               <div class="theme-profile theme-header-content" v-else>
                 <div class="title is-5">{{ theme.title }}</div>
                 <div class="user-profile" @click="$router.push(`/${theme.createdUser.id}`)">
-                  <figure class="image is-16x16" v-if="theme.createdUser.image">
+                  <figure class="image is-24x24" v-if="theme.createdUser.image">
                     <img class="circle" :src="theme.createdUser.image">
                   </figure>
                   <span class="user-name has-text-weight-bold">{{ theme.createdUser.name }}</span>
@@ -50,6 +50,7 @@
                 <span class="favorite-count" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
               </div>
 
+              <span class="private-icon icon" v-if="theme.private"><i class="material-icons">lock</i></span>
               <div class="edit-action" @click.stop.prevent="$refs.themeEditModal.open(theme)" v-if="isMyPage">
                 <span class="icon"><i class="material-icons">more_horiz</i></span>
               </div>
@@ -63,7 +64,7 @@
             </div>
           </div>
 
-          <div class="theme-sub-header">
+          <!--<div class="theme-sub-header">
             <div class="search-box">
               <div class="field has-addons">
                 <div class="input-control control">
@@ -76,18 +77,26 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div>-->
 
           <div class="theme-items">
-            <div class="subtitle is-7">アイテム一覧</div>
+            <button class="add-button button is-primary is-outlined is-small" @click="$refs.itemCreateModal.open(theme.templates)"
+                    v-if="isMyPage">
+              <span class="icon"><i class="material-icons">add</i></span>
+              <span>新規アイテム作成</span>
+            </button>
+            <div class="subtitle is-7">
+              <span>アイテム一覧</span>
+            </div>
             <item-card  v-for="item in theme.items" :key="item.id" :theme="theme" :item="item"
                         :class="{ 'is-active': currentItem.id === item.id }"
-                        @click.native="currentItem = item"
+                        @click.native="$router.push(`/${urlUserId}/${themeId}/${item.id}`)"
+                        @open-edit-modal="$refs.itemEditModal.open(item)"
                         v-if="theme.items.length"></item-card>
           </div>
         </div>
 
-        <div class="column is-8" v-if="theme.items.length">
+        <div class="main-column column is-8" v-if="currentItem.id">
           <item-page :current-item="currentItem"></item-page>
         </div>
 
@@ -100,29 +109,11 @@
       </div>
     </div>
 
-    <div class="fixed-action-button vertical">
-      <a class="button trigger-button is-float is-primary circle">
-        <i class="material-icons">add</i>
-      </a>
-      <ul>
-        <li>
-          <el-tooltip content="新規アイテム" placement="left">
-            <a class="button button-create is-float is-link circle"
-               @click="$refs.itemCreateModal.open()">
-              <i class="material-icons">add</i>
-            </a>
-          </el-tooltip>
-        </li>
-        <li v-for="template in theme.templates">
-          <el-tooltip content="テンプレート" placement="left">
-            <a class="button button-template is-float is-info circle"
-               @click="$refs.itemCreateModal.open(template)">
-              <i class="material-icons">assignment</i>
-            </a>
-          </el-tooltip>
-        </li>
-      </ul>
-    </div>
+
+    <a @click="$refs.itemCreateModal.open(theme.templates)" class="button button-create is-float is-primary circle"
+        v-if="loggedIn">
+      <i class="material-icons">add</i>
+    </a>
 
     <theme-edit-modal ref="themeEditModal" @refresh="refresh"></theme-edit-modal>
     <item-create-modal ref="itemCreateModal" @refresh="refresh"></item-create-modal>
@@ -132,6 +123,7 @@
 
 <script>
   import ThemeModel from '@/models/Theme'
+  import ItemModel from '@/models/Item'
   import ItemCard from '@/components/item/ItemCard'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
   import ItemCreateModal from '@/components/item/ItemCreateModal'
@@ -166,11 +158,22 @@
       urlUserId() {
         return this.$route.params.userId
       },
+      itemId() {
+        return this.$route.params.itemId
+      },
       isMyPage() {
         return this.$store.state.user.id === this.urlUserId
       },
       themeId() {
         return this.$route.params.themeId
+      },
+      loggedIn() {
+        return this.$store.state.loggedIn
+      }
+    },
+    watch: {
+      itemId() {
+        this.refreshItem(this.itemId)
       }
     },
     created() {
@@ -178,15 +181,23 @@
     },
     methods: {
       refresh() {
+        const itemId = this.itemId
         const themeModel = new ThemeModel()
         themeModel.findOne(this.themeId).then(res => {
-          Object.assign(this.theme, res)
-          if (this.theme.items.length) {
+          Object.assign(this.theme, res.data)
+
+          if (itemId) {
+            this.refreshItem(itemId)
+          } else if (this.theme.items.length) {
             this.currentItem = this.theme.items[0]
           }
-          return themeModel.findOneFavorite(this.theme.id, this.selfUser.id)
+          if (this.loggedIn) {
+            return themeModel.findOneFavorite(this.theme.id, this.selfUser.id)
+          }
         }).then(res => {
-          this.theme.favorite = !!res.themeId
+          if (this.loggedIn) {
+            this.theme.favorite = !!res.data.themeId
+          }
         }, () => {
           // through the NotFound favorite error
         }).catch(err => {
@@ -198,13 +209,26 @@
           })
         })
       },
-      onClickFavorite() {
-        this.clickFavorite().then(res => {
-          this.theme.favoriteCount += this.theme.favorite ? -1 : 1
-          this.theme.favorite = !this.theme.favorite
+      refreshItem(itemId) {
+        new ItemModel(this.theme.id).findOne(itemId).then(res => {
+          this.currentItem = res.data
         })
       },
-      clickFavorite() {
+      onClickFavorite() {
+        if (this.loggedIn) {
+          this.doFavorite().then(res => {
+            this.theme.favoriteCount += this.theme.favorite ? -1 : 1
+            this.theme.favorite = !this.theme.favorite
+          })
+        } else {
+          this.$confirm('アカウントを作成すると、テーマをお気に入りに追加できるようになります！', '', {
+            type: 'info',
+            showCancelButton: false,
+            showConfirmButton: false
+          })
+        }
+      },
+      doFavorite() {
         if (this.theme.favorite) {
           return new ThemeModel().deleteFavorite(this.theme.id, this.selfUser.id)
         } else {
@@ -229,7 +253,10 @@
         width: 100%;
         margin: 0;
 
-        > div {
+        .main-column {
+          padding-left: 2rem;
+        }
+        > .column {
           overflow: scroll;
 
           .theme-header {
@@ -253,8 +280,13 @@
               }
               .user-profile {
                 font-size: .875rem;
+                display: flex;
+                align-items: center;
                 cursor: pointer;
 
+                :not(:last-child) {
+                  margin-right: .3em;
+                }
                 .user-name:hover {
                   text-decoration: underline;
                 }
@@ -286,8 +318,13 @@
                 }
                 .user-profile {
                   font-size: .875rem;
+                  display: flex;
+                  align-items: center;
                   cursor: pointer;
 
+                  :not(:last-child) {
+                    margin-right: .3em;
+                  }
                   .user-name {
                     color: white;
 
@@ -345,6 +382,12 @@
                 opacity: .8;
               }
             }
+            .private-icon {
+              position: absolute;
+              top: 0;
+              right: 3rem;
+              height: 3rem;
+            }
             .edit-action {
               display: flex;
               align-items: center;
@@ -360,7 +403,9 @@
                 opacity: .65;
               }
             }
-            .theme-image + .favorite-action + .edit-action {
+            .theme-image + .favorite-action + .private-icon,
+            .theme-image + .favorite-action + .edit-action,
+            .theme-image + .favorite-action + .private-icon + .edit-action {
               color: #e8e8e8;
             }
           }
@@ -391,7 +436,7 @@
               margin: 0 auto;
               display: flex;
               align-items: center;
-              padding: .5rem 0;
+              padding: 1rem 0 .5rem;
 
               .field {
                 width: 100%;
@@ -408,6 +453,18 @@
           }
         }
         .theme-items {
+          position: relative;
+          margin-top: 1.5rem;
+
+          .add-button {
+            position: absolute;
+            top: -6px;
+            right: 0;
+
+            .icon i {
+              font-size: $size-6;
+            }
+          }
           .subtitle {
             text-align: center;
             margin: .5rem auto;
@@ -472,6 +529,11 @@
           }
         }
       }
+    }
+    .button.is-float {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
     }
   }
 </style>

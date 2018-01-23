@@ -14,13 +14,14 @@
           <span class="favorite-count" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
         </div>
 
+        <span class="private-icon icon" v-if="theme.private"><i class="material-icons">lock</i></span>
         <div class="edit-action" @click.stop.prevent="$emit('open-edit-modal')" v-if="isMyTheme">
           <span class="icon"><i class="material-icons">more_horiz</i></span>
         </div>
 
         <div class="title is-5">{{ theme.title }}</div>
         <div class="user-profile" @click.stop="$router.push(`/${theme.createdUser.id}`)">
-          <figure class="image is-16x16" v-if="theme.createdUser.image">
+          <figure class="image is-24x24" v-if="theme.createdUser.image">
             <img class="circle" :src="theme.createdUser.image">
           </figure>
           <span class="user-name has-text-weight-bold">{{ theme.createdUser.name }}</span>
@@ -60,16 +61,27 @@
       },
       isMyTheme() {
         return this.$store.state.user.id === this.theme.createdUser.id
+      },
+      loggedIn() {
+        return this.$store.state.loggedIn
       }
     },
     methods: {
       onClickFavorite() {
-        this.clickFavorite().then(res => {
-          this.theme.favoriteCount += this.theme.favorite ? -1 : 1
-          this.theme.favorite = !this.theme.favorite
-        })
+        if (this.loggedIn) {
+          this.doFavorite().then(res => {
+            this.theme.favoriteCount += this.theme.favorite ? -1 : 1
+            this.theme.favorite = !this.theme.favorite
+          })
+        } else {
+          this.$confirm('アカウントを作成すると、テーマをお気に入りに追加できるようになります！', '', {
+            type: 'info',
+            showCancelButton: false,
+            showConfirmButton: false
+          })
+        }
       },
-      clickFavorite() {
+      doFavorite() {
         if (this.theme.favorite) {
           return new ThemeModel().deleteFavorite(this.theme.id, this.user.id)
         } else {
@@ -130,6 +142,13 @@
             opacity: .8;
           }
         }
+        .private-icon {
+          position: absolute;
+          top: 0;
+          right: 3rem;
+          height: 3rem;
+          color: #e8e8e8;
+        }
         .edit-action {
           display: flex;
           align-items: center;
@@ -160,11 +179,20 @@
           -webkit-line-clamp: 3;
           overflow: hidden;
           color: white;
+
+          &:hover {
+            text-decoration: underline;
+          }
         }
         .user-profile {
           font-size: .875rem;
+          display: flex;
+          align-items: center;
           cursor: pointer;
 
+          :not(:last-child) {
+            margin-right: .3em;
+          }
           .user-name {
             color: white;
 

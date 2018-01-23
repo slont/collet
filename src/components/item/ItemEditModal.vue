@@ -29,9 +29,6 @@
                     <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
                   </div>
                 </div>
-                <div class="item-description">
-                  <textarea v-model="item.description" v-autosize="item.description" class="textarea subtitle is-6" rows="2" placeholder="説明文"></textarea>
-                </div>
               </div>
             </div>
           </article>
@@ -40,6 +37,7 @@
             <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
               <div class="sort-buttons">
                 <a class="button up-button is-white" @click="upOrder(i)"><i class="material-icons">arrow_upward</i></a>
+                <span class="element-order">{{ element.order + 1 }}</span>
                 <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
               </div>
 
@@ -60,33 +58,16 @@
             </div>
           </div>
         </div>
-
-        <div class="right-column column">
-          <figure class="media-right">
-            <div class="field image-field">
-              <div class="control loading-mask" :class="{ 'is-loading': item.image.substring(0, 4) === 'data' }">
-                <div class="file is-boxed">
-                  <label class="file-label">
-                    <input @change="changeImage" class="file-input" type="file" name="resume">
-                    <span class="file-view" v-if="item.image">
-                      <img :src="item.image"/>
-                      <a @click.stop.prevent="removeImage" class="delete"></a>
-                    </span>
-                    <span class="file-cta" v-else>
-                      <span class="file-icon"><i class="material-icons">file_upload</i></span>
-                      <span class="file-label">メイン画像（オプショナル）</span>
-                    </span>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </figure>
-        </div>
       </div>
     </div>
 
     <footer class="modal-card-foot has-right">
       <button @click="$refs.itemDeleteModal.open(item)" class="button is-danger is-outlined is-left">削除</button>
+
+      <label class="checkbox">
+        <input v-model="isTemplate" type="checkbox">
+        テンプレート登録
+      </label>
       <button @click="close" class="button">キャンセル</button>
       <button @click="ok" class="button is-info">保存</button>
     </footer>
@@ -99,6 +80,7 @@
   import ItemModel from '@/models/Item'
   import FileModel from '@/models/File'
   import Modal from '@/components/Modal'
+  import ElementButton from '@/components/element/button/ElementButton'
   import TextButton from '@/components/element/button/TextButton'
   import ImageButton from '@/components/element/button/ImageButton'
   import LocationButton from '@/components/element/button/LocationButton'
@@ -124,6 +106,7 @@
   export default {
     components: {
       Modal,
+      ElementButton,
       TextButton,
       ImageButton,
       LocationButton,
@@ -156,6 +139,8 @@
           image: '',
           elements: []
         },
+        templates: [],
+        isTemplate: false,
         errorMessage: ''
       }
     },
@@ -168,7 +153,7 @@
       open(item) {
         this.item = item
         new ItemModel(this.themeId).findOne(this.item.id).then(res => {
-          this.item = res
+          this.item = res.data
           this.$refs.itemEditModal.open()
         }).catch(err => {
           console.log(err)
@@ -188,7 +173,10 @@
           if (!result) return
 
           this.setOrder()
-          new ItemModel(this.themeId).update(this.item.id, this.item).then(() => {
+          const body = Object.assign({
+            isTemplate: this.isTemplate
+          }, this.item)
+          new ItemModel(this.themeId).update(this.item.id, body).then(() => {
             this.$emit('refresh')
             this.$message({
               showClose: true,
@@ -253,7 +241,7 @@
         }
         reader.readAsDataURL(file)
         new FileModel().create(file, this.themeId).then(res => {
-          this.item.image = res.path
+          this.item.image = res.data.path
         })
       },
       removeImage() {
@@ -283,7 +271,7 @@
 
           .left-column {
             height: 100%;
-            max-width: $element-button-size;
+            max-width: calc(#{$element-button-size} + 1rem);
 
             .slider {
               height: 100%;
@@ -299,6 +287,16 @@
                   margin-right: 0;
                   margin-bottom: -1px;
                 }
+                .template-button {
+                  @extend .is-primary;
+                }
+                .subtitle {
+                  margin-bottom: .5em;
+                  color: grey;
+                }
+                .buttons-label:not(:first-child) {
+                  margin-top: 1.5em;
+                }
               }
             }
           }
@@ -312,6 +310,7 @@
 
             .item-name {
               padding: 0;
+              margin-bottom: 1rem;
 
               .input {
                 border-top: none;
@@ -336,7 +335,7 @@
 
                 .sort-buttons {
                   display: flex;
-                  flex: .05;
+                  flex: .025;
                   flex-direction: column;
 
                   .button {
@@ -346,6 +345,11 @@
                     .material-icons {
                       color: gainsboro;
                     }
+                  }
+                  .element-order {
+                    font-size: .75em;
+                    color: darkgrey;
+                    text-align: center;
                   }
                 }
                 .cl-element {
@@ -402,6 +406,9 @@
       .modal-card-foot {
         .is-left {
           margin-right: auto;
+        }
+        .checkbox {
+          margin-right: 1rem;
         }
       }
     }

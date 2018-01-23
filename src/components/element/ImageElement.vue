@@ -59,7 +59,7 @@
         }
         reader.readAsDataURL(file)
         new FileModel().create(file).then(res => {
-          this.params.valueStr = res.path
+          this.params.valueStr = res.data.path
         })
       },
       removeImage() {
@@ -72,6 +72,8 @@
 <style lang="scss" rel="stylesheet/scss">
   .image-element {
     .file-view {
+      text-align: center;
+
       .delete {
         position: absolute;
         top: 5px;

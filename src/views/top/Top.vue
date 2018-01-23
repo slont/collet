@@ -1,90 +1,49 @@
 <template>
   <div id="top-top">
-    <article v-for="theme in themes" class="message is-primary">
-      <div class="message-header">
-        <div class="item-name">{{ theme.item.name }}</div>
-        <div class="meta-data">
-          <figure class="image is-16x16">
-            <img :src="theme.user.image || 'https://bulma.io/images/placeholders/128x128.png'" class="circle">
-          </figure>
-          <div class="user-name">{{ theme.user.name }}</div>
-          <div class="divider">-</div>
-          <div class="theme-name">{{ theme.name }}</div>
-        </div>
+    <label class="label">新着一覧</label>
+    <transition-group name="slide-fade" mode="out-in" class="columns is-multiline">
+      <div v-for="theme in themes" class="column is-one-third-tablet" :key="theme.id">
+        <theme-card :theme="theme"
+                    @open-edit-modal="$emit('open-edit-modal', theme)"
+                    @refresh="refresh"></theme-card>
       </div>
-      <div class="message-body">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Aenean ac <em>eleifend lacus</em>, in mollis lectus. Donec sodales, arcu et sollicitudin porttitor, tortor urna tempor ligula, id porttitor mi magna a neque. Donec dui urna, vehicula et sem eget, facilisis sodales sem.
-      </div>
-    </article>
-    <a class="button button-create is-float is-primary circle">
-      <i class="material-icons">add</i>
-    </a>
+    </transition-group>
   </div>
 </template>
 
 <script>
+  import ThemeModel from '@/models/Theme'
+  import ThemeCard from '@/components/theme/ThemeCard'
+
   export default {
+    components: { ThemeCard },
     data() {
       return {
-        themes: [
-          {
-            id: 'aaa',
-            name: '1000円台でオススメのワイン',
-            description: '1000円台でオススメのワインを紹介します',
-            image: '',
-            user: {
-              id: 'aaa',
-              image: '',
-              name: 'hogehoge'
-            },
-            item: {
-              name: 'Evodia',
-              elements: []
-            }
-          }, {
-            id: 'bbb',
-            name: 'オススメの日本酒',
-            description: 'オススメの日本酒を紹介します',
-            image: '',
-            user: {
-              id: 'aaa',
-              image: '',
-              name: 'hogehoge'
-            },
-            item: {
-              name: '〆張鶴',
-              elements: []
-            }
-          }, {
-            id: 'ccc',
-            name: 'デートに使えるお店',
-            description: 'デートに使えるお店を紹介します',
-            image: '',
-            user: {
-              id: 'aaa',
-              image: '',
-              name: 'hogehoge'
-            },
-            item: {
-              name: 'マチュリテ',
-              elements: []
-            }
-          }, {
-            id: 'ddd',
-            name: 'デートに使えるお店2',
-            description: 'デートに使えるお店を紹介します',
-            image: '',
-            user: {
-              id: 'aaa',
-              image: '',
-              name: 'hogehoge'
-            },
-            item: {
-              name: 'レトノ',
-              elements: []
-            }
-          }
-        ]
+        themes: []
+      }
+    },
+    created() {
+      this.refresh()
+    },
+    methods: {
+      refresh() {
+        new ThemeModel().findByNew({
+          userId: this.urlUserId,
+          p: 0,
+          s: 20
+        }).then(res => {
+          this.themes = res.data.map(theme => {
+            theme.favorite = false
+            return theme
+          })
+        }).catch(err => {
+          console.log(err)
+          this.$message({
+            showClose: true,
+            message: 'データ取得に失敗しました',
+            type: 'error'
+          })
+        })
       }
     }
   }

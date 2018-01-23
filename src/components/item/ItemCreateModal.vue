@@ -19,6 +19,18 @@
         </div>
 
         <div class="main-column column">
+          <div class="template-tabs tabs is-small" v-if="templates.length">
+            <ul>
+              <li v-for="(template, i) in templates"
+                  :class="{ 'is-active': selectedTemplateNo === i }" @click="changeTemplate(i)">
+                <a><span>{{ `テンプレート ${i + 1}` }}</span></a>
+              </li>
+              <li :class="{ 'is-active': selectedTemplateNo === -1 }" @click="changeTemplate(-1)">
+                <a><span>白紙</span></a>
+              </li>
+            </ul>
+          </div>
+
           <article class="media">
             <div class="media-content">
               <div class="content">
@@ -29,9 +41,6 @@
                     <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
                   </div>
                 </div>
-                <div class="item-description">
-                  <textarea v-model="item.description" v-autosize="item.description" class="textarea subtitle is-6" rows="2" placeholder="説明文"></textarea>
-                </div>
               </div>
             </div>
           </article>
@@ -40,6 +49,7 @@
             <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
               <div class="sort-buttons">
                 <a class="button up-button is-white" @click="upOrder(i)"><i class="material-icons">arrow_upward</i></a>
+                <span class="element-order">{{ element.order + 1 }}</span>
                 <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
               </div>
 
@@ -60,32 +70,14 @@
             </div>
           </div>
         </div>
-
-        <div class="right-column column">
-          <figure class="media-right">
-            <div class="field image-field">
-              <div class="control loading-mask" :class="{ 'is-loading': item.image.substring(0, 4) === 'data' }">
-                <div class="file is-boxed">
-                  <label class="file-label">
-                    <input @change="changeImage" class="file-input" type="file" name="resume">
-                    <span class="file-view" v-if="item.image">
-                      <img :src="item.image"/>
-                      <a @click.stop.prevent="removeImage" class="delete"></a>
-                    </span>
-                    <span class="file-cta" v-else>
-                      <span class="file-icon"><i class="material-icons">file_upload</i></span>
-                      <span class="file-label">メイン画像（オプショナル）</span>
-                    </span>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </figure>
-        </div>
       </div>
     </div>
 
     <footer class="modal-card-foot has-right">
+      <label class="checkbox">
+        <input v-model="isTemplate" type="checkbox">
+        テンプレート登録
+      </label>
       <button @click="close" class="button">キャンセル</button>
       <button @click="ok" class="button is-info">作成</button>
     </footer>
@@ -93,9 +85,11 @@
 </template>
 
 <script>
+  import TemplateModel from '@/models/Template'
   import ItemModel from '@/models/Item'
   import FileModel from '@/models/File'
   import Modal from '@/components/Modal'
+  import ElementButton from '@/components/element/button/ElementButton'
   import TextButton from '@/components/element/button/TextButton'
   import ImageButton from '@/components/element/button/ImageButton'
   import LocationButton from '@/components/element/button/LocationButton'
@@ -120,6 +114,7 @@
   export default {
     components: {
       Modal,
+      ElementButton,
       TextButton,
       ImageButton,
       LocationButton,
@@ -147,11 +142,11 @@
         draggingElement: null,
         item: {
           name: '',
-          description: '',
-          image: '',
           elements: []
         },
-        template: {},
+        templates: [],
+        selectedTemplateNo: 0,
+        isTemplate: false,
         errorMessage: ''
       }
     },
@@ -161,9 +156,18 @@
       }
     },
     methods: {
-      open(template = {}) {
-        this.template = template
+      open() {
         this.$refs.itemCreateModal.open()
+
+        new TemplateModel(this.themeId).find({
+          p: 0,
+          s: 20
+        }).then(res => {
+          if (res.data.length) {
+            this.templates = res.data
+            Object.assign(this.item.elements, this.templates[0].elements)
+          }
+        })
       },
       close() {
         this.reset()
@@ -174,7 +178,10 @@
           if (!result) return
 
           this.setOrder()
-          new ItemModel(this.themeId).create(this.item).then(() => {
+          const body = Object.assign({
+            isTemplate: this.isTemplate
+          }, this.item)
+          new ItemModel(this.themeId).create(body).then(() => {
             this.$emit('refresh')
             this.$message({
               showClose: true,
@@ -190,6 +197,14 @@
       reset() {
         Object.assign(this.$data, this.$options.data.call(this))
         this.$nextTick(() => this.errors.clear())
+      },
+      changeTemplate(index) {
+        this.selectedTemplateNo = index
+        if (-1 === index) {
+          this.item.elements = []
+        } else {
+          this.item.elements = this.templates[index].elements
+        }
       },
       addElement(element) {
         this.item.elements.push(element)
@@ -235,7 +250,7 @@
         }
         reader.readAsDataURL(file)
         new FileModel().create(file, this.themeId).then(res => {
-          this.item.image = res.path
+          this.item.image = res.data.path
         })
       },
       removeImage() {
@@ -281,19 +296,41 @@
                   margin-right: 0;
                   margin-bottom: -1px;
                 }
+                .template-button {
+                  @extend .is-primary;
+                }
+                .subtitle {
+                  margin-bottom: .5em;
+                  color: grey;
+                }
+                .buttons-label:not(:first-child) {
+                  margin-top: 1.5em;
+                }
               }
             }
           }
           .main-column {
             $sort-button-size: 2rem;
             $margin-side: $sort-button-size + .5rem;
-            padding: 0 3rem 1.5rem !important;
+            padding: 0 4rem 1.5rem !important;
             background-color: white;
             overflow-y: scroll;
             z-index: 0;
 
+            .template-tabs {
+              margin-bottom: 1rem;
+
+              ul {
+                border-bottom: none;
+
+                > a {
+                  margin-top: 0;
+                }
+              }
+            }
             .item-name {
               padding: 0;
+              margin-bottom: 1rem;
 
               .input {
                 border-top: none;
@@ -318,7 +355,7 @@
 
                 .sort-buttons {
                   display: flex;
-                  flex: .05;
+                  flex: .025;
                   flex-direction: column;
 
                   .button {
@@ -328,6 +365,11 @@
                     .material-icons {
                       color: gainsboro;
                     }
+                  }
+                  .element-order {
+                    font-size: .75em;
+                    color: darkgrey;
+                    text-align: center;
                   }
                 }
                 .cl-element {
@@ -380,6 +422,11 @@
             }
           }
         }
+      }
+    }
+    .modal-card-foot {
+      .checkbox {
+        margin-right: 1rem;
       }
     }
   }

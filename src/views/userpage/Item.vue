@@ -1,18 +1,13 @@
 <template>
   <div id="userpage-item">
-    <div class="item-info">
-      <div class="title is-3">
-        {{ item.name }}
-        <button class="button is-info is-outlined" @click="$refs.itemEditModal.open(item)"
-                v-if="isMyPage">
-          <span class="icon"><i class="material-icons">edit</i></span>
-        </button>
-      </div>
-      <div class="subtitle is-6">{{ item.description }}</div>
+    <button class="edit-button button is-info is-outlined" @click="$refs.itemEditModal.open(item)"
+            v-if="isMyPage">
+      <span class="icon"><i class="material-icons">edit</i></span>
+      <span>編集</span>
+    </button>
 
-      <figure class="image">
-        <img :src="item.image" v-if="item.image">
-      </figure>
+    <div class="item-info">
+      <div class="title is-3">{{ item.name }}</div>
     </div>
 
     <div class="item-elements">
@@ -26,15 +21,12 @@
 </template>
 
 <script>
-  import ItemModel from '@/models/item'
+  import ItemModel from '@/models/Item'
   import ItemEditModal from '@/components/item/ItemEditModal'
   import ElementView from '@/components/element/ElementView'
 
   export default {
-    components: {
-      ItemEditModal,
-      ElementView
-    },
+    components: { ItemEditModal, ElementView },
     props: {
       currentItem: {
         type: Object,
@@ -71,7 +63,7 @@
     methods: {
       refresh() {
         new ItemModel(this.themeId).findOne(this.itemId).then(res => {
-          this.item = res
+          this.item = res.data
         }).catch(err => {
           console.log(err)
           this.$message({
@@ -87,6 +79,13 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-item {
+    .edit-button {
+      margin-bottom: .5rem;
+
+      .icon i {
+        font-size: $size-5;
+      }
+    }
     .item-info {
       margin-bottom: 2rem;
 

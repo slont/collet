@@ -26,6 +26,15 @@ export default class Theme extends Base {
     }))
   }
 
+  findByNew(params) {
+    return this.postProcess(fetch(`${this.endpoint}/_new?${qs.stringify(params, { indices: false })}`, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
+      headers: Base.getHeaders()
+    }))
+  }
+
   findOneFavorite(themeId, userId) {
     return this.postProcess(fetch(`${this.endpoint}/${themeId}/favorites/${userId}`, {
       method: 'GET',
@@ -64,6 +73,7 @@ export default class Theme extends Base {
   static _deserialize(json) {
     return Object.assign({}, json, {
       items: (json.items && new Item().deserialize(json.items)) || [],
+      private: 0 !== json.private,
       createdAt: moment(json.createdAt),
       updatedAt: moment(json.createdAt)
     })

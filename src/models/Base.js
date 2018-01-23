@@ -58,12 +58,15 @@ export default class Base {
         switch (response.status) {
           case 201: // Created
             return response.json()
-              .then(json => Promise.resolve(this.deserialize(json)),
+              .then(json => Promise.resolve({ data: this.deserialize(json) }),
                     err => err instanceof SyntaxError ? Promise.resolve() : Promise.reject())
           case 204: // No-Content
             return Promise.resolve()
           default:
-            return response.json().then(json => Promise.resolve(this.deserialize(json)))
+            return response.json().then(json => ({
+                  data: this.deserialize(json),
+                  headers: response.headers
+            }))
         }
       } else {
         switch (response.status) {

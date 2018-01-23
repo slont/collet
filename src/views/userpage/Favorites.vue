@@ -26,6 +26,9 @@
       },
       urlUserId() {
         return this.$route.params.userId
+      },
+      loggedIn() {
+        return this.$store.state.loggedIn
       }
     },
     watch: {
@@ -41,18 +44,22 @@
           p: 0,
           s: 20
         }).then(res => {
-          this.themes = res.map(theme => {
+          this.themes = res.data.map(theme => {
             theme.favorite = false
             return theme
           })
-          return new FavoriteModel().find({
-            themeIds: res.map(theme => theme.id),
-            userId: this.selfUser.id
-          })
+          if (this.loggedIn) {
+            return new FavoriteModel().find({
+              themeIds: res.data.map(theme => theme.id),
+              userId: this.selfUser.id
+            })
+          }
         }).then(res => {
-          this.themes.forEach((theme, i) => Object.assign(theme, {
-            favorite: !!res[i].themeId
-          }))
+          if (this.loggedIn) {
+            this.themes.forEach((theme, i) => Object.assign(theme, {
+              favorite: !!res.data[i].themeId
+            }))
+          }
         }).catch(err => {
           console.log(err)
           this.$message({

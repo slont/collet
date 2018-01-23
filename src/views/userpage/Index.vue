@@ -32,23 +32,34 @@
       </article>
       <div class="tabs">
         <ul>
-          <router-link :to="`/${urlUserId}`" tag="li" exact><a>テーマ一覧</a></router-link>
-          <router-link :to="`/${urlUserId}/favorites`" tag="li"><a>お気に入り</a></router-link>
+          <router-link :to="`/${urlUserId}`" class="theme-tab" tag="li" exact>
+            <a class="has-text-centered">
+              <span class="label-name is-size-7">テーマ</span><br/>
+              <span class="label-count">{{ user.themeCount }}</span>
+            </a>
+          </router-link>
+          <router-link :to="`/${urlUserId}/favorites`" class="favorite-tab" tag="li">
+            <a class="has-text-centered">
+              <span class="label-name is-size-7">お気に入り</span><br/>
+              <span class="label-count">{{ user.favoriteCount }}</span>
+            </a>
+          </router-link>
         </ul>
       </div>
     </header>
 
     <transition name="slide-fade" mode="out-in">
       <favorites @open-edit-modal="openEditModal" v-if="$route.path.endsWith('/favorites')"></favorites>
-      <themes @open-edit-modal="openEditModal" v-else></themes>
+      <themes ref="themes" @open-edit-modal="openEditModal" @refresh="refresh" v-else></themes>
     </transition>
 
-    <a @click="$refs.themeCreateModal.open()" class="button button-create is-float is-primary circle">
+    <a @click="$refs.themeCreateModal.open()" class="button button-create is-float is-primary circle"
+       v-if="loggedIn">
       <i class="material-icons">add</i>
     </a>
 
-    <theme-create-modal ref="themeCreateModal" @refresh="refresh"></theme-create-modal>
-    <theme-edit-modal ref="themeEditModal" @refresh="refresh"></theme-edit-modal>
+    <theme-create-modal ref="themeCreateModal" @refresh="refreshThemes"></theme-create-modal>
+    <theme-edit-modal ref="themeEditModal" @refresh="refreshThemes"></theme-edit-modal>
   </div>
 </template>
 
@@ -75,6 +86,9 @@
     computed: {
       urlUserId() {
         return this.$route.params.userId
+      },
+      loggedIn() {
+        return this.$store.state.loggedIn
       }
     },
     watch: {
@@ -86,7 +100,7 @@
     methods: {
       refresh() {
         new UserModel().findOne(this.urlUserId).then(res => {
-          this.user = res
+          this.user = res.data
         }).catch(err => {
           console.log(err)
           this.$message({
@@ -95,6 +109,9 @@
             type: 'error'
           })
         })
+      },
+      refreshThemes() {
+        this.$refs.themes.refresh()
       },
       openEditModal(theme) {
         this.$refs.themeEditModal.open(theme)
@@ -133,7 +150,16 @@
 
           li {
             a {
+              flex-direction: column;
+              line-height: .7;
               border-bottom-width: 0;
+
+              .label-name {
+                font-weight: bold;
+              }
+              .label-count {
+                font-weight: bold;
+              }
             }
             &.router-link-active {
               @extend .is-active;
