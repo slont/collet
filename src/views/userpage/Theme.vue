@@ -215,10 +215,18 @@
         })
       },
       onClickFavorite() {
-        this.doFavorite().then(res => {
-          this.theme.favoriteCount += this.theme.favorite ? -1 : 1
-          this.theme.favorite = !this.theme.favorite
-        })
+        if (this.loggedIn) {
+          this.doFavorite().then(res => {
+            this.theme.favoriteCount += this.theme.favorite ? -1 : 1
+            this.theme.favorite = !this.theme.favorite
+          })
+        } else {
+          this.$confirm('アカウントを作成すると、テーマをお気に入りに追加できるようになります！', '', {
+            type: 'info',
+            showCancelButton: false,
+            showConfirmButton: false
+          })
+        }
       },
       doFavorite() {
         if (this.theme.favorite) {
