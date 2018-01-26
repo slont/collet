@@ -22,6 +22,8 @@
           </div>
         </div>
       </div>
+
+      <button class="add-item-button button is-info is-rounded" v-if="isMyTheme && visibleAddItem">アイテム新規追加</button>
     </div>
 
     <div class="card-content">
@@ -61,7 +63,10 @@
   import ThemeModel from '@/models/Theme'
 
   export default {
-    props: ['theme'],
+    props: {
+      theme: Object,
+      visibleAddItem: Boolean
+    },
     computed: {
       user() {
         return this.$store.state.user
@@ -105,8 +110,11 @@
 <style lang="scss" rel="stylesheet/scss">
   .theme-card {
     .card-image {
-      overflow: hidden;
+      overflow: visible;
 
+      .image {
+        overflow: hidden;
+      }
       .dark-mask {
         display: flex;
         flex-direction: column;
@@ -177,6 +185,18 @@
         .subtitle {
           color: white;
           margin: .3rem 0 0;
+        }
+      }
+      .add-item-button,
+      .add-button {
+        position: absolute;
+        bottom: -.75em;
+        right: 1em;
+
+        &:not(:hover) {
+          color: #409eff;
+          background: #ecf5ff;
+          border-color: #b3d8ff;
         }
       }
     }

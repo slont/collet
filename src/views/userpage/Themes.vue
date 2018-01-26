@@ -2,7 +2,7 @@
   <div id="userpage-themes">
     <transition-group name="slide-fade" mode="out-in" class="columns is-multiline">
       <div v-for="theme in themes" class="column is-half" :key="theme.id">
-        <theme-card :theme="theme"
+        <theme-card :theme="theme" visible-add-item
                     @open-edit-modal="$emit('open-edit-modal', theme)"
                     @refresh="refresh"></theme-card>
       </div>

@@ -3,66 +3,9 @@
     <div class="theme-content">
       <div class="theme-columns columns">
         <div class="side-column column is-4">
-          <div class="theme-card card">
-            <header class="theme-header">
-              <div class="theme-image theme-header-content trim" v-if="theme.image">
-                <figure class="theme-image image is-16by9">
-                  <img :src="theme.image" v-if="theme.image">
-                </figure>
-                <div class="dark-mask">
-                  <div class="title is-5">{{ theme.title }}</div>
-                  <div class="user-profile" @click="$router.push(`/${theme.createdUser.id}`)">
-                    <figure class="image is-24x24" v-if="theme.createdUser.image">
-                      <img class="circle" :src="theme.createdUser.image">
-                    </figure>
-                    <span class="user-name has-text-weight-bold">{{ theme.createdUser.name }}</span>
-                    <span class="user-id">@{{ theme.createdUser.id }}</span>
-                    <span class="updated-at">- {{ theme.updatedAt && theme.updatedAt.format('YYYY/MM/DD') }}</span>
-                  </div>
-                  <div class="theme-tags tags" v-if="theme.tags.length">
-                    <a v-for="tag in theme.tags" class="tag is-primary"
-                       @click.stop="$router.push(`/tag?name=${tag.name}`)">#{{ tag.name }}</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="theme-profile theme-header-content" v-else>
-                <div class="title is-5">{{ theme.title }}</div>
-                <div class="user-profile" @click="$router.push(`/${theme.createdUser.id}`)">
-                  <figure class="image is-24x24" v-if="theme.createdUser.image">
-                    <img class="circle" :src="theme.createdUser.image">
-                  </figure>
-                  <span class="user-name has-text-weight-bold">{{ theme.createdUser.name }}</span>
-                  <span class="user-id">@{{ theme.createdUser.id }}</span>
-                  <span class="updated-at">- {{ theme.updatedAt && theme.updatedAt.format('YYYY/MM/DD') }}</span>
-                </div>
-                <div class="theme-tags tags" v-if="theme.tags.length">
-                  <a v-for="tag in theme.tags" class="tag is-primary"
-                     @click.stop="$router.push(`/tag?name=${tag.name}`)">#{{ tag.name }}</a>
-                </div>
-              </div>
-
-              <div class="favorite-action" @click.stop.prevent="onClickFavorite">
-                <span class="icon">
-                  <i class="favorite material-icons" v-if="theme.favorite">star</i>
-                  <i class="material-icons" v-else>star_border</i>
-                </span>
-                <span class="favorite-count" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
-              </div>
-
-              <span class="private-icon icon" v-if="theme.private"><i class="material-icons">lock</i></span>
-              <div class="edit-action" @click.stop.prevent="$refs.themeEditModal.open(theme)" v-if="isMyPage">
-                <span class="icon"><i class="material-icons">more_horiz</i></span>
-              </div>
-            </header>
-
-            <div class="theme-description card-content">
-              <div class="subtitle is-6" :class="{ 'is-opened': openedThemeDescription }">{{ theme.description }}</div>
-              <a class="button is-text is-small" @click="openedThemeDescription = !openedThemeDescription">
-                {{ openedThemeDescription ? '閉じる' : '詳しく見る' }}
-              </a>
-            </div>
-          </div>
+          <theme-card :theme="theme"
+                      @open-edit-modal="$refs.themeEditModal.open(theme)"
+                      @refresh="refresh"></theme-card>
 
           <!--<div class="theme-sub-header">
             <div class="search-box">
@@ -80,11 +23,9 @@
           </div>-->
 
           <div class="theme-items">
-            <button class="add-button button is-primary is-outlined is-small" @click="$refs.itemCreateModal.open(theme.templates)"
-                    v-if="isMyPage">
-              <span class="icon"><i class="material-icons">add</i></span>
-              <span>新規アイテム作成</span>
-            </button>
+            <el-button type="primary" plain round size="mini" class="add-button" @click="$refs.itemCreateModal.open(theme.templates)" v-if="isMyPage">
+              アイテム新規追加
+            </el-button>
             <div class="subtitle is-7">
               <span>アイテム一覧</span>
             </div>
@@ -110,7 +51,7 @@
     </div>
 
 
-    <a @click="$refs.itemCreateModal.open(theme.templates)" class="button button-create is-float is-primary circle"
+    <a @click="$refs.itemCreateModal.open(theme.templates)" class="button button-create is-float is-info circle"
         v-if="loggedIn">
       <i class="material-icons">add</i>
     </a>
@@ -124,6 +65,7 @@
 <script>
   import ThemeModel from '@/models/Theme'
   import ItemModel from '@/models/Item'
+  import ThemeCard from '@/components/theme/ThemeCard'
   import ItemCard from '@/components/item/ItemCard'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
   import ItemCreateModal from '@/components/item/ItemCreateModal'
@@ -131,7 +73,7 @@
   import ItemPage from './Item'
 
   export default {
-    components: { ThemeEditModal, ItemCreateModal, ItemEditModal, ItemCard, ItemPage },
+    components: { ThemeCard, ThemeEditModal, ItemCreateModal, ItemEditModal, ItemCard, ItemPage },
     data() {
       return {
         theme: {
@@ -473,7 +415,7 @@
             &.is-active {
               .card-content {
                 padding: calc(1rem - 3px);
-                border: 3px solid $primary;
+                border: 3px solid $info;
               }
             }
             &:hover {
