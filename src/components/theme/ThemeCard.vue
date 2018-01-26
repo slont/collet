@@ -42,7 +42,11 @@
                   <i class="favorite material-icons" v-if="theme.favorite">star</i>
                   <i class="material-icons" v-else>star_border</i>
                 </span>
-                <span class="favorite-count" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
+                <span class="favorite-count count has-text-weight-bold" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
+              </a>
+              <a class="item-action level-item">
+                <span class="icon"><i class="material-icons">assignment</i></span>
+                <span class="item-count count has-text-weight-bold">{{ theme.itemCount }}</span>
               </a>
             </div>
             <div class="level-right">
@@ -190,7 +194,7 @@
       .add-item-button,
       .add-button {
         position: absolute;
-        bottom: -.75em;
+        bottom: 1em;
         right: 1em;
 
         &:not(:hover) {
@@ -226,17 +230,24 @@
             border-top: $border-style;
             background-color: white;
 
-            .favorite-action {
+            .level-item {
               display: flex;
               align-items: center;
-              position: absolute;
               top: .5rem;
               left: 0;
               padding: .25rem .4rem .25rem 0;
 
               .material-icons {
                 color: darkgrey;
-
+              }
+              .count {
+                margin-left: .25rem;
+                margin-bottom: -.25rem;
+                color: #4a4a4a;
+              }
+            }
+            .favorite-action {
+              .material-icons {
                 &.favorite {
                   color: #ebeb00;
                 }
