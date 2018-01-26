@@ -294,36 +294,6 @@
                 }
               }
             }
-            .favorite-action {
-              display: flex;
-              align-items: center;
-              position: absolute;
-              top: .5rem;
-              left: 0;
-              padding: .25rem .4rem .25rem .25rem;
-              background-color: rgba(0, 0, 0, .5);
-              border: 1px solid white;
-              border-left: none;
-              border-bottom-right-radius: 5px;
-              border-top-right-radius: 5px;
-              cursor: pointer;
-
-              .material-icons {
-                font-size: 18px;
-                color: rgba(255, 255, 255, .6);
-
-                &.favorite {
-                  color: #ebeb00;
-                }
-              }
-              .favorite-count {
-                margin-bottom: -.25rem;
-                color: white;
-              }
-              &:hover {
-                opacity: .8;
-              }
-            }
             .private-icon {
               position: absolute;
               top: 0;
@@ -409,7 +379,7 @@
           }
           .subtitle {
             text-align: center;
-            margin: .5rem auto;
+            margin: .75rem auto;
           }
           .item-card {
             &.is-active {
