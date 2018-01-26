@@ -3,7 +3,7 @@
     <nav class="navbar is-primary">
       <div class="navbar-brand">
         <span class="navbar-item logo" @click="$router.push(`/`)">
-          <img src="/static/img/colette-logo.png" alt="Colette">
+          <img src="/static/img/cullet.png" alt="Colette">
         </span>
 
         <a class="navbar-item is-hidden-desktop" href="https://github.com/jgthms/bulma" target="_blank">
