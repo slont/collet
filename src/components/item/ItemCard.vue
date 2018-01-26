@@ -11,7 +11,7 @@
         <div v-else>まだコンテンツがありません</div>
       </div>
 
-      <a class="edit-button button is-primary is-outlined" v-if="isMyPage"
+      <a class="edit-button button is-info is-outlined" v-if="isMyPage"
          @click.stop="$emit('open-edit-modal')">
         <span class="icon"><i class="material-icons">edit</i></span>
         <span>編集</span>
@@ -108,6 +108,10 @@
       &:hover .edit-button {
         opacity: 1;
 
+        &:not(:hover) {
+          color: #409eff;
+          background: #ecf5ff;
+        }
         &:hover.is-primary.is-outlined {
           background-color: $primary;
         }
