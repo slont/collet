@@ -21,6 +21,9 @@ export default new Vuex.Store({
     setUser({commit}, user) {
       commit(SET_USER, user)
     },
+    setLoggedIn({commit}, loggedIn) {
+      commit(SET_LOGGED_IN, loggedIn)
+    },
     signin({ commit }, params) {
       const authModel = new AuthModel()
       return authModel.signin(params).then(res => {

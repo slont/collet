@@ -324,7 +324,7 @@
           .theme-description {
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             padding-bottom: .5rem;
 
             .subtitle {
