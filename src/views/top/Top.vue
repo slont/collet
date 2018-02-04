@@ -2,7 +2,7 @@
   <div id="top-top">
     <label class="label">新着一覧</label>
     <transition-group name="slide-fade" mode="out-in" class="columns is-multiline">
-      <div v-for="theme in themes" class="column is-one-third-tablet" :key="theme.id">
+      <div v-for="theme in themes" class="column is-half" :key="theme.id">
         <theme-card :theme="theme"
                     @open-edit-modal="$emit('open-edit-modal', theme)"
                     @refresh="refresh"></theme-card>

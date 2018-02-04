@@ -87,7 +87,7 @@
       }
       img {
         width: 70%;
-        margin: auto;
+        margin: 0 auto;
       }
     }
   }

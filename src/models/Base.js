@@ -72,7 +72,8 @@ export default class Base {
         switch (response.status) {
           case 401:
           case 440:
-            window.location.href = `/signin?redirect=${encodeURIComponent(window.location.pathname)}`
+            require('@/store').default.dispatch('setLoggedIn', false)
+            // window.location.href = `/signin?redirect=${encodeURIComponent(window.location.pathname)}`
             break
           default:
             console.log('Network response was not ok.')

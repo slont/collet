@@ -11,7 +11,7 @@
         <div v-else>まだコンテンツがありません</div>
       </div>
 
-      <a class="edit-button button is-primary is-outlined" v-if="isMyPage"
+      <a class="edit-button button is-info is-outlined" v-if="isMyPage"
          @click.stop="$emit('open-edit-modal')">
         <span class="icon"><i class="material-icons">edit</i></span>
         <span>編集</span>
@@ -79,12 +79,14 @@
             color: darkgrey;
           }
           figure {
-            margin-top: 0;
-            margin-bottom: -.75em;
+            display: flex;
+            align-items: center;
+            height: 18em;
+            margin: 0 0 -1em 0;
+            overflow: hidden;
 
             img {
-              height: 10em;
-              width: auto;
+              width: 100%;
             }
           }
         }
@@ -108,6 +110,10 @@
       &:hover .edit-button {
         opacity: 1;
 
+        &:not(:hover) {
+          color: #409eff;
+          background: #ecf5ff;
+        }
         &:hover.is-primary.is-outlined {
           background-color: $primary;
         }
