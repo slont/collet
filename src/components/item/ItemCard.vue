@@ -79,12 +79,14 @@
             color: darkgrey;
           }
           figure {
-            margin-top: 0;
-            margin-bottom: -.75em;
+            display: flex;
+            align-items: center;
+            height: 18em;
+            margin: 0 0 -1em 0;
+            overflow: hidden;
 
             img {
-              height: 10em;
-              width: auto;
+              width: 100%;
             }
           }
         }
