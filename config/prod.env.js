@@ -1,4 +1,4 @@
 module.exports = {
   NODE_ENV: '"production"',
-  API_ENDPOINT: '"http://localhost:18080/v1"'
+  API_ENDPOINT: '"https://api.cullet.me/v1"'
 }
