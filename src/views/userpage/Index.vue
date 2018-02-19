@@ -122,11 +122,13 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-index {
+    padding-top: 3.25rem;
+
     .userpage-header {
       background-color: white;
 
       .user-profile {
-        width: $width;
+        max-width: $width;
         margin-left: auto;
         margin-right: auto;
         padding: 1rem .5rem .5rem;
@@ -141,7 +143,7 @@
         }
       }
       .tabs {
-        width: $width;
+        max-width: $width;
         margin-left: auto;
         margin-right: auto;
 

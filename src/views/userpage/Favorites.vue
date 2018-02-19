@@ -75,11 +75,21 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-favorites {
-    width: $width;
+    max-width: $width;
     margin: 0 auto;
 
     > .columns {
       padding-top: 1em;
+    }
+
+    @media screen and (max-width: 768px) {
+      .columns {
+        margin: 0;
+
+        .column {
+          padding: 0;
+        };
+      }
     }
   }
 </style>

@@ -1,11 +1,13 @@
 <template>
   <div id="top-top">
-    <label class="label">新着一覧</label>
     <transition-group name="slide-fade" mode="out-in" class="columns is-multiline">
+      <div class="column is-12 is-hidden-mobile" key="label">
+        <label class="label">新着一覧</label>
+      </div>
       <div v-for="theme in themes" class="column is-half" :key="theme.id">
         <theme-card :theme="theme"
                     @open-edit-modal="$emit('open-edit-modal', theme)"
-                    @refresh="refresh"></theme-card>
+                    @refresh="refresh"/>
       </div>
     </transition-group>
   </div>
@@ -51,7 +53,7 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #top-top {
-    width: $width;
+    max-width: $width;
     margin-left: auto;
     margin-right: auto;
 
@@ -63,6 +65,16 @@
       > figure,
       > div:not(:last-child) {
         margin-right: 3px;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .columns {
+        margin: 0;
+
+        .column {
+          padding: 0;
+        };
       }
     }
   }

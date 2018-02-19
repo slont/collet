@@ -1,22 +1,20 @@
 <template>
-  <div id="header-nav">
-    <nav class="navbar is-primary">
+  <nav id="header-nav" class="navbar is-primary is-fixed-top">
+    <div class="container">
       <div class="navbar-brand">
-        <span class="navbar-item logo" @click="$router.push(`/`)">
+        <span class="navbar-item logo is-hidden-mobile" @click="$router.push(`/`)">
           <img src="/static/img/cullet.png" alt="Colette">
         </span>
 
-        <a class="navbar-item is-hidden-desktop" href="https://github.com/jgthms/bulma" target="_blank">
-          <span class="icon" style="color: #333;">
-            <i class="fa fa-lg fa-github"></i>
-          </span>
-        </a>
+        <router-link to="/" class="navbar-item navbar-item-icon is-hidden-desktop" exact>
+          <span class="icon"><i class="material-icons">home</i></span>
+          <span class="subtitle is-7">ホーム</span>
+        </router-link>
 
-        <a class="navbar-item is-hidden-desktop" href="https://twitter.com/jgthms" target="_blank">
-          <span class="icon" style="color: #55acee;">
-            <i class="fa fa-lg fa-twitter"></i>
-          </span>
-        </a>
+        <router-link :to="`/${user.name}`" class="navbar-item navbar-item-icon is-hidden-desktop" v-if="loggedIn">
+          <span class="icon"><i class="material-icons">account_circle</i></span>
+          <span class="subtitle is-7">マイページ</span>
+        </router-link>
 
         <div class="navbar-burger burger" :class="{ 'is-active': activeNavbarMenu }"
              @click="activeNavbarMenu = !activeNavbarMenu">
@@ -29,10 +27,12 @@
       <div class="navbar-menu" :class="{ 'is-active': activeNavbarMenu }">
         <div class="navbar-start">
           <router-link to="/" class="navbar-item" exact>
-            トップ
+            <span class="icon"><i class="material-icons">home</i></span>
+            <span>ホーム</span>
           </router-link>
           <router-link :to="`/${user.name}`" class="navbar-item" v-if="loggedIn">
-            マイページ
+            <span class="icon"><i class="material-icons">account_circle</i></span>
+            <span>マイページ</span>
           </router-link>
         </div>
 
@@ -68,17 +68,20 @@
           </div>
         </div>
       </div>
-    </nav>
-  </div>
+    </div>
+  </nav>
 </template>
 
 <script>
   import Dropdown from '@/components/Dropdown'
+  // const HEADER_HEIGHT = 46
 
   export default {
     components: { Dropdown },
     data() {
       return {
+        // scrolledVal: 0,
+        // headerPos: 0,
         activeNavbarMenu: false
       }
     },
@@ -90,7 +93,24 @@
         return this.$store.state.loggedIn
       }
     },
+    // created() {
+    //   window.addEventListener('scroll', this.handleScroll)
+    // },
+    // destroyed() {
+    //   window.removeEventListener('scroll', this.handleScroll)
+    // },
     methods: {
+      // handleScroll(e) {
+      //   const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+      //   let diff = this.scrolledVal - scrollTop
+      //   if (this.scrolledVal < scrollTop) {
+      //     this.headerPos = Math.max(-HEADER_HEIGHT, this.headerPos + diff)
+      //   } else {
+      //     diff = Math.sign(diff) * Math.min(10, Math.abs(diff))
+      //     this.headerPos = Math.min(0, this.headerPos + diff)
+      //   }
+      //   this.scrolledVal = scrollTop
+      // },
       signout() {
         this.$store.dispatch('signout').then(() => {
           this.$router.push('/')
@@ -102,11 +122,12 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #header-nav {
+    height: 3.25rem;
     background-color: $primary;
+    box-shadow: $box-shadow;
 
-    .navbar {
+    .container {
       max-width: $width;
-      margin: 0 auto;
 
       .navbar-brand {
         .logo {
@@ -116,6 +137,23 @@
 
           img {
             max-height: 2.25rem;
+          }
+        }
+        .navbar-item-icon {
+          flex-direction: column;
+
+          .subtitle {
+            color: white;
+          }
+
+          &.router-link-active,
+          &.is-active,
+          &:hover {
+            padding-top: 5px;
+            padding-bottom: 0;
+            margin-bottom: 0;
+            background-color: inherit;
+            border-bottom: 3px solid white;
           }
         }
       }
@@ -147,9 +185,6 @@
             }
           }
         }
-      }
-      .router-link-active {
-        @extend .is-active;
       }
     }
   }

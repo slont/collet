@@ -26,8 +26,11 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #top-index {
+    padding-top: 3.25rem;
+
     .tabs {
       background-color: white;
+      margin-bottom: 0;
 
       > ul {
         max-width: $width;
@@ -43,7 +46,7 @@
             @extend .is-active;
 
             a {
-              border-bottom-width: 2px;
+              border-bottom-width: 3px;
             }
           }
         }

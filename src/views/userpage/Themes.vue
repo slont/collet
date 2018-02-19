@@ -2,9 +2,9 @@
   <div id="userpage-themes">
     <transition-group name="slide-fade" mode="out-in" class="columns is-multiline">
       <div v-for="theme in themes" class="column is-half" :key="theme.id">
-        <theme-card :theme="theme" visible-add-item
+        <theme-card :theme="theme"
                     @open-edit-modal="$emit('open-edit-modal', theme)"
-                    @refresh="refresh"></theme-card>
+                    @refresh="refresh"/>
       </div>
     </transition-group>
   </div>
@@ -77,11 +77,21 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-themes {
-    width: $width;
+    max-width: $width;
     margin: 0 auto;
 
     > .columns {
       padding-top: 1em;
+    }
+
+    @media screen and (max-width: 768px) {
+      .columns {
+        margin: 0;
+
+        .column {
+          padding: 0;
+        };
+      }
     }
   }
 </style>
