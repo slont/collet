@@ -1,5 +1,6 @@
 <template>
   <nav id="footer-nav" class="navbar is-fixed-bottom">
+    <!-- ログイン済 -->
     <template v-if="loggedIn">
       <div class="navbar-brand logged-in">
         <router-link to="/" class="navbar-item navbar-item-icon" exact>
@@ -7,12 +8,18 @@
           <span class="subtitle is-7">ホーム</span>
         </router-link>
 
-        <router-link :to="`/${user.name}`" class="navbar-item navbar-item-icon" v-if="loggedIn">
+        <router-link :to="`/${user.name}`" class="navbar-item navbar-item-icon">
           <span class="icon"><i class="material-icons">account_circle</i></span>
           <span class="subtitle is-7">マイページ</span>
         </router-link>
+
+        <router-link to="/settings/profile" class="navbar-item navbar-item-icon">
+          <span class="icon"><i class="material-icons">settings</i></span>
+          <span class="subtitle is-7">設定</span>
+        </router-link>
       </div>
     </template>
+    <!-- 未ログイン -->
     <template v-else>
       <div class="navbar-brand logged-out">
         <router-link :to="`/signin?redirect=${encodeURIComponent($route.path)}`"

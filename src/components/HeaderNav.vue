@@ -51,9 +51,9 @@
                 <span class="icon" v-else><i class="material-icons">arrow_drop_down</i></span>
               </template>
 
-              <a @click="$router.push('/settings/profile')" class="dropdown-item">
+              <router-link to="/settings/profile" class="dropdown-item">
                 設定
-              </a>
+              </router-link>
               <hr class="dropdown-divider">
               <a @click="signout" class="dropdown-item">
                 サインアウト
