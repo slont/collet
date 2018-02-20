@@ -520,6 +520,7 @@
           padding-right: 0;
 
           .columns .main-column {
+            margin-bottom: 1rem;
             padding: 0 2.75rem !important;
 
             > .dropdown,

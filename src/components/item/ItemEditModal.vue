@@ -5,15 +5,15 @@
         <div class="left-column column is-hidden-mobile">
           <div class="slider">
             <div class="buttons has-addons is-centered">
-              <text-button @add="addElement"></text-button>
-              <image-button @add="addElement"></image-button>
-              <location-button @add="addElement"></location-button>
-              <datetime-button @add="addElement"></datetime-button>
-              <link-button @add="addElement"></link-button>
-              <rating-button @add="addElement"></rating-button>
-              <tag-button @add="addElement"></tag-button>
-              <phone-button @add="addElement"></phone-button>
-              <email-button @add="addElement"></email-button>
+              <text-button @add="addElement"/>
+              <image-button @add="addElement"/>
+              <location-button @add="addElement"/>
+              <datetime-button @add="addElement"/>
+              <link-button @add="addElement"/>
+              <rating-button @add="addElement"/>
+              <tag-button @add="addElement"/>
+              <phone-button @add="addElement"/>
+              <email-button @add="addElement"/>
             </div>
           </div>
         </div>
@@ -50,18 +50,18 @@
                 <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
               </div>
 
-              <text-element :params="element" v-if="'text' === element.type" editable></text-element>
-              <image-element :params="element" v-else-if="'image' === element.type" editable></image-element>
-              <location-element :params="element" v-else-if="'location' === element.type" editable></location-element>
-              <datetime-element :params="element" v-else-if="'date' === element.type" editable></datetime-element>
-              <datetime-element :params="element" v-else-if="'time' === element.type" editable></datetime-element>
-              <datetime-element :params="element" v-else-if="'datetime' === element.type" editable></datetime-element>
-              <tag-element :params="element" v-else-if="'tag' === element.type" editable></tag-element>
-              <link-element :params="element" v-else-if="'link' === element.type" editable></link-element>
-              <phone-element :params="element" v-else-if="'phone' === element.type" editable></phone-element>
-              <email-element :params="element" v-else-if="'email' === element.type" editable></email-element>
-              <rating-element :params="element" v-else-if="'rating' === element.type" editable></rating-element>
-              <switch-element :params="element" v-else-if="'switch' === element.type" editable></switch-element>
+              <text-element :params="element" v-if="'text' === element.type" editable/>
+              <image-element :params="element" v-else-if="'image' === element.type" editable/>
+              <location-element :params="element" v-else-if="'location' === element.type" editable/>
+              <datetime-element :params="element" v-else-if="'date' === element.type" editable/>
+              <datetime-element :params="element" v-else-if="'time' === element.type" editable/>
+              <datetime-element :params="element" v-else-if="'datetime' === element.type" editable/>
+              <tag-element :params="element" v-else-if="'tag' === element.type" editable/>
+              <link-element :params="element" v-else-if="'link' === element.type" editable/>
+              <phone-element :params="element" v-else-if="'phone' === element.type" editable/>
+              <email-element :params="element" v-else-if="'email' === element.type" editable/>
+              <rating-element :params="element" v-else-if="'rating' === element.type" editable/>
+              <switch-element :params="element" v-else-if="'switch' === element.type" editable/>
 
               <a @click="removeElement(i)" class="delete"></a>
             </div>
@@ -72,15 +72,15 @@
 
     <div class="modal-card-body slider is-hidden-desktop">
       <div class="buttons has-addons">
-        <text-button @add="addElement"></text-button>
-        <image-button @add="addElement"></image-button>
-        <location-button @add="addElement"></location-button>
-        <datetime-button @add="addElement"></datetime-button>
-        <link-button @add="addElement"></link-button>
-        <rating-button @add="addElement"></rating-button>
-        <tag-button @add="addElement"></tag-button>
-        <phone-button @add="addElement"></phone-button>
-        <email-button @add="addElement"></email-button>
+        <text-button @add="addElement"/>
+        <image-button @add="addElement"/>
+        <location-button @add="addElement"/>
+        <datetime-button @add="addElement"/>
+        <link-button @add="addElement"/>
+        <rating-button @add="addElement"/>
+        <tag-button @add="addElement"/>
+        <phone-button @add="addElement"/>
+        <email-button @add="addElement"/>
       </div>
     </div>
 
@@ -95,7 +95,7 @@
       <button @click="ok" class="button is-info">保存</button>
     </footer>
 
-    <item-delete-modal ref="itemDeleteModal" @refresh="refreshClose"></item-delete-modal>
+    <item-delete-modal ref="itemDeleteModal" @refresh="refreshClose"/>
   </modal>
 </template>
 
@@ -177,9 +177,10 @@
       }
     },
     methods: {
-      open(item) {
+      open(theme, item) {
+        this.theme = theme
         this.item = item
-        new ItemModel(this.themeId).findOne(this.item.id).then(res => {
+        new ItemModel(theme.id).findOne(this.item.id).then(res => {
           this.item = res.data
           this.$refs.itemEditModal.open()
         }).catch(err => {
@@ -482,6 +483,7 @@
           padding-right: 0;
 
           .columns .main-column {
+            margin-bottom: 1rem;
             padding: 0 2.75rem !important;
 
             > .dropdown,
