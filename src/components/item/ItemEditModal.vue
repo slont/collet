@@ -2,7 +2,7 @@
   <modal id="item-edit-modal" class="modal" :class="`page-${pageIndex}`" ref="itemEditModal" @close="reset">
     <div class="modal-card-body">
       <div class="columns is-gapless">
-        <div class="left-column column">
+        <div class="left-column column is-hidden-mobile">
           <div class="slider">
             <div class="buttons has-addons is-centered">
               <text-button @add="addElement"></text-button>
@@ -58,6 +58,20 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="modal-card-body slider is-hidden-desktop">
+      <div class="buttons has-addons">
+        <text-button @add="addElement"></text-button>
+        <image-button @add="addElement"></image-button>
+        <location-button @add="addElement"></location-button>
+        <datetime-button @add="addElement"></datetime-button>
+        <link-button @add="addElement"></link-button>
+        <rating-button @add="addElement"></rating-button>
+        <tag-button @add="addElement"></tag-button>
+        <phone-button @add="addElement"></phone-button>
+        <email-button @add="addElement"></email-button>
       </div>
     </div>
 
@@ -253,6 +267,8 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #item-edit-modal {
+    $button-count: 9;
+
     > .modal-card {
       display: flex;
       flex-direction: column;
@@ -403,12 +419,39 @@
           }
         }
       }
+      .modal-card-body.slider {
+        height: $element-button-size + 1rem;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border-radius: 0;
+        overflow: scroll;
+
+        .buttons {
+          width: $element-button-size * $button-count;
+
+          .el-button {
+            margin-bottom: 0;
+          }
+        }
+      }
       .modal-card-foot {
         .is-left {
           margin-right: auto;
         }
         .checkbox {
+          font-size: $size-small;
           margin-right: 1rem;
+        }
+      }
+      @media screen and (max-width: 768px) {
+        .modal-card-body {
+          padding-left: 0;
+          padding-right: 0;
+
+          .columns .main-column {
+            padding: 0 2.75rem 1rem !important;
+          }
         }
       }
     }
