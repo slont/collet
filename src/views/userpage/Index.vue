@@ -49,17 +49,17 @@
     </header>
 
     <transition name="slide-fade" mode="out-in">
-      <favorites @open-edit-modal="openEditModal" v-if="$route.path.endsWith('/favorites')"></favorites>
-      <themes ref="themes" @open-edit-modal="openEditModal" @refresh="refresh" v-else></themes>
+      <favorites @open-edit-modal="openEditModal" v-if="$route.path.endsWith('/favorites')"/>
+      <themes ref="themes" @open-edit-modal="openEditModal" @refresh="refresh" v-else/>
     </transition>
 
-    <a @click="$refs.themeCreateModal.open()" class="button button-create is-float is-primary circle"
-       v-if="loggedIn">
+    <a @click="$refs.themeCreateModal.open()" v-if="loggedIn"
+       class="button button-create is-float is-primary circle is-hidden-mobile">
       <i class="material-icons">add</i>
     </a>
 
-    <theme-create-modal ref="themeCreateModal" @refresh="refreshThemes"></theme-create-modal>
-    <theme-edit-modal ref="themeEditModal" @refresh="refreshThemes"></theme-edit-modal>
+    <theme-create-modal ref="themeCreateModal" @refresh="refreshThemes"/>
+    <theme-edit-modal ref="themeEditModal" @refresh="refreshThemes"/>
   </div>
 </template>
 

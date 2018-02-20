@@ -3,19 +3,28 @@
     <!-- ログイン済 -->
     <template v-if="loggedIn">
       <div class="navbar-brand logged-in">
-        <router-link to="/" class="navbar-item navbar-item-icon" exact>
+        <router-link to="/" class="navbar-item" exact>
           <span class="icon"><i class="material-icons">home</i></span>
           <span class="subtitle is-7">ホーム</span>
         </router-link>
 
-        <router-link :to="`/${user.name}`" class="navbar-item navbar-item-icon">
-          <span class="icon"><i class="material-icons">account_circle</i></span>
-          <span class="subtitle is-7">マイページ</span>
+        <router-link to="/search" class="navbar-item">
+          <span class="icon"><i class="material-icons">search</i></span>
+          <span class="subtitle is-7">検索</span>
         </router-link>
 
-        <router-link to="/settings/profile" class="navbar-item navbar-item-icon">
-          <span class="icon"><i class="material-icons">settings</i></span>
-          <span class="subtitle is-7">設定</span>
+        <a @click="$refs.themeCreateModal.open()" class="navbar-item button is-primary is-rounded is-outlined">
+          <span class="icon"><i class="material-icons">add</i></span>
+        </a>
+
+        <router-link :to="`/${user.name}/favorites`" class="navbar-item">
+          <span class="icon"><i class="material-icons">star_border</i></span>
+          <span class="subtitle is-7">お気に入り</span>
+        </router-link>
+
+        <router-link :to="`/${user.name}`" class="navbar-item" exact>
+          <span class="icon"><i class="material-icons">account_circle</i></span>
+          <span class="subtitle is-7">マイページ</span>
         </router-link>
       </div>
     </template>
@@ -32,11 +41,16 @@
         </router-link>
       </div>
     </template>
+
+    <theme-create-modal ref="themeCreateModal" @refresh=""/>
   </nav>
 </template>
 
 <script>
+  import ThemeCreateModal from '@/components/theme/ThemeCreateModal'
+
   export default {
+    components: { ThemeCreateModal },
     computed: {
       user() {
         return this.$store.state.user
@@ -70,7 +84,21 @@
             color: $primary;
           }
         }
-        &.button {
+      }
+      &.logged-in {
+        .navbar-item {
+          width: 20%;
+          padding-left: 0;
+          padding-right: 0;
+        }
+        .button {
+          height: 40px;
+          width: 40px;
+          margin: auto 12px;
+        }
+      }
+      &.logged-out {
+        .button {
           padding: 1.125em 4em;
         }
       }

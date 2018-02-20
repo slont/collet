@@ -20,9 +20,14 @@
       </div>
 
       <!-- SP用 -->
-      <div class="navbar-menu is-hidden-desktop" :class="{ 'is-active': activeNavbarMenu }">
+      <div class="navbar-menu is-hidden-desktop" :class="{ 'is-active': activeNavbarMenu }"
+           @click="activeNavbarMenu = false">
         <div class="navbar-start">
-          <a @click="onClickSpSignout" class="navbar-item">
+          <router-link to="/settings/profile" class="navbar-item">
+            <span class="icon"><i class="material-icons">settings</i></span>
+            設定
+          </router-link>
+          <a @click="signout" class="navbar-item">
             <span class="icon"><i class="material-icons">exit_to_app</i></span>
             サインアウト
           </a>
@@ -56,6 +61,7 @@
               </router-link>
               <hr class="dropdown-divider">
               <a @click="signout" class="dropdown-item">
+                <span class="icon"><i class="material-icons">exit_to_app</i></span>
                 サインアウト
               </a>
             </dropdown>
@@ -118,10 +124,6 @@
       //   }
       //   this.scrolledVal = scrollTop
       // },
-      onClickSpSignout() {
-        this.signout()
-        this.activeNavbarMenu = false
-      },
       signout() {
         this.$store.dispatch('signout').then(() => {
           this.$router.push('/')
