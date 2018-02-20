@@ -14,11 +14,26 @@
           </div>
         </div>
 
-        <div class="navbar-burger burger" :class="{ 'is-active': activeNavbarMenu }"
+        <div class="navbar-burger burger" :class="{ 'is-active': activeNavbarMenu }" v-if="loggedIn"
              @click="activeNavbarMenu = !activeNavbarMenu"><span></span><span></span><span></span>
         </div>
       </div>
 
+      <!-- SP用 -->
+      <div class="navbar-menu is-hidden-desktop" :class="{ 'is-active': activeNavbarMenu }">
+        <div class="navbar-start">
+          <router-link to="/" class="navbar-item" exact>
+            <span class="icon"><i class="material-icons">home</i></span>
+            <span>ホーム</span>
+          </router-link>
+          <router-link :to="`/${user.name}`" class="navbar-item" v-if="loggedIn">
+            <span class="icon"><i class="material-icons">account_circle</i></span>
+            <span>マイページ</span>
+          </router-link>
+        </div>
+      </div>
+
+      <!-- PC用 -->
       <div class="navbar-menu">
         <div class="navbar-start">
           <router-link to="/" class="navbar-item" exact>
@@ -136,7 +151,8 @@
           }
         }
         .search-field {
-          margin: 0;
+          margin-left: auto;
+          padding-right: .5em;
 
           .input {
             background: transparent;
