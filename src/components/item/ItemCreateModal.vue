@@ -19,6 +19,15 @@
         </div>
 
         <div class="main-column column">
+          <div class="theme-dropdown dropdown">
+            <div class="dropdown-trigger">
+              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                <span>{{ theme.title }}</span>
+                <span class="icon is-small"><i class="material-icons">arrow_drop_down</i></span>
+              </button>
+            </div>
+          </div>
+
           <div class="template-tabs tabs is-small" v-if="templates.length">
             <ul>
               <li v-for="(template, i) in templates"
@@ -99,6 +108,7 @@
 </template>
 
 <script>
+  import ThemeModel from '@/models/Theme'
   import TemplateModel from '@/models/Template'
   import ItemModel from '@/models/Item'
   import FileModel from '@/models/File'
@@ -154,6 +164,11 @@
       return {
         pageIndex: 0,
         draggingElement: null,
+        theme: {
+          id: '',
+          title: '',
+          templates: []
+        },
         item: {
           name: '',
           elements: []
@@ -166,22 +181,41 @@
     },
     computed: {
       themeId() {
-        return this.$route.params.themeId
+        return this.theme.id || this.$route.params.themeId
       }
     },
     methods: {
-      open() {
+      open(theme = {}) {
+        this.refresh(theme)
         this.$refs.itemCreateModal.open()
-
-        new TemplateModel(this.themeId).find({
-          p: 0,
-          s: 20
+      },
+      refresh(theme = {}) {
+        this.theme = theme
+        this.fetchThemeId().then(() => {
+          return new TemplateModel(this.themeId).find({
+            p: 0,
+            s: 20
+          })
         }).then(res => {
           if (res.data.length) {
             this.templates = res.data
             Object.assign(this.item.elements, this.templates[0].elements)
           }
         })
+      },
+      fetchThemeId() {
+        if (this.themeId) {
+          return Promise.resolve()
+        } else {
+          return new ThemeModel().find().then(res => {
+            if (res.data.length) {
+              this.theme = res.data[0]
+              return Promise.resolve()
+            } else {
+              return Promise.reject()
+            }
+          })
+        }
       },
       close() {
         this.reset()
@@ -328,11 +362,30 @@
           .main-column {
             $sort-button-size: 2rem;
             $margin-side: $sort-button-size + .5rem;
-            padding: 0 4rem 1.5rem !important;
+            padding: 0 0 1.5rem 3rem !important;
             background-color: white;
             overflow-y: scroll;
             z-index: 0;
 
+            .theme-dropdown {
+              width: 100%;
+
+              .dropdown-trigger {
+                width: 100%;
+
+                .button {
+                  max-width: 70%;
+
+                  :first-child {
+                    max-width: 95%;
+                    overflow: hidden;
+                  }
+                  .icon {
+                    margin-left: auto;
+                  }
+                }
+              }
+            }
             .template-tabs {
               margin-bottom: 1rem;
 
@@ -467,7 +520,7 @@
           padding-right: 0;
 
           .columns .main-column {
-            padding: 0 2.75rem 1rem !important;
+            padding: 0 2.75rem !important;
           }
         }
       }

@@ -5,7 +5,7 @@
         <div class="side-column column is-4">
           <theme-card :theme="theme"
                       @open-edit-modal="$refs.themeEditModal.open(theme)"
-                      @refresh="refresh"></theme-card>
+                      @refresh="refresh"/>
 
           <!--<div class="theme-sub-header">
             <div class="search-box">
@@ -23,22 +23,23 @@
           </div>-->
 
           <div class="theme-items">
-            <el-button type="primary" plain round size="mini" class="add-button" @click="$refs.itemCreateModal.open(theme.templates)" v-if="isMyPage">
+            <el-button type="primary" plain round size="mini" class="add-button"
+                       @click="$refs.itemCreateModal.open(theme)" v-if="isMyPage">
               アイテム新規追加
             </el-button>
             <div class="subtitle is-7">
               <span>アイテム一覧</span>
             </div>
-            <item-card  v-for="item in theme.items" :key="item.id" :theme="theme" :item="item"
-                        :class="{ 'is-active': currentItem.id === item.id }"
-                        @click.native="$router.push(`/${urlUserId}/${themeId}/${item.id}`)"
-                        @open-edit-modal="$refs.itemEditModal.open(item)"
-                        v-if="theme.items.length"></item-card>
+            <item-card v-for="item in theme.items" :key="item.id" :theme="theme" :item="item"
+                       :class="{ 'is-active': currentItem.id === item.id }"
+                       @click.native="$router.push(`/${urlUserId}/${themeId}/${item.id}`)"
+                       @open-edit-modal="$refs.itemEditModal.open(item)"
+                       v-if="theme.items.length"/>
           </div>
         </div>
 
         <div class="main-column column is-8" v-if="currentItem.id">
-          <item-page :current-item="currentItem"></item-page>
+          <item-page :current-item="currentItem"/>
         </div>
 
         <div v-else>
@@ -50,15 +51,14 @@
       </div>
     </div>
 
-
-    <a @click="$refs.itemCreateModal.open(theme.templates)" class="button button-create is-float is-info circle"
-        v-if="loggedIn">
+    <a @click="$refs.itemCreateModal.open(theme)" v-if="loggedIn"
+       class="button button-create is-float is-info circle is-hidden-mobile">
       <i class="material-icons">add</i>
     </a>
 
-    <theme-edit-modal ref="themeEditModal" @refresh="refresh"></theme-edit-modal>
-    <item-create-modal ref="itemCreateModal" @refresh="refresh"></item-create-modal>
-    <item-edit-modal ref="itemEditModal" @refresh="refresh"></item-edit-modal>
+    <theme-edit-modal ref="themeEditModal" @refresh="refresh"/>
+    <item-create-modal ref="itemCreateModal" @refresh="refresh"/>
+    <item-edit-modal ref="itemEditModal" @refresh="refresh"/>
   </div>
 </template>
 
