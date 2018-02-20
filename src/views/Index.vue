@@ -1,17 +1,19 @@
 <template>
   <div id="index">
-    <header-nav></header-nav>
+    <header-nav/>
     <transition name="slide-fade" mode="out-in">
-      <router-view class="container"></router-view>
+      <router-view class="container"/>
     </transition>
+    <footer-nav class="is-hidden-desktop"/>
   </div>
 </template>
 
 <script>
   import HeaderNav from '@/components/HeaderNav'
+  import FooterNav from '@/components/FooterNav'
 
   export default {
-    components: { HeaderNav }
+    components: { HeaderNav, FooterNav }
   }
 </script>
 
