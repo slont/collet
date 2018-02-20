@@ -2,29 +2,24 @@
   <nav id="header-nav" class="navbar is-primary is-fixed-top">
     <div class="container">
       <div class="navbar-brand">
-        <span class="navbar-item logo is-hidden-mobile" @click="$router.push(`/`)">
+        <div class="navbar-item logo" @click="$router.push(`/`)">
           <img src="/static/img/cullet.png" alt="Colette">
-        </span>
+        </div>
 
-        <router-link to="/" class="navbar-item navbar-item-icon is-hidden-desktop" exact>
-          <span class="icon"><i class="material-icons">home</i></span>
-          <span class="subtitle is-7">ホーム</span>
-        </router-link>
-
-        <router-link :to="`/${user.name}`" class="navbar-item navbar-item-icon is-hidden-desktop" v-if="loggedIn">
-          <span class="icon"><i class="material-icons">account_circle</i></span>
-          <span class="subtitle is-7">マイページ</span>
-        </router-link>
+        <div class="navbar-item field search-field is-hidden-desktop" v-if="!loggedIn">
+          <div class="control has-icons-right">
+            <input v-model="query" class="input is-rounded"
+                 placeholder="キーワード検索"/>
+            <span class="icon is-small is-right"><i class="material-icons">search</i></span>
+          </div>
+        </div>
 
         <div class="navbar-burger burger" :class="{ 'is-active': activeNavbarMenu }"
-             @click="activeNavbarMenu = !activeNavbarMenu">
-          <span></span>
-          <span></span>
-          <span></span>
+             @click="activeNavbarMenu = !activeNavbarMenu"><span></span><span></span><span></span>
         </div>
       </div>
 
-      <div class="navbar-menu" :class="{ 'is-active': activeNavbarMenu }">
+      <div class="navbar-menu">
         <div class="navbar-start">
           <router-link to="/" class="navbar-item" exact>
             <span class="icon"><i class="material-icons">home</i></span>
@@ -82,6 +77,7 @@
       return {
         // scrolledVal: 0,
         // headerPos: 0,
+        query: '',
         activeNavbarMenu: false
       }
     },
@@ -139,21 +135,13 @@
             max-height: 2.25rem;
           }
         }
-        .navbar-item-icon {
-          flex-direction: column;
+        .search-field {
+          margin: 0;
 
-          .subtitle {
+          .input {
+            background: transparent;
             color: white;
-          }
-
-          &.router-link-active,
-          &.is-active,
-          &:hover {
-            padding-top: 5px;
-            padding-bottom: 0;
-            margin-bottom: 0;
-            background-color: inherit;
-            border-bottom: 3px solid white;
+            border: 1px solid #e07b00;
           }
         }
       }
