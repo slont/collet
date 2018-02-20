@@ -1,11 +1,5 @@
 <template>
   <div id="top-index">
-    <div class="tabs header-shadow">
-      <ul>
-        <router-link to="/" tag="li"><a>TOP</a></router-link>
-        <router-link to="/recommend" tag="li"><a>おすすめ</a></router-link>
-      </ul>
-    </div>
     <transition name="slide-fade" mode="out-in" class="content">
       <router-view></router-view>
     </transition>

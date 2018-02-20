@@ -1,7 +1,7 @@
 <template>
   <div id="top-top">
     <transition-group name="slide-fade" mode="out-in" class="columns is-multiline">
-      <div class="column is-12 is-hidden-mobile" key="label">
+      <div class="column is-12" key="label">
         <label class="label">新着一覧</label>
       </div>
       <div v-for="theme in themes" class="column is-half" :key="theme.id">
@@ -74,7 +74,7 @@
 
         .column {
           padding: 0;
-        };
+        }
       }
     }
   }

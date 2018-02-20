@@ -20,5 +20,11 @@
 <style lang="scss" rel="stylesheet/scss">
   #index {
     height: 100%;
+
+    @media screen and (max-width: 768px) {
+      > .container {
+        margin-bottom: 3.25em;
+      }
+    }
   }
 </style>
