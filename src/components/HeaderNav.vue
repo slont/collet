@@ -22,14 +22,10 @@
       <!-- SP用 -->
       <div class="navbar-menu is-hidden-desktop" :class="{ 'is-active': activeNavbarMenu }">
         <div class="navbar-start">
-          <router-link to="/" class="navbar-item" exact>
-            <span class="icon"><i class="material-icons">home</i></span>
-            <span>ホーム</span>
-          </router-link>
-          <router-link :to="`/${user.name}`" class="navbar-item" v-if="loggedIn">
-            <span class="icon"><i class="material-icons">account_circle</i></span>
-            <span>マイページ</span>
-          </router-link>
+          <a @click="onClickSpSignout" class="navbar-item">
+            <span class="icon"><i class="material-icons">exit_to_app</i></span>
+            サインアウト
+          </a>
         </div>
       </div>
 
@@ -122,6 +118,10 @@
       //   }
       //   this.scrolledVal = scrollTop
       // },
+      onClickSpSignout() {
+        this.signout()
+        this.activeNavbarMenu = false
+      },
       signout() {
         this.$store.dispatch('signout').then(() => {
           this.$router.push('/')
@@ -161,31 +161,44 @@
           }
         }
       }
-      .navbar-end {
-        .breadcrumb {
-          $color: white;
+      .navbar-menu {
+        .navbar-end {
+          .breadcrumb {
+            $color: white;
 
-          a {
-            color: $color;
+            a {
+              color: $color;
 
-            &:hover {
-              color: darken($color, 15%);
+              &:hover {
+                color: darken($color, 15%);
+              }
+            }
+          }
+          .account-item {
+            .dropdown-trigger {
+              display: flex;
+              align-items: center;
+              cursor: pointer;
+
+              .user-name {
+                margin-right: .25rem;
+              }
+              img {
+                height: 2.25rem;
+                max-height: 2.25rem;
+                width: 2.25rem;
+              }
             }
           }
         }
-        .account-item {
-          .dropdown-trigger {
+        /* SP用 */
+        &.is-hidden-desktop.is-active {
+          .navbar-item {
             display: flex;
             align-items: center;
-            cursor: pointer;
 
-            .user-name {
-              margin-right: .25rem;
-            }
-            img {
-              height: 2.25rem;
-              max-height: 2.25rem;
-              width: 2.25rem;
+            .icon {
+              margin-right: .5em;
             }
           }
         }
