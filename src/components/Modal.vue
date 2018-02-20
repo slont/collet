@@ -36,5 +36,14 @@
       background: white;
       height: 4rem;
     }
+
+    @media screen and (max-width: 768px) {
+      .modal-card {
+        height: 100vh !important;
+        width: 100vw !important;
+        max-height: 100vh;
+        margin: 0;
+      }
+    }
   }
 </style>
