@@ -521,6 +521,13 @@
 
           .columns .main-column {
             padding: 0 2.75rem !important;
+
+            > .dropdown,
+            > .tabs,
+            > .media {
+              margin-left: -1.5rem;
+              margin-right: -1.5rem;
+            }
           }
         }
       }

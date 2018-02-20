@@ -95,7 +95,7 @@
       text-align: center;
     }
     .box {
-      width: 30%;
+      max-width: 400px;
       margin: 3em auto;
 
       ul {

@@ -19,6 +19,15 @@
         </div>
 
         <div class="main-column column">
+          <div class="theme-dropdown dropdown is-primary">
+            <div class="dropdown-trigger">
+              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                <span>{{ theme.title }}</span>
+                <span class="icon is-small"><i class="material-icons">arrow_drop_down</i></span>
+              </button>
+            </div>
+          </div>
+
           <article class="media">
             <div class="media-content">
               <div class="content">
@@ -147,6 +156,10 @@
       return {
         pageIndex: 0,
         draggingElement: null,
+        theme: {
+          id: '',
+          title: ''
+        },
         item: {
           name: '',
           description: '',
@@ -319,11 +332,30 @@
           .main-column {
             $sort-button-size: 2rem;
             $margin-side: $sort-button-size + .5rem;
-            padding: 0 3rem 1.5rem !important;
+            padding: 0 0 1.5rem 3rem !important;
             background-color: white;
             overflow-y: scroll;
             z-index: 0;
 
+            .theme-dropdown {
+              width: 100%;
+
+              .dropdown-trigger {
+                width: 100%;
+
+                .button {
+                  max-width: 70%;
+
+                  :first-child {
+                    max-width: 95%;
+                    overflow: hidden;
+                  }
+                  .icon {
+                    margin-left: auto;
+                  }
+                }
+              }
+            }
             .item-name {
               padding: 0;
               margin-bottom: 1rem;
@@ -450,7 +482,14 @@
           padding-right: 0;
 
           .columns .main-column {
-            padding: 0 2.75rem 1rem !important;
+            padding: 0 2.75rem !important;
+
+            > .dropdown,
+            > .tabs,
+            > .media {
+              margin-left: -1.5rem;
+              margin-right: -1.5rem;
+            }
           }
         }
       }
