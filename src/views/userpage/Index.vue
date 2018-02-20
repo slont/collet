@@ -122,7 +122,7 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-index {
-    padding-top: 3.25rem;
+    padding-top: $header-nav-height;
 
     .userpage-header {
       background-color: white;

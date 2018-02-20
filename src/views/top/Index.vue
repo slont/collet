@@ -26,7 +26,7 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #top-index {
-    padding-top: 3.25rem;
+    padding-top: $header-nav-height;
 
     .tabs {
       background-color: white;

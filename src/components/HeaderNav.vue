@@ -122,7 +122,7 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #header-nav {
-    height: 3.25rem;
+    height: $header-nav-height;
     background-color: $primary;
     box-shadow: $box-shadow;
 
