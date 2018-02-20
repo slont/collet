@@ -13,7 +13,7 @@
           <span class="subtitle is-7">検索</span>
         </router-link>
 
-        <a @click="$refs.themeCreateModal.open()" class="navbar-item button is-primary is-rounded is-outlined">
+        <a @click="onClickAdd" class="navbar-item button is-primary is-rounded is-outlined">
           <span class="icon"><i class="material-icons">add</i></span>
         </a>
 
@@ -43,20 +43,48 @@
     </template>
 
     <theme-create-modal ref="themeCreateModal" @refresh=""/>
+    <item-create-modal ref="itemCreateModal" @refresh=""/>
   </nav>
 </template>
 
 <script>
+  import ThemeModel from '@/models/Theme'
   import ThemeCreateModal from '@/components/theme/ThemeCreateModal'
+  import ItemCreateModal from '@/components/item/ItemCreateModal'
 
   export default {
-    components: { ThemeCreateModal },
+    components: { ThemeCreateModal, ItemCreateModal },
+    data() {
+      return {
+        themes: []
+      }
+    },
     computed: {
       user() {
         return this.$store.state.user
       },
       loggedIn() {
         return this.$store.state.loggedIn
+      }
+    },
+    created() {
+      this.fetchThemes()
+    },
+    methods: {
+      fetchThemes() {
+        new ThemeModel().findByNew({
+          p: 0,
+          s: 1
+        }).then(res => {
+          this.themes = res.data
+        })
+      },
+      onClickAdd() {
+        if (this.themes.length) {
+          this.$refs.itemCreateModal.open(this.themes[0])
+        } else {
+          this.$refs.themeCreateModal.open()
+        }
       }
     }
   }
