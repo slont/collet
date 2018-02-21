@@ -25,9 +25,9 @@
 
 
         <div class="has-text-centered">
-          <button @click="ok" class="button is-info" :class="{ 'is-loading': isLoading }">
+          <a @click="ok" class="button is-info" :class="{ 'is-loading': isLoading }">
             {{ $t('buttons.signup') }}
-          </button>
+          </a>
         </div>
         <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
       </template>

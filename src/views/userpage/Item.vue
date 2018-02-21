@@ -1,10 +1,10 @@
 <template>
   <div id="userpage-item">
-    <button class="edit-button button is-info is-outlined" @click="$refs.itemEditModal.open(theme, item)"
+    <a class="edit-button button is-info is-outlined" @click="$refs.itemEditModal.open(theme, item)"
             v-if="isMyPage">
       <span class="icon"><i class="material-icons">edit</i></span>
       <span>編集</span>
-    </button>
+    </a>
 
     <div class="item-info">
       <div class="title is-3">{{ item.name }}</div>

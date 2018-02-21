@@ -21,10 +21,10 @@
         <div class="main-column column">
           <div class="theme-dropdown dropdown">
             <div class="dropdown-trigger">
-              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+              <a class="button" aria-haspopup="true" aria-controls="dropdown-menu">
                 <span>{{ theme.title }}</span>
                 <span class="icon is-small"><i class="material-icons">arrow_drop_down</i></span>
-              </button>
+              </a>
             </div>
           </div>
 
@@ -101,8 +101,8 @@
         <input v-model="isTemplate" type="checkbox">
         テンプレート登録
       </label>
-      <button @click="close" class="button">キャンセル</button>
-      <button @click="ok" class="button is-info">作成</button>
+      <a @click="close" class="button">キャンセル</a>
+      <a @click="ok" class="button is-info">作成</a>
     </footer>
   </modal>
 </template>

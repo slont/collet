@@ -23,7 +23,7 @@
         </div>
       </div>
 
-      <button class="add-item-button button is-info is-rounded" v-if="isMyTheme && visibleAddItem">アイテム新規追加</button>
+      <a class="add-item-button button is-info is-rounded" v-if="isMyTheme && visibleAddItem">アイテム新規追加</a>
     </div>
 
     <div class="card-content">

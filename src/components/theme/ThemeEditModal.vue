@@ -76,9 +76,9 @@
 
     <footer class="modal-card-foot has-right">
       <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
-      <button @click="$refs.themeDeleteModal.open(theme)" class="button is-danger is-outlined is-left">削除</button>
-      <button @click="close" class="button">キャンセル</button>
-      <button @click="ok" class="button is-info">保存</button>
+      <a @click="$refs.themeDeleteModal.open(theme)" class="button is-danger is-outlined is-left">削除</a>
+      <a @click="close" class="button">キャンセル</a>
+      <a @click="ok" class="button is-info">保存</a>
     </footer>
 
     <theme-delete-modal ref="themeDeleteModal" @refresh="refreshClose"></theme-delete-modal>

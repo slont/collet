@@ -63,7 +63,7 @@
 
         <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
         <div class="save-button has-right">
-          <button @click="save" class="button is-primary">保存</button>
+          <a @click="save" class="button is-primary">保存</a>
         </div>
       </div>
 

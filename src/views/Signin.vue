@@ -26,9 +26,9 @@
       </div>
 
       <div class="has-text-centered">
-        <button @click="ok" class="button is-info" :class="{ 'is-loading': isLoading }">
+        <a @click="ok" class="button is-info" :class="{ 'is-loading': isLoading }">
           {{ $t('buttons.signin') }}
-        </button>
+        </a>
       </div>
       <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
       <!--<router-link to="/">{{ $t('views.signin.passwordReset') }}</router-link>-->
