@@ -38,11 +38,26 @@
         <guard-button :click="ok" class="button is-info" :class="{ 'is-loading': isLoading }">
           {{ $t('buttons.signin') }}
         </guard-button>
-
-        <a @click="ok" class="button is-info">
-          Twitterでログイン
-        </a>
       </div>
+
+      <!--<div class="has-text-centered">-->
+        <!--<a @click="ok" class="button is-info">-->
+          <!--Twitterでログイン-->
+        <!--</a>-->
+      <!--</div>-->
+
+      <!--<div class="has-text-centered">-->
+        <!--<a @click="ok" class="button is-info">-->
+          <!--Facebookでログイン-->
+        <!--</a>-->
+      <!--</div>-->
+
+      <div class="has-text-centered">
+        <router-link to="/signup" class="is-small">
+          新規登録はこちらから
+        </router-link>
+      </div>
+
       <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
       <!--<router-link to="/">{{ $t('views.signin.passwordReset') }}</router-link>-->
     </div>

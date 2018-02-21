@@ -30,6 +30,12 @@
           </guard-button>
         </div>
         <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
+
+        <div class="has-text-centered">
+          <router-link to="/signin" class="label">
+            ログインはこちらから
+          </router-link>
+        </div>
       </template>
 
       <template v-else-if="1 === pageIndex">
