@@ -2,7 +2,7 @@
   <div id="userpage-favorites">
     <transition-group name="slide-fade" mode="out-in" class="columns is-multiline">
       <div v-for="theme in themes" class="column is-half" :key="theme.id">
-        <theme-card :theme="theme" @open-edit-modal="$emit('open-edit-modal', theme)"></theme-card>
+        <theme-card :theme="theme" @open-edit-modal="$emit('open-edit-modal', theme)"/>
       </div>
     </transition-group>
   </div>

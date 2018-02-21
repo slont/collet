@@ -49,8 +49,8 @@
     </header>
 
     <transition name="slide-fade" mode="out-in">
-      <favorites @open-edit-modal="openEditModal" v-if="$route.path.endsWith('/favorites')"/>
-      <themes ref="themes" @open-edit-modal="openEditModal" @refresh="refresh" v-else/>
+      <favorites ref="child" @open-edit-modal="openEditModal" v-if="$route.path.endsWith('/favorites')"/>
+      <themes ref="child" @open-edit-modal="openEditModal" @refresh="refresh" v-else/>
     </transition>
 
     <a @click="$refs.themeCreateModal.open()" v-if="loggedIn"
@@ -111,7 +111,7 @@
         })
       },
       refreshThemes() {
-        this.$refs.themes.refresh()
+        this.$refs.child.refresh()
       },
       openEditModal(theme) {
         this.$refs.themeEditModal.open(theme)

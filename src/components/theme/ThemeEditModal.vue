@@ -78,7 +78,7 @@
       <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
       <a @click="$refs.themeDeleteModal.open(theme)" class="button is-danger is-outlined is-left">削除</a>
       <a @click="close" class="button">キャンセル</a>
-      <a @click="ok" class="button is-info">保存</a>
+      <guard-button :click="ok" class="button is-info">保存</guard-button>
     </footer>
 
     <theme-delete-modal ref="themeDeleteModal" @refresh="refreshClose"></theme-delete-modal>
@@ -119,25 +119,26 @@
         this.reset()
         this.$refs.themeEditModal.close()
       },
-      ok() {
-        this.$validator.validateAll().then(result => {
+      async ok() {
+        await this.$validator.validateAll().then(async result => {
           if (!result) return
 
           const body = Object.assign({}, this.theme, {
             tags: this.tags,
             private: false === this.theme.private ? 0 : 1
           })
-          new ThemeModel().update(this.theme.id, body).then(() => {
-            this.$emit('refresh')
-            this.$message({
-              showClose: true,
-              message: '保存されました',
-              type: 'success'
-            })
-            this.close()
-          }).catch(err => {
+          await new ThemeModel().update(this.theme.id, body).catch(err => {
             this.errorMessage = err
+            throw new Error(err)
           })
+
+          this.$emit('refresh')
+          this.$message({
+            showClose: true,
+            message: '保存されました',
+            type: 'success'
+          })
+          this.close()
         })
       },
       reset() {
