@@ -25,6 +25,15 @@
         </p>
       </div>
 
+      <div class="field-saved-info field">
+        <p class="control is-expanded">
+          <label class="checkbox">
+            <input v-model="checkedSaveLoginInfo" type="checkbox">
+            ログイン情報を保存
+          </label>
+        </p>
+      </div>
+
       <div class="has-text-centered">
         <guard-button :click="ok" class="button is-info" :class="{ 'is-loading': isLoading }">
           {{ $t('buttons.signin') }}
@@ -53,8 +62,9 @@
     data() {
       return {
         locale: this.$store.state.locale,
-        email: '',
-        password: '',
+        email: this.$store.state.loginInfo.email || '',
+        password: this.$store.state.loginInfo.password || '',
+        checkedSaveLoginInfo: !!this.$store.state.loginInfo.email,
         isLoading: false,
         errorMessage: ''
       }
@@ -70,14 +80,20 @@
           if (!result) return
 
           this.isLoading = true
-          await this.$store.dispatch('signin', {
+          const loginInfo = {
             email: this.email,
             password: this.password
-          }).catch(err => {
+          }
+          await this.$store.dispatch('signin', loginInfo).catch(err => {
             this.errorMessage = err.message
             this.isLoading = false
             throw new Error(err)
           })
+          if (this.checkedSaveLoginInfo) {
+            this.$store.dispatch('setLoginInfo', loginInfo)
+          } else {
+            this.$store.dispatch('setLoginInfo', {})
+          }
 
           this.isLoading = false
           this.$router.push(this.$route.query.redirect || '/')
