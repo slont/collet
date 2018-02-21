@@ -49,8 +49,8 @@
     data() {
       return {
         locale: this.$store.state.locale,
-        email: 'slont.maytry@gmail.com',
-        password: 'password',
+        email: '',
+        password: '',
         isLoading: false,
         errorMessage: ''
       }
