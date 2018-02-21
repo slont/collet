@@ -26,8 +26,12 @@
       </div>
 
       <div class="has-text-centered">
-        <a @click="ok" class="button is-info" :class="{ 'is-loading': isLoading }">
+        <guard-button :click="ok" class="button is-info" :class="{ 'is-loading': isLoading }">
           {{ $t('buttons.signin') }}
+        </guard-button>
+
+        <a @click="ok" class="button is-info">
+          Twitterでログイン
         </a>
       </div>
       <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
@@ -61,24 +65,28 @@
       }
     },
     methods: {
-      ok() {
-        this.$validator.validateAll().then(result => {
+      async ok() {
+        await this.$validator.validateAll().then(async result => {
           if (!result) return
 
           this.isLoading = true
-          this.$store.dispatch('signin', {
+          await this.$store.dispatch('signin', {
             email: this.email,
             password: this.password
-          }).then(() => {
-            this.isLoading = false
-            this.$router.push(this.$route.query.redirect || '/')
           }).catch(err => {
             this.errorMessage = err.message
             this.isLoading = false
+            throw new Error(err)
           })
+
+          this.isLoading = false
+          this.$router.push(this.$route.query.redirect || '/')
         }).catch(() => {
           console.log('Correct them errors!')
         })
+      },
+      signinTwitter() {
+
       },
       switchLocale() {
         this.$store.dispatch('setLocale', this.locale)

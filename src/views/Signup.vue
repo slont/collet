@@ -25,9 +25,9 @@
 
 
         <div class="has-text-centered">
-          <a @click="ok" class="button is-info" :class="{ 'is-loading': isLoading }">
+          <guard-button :click="ok" class="button is-info" :class="{ 'is-loading': isLoading }">
             {{ $t('buttons.signup') }}
-          </a>
+          </guard-button>
         </div>
         <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
       </template>
@@ -48,8 +48,8 @@
       return {
         pageIndex: 0,
         locale: this.$store.state.locale,
-        email: 'slont.maytry@gmail.com',
-        password: 'password',
+        email: '',
+        password: '',
         isLoading: false,
         errorMessage: ''
       }
@@ -60,21 +60,22 @@
       }
     },
     methods: {
-      ok() {
-        this.$validator.validateAll().then(result => {
+      async ok() {
+        await this.$validator.validateAll().then(async result => {
           if (!result) return
 
           this.isLoading = true
-          new AuthModel().signup({
+          await new AuthModel().signup({
             email: this.email,
             password: this.password
-          }).then(() => {
-            this.isLoading = false
-            this.pageIndex = 1
           }).catch(err => {
             this.isLoading = false
             this.errorMessage = err.message
+            throw new Error(err)
           })
+
+          this.isLoading = false
+          this.pageIndex = 1
         }).catch(() => {
           console.log('Correct them errors!')
         })

@@ -11,9 +11,9 @@
       </div>
 
       <div>
-        <a @click="ok" class="button is-info" :class="{ 'is-loading': isLoading }">
+        <guard-button :click="ok" class="button is-info" :class="{ 'is-loading': isLoading }">
           {{ $t('buttons.signin') }}
-        </a>
+        </guard-button>
       </div>
       <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
     </div>
@@ -35,21 +35,21 @@
       }
     },
     methods: {
-      ok() {
-        this.$validator.validateAll().then(result => {
+      async ok() {
+        await this.$validator.validateAll().then(async result => {
           if (!result) return
 
           this.isLoading = true
-          this.$store.dispatch('confirm', {
+          await this.$store.dispatch('confirm', {
             id: this.userId,
             name: this.name
-          }).then(() => {
-            this.isLoading = false
-            this.$router.push(this.$route.query.redirect || '/')
           }).catch(err => {
             this.errorMessage = err.message
             this.isLoading = false
           })
+
+          this.isLoading = false
+          this.$router.push(this.$route.query.redirect || '/')
         }).catch(() => {
           console.log('Correct them errors!')
         })

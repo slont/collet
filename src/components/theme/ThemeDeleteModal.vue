@@ -50,17 +50,18 @@
         this.$refs.themeDeleteModal.close()
       },
       async ok() {
-        await new ThemeModel().delete(this.theme.id).then(() => {
-          this.$emit('refresh')
-          this.$message({
-            showClose: true,
-            message: '削除されました',
-            type: 'success'
-          })
-          this.close()
-        }).catch(err => {
+        await new ThemeModel().delete(this.theme.id).catch(err => {
           this.errorMessage = err
+          throw new Error(err)
         })
+
+        this.$emit('refresh')
+        this.$message({
+          showClose: true,
+          message: '削除されました',
+          type: 'success'
+        })
+        this.close()
       },
       reset() {
         Object.assign(this.$data, this.$options.data.call(this))

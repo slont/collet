@@ -50,17 +50,18 @@
         this.$refs.itemDeleteModal.close()
       },
       async ok() {
-        await new ItemModel().delete(this.item.id).then(() => {
-          this.$emit('refresh')
-          this.$message({
-            showClose: true,
-            message: '削除されました',
-            type: 'success'
-          })
-          this.close()
-        }).catch(err => {
+        await new ItemModel().delete(this.item.id).catch(err => {
           this.errorMessage = err
+          throw new Error(err)
         })
+
+        this.$emit('refresh')
+        this.$message({
+          showClose: true,
+          message: '削除されました',
+          type: 'success'
+        })
+        this.close()
       },
       reset() {
         Object.assign(this.$data, this.$options.data.call(this))
