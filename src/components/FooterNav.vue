@@ -67,9 +67,6 @@
         return this.$store.state.loggedIn
       }
     },
-    created() {
-      this.fetchThemes()
-    },
     methods: {
       fetchThemes() {
         new ThemeModel().findByNew({
@@ -79,7 +76,14 @@
           this.themes = res.data
         })
       },
-      onClickAdd() {
+      async onClickAdd() {
+        await new ThemeModel().findByNew({
+          p: 0,
+          s: 1
+        }).then(res => {
+          this.themes = res.data
+        })
+
         if (this.themes.length) {
           this.$refs.itemCreateModal.open(this.themes[0])
         } else {
