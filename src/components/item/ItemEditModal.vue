@@ -92,7 +92,7 @@
         テンプレート登録
       </label>
       <a @click="close" class="button">キャンセル</a>
-      <a @click="ok" class="button is-info">保存</a>
+      <guard-button @click="ok" class="button is-info">保存</guard-button>
     </footer>
 
     <item-delete-modal ref="itemDeleteModal" @refresh="refreshClose"/>
@@ -196,25 +196,25 @@
         this.reset()
         this.$refs.itemEditModal.close()
       },
-      ok() {
-        this.$validator.validateAll().then(result => {
+      async ok() {
+        await this.$validator.validateAll().then(async result => {
           if (!result) return
 
           this.setOrder()
           const body = Object.assign({
             isTemplate: this.isTemplate
           }, this.item)
-          new ItemModel(this.themeId).update(this.item.id, body).then(() => {
-            this.$emit('refresh')
-            this.$message({
-              showClose: true,
-              message: '保存されました',
-              type: 'success'
-            })
-            this.close()
-          }).catch(err => {
+          await new ItemModel(this.themeId).update(this.item.id, body).catch(err => {
             this.errorMessage = err
           })
+
+          this.$emit('refresh')
+          this.$message({
+            showClose: true,
+            message: '保存されました',
+            type: 'success'
+          })
+          this.close()
         })
       },
       reset() {

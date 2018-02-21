@@ -19,7 +19,7 @@
 
     <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
     <footer class="modal-card-foot has-right">
-      <a @click="ok" class="button is-danger">削除</a>
+      <guard-button :click="ok" class="button is-danger">削除</guard-button>
       <a @click="close" class="button">キャンセル</a>
     </footer>
   </modal>
@@ -49,8 +49,8 @@
         this.reset()
         this.$refs.itemDeleteModal.close()
       },
-      ok() {
-        new ItemModel().delete(this.item.id).then(() => {
+      async ok() {
+        await new ItemModel().delete(this.item.id).then(() => {
           this.$emit('refresh')
           this.$message({
             showClose: true,

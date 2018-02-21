@@ -45,7 +45,8 @@
               <div class="content">
                 <div class="field">
                   <div class="item-name control">
-                    <input v-model.trim="item.name" class="input title is-3" type="text" placeholder="Item Name" name="itemName"
+                    <input v-model.trim="item.name" class="input title is-3" type="text" placeholder="Item Name"
+                           name="itemName"
                            v-validate="'required'" :class="{ 'is-danger': errors.has('itemName') }">
                     <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
                   </div>
@@ -102,7 +103,7 @@
         テンプレート登録
       </label>
       <a @click="close" class="button">キャンセル</a>
-      <a @click="ok" class="button is-info">作成</a>
+      <guard-button :click="ok" class="button is-info">作成</guard-button>
     </footer>
   </modal>
 </template>
@@ -221,26 +222,26 @@
         this.reset()
         this.$refs.itemCreateModal.close()
       },
-      ok() {
-        this.$validator.validateAll().then(result => {
+      async ok() {
+        await this.$validator.validateAll().then(async result => {
           if (!result) return
 
           this.setOrder()
           const body = Object.assign({
             isTemplate: this.isTemplate
           }, this.item)
-          new ItemModel(this.themeId).create(body).then(() => {
-            this.$emit('refresh')
-            this.$message({
-              showClose: true,
-              message: '作成されました',
-              type: 'success'
-            })
-            this.close()
-          }).catch(err => {
+          await new ItemModel(this.themeId).create(body).catch(err => {
             this.errorMessage = err
           })
-        })
+
+          this.$emit('refresh')
+          this.$message({
+            showClose: true,
+            message: '作成されました',
+            type: 'success'
+          })
+          this.close()
+        }).catch(err => this.$message.error(err))
       },
       reset() {
         Object.assign(this.$data, this.$options.data.call(this))

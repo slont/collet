@@ -77,7 +77,7 @@
     <footer class="modal-card-foot has-right">
       <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
       <a @click="close" class="button">キャンセル</a>
-      <a @click="ok" class="button is-info">作成</a>
+      <guard-button @click="ok" class="button is-info">作成</guard-button>
     </footer>
   </modal>
 </template>
@@ -112,23 +112,23 @@
         this.reset()
         this.$refs.themeCreateModal.close()
       },
-      ok() {
-        this.$validator.validateAll().then(result => {
+      async ok() {
+        await this.$validator.validateAll().then(async result => {
           if (!result) return
 
-          new ThemeModel().create(Object.assign({}, this.theme, {
+          await new ThemeModel().create(Object.assign({}, this.theme, {
             private: false === this.theme.private ? 0 : 1
-          })).then(() => {
-            this.$emit('refresh')
-            this.$message({
-              showClose: true,
-              message: '作成されました',
-              type: 'success'
-            })
-            this.close()
-          }).catch(err => {
+          })).catch(err => {
             this.errorMessage = err
           })
+
+          this.$emit('refresh')
+          this.$message({
+            showClose: true,
+            message: '作成されました',
+            type: 'success'
+          })
+          this.close()
         })
       },
       reset() {
