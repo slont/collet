@@ -9,10 +9,18 @@
         </figure>
         <div class="media-content">
           <div class="content">
-            <div class="">
+            <div class="user-name">
               <span class="title is-4">{{ user.name }}</span>
               <span class="subtitle is-6">@{{ urlUserId }}</span>
             </div>
+            <router-link to="/settings/profile" v-if="isSelf"
+                         class="profile-edit-button button is-info is-outlined is-small">
+              プロフィール編集
+            </router-link>
+            <router-link to="/settings" v-if="isSelf"
+                         class="settings-button button is-info is-outlined is-small">
+              <span class="icon is-small"><i class="material-icons">settings</i></span>
+            </router-link>
             <p class="user-bio">{{ user.biography }}</p>
           </div>
           <nav class="level is-mobile">
@@ -84,8 +92,14 @@
       }
     },
     computed: {
+      user() {
+        return this.$store.state.user
+      },
       urlUserId() {
         return this.$route.params.userId
+      },
+      isSelf() {
+        return this.$store.state.user.id === this.urlUserId
       },
       loggedIn() {
         return this.$store.state.loggedIn
@@ -128,6 +142,7 @@
       background-color: white;
 
       .user-profile {
+        align-items: center;
         max-width: $width;
         margin-left: auto;
         margin-right: auto;
@@ -137,8 +152,14 @@
         .content {
           margin-bottom: 0;
 
+          .user-name {
+            margin-bottom: .3rem;
+          }
           .user-bio {
-            margin-top: .5rem;
+            margin-top: .3rem;
+          }
+          .icon.is-small i {
+            font-size: $size-5;
           }
         }
       }
