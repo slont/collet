@@ -23,7 +23,8 @@
         </router-link>
 
         <router-link :to="`/${user.name}`" class="navbar-item" exact>
-          <span class="icon"><i class="material-icons">account_circle</i></span>
+          <img :src="user.image" class="circle" v-if="user.image"/>
+          <span class="icon" v-else><i class="material-icons">account_circle</i></span>
           <span class="subtitle is-7">マイページ</span>
         </router-link>
       </div>
