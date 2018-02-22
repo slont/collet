@@ -88,7 +88,7 @@
 
         .column {
           padding: 0;
-        };
+        }
       }
     }
   }

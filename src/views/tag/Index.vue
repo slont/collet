@@ -133,7 +133,7 @@
 
         .column {
           padding: 0;
-        };
+        }
       }
     }
   }

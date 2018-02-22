@@ -90,7 +90,7 @@
 
         .column {
           padding: 0;
-        };
+        }
       }
     }
   }

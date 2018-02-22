@@ -38,7 +38,7 @@
           </div>
         </div>
 
-        <div class="main-column column is-8" v-if="currentItem.id">
+        <div class="main-column column is-8 is-hidden-mobile" v-if="currentItem.id">
           <item-page :current-item="currentItem"/>
         </div>
 
@@ -446,6 +446,20 @@
       position: fixed;
       bottom: 2rem;
       right: 2rem;
+    }
+
+    @media screen and (max-width: 768px) {
+      .theme-content {
+        width: 100%;
+        margin: 0;
+      }
+      .columns {
+        margin: 0;
+
+        .column {
+          padding: 0;
+        }
+      }
     }
   }
 </style>
