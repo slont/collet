@@ -92,9 +92,6 @@
       }
     },
     computed: {
-      user() {
-        return this.$store.state.user
-      },
       urlUserId() {
         return this.$route.params.userId
       },

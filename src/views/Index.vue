@@ -19,10 +19,11 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #index {
-    height: 100%;
+    height: 100vh;
 
     @media screen and (max-width: 768px) {
       > .container {
+        height: calc(100vh - #{$header-nav-height});
         margin-bottom: 3.25em;
       }
     }

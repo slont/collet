@@ -1,33 +1,92 @@
 <template>
   <div id="settings-index">
-    <aside class="settings-menu menu">
+    <aside class="settings-menu menu" :class="{ 'is-root': isRoot }">
       <p class="menu-label">
         アカウント
       </p>
       <ul class="menu-list">
-        <router-link to="/settings/profile" tag="li"><a>プロフィール</a></router-link>
+        <router-link to="/settings/profile" tag="li">
+          <a>
+            <span>プロフィール</span>
+            <span class="icon is-hidden-desktop"><i class="material-icons">chevron_right</i></span>
+          </a>
+        </router-link>
       </ul>
+      <div class="divider"></div>
     </aside>
+
     <transition name="slide-fade" mode="out-in">
       <router-view></router-view>
     </transition>
   </div>
 </template>
 
+<script>
+  export default {
+    computed: {
+      isRoot() {
+        return '/settings' === this.$route.path
+      }
+    }
+  }
+</script>
+
 <style lang="scss" rel="stylesheet/scss">
   #settings-index {
     display: flex;
-    padding: 1.5rem;
+    padding-top: $header-nav-height;
 
     .settings-menu {
       width: 200px;
       min-width: 200px;
       margin-right: 1rem;
+      padding: 1em 0;
 
-      .menu-list {
+      .menu-label {
+        padding-left: .75em;
+      }
+      .menu-list li {
         .router-link-active a {
           @extend .is-active;
         }
+      }
+      .divider {
+        margin: .5em;
+        height: 1px;
+        background-color: $border;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .settings-menu {
+        display: none;
+        height: 100%;
+        width: 100%;
+        min-width: 100%;
+        margin: 0;
+        background-color: white;
+
+        &.is-root {
+          display: initial;
+        }
+        .menu-list li a {
+          display: flex;
+          align-items: center;
+
+          .icon {
+            color: darkgrey;
+            margin-left: auto;
+          }
+        }
+      }
+
+      .columns {
+        margin: 0;
+        margin-bottom: 3.25em;
+
+        .column {
+          padding: 0;
+        };
       }
     }
   }

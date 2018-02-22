@@ -60,11 +60,6 @@
             </div>
           </div>
         </div>
-
-        <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
-        <div class="save-button has-right">
-          <a @click="save" class="button is-primary">保存</a>
-        </div>
       </div>
 
       <div class="column is-4">
@@ -85,6 +80,11 @@
               </label>
             </div>
           </div>
+        </div>
+
+        <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
+        <div class="save-button has-right">
+          <a @click="save" class="button is-primary">保存</a>
         </div>
       </div>
     </div>
@@ -168,9 +168,6 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #settings-profile {
-    margin-top: -.75rem;
-    margin-left: .75rem;
-
     .password-setting-expand {
       display: flex;
       align-items: center;
