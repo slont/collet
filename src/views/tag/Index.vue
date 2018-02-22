@@ -100,6 +100,8 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #tag-index {
+    padding-top: $header-nav-height;
+
     .tag-header {
       background-color: white;
 
@@ -123,6 +125,16 @@
       position: fixed;
       bottom: 2rem;
       right: 2rem;
+    }
+
+    @media screen and (max-width: 768px) {
+      .columns {
+        margin: 0;
+
+        .column {
+          padding: 0;
+        };
+      }
     }
   }
 </style>
