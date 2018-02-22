@@ -82,7 +82,7 @@
 
       .columns {
         margin: 0;
-        margin-bottom: 3.25em;
+        margin-bottom: $footer-nav-height;
 
         .column {
           padding: 0;

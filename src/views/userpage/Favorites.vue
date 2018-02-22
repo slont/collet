@@ -76,7 +76,7 @@
 <style lang="scss" rel="stylesheet/scss">
   #userpage-favorites {
     max-width: $width;
-    margin: 0 auto;
+    margin: 0 auto $footer-nav-height;
 
     > .columns {
       padding-top: 1em;

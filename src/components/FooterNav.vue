@@ -18,7 +18,7 @@
         </a>
 
         <router-link :to="`/${user.name}/favorites`" class="navbar-item">
-          <span class="icon"><i class="material-icons">star_border</i></span>
+          <span class="icon"><i class="material-icons">favorite_border</i></span>
           <span class="subtitle is-7">お気に入り</span>
         </router-link>
 

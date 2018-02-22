@@ -39,8 +39,8 @@
             <div class="level-left">
               <a class="favorite-action level-item">
                 <span class="icon" @click.stop.prevent="onClickFavorite">
-                  <i class="favorite material-icons" v-if="theme.favorite">star</i>
-                  <i class="material-icons" v-else>star_border</i>
+                  <i class="favorite material-icons" v-if="theme.favorite">favorite</i>
+                  <i class="material-icons" v-else>favorite_border</i>
                 </span>
                 <span class="favorite-count count has-text-weight-bold" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
               </a>
@@ -249,7 +249,7 @@
             .favorite-action {
               .material-icons {
                 &.favorite {
-                  color: #ebeb00;
+                  color: deeppink;
                 }
               }
               .favorite-count {
