@@ -20,8 +20,6 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #top-index {
-    padding-top: $header-nav-height;
-
     .tabs {
       background-color: white;
       margin-bottom: 0;

@@ -20,11 +20,11 @@
 <style lang="scss" rel="stylesheet/scss">
   #index {
     height: 100vh;
+    margin-top: $header-nav-height;
 
     @media screen and (max-width: 768px) {
       > .container {
-        height: calc(100vh - #{$header-nav-height});
-        margin-bottom: 3.25em;
+        margin: $header-nav-height 0 $footer-nav-height;
       }
     }
   }

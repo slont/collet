@@ -97,8 +97,6 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #tag-index {
-    padding-top: $header-nav-height;
-
     .tag-header {
       background-color: white;
 

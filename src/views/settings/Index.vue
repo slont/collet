@@ -34,7 +34,6 @@
 <style lang="scss" rel="stylesheet/scss">
   #settings-index {
     display: flex;
-    padding-top: $header-nav-height;
 
     .settings-menu {
       width: 200px;

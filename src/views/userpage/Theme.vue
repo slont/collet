@@ -24,7 +24,7 @@
 
           <div class="theme-items">
             <el-button type="primary" plain round size="mini" class="add-button"
-                       @click="$refs.itemCreateModal.open(theme)" v-if="isMyPage">
+                       @click="$refs.itemCreateModal.open(theme)" v-if="loggedIn && isMyPage">
               アイテム新規追加
             </el-button>
             <div class="subtitle is-7">
@@ -183,7 +183,6 @@
     background-color: white;
 
     .theme-content {
-      height: 100vh;
       width: 90%;
       margin: 0 auto;
 

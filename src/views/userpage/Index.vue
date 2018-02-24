@@ -13,11 +13,11 @@
               <span class="title is-4">{{ user.name }}</span>
               <span class="subtitle is-6">@{{ urlUserId }}</span>
             </div>
-            <router-link to="/settings/profile" v-if="isSelf"
+            <router-link to="/settings/profile" v-if="loggedIn && isSelf"
                          class="profile-edit-button button is-info is-outlined is-small">
               プロフィール編集
             </router-link>
-            <router-link to="/settings" v-if="isSelf"
+            <router-link to="/settings" v-if="loggedIn && isSelf"
                          class="settings-button button is-info is-outlined is-small">
               <span class="icon is-small"><i class="material-icons">settings</i></span>
             </router-link>
@@ -130,8 +130,6 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-index {
-    padding-top: $header-nav-height;
-
     .userpage-header {
       background-color: white;
 
