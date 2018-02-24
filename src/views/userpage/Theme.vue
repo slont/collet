@@ -25,10 +25,10 @@
           <div class="theme-items">
             <el-button type="primary" plain round size="mini" class="add-button"
                        @click="$refs.itemCreateModal.open(theme)" v-if="loggedIn && isMyPage">
-              アイテム新規追加
+              カレット新規追加
             </el-button>
             <div class="subtitle is-7">
-              <span>アイテム一覧</span>
+              <span>カレット一覧</span>
             </div>
             <item-card v-for="item in theme.items" :key="item.id" :theme="theme" :item="item"
                        :class="{ 'is-active': currentItem.id === item.id }"
@@ -43,9 +43,9 @@
         </div>
 
         <div v-else>
-          まだアイテムはありません
+          まだカレットはありません
           <template v-if="isMyPage">
-            <br/>右下のボタンからアイテムを追加してみましょう！
+            <br/>右下のボタンからカレットを追加してみましょう！
           </template>
         </div>
       </div>

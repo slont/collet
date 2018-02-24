@@ -33,7 +33,7 @@
               <div class="content">
                 <div class="field">
                   <div class="item-name control">
-                    <input v-model.trim="item.name" class="input title is-3" type="text" placeholder="アイテム名" name="itemName"
+                    <input v-model.trim="item.name" class="input title is-3" type="text" placeholder="カレット名" name="itemName"
                            v-validate="'required'" :class="{ 'is-danger': errors.has('itemName') }">
                     <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
                   </div>

@@ -3,7 +3,7 @@
     <div class="modal-card-body">
       <div class="column">
         <div class="field">
-          <label class="label">アイテム名</label>
+          <label class="label">カレット名</label>
           <div class="control">
             {{ item.name }}
           </div>
