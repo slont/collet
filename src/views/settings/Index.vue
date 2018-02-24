@@ -22,7 +22,6 @@
           <a><span>サインアウト</span></a>
         </li>
       </ul>
-      <div class="divider"></div>
     </aside>
 
     <transition name="slide-fade" mode="out-in">

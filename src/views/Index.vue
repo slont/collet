@@ -27,7 +27,7 @@
       padding-bottom: $footer-nav-height;
 
       > .container {
-        /*height: 100%;*/
+        height: 100%;
       }
     }
   }
