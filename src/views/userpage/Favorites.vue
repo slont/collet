@@ -26,9 +26,6 @@
       },
       urlUserId() {
         return this.$route.params.userId
-      },
-      loggedIn() {
-        return this.$store.state.loggedIn
       }
     },
     watch: {

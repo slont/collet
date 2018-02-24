@@ -108,9 +108,6 @@
       },
       themeId() {
         return this.$route.params.themeId
-      },
-      loggedIn() {
-        return this.$store.state.loggedIn
       }
     },
     watch: {

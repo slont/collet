@@ -80,9 +80,6 @@
       },
       isMyTheme() {
         return this.$store.state.user.id === this.theme.createdUser.id
-      },
-      loggedIn() {
-        return this.$store.state.loggedIn
       }
     },
     methods: {

@@ -48,9 +48,6 @@
       },
       tagName() {
         return this.$route.query.name
-      },
-      loggedIn() {
-        return this.$store.state.loggedIn
       }
     },
     watch: {

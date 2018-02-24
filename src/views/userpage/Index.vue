@@ -97,9 +97,6 @@
       },
       isSelf() {
         return this.$store.state.user.id === this.urlUserId
-      },
-      loggedIn() {
-        return this.$store.state.loggedIn
       }
     },
     watch: {

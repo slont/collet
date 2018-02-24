@@ -39,7 +39,12 @@ Vue.filter('truncate', (text, stop) => text.slice(0, stop) + (stop < text.length
 Vue.use({
   install: (Vue, options) => {
     Vue.mixin({
-      components: {GuardButton}
+      components: {GuardButton},
+      computed: {
+        loggedIn() {
+          return store.state.loggedIn
+        }
+      }
     })
   }
 })
