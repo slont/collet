@@ -1,13 +1,18 @@
 <template>
   <div id="userpage-item">
-    <a class="edit-button button is-info is-outlined" @click="$refs.itemEditModal.open(theme, item)"
-            v-if="isMyPage">
-      <span class="icon"><i class="material-icons">edit</i></span>
-      <span>編集</span>
-    </a>
+    <div class="theme-title subtitle is-7" @click="$router.push(`/${$route.params.userId}/${themeId}`)">
+      {{ theme.title }}
+    </div>
 
     <div class="item-info">
-      <div class="title is-3">{{ item.name }}</div>
+      <div class="title is-3">
+        {{ item.name }}
+        <a class="edit-button button is-info is-outlined" @click="$refs.itemEditModal.open(theme, item)"
+           v-if="isMyPage">
+          <span class="icon"><i class="material-icons">edit</i></span>
+          <span>編集</span>
+        </a>
+      </div>
     </div>
 
     <div class="item-elements">
@@ -87,6 +92,10 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-item {
+    .theme-title {
+      margin-top: -.5rem;
+      margin-bottom: .5rem;
+    }
     .edit-button {
       margin-bottom: .5rem;
 

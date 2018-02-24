@@ -2,7 +2,7 @@
   <div id="userpage-theme">
     <div class="theme-content">
       <div class="theme-columns columns">
-        <div class="side-column column is-4">
+        <div class="side-column column is-4" :class="{ 'hidden-mobile-only': itemId }">
           <theme-card :theme="theme"
                       @open-edit-modal="$refs.themeEditModal.open(theme)"
                       @refresh="refresh"/>
@@ -38,7 +38,8 @@
           </div>
         </div>
 
-        <div class="main-column column is-8 is-hidden-mobile" v-if="currentItem.id">
+        <div class="main-column column is-8"
+             :class="{ 'hidden-mobile-only': !itemId }" v-if="currentItem.id">
           <item-page :current-item="currentItem"/>
         </div>
 
@@ -448,6 +449,15 @@
       .theme-content {
         width: 100%;
         margin: 0;
+
+        .theme-columns {
+          > .main-column {
+            padding: 1.5rem 1rem;
+          }
+          .hidden-mobile-only {
+            display: none;
+          }
+        }
       }
       .columns {
         margin: 0;
