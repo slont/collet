@@ -44,6 +44,10 @@
         max-height: 100vh;
         margin: 0;
       }
+      .modal-close:before,
+      .modal-close:after{
+        background-color: $label-color;
+      }
     }
   }
 </style>

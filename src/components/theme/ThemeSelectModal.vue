@@ -18,15 +18,16 @@
 
       <aside class="theme-menu menu">
         <ul class="menu-list">
-          <li @click="openThemeCreateModal">
-            <a>
+          <li class="create-item" @click="openThemeCreateModal">
+            <a class="button is-primary is-outlined">
               <span>新規作成</span>
               <span class="icon"><i class="material-icons">add</i></span>
             </a>
             <div class="divider"></div>
           </li>
 
-          <li v-for="theme in themes" :key="theme.id" @click="select(theme)">
+          <li v-for="theme in themes" :key="theme.id" class="theme-item"
+              @click="select(theme)">
             <a>
               <span>{{ theme.title }}</span>
               <span class="item-count">{{ theme.itemCount }}</span>
@@ -107,14 +108,31 @@
         margin-bottom: 0;
         padding: 1rem;
 
+        .create-item a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          i {
+            font-size: $size-medium;
+          }
+        }
+        .theme-item a {
+          display: flex;
+          align-items: center;
+          padding-left: 0;
+
+          .item-count {
+            width: 32px;
+            margin-left: auto;
+            text-align: right;
+          }
+        }
         .divider {
-          margin: .5em;
+          margin: .5em 0;
           height: 1px;
           background-color: $border;
         }
-      }
-      .modal-close {
-        color: $label-color;
       }
     }
   }
