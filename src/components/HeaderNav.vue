@@ -2,10 +2,6 @@
   <nav id="header-nav" class="navbar is-primary is-fixed-top">
     <div class="container">
       <div class="navbar-brand">
-        <div class="navbar-item back is-hidden-desktop" @click="$router.go(-1)">
-          <span class="icon"><i class="material-icons">arrow_back</i></span>
-        </div>
-
         <div class="navbar-item logo" @click="$router.push(`/`)">
           <img src="/static/img/cullet.png" alt="Colette">
         </div>

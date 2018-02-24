@@ -13,6 +13,16 @@
         </router-link>
       </ul>
       <div class="divider"></div>
+
+      <p class="menu-label">
+        その他
+      </p>
+      <ul class="menu-list">
+        <li @click="signout">
+          <a><span>サインアウト</span></a>
+        </li>
+      </ul>
+      <div class="divider"></div>
     </aside>
 
     <transition name="slide-fade" mode="out-in">
@@ -26,6 +36,13 @@
     computed: {
       isRoot() {
         return '/settings' === this.$route.path
+      }
+    },
+    methods: {
+      signout() {
+        this.$store.dispatch('signout').then(() => {
+          this.$router.push('/')
+        })
       }
     }
   }
@@ -78,10 +95,8 @@
           }
         }
       }
-
       .columns {
         margin: 0;
-        margin-bottom: $footer-nav-height;
 
         .column {
           padding: 0;

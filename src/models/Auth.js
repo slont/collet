@@ -43,6 +43,16 @@ export default class Auth extends Base {
     }))
   }
 
+  signinTwitter(body) {
+    return this.postProcess(fetch(`https://api.twitter.com/oauth/request_token`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+      headers: Base.getHeaders(),
+      body: JSON.stringify(body)
+    }))
+  }
+
   getToken() {
     return localStorage.authToken
   }
