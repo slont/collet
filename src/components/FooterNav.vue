@@ -65,9 +65,13 @@
         return this.$store.state.user
       }
     },
+    created() {
+      this.fetchThemes()
+    },
     methods: {
       fetchThemes() {
-        new ThemeModel().findByNew({
+        new ThemeModel().find({
+          userId: this.user.id,
           p: 0,
           s: 1
         }).then(res => {
@@ -75,13 +79,6 @@
         })
       },
       async onClickAdd() {
-        await new ThemeModel().findByNew({
-          p: 0,
-          s: 1
-        }).then(res => {
-          this.themes = res.data
-        })
-
         if (this.themes.length) {
           this.$refs.itemCreateModal.open(this.themes[0])
         } else {

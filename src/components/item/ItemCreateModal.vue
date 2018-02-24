@@ -20,7 +20,7 @@
 
         <div class="main-column column">
           <div class="theme-dropdown dropdown">
-            <div class="dropdown-trigger">
+            <div class="dropdown-trigger" @click="openThemeSelectModal">
               <a class="button" aria-haspopup="true" aria-controls="dropdown-menu">
                 <span>{{ theme.title }}</span>
                 <span class="icon is-small"><i class="material-icons">arrow_drop_down</i></span>
@@ -105,15 +105,17 @@
       <a @click="close" class="button">キャンセル</a>
       <guard-button :click="ok" class="button is-info">作成</guard-button>
     </footer>
+
+    <theme-select-modal ref="themeSelectModal" @refresh="refresh"/>
   </modal>
 </template>
 
 <script>
-  import ThemeModel from '@/models/Theme'
   import TemplateModel from '@/models/Template'
   import ItemModel from '@/models/Item'
   import FileModel from '@/models/File'
   import Modal from '@/components/Modal'
+  import ThemeSelectModal from '@/components/theme/ThemeSelectModal'
   import ElementButton from '@/components/element/button/ElementButton'
   import TextButton from '@/components/element/button/TextButton'
   import ImageButton from '@/components/element/button/ImageButton'
@@ -139,6 +141,7 @@
   export default {
     components: {
       Modal,
+      ThemeSelectModal,
       ElementButton,
       TextButton,
       ImageButton,
@@ -174,6 +177,7 @@
           name: '',
           elements: []
         },
+        themes: [],
         templates: [],
         selectedTemplateNo: 0,
         isTemplate: false,
@@ -186,37 +190,25 @@
       }
     },
     methods: {
-      open(theme = {}) {
+      open(theme) {
         this.refresh(theme)
         this.$refs.itemCreateModal.open()
       },
-      refresh(theme = {}) {
+      refresh(theme) {
         this.theme = theme
-        this.fetchThemeId().then(() => {
-          return new TemplateModel(this.themeId).find({
-            p: 0,
-            s: 20
-          })
+
+        new TemplateModel(this.themeId).find({
+          p: 0,
+          s: 20
         }).then(res => {
           if (res.data.length) {
             this.templates = res.data
-            Object.assign(this.item.elements, this.templates[0].elements)
+            this.item.elements = this.templates[0].elements
+          } else {
+            this.templates = []
+            this.item.elements = []
           }
         })
-      },
-      fetchThemeId() {
-        if (this.themeId) {
-          return Promise.resolve()
-        } else {
-          return new ThemeModel().find().then(res => {
-            if (res.data.length) {
-              this.theme = res.data[0]
-              return Promise.resolve()
-            } else {
-              return Promise.reject()
-            }
-          })
-        }
       },
       close() {
         this.reset()
@@ -304,6 +296,9 @@
       },
       removeImage() {
         this.item.image = ''
+      },
+      openThemeSelectModal() {
+        this.$refs.themeSelectModal.open(this.theme)
       }
     }
   }
@@ -530,6 +525,9 @@
               margin-left: -1.5rem;
               margin-right: -1.5rem;
             }
+          }
+          .buttons .button {
+            margin-bottom: 0;
           }
         }
       }

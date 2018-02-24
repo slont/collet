@@ -493,6 +493,9 @@
               margin-right: -1.5rem;
             }
           }
+          .buttons .button {
+            margin-bottom: 0;
+          }
         }
       }
     }
