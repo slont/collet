@@ -13,28 +13,8 @@
             <span class="icon is-small is-right"><i class="material-icons">search</i></span>
           </div>
         </div>
-
-        <div class="navbar-burger burger" :class="{ 'is-active': activeNavbarMenu }" v-if="loggedIn"
-             @click="activeNavbarMenu = !activeNavbarMenu"><span></span><span></span><span></span>
-        </div>
       </div>
 
-      <!-- SP用 -->
-      <div class="navbar-menu is-hidden-desktop" :class="{ 'is-active': activeNavbarMenu }"
-           @click="activeNavbarMenu = false">
-        <div class="navbar-start">
-          <router-link to="/settings/profile" class="navbar-item">
-            <span class="icon"><i class="material-icons">settings</i></span>
-            設定
-          </router-link>
-          <a @click="signout" class="navbar-item">
-            <span class="icon"><i class="material-icons">exit_to_app</i></span>
-            サインアウト
-          </a>
-        </div>
-      </div>
-
-      <!-- PC用 -->
       <div class="navbar-menu">
         <div class="navbar-start">
           <router-link to="/" class="navbar-item" exact>
@@ -94,8 +74,7 @@
       return {
         // scrolledVal: 0,
         // headerPos: 0,
-        query: '',
-        activeNavbarMenu: false
+        query: ''
       }
     },
     computed: {

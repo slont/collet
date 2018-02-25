@@ -193,6 +193,22 @@
     created() {
       this.refresh().then(() => this.$refs.createItem.open())
     },
+    beforeRouteUpdate(to, from, next) {
+      if (this.$refs.themeSelectModal.$refs.themeSelectModal.active) {
+        this.$refs.themeSelectModal.close()
+        next(false)
+      } else {
+        next()
+      }
+    },
+    beforeRouteLeave(to, from, next) {
+      if (this.$refs.themeSelectModal.$refs.themeSelectModal.active) {
+        this.$refs.themeSelectModal.close()
+        next(false)
+      } else {
+        next()
+      }
+    },
     methods: {
       async refresh(theme = {}) {
         let res = null
@@ -344,7 +360,7 @@
           border: none;
         }
       }
-      .modal-card-body {
+      > .modal-card-body {
         height: 100%;
         padding: .5rem 0;
 
