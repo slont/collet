@@ -19,7 +19,7 @@
 
     <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
     <footer class="modal-card-foot has-right">
-      <guard-button :click="ok" class="button is-danger">削除</guard-button>
+      <guard-button :click="ok" class="is-danger">削除</guard-button>
       <a @click="close" class="button">キャンセル</a>
     </footer>
   </modal>

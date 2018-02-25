@@ -103,7 +103,7 @@
         テンプレート登録
       </label>
       <a @click="close" class="button">キャンセル</a>
-      <guard-button :click="ok" class="button is-info">作成</guard-button>
+      <guard-button :click="ok" class="is-info">作成</guard-button>
     </footer>
 
     <theme-select-modal ref="themeSelectModal" @refresh="refresh"/>

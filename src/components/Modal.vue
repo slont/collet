@@ -4,7 +4,7 @@
     <div class="modal-card">
       <slot></slot>
     </div>
-    <a @click="close" class="button modal-close is-large" aria-label="close"></a>
+    <a @click="close" class="button modal-close is-large" aria-label="close" v-if="deletable"></a>
   </div>
 </template>
 
@@ -12,7 +12,8 @@
   export default {
     data() {
       return {
-        active: false
+        active: false,
+        deletable: false
       }
     },
     methods: {

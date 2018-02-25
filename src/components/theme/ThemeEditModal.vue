@@ -78,7 +78,7 @@
       <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
       <a @click="$refs.themeDeleteModal.open(theme)" class="button is-danger is-outlined is-left">削除</a>
       <a @click="close" class="button">キャンセル</a>
-      <guard-button :click="ok" class="button is-info">保存</guard-button>
+      <guard-button :click="ok" class="is-info">保存</guard-button>
     </footer>
 
     <theme-delete-modal ref="themeDeleteModal" @refresh="refreshClose"></theme-delete-modal>

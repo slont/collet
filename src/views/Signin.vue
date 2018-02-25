@@ -35,7 +35,7 @@
       </div>
 
       <div class="has-text-centered">
-        <guard-button :click="ok" class="button is-info" :class="{ 'is-loading': isLoading }">
+        <guard-button :click="ok" class="is-info" :class="{ 'is-loading': isLoading }">
           {{ $t('buttons.signin') }}
         </guard-button>
       </div>
