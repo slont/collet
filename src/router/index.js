@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/views/Index'
-import Signup from '@/views/Signup.vue'
-import Signin from '@/views/Signin.vue'
-import Confirm from '@/views/Confirm.vue'
+import Signup from '@/views/Signup'
+import Signin from '@/views/Signin'
+import Confirm from '@/views/Confirm'
+import CreateTheme from '@/views/CreateTheme'
+import CreateItem from '@/views/CreateItem'
 import TopIndex from '@/views/top/Index'
 import TopTop from '@/views/top/Top'
 import TagIndex from '@/views/tag/Index'
@@ -64,6 +66,14 @@ export default new Router({
         }, {
           path: 'u/:userId',
           component: UserpageIndex
+        },
+        // モバイル向け
+        {
+          path: 'm/createTheme',
+          component: CreateTheme
+        }, {
+          path: 'm/createItem/:themeId',
+          component: CreateItem
         }
       ]
     }

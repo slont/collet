@@ -80,7 +80,8 @@
       },
       async onClickAdd() {
         if (this.themes.length) {
-          this.$refs.itemCreateModal.open(this.themes[0])
+          // this.$refs.itemCreateModal.open(this.themes[0])
+          this.$router.push(`/m/createItem/${this.themes[0].id}`)
         } else {
           this.$refs.themeCreateModal.open()
         }

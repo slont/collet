@@ -3,12 +3,13 @@
     <div class="modal-card-body">
       <div class="field current-theme" v-if="theme.title">
         <div class="control">
-          <label class="label">選択中のテーマ</label>
+          <div class="subtitle is-7">選択中のテーマ</div>
           {{ theme.title }}
         </div>
       </div>
 
       <div class="field search-field">
+        <div class="subtitle is-7">テーマ一覧</div>
         <div class="control has-icons-right">
           <input v-model="query" class="input is-rounded"
                  placeholder="テーマ検索"/>
@@ -29,6 +30,7 @@
           <li v-for="theme in themes" :key="theme.id" class="theme-item"
               @click="select(theme)">
             <a>
+              <span class="private-icon icon" v-if="theme.private"><i class="material-icons">lock</i></span>
               <span>{{ theme.title }}</span>
               <span class="item-count">{{ theme.itemCount }}</span>
             </a>
@@ -37,8 +39,6 @@
         </ul>
       </aside>
     </div>
-
-    <button class="modal-close is-large" @click="close"></button>
 
     <theme-create-modal ref="themeCreateModal" @refresh="refresh"/>
   </modal>
@@ -108,6 +108,16 @@
         margin-bottom: 0;
         padding: 1rem;
 
+        .current-theme {
+          .subtitle {
+            margin-bottom: 0;
+          }
+        }
+        .search-field {
+          .subtitle {
+            margin-bottom: 0;
+          }
+        }
         .create-item a {
           display: flex;
           align-items: center;
