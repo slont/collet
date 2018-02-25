@@ -10,12 +10,6 @@
         <element-view :element="item.elements[0]" v-if="item.elements[0]"></element-view>
         <div v-else>まだコンテンツがありません</div>
       </div>
-
-      <a class="edit-button button is-info is-outlined" v-if="isMyPage"
-         @click.stop="$emit('open-edit-modal')">
-        <span class="icon"><i class="material-icons">edit</i></span>
-        <span>編集</span>
-      </a>
     </div>
   </div>
 </template>
