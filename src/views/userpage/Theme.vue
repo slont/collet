@@ -23,8 +23,12 @@
           </div>-->
 
           <div class="theme-items">
-            <el-button type="primary" plain round size="mini" class="add-button"
+            <el-button type="primary" plain round size="mini" class="add-button is-hidden-mobile"
                        @click="$refs.itemCreateModal.open(theme)" v-if="loggedIn && isMyPage">
+              カレット新規追加
+            </el-button>
+            <el-button type="primary" plain round size="mini" class="add-button is-hidden-desktop"
+                       @click="$router.push(`/m/createItem/${theme.id}`)" v-if="loggedIn && isMyPage">
               カレット新規追加
             </el-button>
             <div class="subtitle is-7">
@@ -123,8 +127,8 @@
       refresh() {
         const itemId = this.itemId
         const themeModel = new ThemeModel()
-        themeModel.findOne(this.themeId).then(res => {
-          Object.assign(this.theme, res.data)
+        themeModel.findOne(this.themeId).then(async res1 => {
+          Object.assign(this.theme, res1.data)
 
           if (itemId) {
             this.refreshItem(itemId)
@@ -132,14 +136,9 @@
             this.currentItem = this.theme.items[0]
           }
           if (this.loggedIn) {
-            return themeModel.findOneFavorite(this.theme.id, this.selfUser.id)
+            const res2 = await themeModel.findOneFavorite(this.theme.id, this.selfUser.id).catch(() => ({}))
+            this.theme.favorite = res2.data && !!res2.data.themeId
           }
-        }).then(res => {
-          if (this.loggedIn) {
-            this.theme.favorite = !!res.data.themeId
-          }
-        }, () => {
-          // through the NotFound favorite error
         }).catch(err => {
           console.log(err)
           this.$message({

@@ -1,11 +1,11 @@
 <template>
-  <modal id="create-item" class="modal" ref="createItem">
+  <modal id="edit-item" class="modal" ref="editItem">
     <header class="modal-card-head">
       <span class="back-button icon" @click="$router.go(-1)">
         <i class="material-icons">arrow_back</i>
       </span>
 
-      <span class="modal-card-title title is-5">新規カレット作成</span>
+      <span class="modal-card-title title is-5">カレット編集</span>
 
       <label class="checkbox">
         <input v-model="isTemplate" type="checkbox">
@@ -21,29 +21,16 @@
       <div class="columns is-gapless">
         <div class="main-column column">
           <div class="theme-field field">
-            <div class="subtitle is-7">選択中のテーマ</div>
+            <div class="subtitle is-7">テーマ</div>
             <div class="control">
               <div class="theme-dropdown dropdown">
-                <div class="dropdown-trigger" @click="openThemeSelectModal">
+                <div class="dropdown-trigger">
                   <a class="button" aria-haspopup="true" aria-controls="dropdown-menu">
                     <span>{{ theme.title }}</span>
-                    <span class="icon is-small"><i class="material-icons">arrow_drop_down</i></span>
                   </a>
                 </div>
               </div>
             </div>
-          </div>
-
-          <div class="template-tabs tabs is-small" v-if="templates.length">
-            <ul>
-              <li v-for="(template, i) in templates"
-                  :class="{ 'is-active': selectedTemplateNo === i }" @click="changeTemplate(i)">
-                <a><span>{{ `テンプレート ${i + 1}` }}</span></a>
-              </li>
-              <li :class="{ 'is-active': selectedTemplateNo === -1 }" @click="changeTemplate(-1)">
-                <a><span>白紙</span></a>
-              </li>
-            </ul>
           </div>
 
           <article class="media">
@@ -102,18 +89,14 @@
         <email-button @add="addElement"></email-button>
       </div>
     </footer>
-
-    <theme-select-modal ref="themeSelectModal" @refresh="refresh"/>
   </modal>
 </template>
 
 <script>
   import ThemeModel from '@/models/Theme'
-  import TemplateModel from '@/models/Template'
   import ItemModel from '@/models/Item'
   import FileModel from '@/models/File'
   import Modal from '@/components/Modal'
-  import ThemeSelectModal from '@/components/theme/ThemeSelectModal'
   import ElementButton from '@/components/element/button/ElementButton'
   import TextButton from '@/components/element/button/TextButton'
   import ImageButton from '@/components/element/button/ImageButton'
@@ -139,7 +122,6 @@
   export default {
     components: {
       Modal,
-      ThemeSelectModal,
       ElementButton,
       TextButton,
       ImageButton,
@@ -188,55 +170,30 @@
       },
       themeId() {
         return this.$route.params.themeId
+      },
+      itemId() {
+        return this.$route.params.itemId
       }
     },
     created() {
-      this.refresh().then(() => this.$refs.createItem.open())
-    },
-    beforeRouteUpdate(to, from, next) {
-      if (this.$refs.themeSelectModal.$refs.themeSelectModal.active) {
-        this.$refs.themeSelectModal.close()
-        next(false)
-      } else {
-        next()
-      }
-    },
-    beforeRouteLeave(to, from, next) {
-      if (this.$refs.themeSelectModal.$refs.themeSelectModal.active) {
-        this.$refs.themeSelectModal.close()
-        next(false)
-      } else {
-        next()
-      }
+      this.refresh().then(() => this.$refs.editItem.open())
     },
     methods: {
-      async refresh(theme = {}) {
-        let res = null
-        if (theme.id) {
-          res = await new ThemeModel().findOne(theme.id)
-          this.theme = theme
-        } else {
-          res = await new ThemeModel().findOne(this.themeId)
+      async refresh() {
+        new ThemeModel().findOne(this.themeId).then(res => {
           this.theme = res.data
-        }
+        })
 
-        await new TemplateModel(this.theme.id).find({
-          p: 0,
-          s: 20
-        }).then(res => {
-          if (res.data.length) {
-            this.templates = res.data
-            this.item.elements = this.templates[0].elements.map(e => {
-              if ('rating' === e.type) {
-                return Object.assign(e, { valueStr: '5' })
-              } else {
-                return e
-              }
-            })
-          } else {
-            this.templates = []
-            this.item.elements = []
-          }
+        await new ItemModel(this.themeId).findOne(this.itemId).then(res => {
+          this.item = res.data
+          this.$refs.editItem.open()
+        }).catch(err => {
+          console.log(err)
+          this.$message({
+            showClose: true,
+            message: 'データ取得に失敗しました',
+            type: 'error'
+          })
         })
       },
       close() {
@@ -252,16 +209,16 @@
           const body = Object.assign({
             isTemplate: this.isTemplate
           }, this.item)
-          await new ItemModel(this.theme.id).create(body).catch(err => {
+          await new ItemModel(this.theme.id).update(this.item.id, body).catch(err => {
             this.errorMessage = err
           })
 
           this.$message({
             showClose: true,
-            message: '作成されました',
+            message: '更新されました',
             type: 'success'
           })
-          this.$router.push(`/u/${this.user.id}/${this.theme.id}`)
+          this.$router.go(-1)
         }).catch(err => this.$message.error(err))
       },
       changeTemplate(index) {
@@ -321,16 +278,13 @@
       },
       removeImage() {
         this.item.image = ''
-      },
-      openThemeSelectModal() {
-        this.$refs.themeSelectModal.open(this.theme)
       }
     }
   }
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-  #create-item {
+  #edit-item {
     $button-count: 9;
 
     > .modal-card {
