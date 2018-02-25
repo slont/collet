@@ -77,7 +77,7 @@
     <footer class="modal-card-foot has-right">
       <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
       <a @click="close" class="button">キャンセル</a>
-      <guard-button @click="ok" class="button is-info">作成</guard-button>
+      <guard-button :click="ok" class="button is-info">作成</guard-button>
     </footer>
   </modal>
 </template>

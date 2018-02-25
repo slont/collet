@@ -42,7 +42,7 @@ Vue.use({
       components: {GuardButton},
       computed: {
         loggedIn() {
-          return store.state.loggedIn
+          return this.$store.state.loggedIn
         }
       }
     })

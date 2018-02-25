@@ -92,7 +92,7 @@
         テンプレート登録
       </label>
       <a @click="close" class="button">キャンセル</a>
-      <guard-button @click="ok" class="button is-info">保存</guard-button>
+      <guard-button :click="ok" class="button is-info">保存</guard-button>
     </footer>
 
     <item-delete-modal ref="itemDeleteModal" @refresh="refreshClose"/>
