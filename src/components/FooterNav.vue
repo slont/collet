@@ -17,12 +17,12 @@
           <span class="icon"><i class="material-icons">add</i></span>
         </a>
 
-        <router-link :to="`/${user.name}/favorites`" class="navbar-item">
+        <router-link :to="`/u/${user.id}/favorites`" class="navbar-item">
           <span class="icon"><i class="material-icons">favorite_border</i></span>
           <span class="subtitle is-7">お気に入り</span>
         </router-link>
 
-        <router-link :to="`/${user.name}`" class="navbar-item" exact>
+        <router-link :to="`/u/${user.id}`" class="navbar-item" exact>
           <img :src="user.image" class="circle" v-if="user.image"/>
           <span class="icon" v-else><i class="material-icons">account_circle</i></span>
           <span class="subtitle is-7">マイページ</span>

@@ -53,16 +53,16 @@ export default new Router({
           path: 'tag',
           component: TagIndex
         }, {
-          path: ':userId/favorites',
+          path: 'u/:userId/favorites',
           component: UserpageIndex
         }, {
-          path: ':userId/:themeId/:itemId',
+          path: 'u/:userId/:themeId/:itemId',
           component: UserpageTheme
         }, {
-          path: ':userId/:themeId',
+          path: 'u/:userId/:themeId',
           component: UserpageTheme
         }, {
-          path: ':userId',
+          path: 'u/:userId',
           component: UserpageIndex
         }
       ]

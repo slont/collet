@@ -41,7 +41,7 @@
             <span class="icon"><i class="material-icons">home</i></span>
             <span>ホーム</span>
           </router-link>
-          <router-link :to="`/${user.name}`" class="navbar-item" v-if="loggedIn">
+          <router-link :to="`/u/${user.id}`" class="navbar-item" v-if="loggedIn">
             <span class="icon"><i class="material-icons">account_circle</i></span>
             <span>マイページ</span>
           </router-link>

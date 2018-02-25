@@ -1,6 +1,6 @@
 <template>
   <div id="userpage-item">
-    <div class="theme-title subtitle is-7" @click="$router.push(`/${$route.params.userId}/${themeId}`)">
+    <div class="theme-title subtitle is-7" @click="$router.push(`/u/${$route.params.userId}/${themeId}`)">
       {{ theme.title }}
     </div>
 

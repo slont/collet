@@ -5,7 +5,7 @@
         <img :src="theme.image" v-if="theme.image">
         <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image" v-else>
       </figure>
-      <div class="dark-mask" @click="$router.push(`/${theme.createdUser.id}/${theme.id}`)">
+      <div class="dark-mask" @click="$router.push(`/u/${theme.createdUser.id}/${theme.id}`)">
         <span class="private-icon icon" v-if="theme.private"><i class="material-icons">lock</i></span>
 
         <div class="title is-4">{{ theme.title }}</div>
@@ -14,7 +14,7 @@
             <img class="circle" :src="theme.createdUser.image">
           </figure>
           <div>
-            <div @click.stop="$router.push(`/${theme.createdUser.id}`)">
+            <div @click.stop="$router.push(`/u/${theme.createdUser.id}`)">
               <span class="user-name has-text-weight-bold">
                 {{ theme.createdUser.name }}</span><span class="user-id">@{{ theme.createdUser.id }}</span>
             </div>
