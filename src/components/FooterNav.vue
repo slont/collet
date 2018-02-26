@@ -112,6 +112,9 @@
             color: $primary;
           }
         }
+        img {
+          max-height: 1.5rem;
+        }
       }
       &.logged-in {
         .navbar-item {
