@@ -361,6 +361,7 @@
           .main-column {
             $sort-button-size: 2rem;
             $margin-side: $sort-button-size + .5rem;
+            height: 100%;
             padding: 0 3rem 1rem !important;
             background-color: white;
             overflow-y: scroll;
