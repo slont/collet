@@ -6,7 +6,7 @@
           <img src="/static/img/cullet.png" alt="Colette">
         </div>
 
-        <div class="navbar-item field search-field is-hidden-desktop" v-if="!loggedIn">
+        <div class="navbar-item field search-field is-hidden-tablet" v-if="!loggedIn">
           <div class="control has-icons-right">
             <input v-model="query" class="input is-rounded"
                  placeholder="キーワード検索"/>
@@ -171,7 +171,7 @@
           }
         }
         /* SP用 */
-        &.is-hidden-desktop.is-active {
+        &.is-hidden-tablet.is-active {
           .navbar-item {
             display: flex;
             align-items: center;

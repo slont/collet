@@ -83,7 +83,7 @@
       </div>
     </div>
 
-    <div class="modal-card-body slider is-hidden-desktop">
+    <div class="modal-card-body slider is-hidden-tablet">
       <div class="buttons has-addons">
         <text-button @add="addElement"></text-button>
         <image-button @add="addElement"></image-button>

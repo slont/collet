@@ -8,7 +8,7 @@
         <router-link to="/settings/profile" tag="li">
           <a>
             <span>プロフィール</span>
-            <span class="icon is-hidden-desktop"><i class="material-icons">chevron_right</i></span>
+            <span class="icon is-hidden-tablet"><i class="material-icons">chevron_right</i></span>
           </a>
         </router-link>
       </ul>

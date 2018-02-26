@@ -4,7 +4,7 @@
     <transition name="slide-fade" mode="out-in">
       <router-view class="container"/>
     </transition>
-    <footer-nav class="is-hidden-desktop"/>
+    <footer-nav class="is-hidden-tablet"/>
   </div>
 </template>
 

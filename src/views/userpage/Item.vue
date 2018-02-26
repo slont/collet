@@ -12,7 +12,7 @@
           <span class="icon"><i class="material-icons">edit</i></span>
           <span>編集</span>
         </a>
-        <a class="edit-button button is-info is-outlined is-hidden-desktop"
+        <a class="edit-button button is-info is-outlined is-hidden-tablet"
            @click="$router.push(`/m/editItem/${theme.id}/${item.id}`)" v-if="isMyPage">
           <span class="icon"><i class="material-icons">edit</i></span>
           <span>編集</span>

@@ -70,7 +70,7 @@
       </div>
     </div>
 
-    <div class="modal-card-body slider is-hidden-desktop">
+    <div class="modal-card-body slider is-hidden-tablet">
       <div class="buttons has-addons">
         <text-button @add="addElement"/>
         <image-button @add="addElement"/>

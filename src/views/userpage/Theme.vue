@@ -27,7 +27,7 @@
                        @click="$refs.itemCreateModal.open(theme)" v-if="loggedIn && isMyPage">
               カレット新規追加
             </el-button>
-            <el-button type="primary" plain round size="mini" class="add-button is-hidden-desktop"
+            <el-button type="primary" plain round size="mini" class="add-button is-hidden-tablet"
                        @click="$router.push(`/m/createItem/${theme.id}`)" v-if="loggedIn && isMyPage">
               カレット新規追加
             </el-button>
