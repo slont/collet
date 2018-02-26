@@ -7,8 +7,8 @@
         </div>
       </div>
       <div class="content">
-        <element-view :element="item.elements[0]" v-if="item.elements[0]"></element-view>
-        <div v-else>まだコンテンツがありません</div>
+        <element-view :element="item.elements[0]" v-if="item.elements[0]"/>
+        <div v-else>エレメントがありません</div>
       </div>
     </div>
   </div>
@@ -46,7 +46,7 @@
         height: $size;
 
         .media-content {
-          height: $size;
+          max-height: $size;
           overflow: hidden;
         }
         .media-right {

@@ -206,6 +206,7 @@
         .media-content {
           position: relative;
           height: 7.5em;
+          min-height: 24px;
           overflow: hidden;
 
           .tags:not(:last-child) {

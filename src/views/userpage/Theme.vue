@@ -131,7 +131,7 @@
           Object.assign(this.theme, res1.data)
 
           if (itemId) {
-            this.refreshItem(itemId)
+            await this.refreshItem(itemId)
           } else if (this.theme.items.length) {
             this.currentItem = this.theme.items[0]
           }
@@ -148,9 +148,12 @@
           })
         })
       },
-      refreshItem(itemId) {
-        new ItemModel(this.theme.id).findOne(itemId).then(res => {
+      async refreshItem(itemId) {
+        await new ItemModel(this.theme.id).findOne(itemId).then(res => {
           this.currentItem = res.data
+          this.$nextTick(() => {
+            window.scrollTo(0, 0)
+          })
         })
       },
       onClickFavorite() {
@@ -202,7 +205,7 @@
             }
           }
         }
-        .main-column {
+        > .main-column {
           padding-left: 2rem;
         }
         > .column {
