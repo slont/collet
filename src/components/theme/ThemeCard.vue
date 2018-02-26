@@ -205,17 +205,17 @@
       .media {
         .media-content {
           position: relative;
-          height: 11rem;
+          height: 7.5em;
           overflow: hidden;
 
           .tags:not(:last-child) {
-            margin-bottom: .25rem;
+            margin-bottom: 0;
           }
           .tags + .theme-description {
-            max-height: 6em;
+            max-height: 3em;
           }
           .theme-description {
-            max-height: 7.5em;
+            max-height: 4.5em;
             overflow: hidden;
           }
           .actions {

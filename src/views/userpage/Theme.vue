@@ -191,6 +191,17 @@
         width: 100%;
         margin: 0;
 
+        .side-column {
+          .theme-card {
+            .media-content {
+              height: 100%;
+
+              .theme-description {
+                max-height: 100%;
+              }
+            }
+          }
+        }
         .main-column {
           padding-left: 2rem;
         }
