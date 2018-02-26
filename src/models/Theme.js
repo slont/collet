@@ -75,7 +75,7 @@ export default class Theme extends Base {
       items: (json.items && new Item().deserialize(json.items)) || [],
       private: 0 !== json.private,
       createdAt: moment(json.createdAt),
-      updatedAt: moment(json.createdAt)
+      updatedAt: moment(json.updatedAt)
     })
   }
 }

@@ -17,7 +17,7 @@ export default class User extends Base {
   static _deserialize(json) {
     return Object.assign({}, json, {
       createdAt: moment(json.createdAt),
-      updatedAt: moment(json.createdAt)
+      updatedAt: moment(json.updatedAt)
     })
   }
 }
