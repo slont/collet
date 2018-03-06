@@ -3,12 +3,17 @@
   "short_name": "cullet",
   "icons": [
     {
-      "src": "/static/img/icons/jewelry-128x128.png",
-      "sizes": "128x128",
+      "src": "/static/img/icons/cullet_circle-96x96.png",
+      "sizes": "96x96",
       "type": "image/png"
     },
     {
-      "src": "/static/img/icons/jewelry-512x512.png",
+      "src": "/static/img/icons/cullet-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/img/icons/cullet-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }

@@ -1,9 +1,10 @@
 <template>
-  <nav id="header-nav" class="navbar is-primary is-fixed-top">
+  <nav id="header-nav" class="navbar is-fixed-top">
     <div class="container">
       <div class="navbar-brand">
         <div class="navbar-item logo" @click="$router.push(`/`)">
-          <img src="/static/img/cullet.png" alt="Colette">
+          <img src="/static/img/icons/cullet-256x256.png" alt="Colette">
+          <img src="/static/img/cullet-logo-color-2.png" alt="Colette">
         </div>
 
         <div class="navbar-item field search-field is-hidden-tablet" v-if="!loggedIn">
@@ -112,7 +113,7 @@
 <style lang="scss" rel="stylesheet/scss">
   #header-nav {
     height: $header-nav-height;
-    background-color: $primary;
+    background-color: white;
     box-shadow: $box-shadow;
     z-index: 20;
 
