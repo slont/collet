@@ -52,8 +52,6 @@
       display: none;
 
       &.has-addons .button {
-        @extend .is-link;
-
         :not(:last-child) {
           margin-right: 0;
         }

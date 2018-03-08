@@ -345,9 +345,6 @@
                   margin-right: 0;
                   margin-bottom: -1px;
                 }
-                .template-button {
-                  @extend .is-primary;
-                }
                 .subtitle {
                   margin-bottom: .5em;
                   color: grey;
@@ -361,7 +358,6 @@
           .main-column {
             $sort-button-size: 2rem;
             $margin-side: $sort-button-size + .5rem;
-            height: 100%;
             padding: 0 3rem 1rem !important;
             background-color: white;
             overflow-y: scroll;

@@ -60,11 +60,6 @@
       .menu-label {
         padding-left: .75em;
       }
-      .menu-list li {
-        .router-link-active a {
-          @extend .is-active;
-        }
-      }
       .divider {
         margin: .5em;
         height: 1px;

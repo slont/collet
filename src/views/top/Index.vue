@@ -35,8 +35,6 @@
             border-bottom-width: 0;
           }
           &.router-link-exact-active {
-            @extend .is-active;
-
             a {
               border-bottom-width: 3px;
             }

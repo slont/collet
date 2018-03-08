@@ -2,7 +2,7 @@
 
 const path = require('path')
 const config = require('../config')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
@@ -52,9 +52,11 @@ exports.cssLoaders = function (options) {
     postcss: generateLoaders(),
     less: generateLoaders('less'),
     sass: generateLoaders('sass', { indentedSyntax: true }),
-    scss: generateLoaders('sass', {
-      includePaths: ['./src/styles'],
-      data: '@import "common.scss";'
+    scss: generateLoaders('sass').concat({
+      loader: 'sass-resources-loader',
+      options: {
+        resources: path.resolve(__dirname, '../src/styles/common.scss')
+      }
     }),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')

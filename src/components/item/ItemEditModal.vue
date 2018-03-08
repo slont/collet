@@ -317,9 +317,6 @@
                   margin-right: 0;
                   margin-bottom: -1px;
                 }
-                .template-button {
-                  @extend .is-primary;
-                }
                 .subtitle {
                   margin-bottom: .5em;
                   color: grey;
