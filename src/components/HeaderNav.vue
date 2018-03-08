@@ -113,7 +113,6 @@
   #header-nav {
     height: $header-nav-height;
     background-color: $primary;
-    box-shadow: $box-shadow;
     z-index: 20;
 
     .container {

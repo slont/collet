@@ -176,9 +176,6 @@
                 font-weight: bold;
               }
             }
-            &.router-link-active {
-              @extend .is-active;
-            }
           }
         }
       }

@@ -4,8 +4,6 @@ import Index from '@/views/Index'
 import Signup from '@/views/Signup'
 import Signin from '@/views/Signin'
 import Confirm from '@/views/Confirm'
-import CreateTheme from '@/views/CreateTheme'
-import CreateItem from '@/views/CreateItem'
 import EditItem from '@/views/EditItem'
 import TopIndex from '@/views/top/Index'
 import TopTop from '@/views/top/Top'
@@ -70,14 +68,8 @@ export default new Router({
         },
         // モバイル向け
         {
-          path: 'm/createTheme',
-          component: CreateTheme
-        }, {
           path: 'm/editItem/:themeId/:itemId',
           component: EditItem
-        }, {
-          path: 'm/createItem/:themeId',
-          component: CreateItem
         }
       ]
     }

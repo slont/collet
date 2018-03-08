@@ -195,9 +195,6 @@
             width: 100%;
 
             .el-tag {
-              @extend .tag;
-              @extend .is-primary;
-
               &:before {
                 content: '#';
               }

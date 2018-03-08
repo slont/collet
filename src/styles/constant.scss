@@ -3,6 +3,7 @@ $main-color: #ff7600;
 $sub-color: #069dff;
 $bg-color: #fff7f0;
 $border: #dbdbdb;
+$label-color: rgba($text-color, .8);
 $border-style: 1px solid $border;
 $width: 920px;
 $item-page-width: 620px;
@@ -22,4 +23,5 @@ $tabs-link-active-border-bottom-color: $primary;
 $tabs-link-active-color: $primary;
 $tabs-toggle-link-active-background-color: $primary;
 $tabs-toggle-link-active-border-color: $primary;
-$tabs-toggle-link-active-color: $primary-invert
+$tabs-toggle-link-active-color: $primary-invert;
+$box-shadow: 0 2px 3px rgba($black, 0.1), 0 0 0 1px rgba($black, 0.1) !default;
