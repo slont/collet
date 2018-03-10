@@ -11,6 +11,7 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
+    vendor: './src/assets/vendor.js',
     app: './src/main.js'
   },
   output: {

@@ -5,7 +5,7 @@
               navigation-enabled
               navigation-prev-label=""
               navigation-next-label=""
-              :autoplay-timeout="40000"
+              :autoplay-timeout="4000"
               autoplay loop>
       <slide v-for="theme in themes" :key="theme.id">
         <div class="card-image">
@@ -34,9 +34,9 @@
       </slide>
     </carousel>
 
-    <transition-group name="slide-fade" mode="out-in" class="columns is-multiline">
-      <div class="column is-12" key="label">
-        <label class="label">新着一覧</label>
+    <transition-group name="slide-fade" mode="out-in" class="new-cullet-list columns is-multiline">
+      <div class="new-cullet-label column is-12" key="label">
+        <label class="label">新着カレット一覧</label>
       </div>
       <div v-for="theme in themes" class="column is-half" :key="theme.id">
         <theme-card :theme="theme"
@@ -113,6 +113,11 @@
     margin-left: auto;
     margin-right: auto;
 
+    .new-cullet-list {
+      .new-cullet-label .label {
+        padding: .5rem 1rem;
+      }
+    }
     .meta-data {
       display: inline-flex;
       font-size: $size-small;

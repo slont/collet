@@ -8,17 +8,17 @@
       <div class="dark-mask" @click="$router.push(`/u/${theme.createdUser.id}/${theme.id}`)">
         <span class="private-icon icon" v-if="theme.private"><i class="material-icons">lock</i></span>
 
-        <div class="title is-4">{{ theme.title }}</div>
-        <div class="user-profile">
+        <div class="title is-6 has-text-white">{{ theme.title }}</div>
+        <div class="user-profile is-size-7">
           <figure class="image is-32x32" v-if="theme.createdUser.image">
             <img class="circle" :src="theme.createdUser.image">
           </figure>
           <div>
             <div @click.stop="$router.push(`/u/${theme.createdUser.id}`)">
-              <span class="user-name has-text-weight-bold">
-                {{ theme.createdUser.name }}</span><span class="user-id">@{{ theme.createdUser.id }}</span>
+              <span class="user-name has-text-white has-text-weight-bold">
+                {{ theme.createdUser.name }}</span><span class="user-id has-text-grey-lighter">@{{ theme.createdUser.id }}</span>
             </div>
-            <div class="updated-at">{{ theme.updatedAt && theme.updatedAt.format('YYYY/MM/DD HH:mm') }}</div>
+            <div class="updated-at has-text-grey-lighter">{{ theme.updatedAt && theme.updatedAt.format('YYYY/MM/DD HH:mm') }}</div>
           </div>
         </div>
       </div>
@@ -33,7 +33,7 @@
             <a v-for="tag in theme.tags" class="tag"
                @click.stop="$router.push(`/tag?name=${tag.name}`)">#{{ tag.name }}</a>
           </div>
-          <div class="theme-description">{{ theme.description }}</div>
+          <div class="theme-description is-size-7">{{ theme.description }}</div>
 
           <nav class="actions level is-mobile">
             <div class="level-left">
@@ -139,16 +139,13 @@
           height: 3rem;
           color: #e8e8e8;
         }
-        .title,
-        .subtitle {
-          color: white;
+        .title {
           margin: 0;
         }
         .title {
           max-height: 80px;
           width: 100%;
-          margin: 0;
-          margin-bottom: .5rem;
+          margin-bottom: 1rem;
           line-height: 1.25;
           display: -webkit-box;
           -webkit-box-orient: vertical;
@@ -161,31 +158,22 @@
           }
         }
         .user-profile {
-          font-size: .875rem;
           display: flex;
           align-items: center;
           cursor: pointer;
 
           .image {
             margin-right: .5em;
+
+            img {
+              height: 100%;
+            }
           }
           .user-name {
-            color: white;
-
             &:hover {
               text-decoration: underline;
             }
           }
-          .user-id {
-            color: gainsboro;
-          }
-          .updated-at {
-            color: gainsboro;
-          }
-        }
-        .subtitle {
-          color: white;
-          margin: .3rem 0 0;
         }
       }
       .add-item-button,
