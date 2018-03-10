@@ -20,6 +20,7 @@
     "vee-validate": "^2.0.5",
     "vue": "^2.5.13",
     "vue-autosize": "^1.0.2",
+    "vue-carousel": "^0.6.9",
     "vue-i18n": "^7.4.2",
     "vue-moment": "^3.2.0",
     "vue-router": "^3.0.1",

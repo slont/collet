@@ -7,6 +7,7 @@
 
 <script>
   export default {
+    name: 'guard-button',
     props: {
       // Promise.resolveを返すfunction
       click: Function,

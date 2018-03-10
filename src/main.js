@@ -1,7 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import './styles/global.scss'
-import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App'
 import store from './store'
@@ -14,8 +13,8 @@ import VueAutosize from 'vue-autosize'
 import Element from 'element-ui'
 import messages from './locales'
 import moment from 'moment'
-import 'moment/min/locales.min'
 import validateConfig from '../config/validate'
+import VueCarousel from 'vue-carousel'
 import GuardButton from './components/GuardButton'
 
 moment.locale(store.state.locale)
@@ -40,7 +39,6 @@ Vue.filter('truncate', (text, stop) => text.slice(0, stop) + (stop < text.length
 Vue.use({
   install: (Vue, options) => {
     Vue.mixin({
-      components: {GuardButton},
       computed: {
         loggedIn() {
           return this.$store.state.loggedIn
@@ -49,6 +47,9 @@ Vue.use({
     })
   }
 })
+
+Vue.use(VueCarousel)
+Vue.component(GuardButton.name, GuardButton)
 
 /* eslint-disable no-new */
 new Vue({
