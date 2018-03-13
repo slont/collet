@@ -23,6 +23,10 @@ body {
   margin-top: -.5rem;
 }
 
+.subtitle:not(:last-child) {
+  margin-bottom: .5em;
+}
+
 .button {
   transition: color .2s ease, background-color .2s ease;
 
@@ -130,4 +134,11 @@ body {
 
 .has-left {
   text-align: left;
+}
+
+.text-color-strong {
+  color: $text-color-strong;
+}
+.text-color-weak {
+  color: $text-color-weak;
 }

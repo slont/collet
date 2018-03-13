@@ -35,13 +35,17 @@
 <style lang="scss" rel="stylesheet/scss">
   .cl-element {
     position: relative;
-    line-height: 1.75rem;
+    line-height: 1.25rem;
 
     .control {
       width: 100%;
     }
     .label {
       font-size: 1.5rem;
+
+      &:not(:last-child) {
+        margin-bottom: 1em;
+      }
     }
     .view-label {
       border-bottom: $border-style;

@@ -71,7 +71,8 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .image-element {
-    .file-view {
+    figure.file-view {
+      margin-top: 0;
       text-align: center;
 
       .delete {

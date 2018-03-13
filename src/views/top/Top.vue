@@ -34,14 +34,45 @@
       </slide>
     </carousel>
 
-    <transition-group name="slide-fade" mode="out-in" class="new-cullet-list columns is-multiline">
+    <transition-group tag="div" name="slide-fade" mode="out-in" class="new-cullet-list columns is-multiline">
       <div class="new-cullet-label column is-12" key="label">
         <label class="label">新着カレット一覧</label>
       </div>
-      <div v-for="theme in themes" class="column is-half" :key="theme.id">
-        <theme-card :theme="theme"
-                    @open-edit-modal="openEditModal(theme)"
-                    @refresh="refresh"/>
+      <div v-for="item in newItems" class="item-list column is-half" :key="item.id">
+        <div class="item-card card">
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <router-link class="theme-title subtitle text-color-weak is-size-7" tag="div"
+                             :to="`/u/${item.theme.createdUser.id}/${item.theme.id}`">
+                  {{ item.theme.title }}
+                </router-link>
+                <router-link class="item-title text-color-strong is-size-5 has-text-weight-bold" tag="div"
+                             :to="`/u/${item.theme.createdUser.id}/${item.theme.id}/${item.id}`">
+                  {{ item.name }}
+                </router-link>
+              </div>
+              <div class="media-right" v-if="item.theme.image">
+                <figure class="image"><img :src="item.theme.image"></figure>
+              </div>
+            </div>
+
+            <div class="user-profile is-size-7">
+              <figure class="image is-16x16" v-if="item.theme.createdUser.image">
+                <img class="circle" :src="item.theme.createdUser.image">
+              </figure>
+              <router-link :to="`/u/${item.theme.createdUser.id}`" class="user-name text-color-weak">
+                {{ item.theme.createdUser.name }}
+              </router-link>
+              <span class="updated-at text-color-weak">- {{ item.updatedAt.fromNow() }}</span>
+            </div>
+
+            <div class="content" v-if="item.elements.length">
+              <element-view :element="item.elements[0]"/>
+              <element-view :element="item.elements[1]" v-if="item.elements[1]"/>
+            </div>
+          </div>
+        </div>
       </div>
     </transition-group>
 
@@ -51,16 +82,20 @@
 
 <script>
   import ThemeModel from '@/models/Theme'
+  import ItemModel from '@/models/Item'
   import FavoriteModel from '@/models/Favorite'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
   import ThemeCard from '@/components/theme/ThemeCard'
+  import ItemCard from '@/components/item/ItemCard'
+  import ElementView from '@/components/element/ElementView'
 
   export default {
-    components: { ThemeCard, ThemeEditModal },
+    components: { ThemeCard, ItemCard, ThemeEditModal, ElementView },
     data() {
       return {
         topThemes: [],
-        themes: []
+        themes: [],
+        newItems: []
       }
     },
     computed: {
@@ -73,8 +108,14 @@
     },
     methods: {
       refresh() {
+        new ItemModel().findByNew({
+          p: 0,
+          s: 20
+        }).then(res => {
+          this.newItems = res.data
+        })
+
         new ThemeModel().findByNew({
-          userId: this.urlUserId,
           p: 0,
           s: 20
         }).then(async res1 => {
@@ -112,10 +153,11 @@
     max-width: $width;
     margin-left: auto;
     margin-right: auto;
+    background-color: rgba($main-color, .15);
 
     .new-cullet-list {
-      .new-cullet-label .label {
-        padding: .5rem 1rem;
+      .new-cullet-label {
+        padding: .75em 1em;
       }
     }
     .meta-data {
@@ -168,7 +210,6 @@
               top: .25rem;
               left: 1rem;
               height: 3rem;
-              color: #e8e8e8;
             }
             .title {
               margin: 0;
@@ -182,7 +223,6 @@
               -webkit-box-orient: vertical;
               -webkit-line-clamp: 3;
               overflow: hidden;
-              color: white;
 
               &:hover {
                 text-decoration: underline;
@@ -195,6 +235,10 @@
 
               .image {
                 margin-right: .5em;
+
+                img {
+                  height: 100%;
+                }
               }
               .user-name {
                 &:hover {
@@ -203,13 +247,70 @@
               }
             }
           }
-        }
-      }
-      .columns {
+        } // .card-image
+      } // VueCarousel
+      .new-cullet-list {
         margin: 0;
 
-        .column {
+        .item-list {
           padding: 0;
+
+          &:not(:last-child) {
+            margin-bottom: 1em;
+          }
+          .item-card {
+            .card-content {
+              .media {
+                margin-bottom: .125em;
+
+                .media-content {
+                  .theme-title {
+                    height: 1em;
+                    margin-bottom: .5em;
+                    overflow: hidden;
+                    text-decoration: underline;
+                    text-overflow: ellipsis;
+                    white-space: nowrap
+                  }
+                  .item-title {
+                    display: flex;
+                    height: 2.5em;
+                    line-height: 1.25;
+                    overflow: hidden;
+                  }
+                }
+                .media-right {
+                  .image {
+                    height: 60px;
+                    overflow: hidden;
+
+                    img {
+                      height: 100%;
+                      width: auto;
+                    }
+                  }
+                }
+              }
+            } // .card-content
+            .user-profile {
+              display: flex;
+              align-items: center;
+              margin-bottom: 1.5em;
+
+              > :not(:last-child) {
+                margin-right: .35em;
+              }
+            }
+            .content {
+              > :not(:last-child) {
+                margin-bottom: 1.5em;
+              }
+              .view-label {
+                font-size: $size-7;
+                color: $text-color-weak;
+              }
+            }
+          }
         }
       }
     }

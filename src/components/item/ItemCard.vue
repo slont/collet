@@ -3,7 +3,10 @@
     <div class="card-content">
       <div class="media">
         <div class="media-content">
-          <span class="title is-6">{{ item.name }}</span>
+          <router-link class="item-title text-color-strong is-6 has-text-weight-bold" tag="div"
+                       :to="`/u/${theme.createdUser.id}/${theme.id}/${item.id}`">
+            {{ item.name }}
+          </router-link>
         </div>
       </div>
       <div class="content">
@@ -31,7 +34,7 @@
   }
 </script>
 
-<style lang="scss" rel="stylesheet/scss">
+<style lang="scss" rel="stylesheet/scss" scoped>
   .item-card {
     width: 100%;
     cursor: pointer;
