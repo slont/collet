@@ -39,7 +39,7 @@
         <label class="label">新着カレット一覧</label>
       </div>
       <div v-for="item in newItems" class="item-list column is-half" :key="item.id">
-        <div class="item-card card">
+        <div class="new-cullet-card card">
           <div class="card-content">
             <div class="media">
               <div class="media-content">
@@ -258,15 +258,15 @@
           &:not(:last-child) {
             margin-bottom: 1em;
           }
-          .item-card {
+          .new-cullet-card {
             .card-content {
               .media {
-                margin-bottom: .125em;
+                margin-bottom: .25em;
 
                 .media-content {
                   .theme-title {
                     height: 1em;
-                    margin-bottom: .5em;
+                    margin-bottom: .75em;
                     overflow: hidden;
                     text-decoration: underline;
                     text-overflow: ellipsis;
