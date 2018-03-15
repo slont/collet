@@ -51,20 +51,21 @@
                              :to="`/u/${item.theme.createdUser.id}/${item.theme.id}/${item.id}`">
                   {{ item.name }}
                 </router-link>
+
+                <div class="user-profile is-size-7">
+                  <figure class="image is-16x16" v-if="item.theme.createdUser.image">
+                    <img class="circle" :src="item.theme.createdUser.image">
+                  </figure>
+                  <router-link :to="`/u/${item.theme.createdUser.id}`" class="user-name text-color-weak">
+                    {{ item.theme.createdUser.name }}
+                  </router-link>
+                  <span class="updated-at text-color-weak">- {{ item.updatedAt.fromNow() }}</span>
+                </div>
               </div>
+
               <div class="media-right" v-if="item.theme.image">
                 <figure class="image"><img :src="item.theme.image"></figure>
               </div>
-            </div>
-
-            <div class="user-profile is-size-7">
-              <figure class="image is-16x16" v-if="item.theme.createdUser.image">
-                <img class="circle" :src="item.theme.createdUser.image">
-              </figure>
-              <router-link :to="`/u/${item.theme.createdUser.id}`" class="user-name text-color-weak">
-                {{ item.theme.createdUser.name }}
-              </router-link>
-              <span class="updated-at text-color-weak">- {{ item.updatedAt.fromNow() }}</span>
             </div>
 
             <div class="content" v-if="item.elements.length">
@@ -264,19 +265,28 @@
                 margin-bottom: .25em;
 
                 .media-content {
+                  > :not(:last-child) {
+                    margin-bottom: .3em;
+                  }
                   .theme-title {
-                    height: 1em;
-                    margin-bottom: .75em;
+                    height: 1rem;
                     overflow: hidden;
-                    text-decoration: underline;
                     text-overflow: ellipsis;
                     white-space: nowrap
                   }
                   .item-title {
                     display: flex;
-                    height: 2.5em;
+                    max-height: 2.5em;
                     line-height: 1.25;
                     overflow: hidden;
+                  }
+                  .user-profile {
+                    display: flex;
+                    align-items: center;
+
+                    > :not(:last-child) {
+                      margin-right: .35em;
+                    }
                   }
                 }
                 .media-right {
@@ -290,26 +300,20 @@
                     }
                   }
                 }
+                + .content {
+                  margin-top: 1.25em;
+                }
+              } // .media
+              .content {
+                > :not(:last-child) {
+                  margin-bottom: 1.5em;
+                }
+                .view-label {
+                  font-size: $size-7;
+                  color: $text-color-weak;
+                }
               }
             } // .card-content
-            .user-profile {
-              display: flex;
-              align-items: center;
-              margin-bottom: 1.5em;
-
-              > :not(:last-child) {
-                margin-right: .35em;
-              }
-            }
-            .content {
-              > :not(:last-child) {
-                margin-bottom: 1.5em;
-              }
-              .view-label {
-                font-size: $size-7;
-                color: $text-color-weak;
-              }
-            }
           }
         }
       }
