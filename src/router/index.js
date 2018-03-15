@@ -4,6 +4,7 @@ import Index from '@/views/Index'
 import Signup from '@/views/Signup'
 import Signin from '@/views/Signin'
 import Confirm from '@/views/Confirm'
+import CreateItem from '@/views/CreateItem'
 import EditItem from '@/views/EditItem'
 import TopIndex from '@/views/top/Index'
 import TopTop from '@/views/top/Top'
@@ -67,6 +68,10 @@ export default new Router({
           component: UserpageIndex
         },
         // モバイル向け
+        {
+          path: 'm/createItem/:themeId',
+          component: CreateItem
+        },
         {
           path: 'm/editItem/:themeId/:itemId',
           component: EditItem

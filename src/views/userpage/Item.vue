@@ -1,8 +1,9 @@
 <template>
   <div id="userpage-item">
-    <div class="theme-title subtitle is-7" @click="$router.push(`/u/${$route.params.userId}/${themeId}`)">
+    <router-link :to="`/u/${$route.params.userId}/${themeId}`" tag="div"
+                 class="theme-title is-size-7 text-color-weak">
       {{ theme.title }}
-    </div>
+    </router-link>
 
     <div class="item-info">
       <div class="title is-3">
@@ -100,6 +101,7 @@
     .theme-title {
       margin-top: -.5rem;
       margin-bottom: .5rem;
+      text-decoration: underline;
     }
     .edit-button {
       margin-bottom: .5rem;
