@@ -83,6 +83,10 @@ body {
   }
 }
 
+.router-link-active {
+  @extend .is-active;
+}
+
 .card {
   .card-content {
     padding: 1rem;
