@@ -58,7 +58,7 @@
 
     <transition name="slide-fade" mode="out-in">
       <favorites ref="child" @open-edit-modal="openEditModal" v-if="$route.path.endsWith('/favorites')"/>
-      <themes ref="child" @open-edit-modal="openEditModal" @refresh="refresh" v-else/>
+      <themes ref="child" @open-edit-modal="openEditModal" v-else/>
     </transition>
 
     <a @click="$refs.themeCreateModal.open()" v-if="loggedIn"
@@ -76,11 +76,12 @@
   import ThemeCard from '@/components/theme/ThemeCard'
   import ThemeCreateModal from '@/components/theme/ThemeCreateModal'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
+  import Items from './Items'
   import Themes from './Themes'
   import Favorites from './Favorites'
 
   export default {
-    components: { ThemeCard, ThemeCreateModal, ThemeEditModal, Themes, Favorites },
+    components: { ThemeCard, ThemeCreateModal, ThemeEditModal, Items, Themes, Favorites },
     data() {
       return {
         user: {
@@ -107,7 +108,7 @@
     },
     methods: {
       refresh() {
-        new UserModel().findOne(this.urlUserId).then(res => {
+        new UserModel().findOneWithReport(this.urlUserId).then(res => {
           this.user = res.data
         }).catch(err => {
           console.log(err)

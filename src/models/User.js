@@ -9,6 +9,15 @@ export default class User extends Base {
     super(`/users`)
   }
 
+  findOneWithReport(id, params = null) {
+    return this.postProcess(fetch(`${this.endpoint}/${id}/_report${(params ? '?' + qs.stringify(params, { indices: false }) : '')}`, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
+      headers: Base.getHeaders()
+    }))
+  }
+
   findThemes(userId, params = null) {
     return this.postProcess(fetch(`${this.endpoint}/${userId}/themes${(params ? '?' + qs.stringify(params, { indices: false }) : '')}`, {
       method: 'GET',

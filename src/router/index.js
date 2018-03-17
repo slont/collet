@@ -55,6 +55,9 @@ export default new Router({
           path: 'tag',
           component: TagIndex
         }, {
+          path: 'u/:userId/themes',
+          component: UserpageIndex
+        }, {
           path: 'u/:userId/favorites',
           component: UserpageIndex
         }, {
