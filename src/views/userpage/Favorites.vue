@@ -36,7 +36,7 @@
     },
     methods: {
       refresh() {
-        new UserModel().findByFavorite(this.urlUserId, {
+        new UserModel().findFavoriteThemes(this.urlUserId, {
           p: 0,
           s: 20
         }).then(res => {

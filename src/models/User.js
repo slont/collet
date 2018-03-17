@@ -1,4 +1,6 @@
 import Base from './Base'
+import Theme from './Theme'
+import Item from './Item'
 import qs from 'qs'
 import moment from 'moment'
 
@@ -13,16 +15,25 @@ export default class User extends Base {
       mode: 'cors',
       credentials: 'include',
       headers: Base.getHeaders()
-    }))
+    }), new Theme().deserialize)
   }
 
-  findByFavorite(userId, params) {
+  findFavoriteThemes(userId, params) {
     return this.postProcess(fetch(`${this.endpoint}/${userId}/themes/_favorite?${qs.stringify(params, { indices: false })}`, {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',
       headers: Base.getHeaders()
-    }))
+    }), new Theme().deserialize)
+  }
+
+  findItems(userId, params = null) {
+    return this.postProcess(fetch(`${this.endpoint}/${userId}/items${(params ? '?' + qs.stringify(params, { indices: false }) : '')}`, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
+      headers: Base.getHeaders()
+    }), new Item().deserialize)
   }
 
   deserialize(json) {
