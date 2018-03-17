@@ -49,7 +49,7 @@
 </template>
 
 <script>
-  import ThemeModel from '@/models/Theme'
+  import UserModel from '@/models/User'
   import ThemeCreateModal from '@/components/theme/ThemeCreateModal'
   import ItemCreateModal from '@/components/item/ItemCreateModal'
 
@@ -70,8 +70,7 @@
     },
     methods: {
       fetchThemes() {
-        new ThemeModel().find({
-          userId: this.user.id,
+        new UserModel().findThemes(this.user.id, {
           p: 0,
           s: 1
         }).then(res => {

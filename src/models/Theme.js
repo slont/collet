@@ -8,15 +8,6 @@ export default class Theme extends Base {
     super('/themes')
   }
 
-  findByFavorite(params) {
-    return this.postProcess(fetch(`${this.endpoint}/_favorite?${qs.stringify(params, { indices: false })}`, {
-      method: 'GET',
-      mode: 'cors',
-      credentials: 'include',
-      headers: Base.getHeaders()
-    }))
-  }
-
   findByTagName(params) {
     return this.postProcess(fetch(`${this.endpoint}/_tag?${qs.stringify(params, { indices: false })}`, {
       method: 'GET',

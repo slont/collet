@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import ThemeModel from '@/models/Theme'
+  import UserModel from '@/models/User'
   import FavoriteModel from '@/models/Favorite'
   import ThemeCard from '@/components/theme/ThemeCard'
 
@@ -36,8 +36,7 @@
     },
     methods: {
       refresh() {
-        new ThemeModel().findByFavorite({
-          userId: this.urlUserId,
+        new UserModel().findByFavorite(this.urlUserId, {
           p: 0,
           s: 20
         }).then(res => {

@@ -287,6 +287,9 @@
                     > :not(:last-child) {
                       margin-right: .35em;
                     }
+                    .image img {
+                      max-height: 100%;
+                    }
                   }
                 }
                 .media-right {
