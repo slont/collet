@@ -4,7 +4,7 @@
     <p class="control">
       <input v-model.trim="params.valueStr" class="input value" type="text" v-if="editable">
 
-      <span class="value" v-else>{{ params.valueStr }}</span>
+      <a :href="params.valueStr" class="value" v-else>{{ params.valueStr }}</a>
     </p>
   </cl-element>
 </template>
