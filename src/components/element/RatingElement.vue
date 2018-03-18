@@ -1,17 +1,19 @@
 <template>
-  <cl-element class="rating-element" :params="params" placeholder="レーティング"
+  <cl-element class="rating-element" :params="params" placeholder="レーティングラベル（オプション）"
               @remove="$emit('remove')" :editable="editable">
+    <span class="element-type-icon icon is-small is-left" v-if="editable"><rating-icon/></span>
     <p class="control">
-      <el-rate v-model="params.valueNum" :max="Number(params.valueStr)" :disabled="!editable"></el-rate>
+      <el-rate v-model="params.valueNum" :max="Number(params.valueStr)" :disabled="!editable"/>
     </p>
   </cl-element>
 </template>
 
 <script>
   import ClElement from './ClElement'
+  import RatingIcon from '@/components/RatingIcon'
 
   export default {
-    components: { ClElement },
+    components: { ClElement, RatingIcon },
     props: {
       params: {
         type: Object,
@@ -29,5 +31,13 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .rating-element {
+    .element-type-icon .rating-icon {
+      display: flex;
+
+      > .material-icons {
+        font-size: .5em;
+        color: gainsboro;
+      }
+    }
   }
 </style>

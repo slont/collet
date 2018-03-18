@@ -1,8 +1,11 @@
 <template>
-  <cl-element class="datetime-element" :params="params" placeholder="日時"
+  <cl-element class="datetime-element" :params="params" placeholder="ラベル（オプション）"
               @remove="$emit('remove')" :editable="editable">
+    <span class="element-type-icon icon is-small is-left" v-if="editable">
+      <i class="material-icons">schedule</i>
+    </span>
     <p class="control">
-      <el-date-picker v-model="params.valueStr" :type="params.type" placeholder="Select date and time"></el-date-picker>
+      <el-date-picker v-model="params.valueStr" :type="params.type" placeholder="Select date and time"/>
     </p>
   </cl-element>
 </template>

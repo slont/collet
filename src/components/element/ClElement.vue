@@ -3,7 +3,7 @@
     <label class="view-label label control" v-if="params.label && !editable">
       {{ params.label }}
     </label>
-    <div class="control label-control" v-else-if="editable">
+    <div class="control label-control has-icons-left" v-else-if="editable">
       <input v-model.trim="params.label" class="input label" type="text" :placeholder="placeholder">
     </div>
     <slot></slot>
@@ -49,12 +49,12 @@
       border-bottom: $border-style;
     }
     .label-control {
+      position: relative;
       display: flex;
       align-items: center;
 
       .label {
         margin-bottom: -1px;
-        padding-left: 0;
         padding-bottom: 0;
         box-shadow: none;
         border-top: none;
@@ -62,6 +62,16 @@
         border-left: none;
         border-radius: 0;
         z-index: 1;
+        background-color: transparent;
+      }
+      + .element-type-icon {
+        position: absolute;
+        top: .75em;
+        left: 1em;
+
+        > .material-icons {
+          color: gainsboro;
+        }
       }
       .material-icons:not(:last-child) {
         font-size: 1.25rem;

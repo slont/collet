@@ -1,6 +1,9 @@
 <template>
-  <cl-element class="tag-element" :params="params" placeholder="タグ"
+  <cl-element class="tag-element" :params="params" placeholder="ラベル（オプション）"
               @remove="$emit('remove')" :editable="editable">
+    <span class="element-type-icon icon is-small is-left" v-if="editable">
+      <i class="material-icons">label_outline</i>
+    </span>
     <p class="control">
       <input v-model.trim="params.valueStr" class="input" type="text">
     </p>

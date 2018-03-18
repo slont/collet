@@ -1,6 +1,9 @@
 <template>
-  <cl-element class="image-element" :params="params" placeholder="画像"
+  <cl-element class="image-element" :params="params" placeholder="ラベル（オプション）"
               @remove="$emit('remove')" :editable="editable">
+    <span class="element-type-icon icon is-small is-left" v-if="editable">
+      <i class="material-icons">photo</i>
+    </span>
     <div class="control file" v-if="editable">
       <div class="field image-field">
         <div class="control loading-mask" :class="{ 'is-loading': params.valueStr.substring(0, 4) === 'data' }">

@@ -1,6 +1,9 @@
 <template>
-  <cl-element class="link-element" :params="params" placeholder="リンク"
+  <cl-element class="link-element" :params="params" placeholder="ラベル（オプション）"
               @remove="$emit('remove')" :editable="editable">
+    <span class="element-type-icon icon is-small is-left" v-if="editable">
+      <i class="material-icons">link</i>
+    </span>
     <p class="control">
       <input v-model.trim="params.valueStr" class="input value" type="text" v-if="editable">
 

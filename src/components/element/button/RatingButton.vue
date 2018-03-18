@@ -1,7 +1,7 @@
 <template>
   <element-button class="rating-button"
                   @click.native="addElement">
-    <rating-icon></rating-icon>
+    <rating-icon/>
     <span class="element-label">Rating</span>
   </element-button>
 </template>

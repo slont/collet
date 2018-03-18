@@ -19,6 +19,11 @@ body {
   margin: 0 auto;
 }
 
+.layout-list {
+  display: flex;
+  flex-direction: column;
+}
+
 .title:not(.is-spaced) + .subtitle {
   margin-top: -.5rem;
 }
