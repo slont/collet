@@ -14,7 +14,7 @@
         </router-link>
 
         <a @click="onClickAdd" class="navbar-item button is-primary is-rounded is-outlined">
-          <span class="icon"><i class="material-icons">add</i></span>
+          <span class="icon"><i class="material-icons">edit</i></span>
         </a>
 
         <router-link :to="`/u/${user.id}/favorites`" class="navbar-item">

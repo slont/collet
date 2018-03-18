@@ -40,7 +40,13 @@
       </article>
       <div class="tabs">
         <ul>
-          <router-link :to="`/u/${urlUserId}`" class="theme-tab" tag="li" exact>
+          <router-link :to="`/u/${urlUserId}`" class="cullet-tab" tag="li" exact>
+            <a class="has-text-centered">
+              <span class="label-name is-size-7">カレット</span><br/>
+              <span class="label-count">{{ user.itemCount }}</span>
+            </a>
+          </router-link>
+          <router-link :to="`/u/${urlUserId}/themes`" class="theme-tab" tag="li" exact>
             <a class="has-text-centered">
               <span class="label-name is-size-7">テーマ</span><br/>
               <span class="label-count">{{ user.themeCount }}</span>
@@ -58,7 +64,8 @@
 
     <transition name="slide-fade" mode="out-in">
       <favorites ref="child" @open-edit-modal="openEditModal" v-if="$route.path.endsWith('/favorites')"/>
-      <themes ref="child" @open-edit-modal="openEditModal" v-else/>
+      <themes ref="child" @open-edit-modal="openEditModal" v-if="$route.path.endsWith('/themes')"/>
+      <items ref="child" @open-edit-modal="openEditModal" v-else/>
     </transition>
 
     <a @click="$refs.themeCreateModal.open()" v-if="loggedIn"

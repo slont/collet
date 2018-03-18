@@ -319,7 +319,7 @@
             } // .card-content
           }
         }
-      }
+      } // .new-cullet-list
     }
   }
 </style>
