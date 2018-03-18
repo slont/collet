@@ -26,7 +26,7 @@
               <div class="theme-dropdown dropdown">
                 <div class="dropdown-trigger" @click="openThemeSelectModal">
                   <a class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                    <span>{{ theme.title }}</span>
+                    <span class="is-size-7">{{ theme.title }}</span>
                     <span class="icon is-small"><i class="material-icons">arrow_drop_down</i></span>
                   </a>
                 </div>
@@ -100,17 +100,6 @@
   import Modal from '@/components/Modal'
   import ThemeSelectModal from '@/components/theme/ThemeSelectModal'
   import ClButtons from '@/components/element/button/ClButtons'
-  import ElementButton from '@/components/element/button/ElementButton'
-  import TextButton from '@/components/element/button/TextButton'
-  import ImageButton from '@/components/element/button/ImageButton'
-  import LocationButton from '@/components/element/button/LocationButton'
-  import DatetimeButton from '@/components/element/button/DatetimeButton'
-  import TagButton from '@/components/element/button/TagButton'
-  import LinkButton from '@/components/element/button/LinkButton'
-  import PhoneButton from '@/components/element/button/PhoneButton'
-  import EmailButton from '@/components/element/button/EmailButton'
-  import RatingButton from '@/components/element/button/RatingButton'
-  import SwitchButton from '@/components/element/button/SwitchButton'
   import TextElement from '@/components/element/TextElement'
   import ImageElement from '@/components/element/ImageElement'
   import LocationElement from '@/components/element/LocationElement'
@@ -127,17 +116,6 @@
       Modal,
       ThemeSelectModal,
       ClButtons,
-      ElementButton,
-      TextButton,
-      ImageButton,
-      LocationButton,
-      DatetimeButton,
-      TagButton,
-      LinkButton,
-      PhoneButton,
-      EmailButton,
-      RatingButton,
-      SwitchButton,
       TextElement,
       ImageElement,
       LocationElement,
@@ -382,6 +360,7 @@
                   width: 100%;
 
                   .button {
+                    height: 1.75em;
                     max-width: 70%;
                     min-width: 300px;
                     padding: 0;
