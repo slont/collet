@@ -41,8 +41,6 @@
       width: 100%;
     }
     .label {
-      font-size: 1.5rem;
-
       &:not(:last-child) {
         margin-bottom: 1em;
       }

@@ -1,5 +1,5 @@
 <template>
-  <transition-group id="userpage-items" name="slide-fade" mode="out-in" class="columns is-multiline">
+  <transition-group id="userpage-items" tag="div" name="slide-fade" mode="out-in" class="columns is-multiline">
     <div v-for="item in items" class="item-list column is-half" :key="item.id">
       <div class="new-cullet-card card">
         <div class="card-content">

@@ -47,12 +47,7 @@
           <item-page :current-item="currentItem"/>
         </div>
 
-        <div v-else>
-          まだカレットはありません
-          <template v-if="isMyPage">
-            <br/>右下のボタンからカレットを追加してみましょう！
-          </template>
-        </div>
+        <div class="is-loading" v-else></div>
       </div>
     </div>
 

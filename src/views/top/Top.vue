@@ -34,6 +34,34 @@
       </slide>
     </carousel>
 
+    <div class="updated-cullet-list columns is-multiline" v-if="user.id && updatedItems.length">
+      <div class="updated-cullet-label column is-12" key="label">
+        <label class="label">{{ user.name }}の更新一覧</label>
+      </div>
+      <div class="card">
+        <transition-group tag="div" name="slide-fade" mode="out-in" class="item-list column is-12 card-content">
+          <div v-for="item in updatedItems" class="updated-cullet" :key="item.id">
+            <div class="media">
+              <div class="media-content">
+                <router-link class="theme-title subtitle text-color-weak is-size-7" tag="div"
+                             :to="`/u/${item.theme.createdUser.id}/${item.theme.id}`">
+                  {{ item.theme.title }}
+                </router-link>
+                <router-link class="item-title text-color-strong is-size-6 has-text-weight-bold" tag="div"
+                             :to="`/u/${item.theme.createdUser.id}/${item.theme.id}/${item.id}`">
+                  {{ item.name }}
+                </router-link>
+              </div>
+
+              <div class="media-right" v-if="item.theme.image">
+                <figure class="image"><img :src="item.theme.image"></figure>
+              </div>
+            </div>
+          </div>
+        </transition-group>
+      </div>
+    </div>
+
     <transition-group tag="div" name="slide-fade" mode="out-in" class="new-cullet-list columns is-multiline">
       <div class="new-cullet-label column is-12" key="label">
         <label class="label">新着カレット一覧</label>
@@ -84,6 +112,7 @@
 <script>
   import ThemeModel from '@/models/Theme'
   import ItemModel from '@/models/Item'
+  import UserModel from '@/models/User'
   import FavoriteModel from '@/models/Favorite'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
   import ThemeCard from '@/components/theme/ThemeCard'
@@ -96,6 +125,7 @@
       return {
         topThemes: [],
         themes: [],
+        updatedItems: [],
         newItems: []
       }
     },
@@ -109,6 +139,15 @@
     },
     methods: {
       refresh() {
+        if (this.loggedIn) {
+          new UserModel().findItems(this.user.id, {
+            p: 0,
+            s: 5
+          }).then(res => {
+            this.updatedItems = res.data
+          })
+        }
+
         new ItemModel().findByNew({
           p: 0,
           s: 20
@@ -250,6 +289,85 @@
           }
         } // .card-image
       } // VueCarousel
+      .updated-cullet-list {
+        margin: 0;
+
+        .item-list {
+          padding: 0;
+
+          .updated-cullet {
+            padding: .5em 1em;
+
+            &:first-child {
+              padding-top: 1em;
+            }
+            &:not(:first-child) {
+              padding-top: 0;
+            }
+            &:last-child {
+              .media {
+                border-bottom: none;
+              }
+            }
+            .media {
+              padding-bottom: .5em;
+              border-bottom: $border-style;
+
+              .media-content {
+                > :not(:last-child) {
+                  margin-bottom: .3em;
+                }
+                .theme-title {
+                  height: 1rem;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap
+                }
+                .item-title {
+                  display: flex;
+                  max-height: 2.5em;
+                  line-height: 1.25;
+                  overflow: hidden;
+                }
+                .user-profile {
+                  display: flex;
+                  align-items: center;
+
+                  > :not(:last-child) {
+                    margin-right: .35em;
+                  }
+                  .image img {
+                    max-height: 100%;
+                  }
+                }
+              }
+              .media-right {
+                .image {
+                  height: 34px;
+                  overflow: hidden;
+
+                  img {
+                    height: 100%;
+                    width: auto;
+                  }
+                }
+              }
+              + .content {
+                margin-top: 1.25em;
+              }
+            } // .media
+            .content {
+              > :not(:last-child) {
+                margin-bottom: 1.5em;
+              }
+              .view-label {
+                font-size: $size-7;
+                color: $text-color-weak;
+              }
+            }
+          }
+        }
+      } // .updated-cullet-list
       .new-cullet-list {
         margin: 0;
 

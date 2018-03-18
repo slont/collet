@@ -6,7 +6,7 @@
     </router-link>
 
     <div class="item-info">
-      <div class="title is-3">
+      <div class="title is-4">
         {{ item.name }}
         <a class="edit-button button is-info is-outlined is-hidden-mobile"
            @click="$refs.itemEditModal.open(theme, item)" v-if="isMyPage">
@@ -124,6 +124,11 @@
           width: 70%;
           margin: auto;
         }
+      }
+    }
+    .item-elements {
+      .element-field:not(:last-child) {
+        margin-bottom: 2em;
       }
     }
   }
