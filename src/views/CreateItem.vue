@@ -21,7 +21,7 @@
       <div class="columns is-gapless">
         <div class="main-column column">
           <div class="theme-field field">
-            <div class="subtitle is-7">選択中のテーマ</div>
+            <div class="subtitle text-color-weak is-7">選択中のテーマ</div>
             <div class="control">
               <div class="theme-dropdown dropdown">
                 <div class="dropdown-trigger" @click="openThemeSelectModal">
@@ -30,6 +30,16 @@
                     <span class="icon is-small"><i class="material-icons">arrow_drop_down</i></span>
                   </a>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="item-name-content content">
+            <div class="field">
+              <div class="item-name control">
+                <input v-model.trim="item.name" class="input title is-4" type="text" placeholder="Cullet Name"
+                       name="itemName" v-validate="'required'" :class="{ 'is-danger': errors.has('itemName') }">
+                <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
               </div>
             </div>
           </div>
@@ -46,21 +56,6 @@
             </ul>
           </div>
 
-          <article class="media">
-            <div class="media-content">
-              <div class="content">
-                <div class="field">
-                  <div class="item-name control">
-                    <input v-model.trim="item.name" class="input title is-3" type="text" placeholder="Cullet Name"
-                           name="itemName"
-                           v-validate="'required'" :class="{ 'is-danger': errors.has('itemName') }">
-                    <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
           <div class="item-elements">
             <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
               <div class="sort-buttons">
@@ -69,18 +64,18 @@
                 <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
               </div>
 
-              <text-element :params="element" v-if="'text' === element.type" editable></text-element>
-              <image-element :params="element" v-else-if="'image' === element.type" editable></image-element>
-              <location-element :params="element" v-else-if="'location' === element.type" editable></location-element>
-              <datetime-element :params="element" v-else-if="'date' === element.type" editable></datetime-element>
-              <datetime-element :params="element" v-else-if="'time' === element.type" editable></datetime-element>
-              <datetime-element :params="element" v-else-if="'datetime' === element.type" editable></datetime-element>
-              <tag-element :params="element" v-else-if="'tag' === element.type" editable></tag-element>
-              <link-element :params="element" v-else-if="'link' === element.type" editable></link-element>
-              <phone-element :params="element" v-else-if="'phone' === element.type" editable></phone-element>
-              <email-element :params="element" v-else-if="'email' === element.type" editable></email-element>
-              <rating-element :params="element" v-else-if="'rating' === element.type" editable></rating-element>
-              <switch-element :params="element" v-else-if="'switch' === element.type" editable></switch-element>
+              <text-element :params="element" v-if="'text' === element.type" editable/>
+              <image-element :params="element" v-else-if="'image' === element.type" editable/>
+              <location-element :params="element" v-else-if="'location' === element.type" editable/>
+              <datetime-element :params="element" v-else-if="'date' === element.type" editable/>
+              <datetime-element :params="element" v-else-if="'time' === element.type" editable/>
+              <datetime-element :params="element" v-else-if="'datetime' === element.type" editable/>
+              <tag-element :params="element" v-else-if="'tag' === element.type" editable/>
+              <link-element :params="element" v-else-if="'link' === element.type" editable/>
+              <phone-element :params="element" v-else-if="'phone' === element.type" editable/>
+              <email-element :params="element" v-else-if="'email' === element.type" editable/>
+              <rating-element :params="element" v-else-if="'rating' === element.type" editable/>
+              <switch-element :params="element" v-else-if="'switch' === element.type" editable/>
 
               <a @click="removeElement(i)" class="delete"></a>
             </div>
@@ -90,17 +85,7 @@
     </div>
 
     <footer class="modal-card-foot slider">
-      <div class="buttons has-addons">
-        <text-button @add="addElement"></text-button>
-        <image-button @add="addElement"></image-button>
-        <location-button @add="addElement"></location-button>
-        <datetime-button @add="addElement"></datetime-button>
-        <link-button @add="addElement"></link-button>
-        <rating-button @add="addElement"></rating-button>
-        <tag-button @add="addElement"></tag-button>
-        <phone-button @add="addElement"></phone-button>
-        <email-button @add="addElement"></email-button>
-      </div>
+      <cl-buttons @add="addElement"/>
     </footer>
 
     <theme-select-modal ref="themeSelectModal" @refresh="refresh"/>
@@ -114,6 +99,7 @@
   import FileModel from '@/models/File'
   import Modal from '@/components/Modal'
   import ThemeSelectModal from '@/components/theme/ThemeSelectModal'
+  import ClButtons from '@/components/element/button/ClButtons'
   import ElementButton from '@/components/element/button/ElementButton'
   import TextButton from '@/components/element/button/TextButton'
   import ImageButton from '@/components/element/button/ImageButton'
@@ -140,6 +126,7 @@
     components: {
       Modal,
       ThemeSelectModal,
+      ClButtons,
       ElementButton,
       TextButton,
       ImageButton,
@@ -373,34 +360,6 @@
         .columns {
           height: 100%;
 
-          .left-column {
-            height: 100%;
-            max-width: $element-button-size;
-
-            .slider {
-              height: 100%;
-              width: 100%;
-              padding: 0;
-              overflow-y: scroll;
-
-              > .buttons {
-                flex-direction: column;
-                width: $element-button-size;
-
-                .button:not(:last-child) {
-                  margin-right: 0;
-                  margin-bottom: -1px;
-                }
-                .subtitle {
-                  margin-bottom: .5em;
-                  color: grey;
-                }
-                .buttons-label:not(:first-child) {
-                  margin-top: 1.5em;
-                }
-              }
-            }
-          }
           .main-column {
             $sort-button-size: 2rem;
             $margin-side: $sort-button-size + .5rem;
@@ -441,8 +400,29 @@
                 }
               }
             }
+            .item-name-content {
+              margin-bottom: 0;
+
+              .item-name {
+                padding: 0;
+                margin: 0 -2rem;
+
+                .input {
+                  border-top: none;
+                  border-right: none;
+                  border-left: none;
+                  border-bottom-width: 2px;
+                  border-radius: 0;
+                  box-shadow: none;
+                  height: 3rem;
+                  margin-bottom: 0;
+                  padding: 0;
+                  line-height: 3rem;
+                }
+              }
+            }
             .template-tabs {
-              margin: 0 -2rem 1rem;
+              margin: 0 -2rem;
 
               ul {
                 border-bottom: none;
@@ -450,26 +430,6 @@
                 > a {
                   margin-top: 0;
                 }
-              }
-            }
-            .media {
-              margin: 0 -2rem;
-            }
-            .item-name {
-              padding: 0;
-              margin-bottom: 1rem;
-
-              .input {
-                border-top: none;
-                border-right: none;
-                border-left: none;
-                border-bottom-width: 2px;
-                border-radius: 0;
-                box-shadow: none;
-                height: 3rem;
-                margin-bottom: 0;
-                padding: 0;
-                line-height: 3rem;
               }
             }
             .item-elements {
@@ -559,6 +519,7 @@
         overflow: scroll;
 
         .buttons {
+          flex-direction: row;
           width: $element-button-size * $button-count;
           min-width: $element-button-size * $button-count;
           margin-bottom: 0;

@@ -4,17 +4,7 @@
       <div class="columns is-gapless">
         <div class="left-column column is-hidden-mobile">
           <div class="slider">
-            <div class="buttons has-addons is-centered">
-              <text-button @add="addElement"></text-button>
-              <image-button @add="addElement"></image-button>
-              <location-button @add="addElement"></location-button>
-              <datetime-button @add="addElement"></datetime-button>
-              <link-button @add="addElement"></link-button>
-              <rating-button @add="addElement"></rating-button>
-              <tag-button @add="addElement"></tag-button>
-              <phone-button @add="addElement"></phone-button>
-              <email-button @add="addElement"></email-button>
-            </div>
+            <cl-buttons @add="addElement" class="is-centered"/>
           </div>
         </div>
 
@@ -28,7 +18,7 @@
             </div>
           </div>
 
-          <div class="template-tabs tabs is-small" v-if="templates.length">
+          <div class="template-tabs tabs is-boxed is-small" v-if="templates.length">
             <ul>
               <li v-for="(template, i) in templates"
                   :class="{ 'is-active': selectedTemplateNo === i }" @click="changeTemplate(i)">
@@ -63,18 +53,18 @@
                 <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
               </div>
 
-              <text-element :params="element" v-if="'text' === element.type" editable></text-element>
-              <image-element :params="element" v-else-if="'image' === element.type" editable></image-element>
-              <location-element :params="element" v-else-if="'location' === element.type" editable></location-element>
-              <datetime-element :params="element" v-else-if="'date' === element.type" editable></datetime-element>
-              <datetime-element :params="element" v-else-if="'time' === element.type" editable></datetime-element>
-              <datetime-element :params="element" v-else-if="'datetime' === element.type" editable></datetime-element>
-              <tag-element :params="element" v-else-if="'tag' === element.type" editable></tag-element>
-              <link-element :params="element" v-else-if="'link' === element.type" editable></link-element>
-              <phone-element :params="element" v-else-if="'phone' === element.type" editable></phone-element>
-              <email-element :params="element" v-else-if="'email' === element.type" editable></email-element>
-              <rating-element :params="element" v-else-if="'rating' === element.type" editable></rating-element>
-              <switch-element :params="element" v-else-if="'switch' === element.type" editable></switch-element>
+              <text-element :params="element" v-if="'text' === element.type" editable/>
+              <image-element :params="element" v-else-if="'image' === element.type" editable/>
+              <location-element :params="element" v-else-if="'location' === element.type" editable/>
+              <datetime-element :params="element" v-else-if="'date' === element.type" editable/>
+              <datetime-element :params="element" v-else-if="'time' === element.type" editable/>
+              <datetime-element :params="element" v-else-if="'datetime' === element.type" editable/>
+              <tag-element :params="element" v-else-if="'tag' === element.type" editable/>
+              <link-element :params="element" v-else-if="'link' === element.type" editable/>
+              <phone-element :params="element" v-else-if="'phone' === element.type" editable/>
+              <email-element :params="element" v-else-if="'email' === element.type" editable/>
+              <rating-element :params="element" v-else-if="'rating' === element.type" editable/>
+              <switch-element :params="element" v-else-if="'switch' === element.type" editable/>
 
               <a @click="removeElement(i)" class="delete"></a>
             </div>
@@ -84,17 +74,7 @@
     </div>
 
     <div class="modal-card-body slider is-hidden-tablet">
-      <div class="buttons has-addons">
-        <text-button @add="addElement"></text-button>
-        <image-button @add="addElement"></image-button>
-        <location-button @add="addElement"></location-button>
-        <datetime-button @add="addElement"></datetime-button>
-        <link-button @add="addElement"></link-button>
-        <rating-button @add="addElement"></rating-button>
-        <tag-button @add="addElement"></tag-button>
-        <phone-button @add="addElement"></phone-button>
-        <email-button @add="addElement"></email-button>
-      </div>
+      <cl-buttons @add="addElement"/>
     </div>
 
     <footer class="modal-card-foot has-right">
@@ -116,17 +96,7 @@
   import FileModel from '@/models/File'
   import Modal from '@/components/Modal'
   import ThemeSelectModal from '@/components/theme/ThemeSelectModal'
-  import ElementButton from '@/components/element/button/ElementButton'
-  import TextButton from '@/components/element/button/TextButton'
-  import ImageButton from '@/components/element/button/ImageButton'
-  import LocationButton from '@/components/element/button/LocationButton'
-  import DatetimeButton from '@/components/element/button/DatetimeButton'
-  import TagButton from '@/components/element/button/TagButton'
-  import LinkButton from '@/components/element/button/LinkButton'
-  import PhoneButton from '@/components/element/button/PhoneButton'
-  import EmailButton from '@/components/element/button/EmailButton'
-  import RatingButton from '@/components/element/button/RatingButton'
-  import SwitchButton from '@/components/element/button/SwitchButton'
+  import ClButtons from '@/components/element/button/ClButtons'
   import TextElement from '@/components/element/TextElement'
   import ImageElement from '@/components/element/ImageElement'
   import LocationElement from '@/components/element/LocationElement'
@@ -142,17 +112,7 @@
     components: {
       Modal,
       ThemeSelectModal,
-      ElementButton,
-      TextButton,
-      ImageButton,
-      LocationButton,
-      DatetimeButton,
-      TagButton,
-      LinkButton,
-      PhoneButton,
-      EmailButton,
-      RatingButton,
-      SwitchButton,
+      ClButtons,
       TextElement,
       ImageElement,
       LocationElement,
