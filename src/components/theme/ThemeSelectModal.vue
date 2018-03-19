@@ -1,15 +1,15 @@
 <template>
   <modal id="theme-select-modal" class="modal" ref="themeSelectModal" @close="reset">
-    <div class="modal-card-body">
-      <div class="field current-theme" v-if="theme.title">
-        <div class="control">
-          <div class="subtitle is-7">選択中のテーマ</div>
-          {{ theme.title }}
-        </div>
-      </div>
+    <header class="top-header modal-card-head">
+      <span class="back-button icon" @click="close">
+        <i class="material-icons">arrow_back</i>
+      </span>
 
+      <span class="modal-card-title title is-6 has-text-white">テーマ選択</span>
+    </header>
+
+    <div class="modal-card-body">
       <div class="field search-field">
-        <div class="subtitle is-7">テーマ一覧</div>
         <div class="control has-icons-right">
           <input v-model="query" class="input is-rounded"
                  placeholder="テーマ検索"/>
@@ -21,7 +21,7 @@
         <ul class="menu-list">
           <li class="create-item" @click="openThemeCreateModal">
             <a class="button is-primary is-outlined">
-              <span>新規作成</span>
+              <span>テーマ新規作成</span>
               <span class="icon"><i class="material-icons">add</i></span>
             </a>
             <div class="divider"></div>
@@ -30,9 +30,12 @@
           <li v-for="theme in themes" :key="theme.id" class="theme-item"
               @click="select(theme)">
             <a>
-              <span class="private-icon icon" v-if="theme.private"><i class="material-icons">lock</i></span>
-              <span>{{ theme.title }}</span>
-              <span class="item-count">{{ theme.itemCount }}</span>
+              <span class="selected-icon icon">
+                <i class="material-icons text-color-main" v-show="selectedTheme.id === theme.id">check</i>
+              </span>
+              <span class="theme-title is-size-6 has-text-weight-bold">{{ theme.title }}</span>
+              <span class="icon has-text-success" v-if="theme.private"><i class="material-icons">lock</i></span>
+              <span class="item-count text-color-weak">({{ theme.itemCount }})</span>
             </a>
             <div class="divider"></div>
           </li>
@@ -54,7 +57,8 @@
     data() {
       return {
         query: '',
-        theme: {
+        selectedTheme: {
+          id: '',
           title: ''
         },
         themes: [],
@@ -68,7 +72,7 @@
     },
     methods: {
       open(theme = {}) {
-        this.theme = theme
+        this.selectedTheme = theme
         this.refresh().then(() => {
           this.$refs.themeSelectModal.open()
         }).catch(err => this.$message.error(err))
@@ -131,10 +135,17 @@
           align-items: center;
           padding-left: 0;
 
+          .selected-icon {
+            min-width: 32px;
+            margin-right: .5rem;
+          }
           .item-count {
-            width: 32px;
-            margin-left: auto;
+            min-width: 32px;
             text-align: right;
+          }
+          .theme-title + .icon,
+          .theme-title + .item-count {
+            margin-left: auto;
           }
         }
         .divider {
