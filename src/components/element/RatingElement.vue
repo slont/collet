@@ -1,5 +1,5 @@
 <template>
-  <cl-element class="rating-element" :params="params" placeholder="レーティングラベル（オプション）"
+  <cl-element class="rating-element" :params="params" placeholder="ラベル（オプション）"
               @remove="$emit('remove')" :editable="editable">
     <span class="element-type-icon icon is-small is-left" v-if="editable"><rating-icon/></span>
     <p class="control">
