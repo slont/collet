@@ -34,13 +34,13 @@
         </div>
       </div>
 
-      <div class="template-tabs tabs is-small" v-if="templates.length">
+      <div class="template-tabs tabs is-small">
         <ul>
           <li v-for="(template, i) in templates"
               :class="{ 'is-active': selectedTemplateNo === i }" @click="changeTemplate(i)">
             <a><span>{{ `テンプレート` }}</span></a>
           </li>
-          <li :class="{ 'is-active': selectedTemplateNo === -1 }" @click="changeTemplate(-1)">
+          <li :class="{ 'is-active': selectedTemplateNo === -1 }" @click="changeTemplate(-1)" v-if="templates.length">
             <a><span>白紙</span></a>
           </li>
           <li class="actions-tab">
@@ -423,7 +423,6 @@
           }
         }
         .item-elements {
-
           &.is-fullwidth {
             .element-field {
               margin-left: -.75rem;

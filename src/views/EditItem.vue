@@ -1,72 +1,70 @@
 <template>
   <modal id="edit-item" class="modal" ref="editItem">
-    <header class="modal-card-head">
+    <header class="top-header modal-card-head">
       <span class="back-button icon" @click="$router.go(-1)">
         <i class="material-icons">arrow_back</i>
       </span>
 
-      <span class="modal-card-title title is-5">カレット編集</span>
+      <span class="modal-card-title title is-6 has-text-white">カレット編集</span>
 
-      <label class="checkbox">
-        <input v-model="isTemplate" type="checkbox">
-        テンプレート登録
-      </label>
+      <div class="template-checkbox field">
+        <input class="is-checkradio has-background-color is-white is-small" id="templateCheckbox" type="checkbox" :checked="isTemplate">
+        <label for="templateCheckbox">テンプレート登録</label>
+      </div>
 
       <guard-button :click="save" class="ok-button is-success is-inverted is-outlined">
         <span class="icon"><i class="material-icons">check</i></span>
       </guard-button>
     </header>
+    <header class="theme-header modal-card-head header-shadow">
+      <a class="text-color">
+        <span class="is-size-7">{{ theme.title }}</span>
+      </a>
+    </header>
 
     <div class="modal-card-body">
-      <div class="columns is-gapless">
-        <div class="main-column column">
-          <div class="theme-field field">
-            <div class="subtitle text-color-weak is-7">テーマ</div>
-            <div class="control">
-              <div class="theme-dropdown dropdown">
-                <div class="dropdown-trigger">
-                  <a class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                    <span class="is-size-7">{{ theme.title }}</span>
-                  </a>
-                </div>
-              </div>
-            </div>
+      <div class="item-name-content content">
+        <div class="field">
+          <div class="item-name control">
+            <input v-model.trim="item.name" class="input title is-4 is-primary text-color-main" type="text" placeholder="Cullet Name"
+                   name="itemName" v-validate="'required'" :class="{ 'is-danger': errors.has('itemName') }">
+            <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="template-tabs tabs is-small">
+        <ul>
+          <li class="actions-tab">
+            <span class="icon" @click="isEditable = !isEditable">
+              <i class="material-icons" :class="[isEditable ? 'has-text-dark' : 'has-text-grey-light']">settings</i>
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="item-elements" :class="{ 'is-fullwidth': !isEditable }">
+        <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
+          <div class="sort-buttons" v-if="isEditable">
+            <a class="button up-button is-white" @click="upOrder(i)"><i class="material-icons">arrow_upward</i></a>
+            <span class="element-order">{{ element.order + 1 }}</span>
+            <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
           </div>
 
-          <div class="item-name-content content">
-            <div class="field">
-              <div class="item-name control">
-                <input v-model.trim="item.name" class="input title is-4" type="text" placeholder="Cullet Name"
-                       name="itemName" v-validate="'required'" :class="{ 'is-danger': errors.has('itemName') }">
-                <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
-              </div>
-            </div>
-          </div>
+          <text-element :params="element" v-if="'text' === element.type" editable/>
+          <image-element :params="element" v-else-if="'image' === element.type" editable/>
+          <location-element :params="element" v-else-if="'location' === element.type" editable/>
+          <datetime-element :params="element" v-else-if="'date' === element.type" editable/>
+          <datetime-element :params="element" v-else-if="'time' === element.type" editable/>
+          <datetime-element :params="element" v-else-if="'datetime' === element.type" editable/>
+          <tag-element :params="element" v-else-if="'tag' === element.type" editable/>
+          <link-element :params="element" v-else-if="'link' === element.type" editable/>
+          <phone-element :params="element" v-else-if="'phone' === element.type" editable/>
+          <email-element :params="element" v-else-if="'email' === element.type" editable/>
+          <rating-element :params="element" v-else-if="'rating' === element.type" editable/>
+          <switch-element :params="element" v-else-if="'switch' === element.type" editable/>
 
-          <div class="item-elements">
-            <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
-              <div class="sort-buttons">
-                <a class="button up-button is-white" @click="upOrder(i)"><i class="material-icons">arrow_upward</i></a>
-                <span class="element-order">{{ element.order + 1 }}</span>
-                <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
-              </div>
-
-              <text-element :params="element" v-if="'text' === element.type" editable/>
-              <image-element :params="element" v-else-if="'image' === element.type" editable/>
-              <location-element :params="element" v-else-if="'location' === element.type" editable/>
-              <datetime-element :params="element" v-else-if="'date' === element.type" editable/>
-              <datetime-element :params="element" v-else-if="'time' === element.type" editable/>
-              <datetime-element :params="element" v-else-if="'datetime' === element.type" editable/>
-              <tag-element :params="element" v-else-if="'tag' === element.type" editable/>
-              <link-element :params="element" v-else-if="'link' === element.type" editable/>
-              <phone-element :params="element" v-else-if="'phone' === element.type" editable/>
-              <email-element :params="element" v-else-if="'email' === element.type" editable/>
-              <rating-element :params="element" v-else-if="'rating' === element.type" editable/>
-              <switch-element :params="element" v-else-if="'switch' === element.type" editable/>
-
-              <a @click="removeElement(i)" class="delete"></a>
-            </div>
-          </div>
+          <a @click="removeElement(i)" class="delete" v-if="isEditable"></a>
         </div>
       </div>
     </div>
@@ -126,6 +124,7 @@
         templates: [],
         selectedTemplateNo: 0,
         isTemplate: false,
+        isEditable: false,
         errorMessage: ''
       }
     },
@@ -263,11 +262,12 @@
       .modal-card-foot {
         border-radius: 0;
       }
-      .modal-card-head {
+      .top-header {
         height: $header-nav-height;
-        padding: 15px;
+        padding: 1em;
         color: white;
         background-color: $main-color;
+        border: none;
 
         .back-button {
           margin-right: 1rem;
@@ -275,158 +275,163 @@
         .modal-card-title {
           margin-bottom: 0;
         }
-        .checkbox {
-          font-size: $size-7;
-          align-items: center;
-          display: flex;
-          margin-right: 1em;
+        .template-checkbox {
+          margin-bottom: 0;
         }
         .ok-button {
           border: none;
         }
       }
+      .theme-header {
+        padding: 0;
+        border-bottom: none;
+        background-color: white;
+        z-index: 1;
+
+        a {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          padding: .5em 1rem;
+
+          .is-size-7 {
+            display: inline-flex;
+            width: 90%;
+            margin-right: auto;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
       > .modal-card-body {
+        $sort-button-size: 2rem;
+        $margin-side: $sort-button-size + .5rem;
         height: 100%;
         padding: .5rem 0;
+        background-color: white;
+        overflow-y: scroll;
+        z-index: 0;
 
-        .columns {
-          height: 100%;
+        .theme-field {
+          .subtitle {
+            margin-bottom: 0;
+          }
+          .theme-dropdown {
+            width: 100%;
 
-          .main-column {
-            $sort-button-size: 2rem;
-            $margin-side: $sort-button-size + .5rem;
-            padding: 0 3rem 1rem !important;
-            background-color: white;
-            overflow-y: scroll;
-            z-index: 0;
+            .dropdown-trigger {
+              width: 100%;
 
-            .theme-field {
-              margin: 0 -2rem;
-
-              .subtitle {
-                margin-bottom: 0;
-              }
-              .theme-dropdown {
-                width: 100%;
-
-                .dropdown-trigger {
-                  width: 100%;
-
-                  .button {
-                    height: 1.75em;
-                    max-width: 70%;
-                    min-width: 300px;
-                    padding: 0;
-                    border-top: none;
-                    border-left: none;
-                    border-right: none;
-
-                    :first-child {
-                      max-width: 95%;
-                      overflow: hidden;
-                    }
-                    .icon {
-                      margin-left: auto;
-                    }
-                  }
-                }
-              }
-            }
-            .item-name-content {
-              margin-bottom: 0;
-
-              .item-name {
+              .button {
+                height: 1.75em;
+                max-width: 70%;
+                min-width: 300px;
                 padding: 0;
-                margin: 0 -2rem;
+                border-top: none;
+                border-left: none;
+                border-right: none;
 
-                .input {
-                  border-top: none;
-                  border-right: none;
-                  border-left: none;
-                  border-bottom-width: 2px;
-                  border-radius: 0;
-                  box-shadow: none;
-                  height: 3rem;
-                  margin-bottom: 0;
-                  padding: 0;
-                  line-height: 3rem;
+                :first-child {
+                  max-width: 95%;
+                  overflow: hidden;
                 }
-              }
-            }
-            .item-elements {
-              margin-left: -$margin-side;
-              margin-right: -$margin-side;
-
-              .element-field {
-                display: flex;
-                align-items: center;
-
-                .sort-buttons {
-                  display: flex;
-                  flex: .025;
-                  flex-direction: column;
-
-                  .button {
-                    width: 2rem;
-                    border: none;
-
-                    .material-icons {
-                      color: gainsboro;
-                    }
-                  }
-                  .element-order {
-                    font-size: .75em;
-                    color: darkgrey;
-                    text-align: center;
-                  }
-                }
-                .cl-element {
-                  flex: .9;
-                  padding: 0 .5rem;
-                }
-                .delete {
-                  flex: .05;
-                }
-                &:first-child {
-                  .up-button {
-                    visibility: hidden;
-                    background-color: black;
-                  }
-                }
-                &:last-child {
-                  .down-button {
-                    visibility: hidden;
-                  }
-                }
-                &:not(:last-child) {
-                  margin-bottom: .25rem;
+                .icon {
+                  margin-left: auto;
                 }
               }
             }
           }
-          .right-column {
-            max-width: 256px;
+        }
+        .item-name-content {
+          margin: 0 1rem;
 
-            .image-field {
-              .field-body {
-                width: 192px;
-                display: flex;
-                flex-direction: column;
+          .item-name {
+            padding: 0;
 
-                .file-view {
-                  .delete {
-                    position: absolute;
-                    top: 5px;
-                    right: 5px;
-                    z-index: 10;
-                  }
-                  + .file {
-                    position: absolute;
-                    top: 0;
-                    opacity: .7;
-                  }
+            .input {
+              border-top: none;
+              border-right: none;
+              border-left: none;
+              border-bottom-width: 2px;
+              border-radius: 0;
+              box-shadow: none;
+              height: $size-1;
+              margin-bottom: 0;
+              padding: 0;
+              line-height: $size-1;
+            }
+          }
+        }
+        .template-tabs {
+          margin: 0 1rem;
+
+          ul {
+            border-bottom: none;
+
+            > a {
+              margin-top: 0;
+            }
+            .actions-tab {
+              margin-left: auto;
+
+              .icon {
+                margin: 0;
+              }
+            }
+          }
+        }
+        .item-elements {
+          &.is-fullwidth {
+            .element-field {
+              margin-left: -.75rem;
+            }
+          }
+          .element-field {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 78px;
+
+            .sort-buttons {
+              display: flex;
+              flex: .025;
+              flex-direction: column;
+
+              .button {
+                width: 2rem;
+                border: none;
+
+                .material-icons {
+                  color: gainsboro;
                 }
               }
+              .element-order {
+                font-size: .75em;
+                color: darkgrey;
+                text-align: center;
+              }
+            }
+            .cl-element {
+              flex: .9;
+              padding: 0 .5rem;
+            }
+            .delete {
+              flex: .05;
+            }
+            &:first-child {
+              .up-button {
+                visibility: hidden;
+                background-color: black;
+              }
+            }
+            &:last-child {
+              .down-button {
+                visibility: hidden;
+              }
+            }
+            &:not(:last-child) {
+              margin-bottom: .25rem;
             }
           }
         }
