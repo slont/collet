@@ -33,7 +33,7 @@
 <script>
   import UserModel from '@/models/User'
   import FavoriteModel from '@/models/Favorite'
-  import itemCard from '@/components/item/itemCard'
+  import itemCard from '@/components/item/ItemCard'
   import ElementView from '@/components/element/ElementView'
 
   export default {

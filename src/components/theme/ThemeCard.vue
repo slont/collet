@@ -29,7 +29,7 @@
     <div class="card-content media">
       <div class="media-content">
         <div class="tags" v-if="theme.tags.length">
-          <router-link v-for="tag in theme.tags" class="tag"
+          <router-link v-for="tag in theme.tags" class="tag" :key="tag.name"
              :to="`/tag?name=${tag.name}`">#{{ tag.name }}</router-link>
         </div>
 
