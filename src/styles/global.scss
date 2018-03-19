@@ -1,5 +1,6 @@
 @import "constant";
 @import "~bulma";
+@import "~bulma-checkradio";
 @import "~element-ui/lib/theme-chalk/index.css";
 @import "transition";
 
@@ -140,6 +141,10 @@ input {
 
 .circle {
   border-radius: 50%;
+}
+
+.has-no-margin {
+  margin: 0;
 }
 
 .has-right {
