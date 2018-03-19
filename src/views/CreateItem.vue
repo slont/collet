@@ -5,9 +5,9 @@
         <i class="material-icons">arrow_back</i>
       </span>
 
-      <span class="modal-card-title title is-5">新規カレット作成</span>
+      <span class="modal-card-title title is-6 has-text-white">新規カレット作成</span>
 
-      <label class="checkbox">
+      <label class="checkbox is-size-7">
         <input v-model="isTemplate" type="checkbox">
         テンプレート登録
       </label>
@@ -27,7 +27,7 @@
       <div class="item-name-content content">
         <div class="field">
           <div class="item-name control">
-            <input v-model.trim="item.name" class="input title is-4 is-primary" type="text" placeholder="Cullet Name"
+            <input v-model.trim="item.name" class="input title is-4 is-primary text-color-main" type="text" placeholder="Cullet Name"
                    name="itemName" v-validate="'required'" :class="{ 'is-danger': errors.has('itemName') }">
             <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
           </div>
@@ -43,12 +43,17 @@
           <li :class="{ 'is-active': selectedTemplateNo === -1 }" @click="changeTemplate(-1)">
             <a><span>白紙</span></a>
           </li>
+          <li class="actions-tab">
+            <span class="icon" @click="isEditable = !isEditable">
+              <i class="material-icons" :class="[isEditable ? 'has-text-dark' : 'has-text-grey-light']">settings</i>
+            </span>
+          </li>
         </ul>
       </div>
 
-      <div class="item-elements">
+      <div class="item-elements" :class="{ 'is-fullwidth': !isEditable }">
         <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
-          <div class="sort-buttons">
+          <div class="sort-buttons" v-if="isEditable">
             <a class="button up-button is-white" @click="upOrder(i)"><i class="material-icons">arrow_upward</i></a>
             <span class="element-order">{{ element.order + 1 }}</span>
             <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
@@ -67,7 +72,7 @@
           <rating-element :params="element" v-else-if="'rating' === element.type" editable/>
           <switch-element :params="element" v-else-if="'switch' === element.type" editable/>
 
-          <a @click="removeElement(i)" class="delete"></a>
+          <a @click="removeElement(i)" class="delete" v-if="isEditable"></a>
         </div>
       </div>
     </div>
@@ -132,6 +137,7 @@
         templates: [],
         selectedTemplateNo: 0,
         isTemplate: false,
+        isEditable: false,
         errorMessage: ''
       }
     },
@@ -299,19 +305,18 @@
       }
       .top-header {
         height: $header-nav-height;
-        padding: 15px 1rem;
+        padding: 1em;
         color: white;
         background-color: $main-color;
         border: none;
 
         .back-button {
-          margin-right: 1rem;
+          margin-right: 1em;
         }
         .modal-card-title {
           margin-bottom: 0;
         }
         .checkbox {
-          font-size: $size-7;
           align-items: center;
           display: flex;
           margin-right: 1em;
@@ -346,7 +351,7 @@
         $sort-button-size: 2rem;
         $margin-side: $sort-button-size + .5rem;
         height: 100%;
-        padding: 0;
+        padding: .5rem 0;
         background-color: white;
         overflow-y: scroll;
         z-index: 0;
@@ -394,10 +399,10 @@
               border-bottom-width: 2px;
               border-radius: 0;
               box-shadow: none;
-              height: 3rem;
+              height: $size-1;
               margin-bottom: 0;
               padding: 0;
-              line-height: 3rem;
+              line-height: $size-1;
             }
           }
         }
@@ -410,12 +415,27 @@
             > a {
               margin-top: 0;
             }
+            .actions-tab {
+              margin-left: auto;
+
+              .icon {
+                margin: 0;
+              }
+            }
           }
         }
         .item-elements {
+
+          &.is-fullwidth {
+            .element-field {
+              margin-left: -.75rem;
+            }
+          }
           .element-field {
             display: flex;
             align-items: center;
+            justify-content: center;
+            min-height: 78px;
 
             .sort-buttons {
               display: flex;

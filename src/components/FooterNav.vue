@@ -118,7 +118,7 @@
       &.logged-in {
         .navbar-item {
           width: 20%;
-          padding: 4px 0;
+          padding: 5px 0;
         }
         .button {
           height: 40px;

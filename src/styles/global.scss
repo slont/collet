@@ -4,12 +4,12 @@
 @import "transition";
 
 html {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 body {
   font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', Arial, Helvetica, sans-serif;
-  font-size: 1rem;
+  font-size: $size-6;
   color: $text-color;
 }
 
@@ -22,6 +22,17 @@ body {
 .layout-list {
   display: flex;
   flex-direction: column;
+}
+
+input {
+  &.label,
+  &.is-size-6 ,
+  &.is-size-7 {
+    font-size: 16px !important;
+    transform: scale(0.875);
+    margin-left: -1.7rem;
+    min-width: 114%;
+  }
 }
 
 .title:not(.is-spaced) + .subtitle {
@@ -147,6 +158,9 @@ body {
 
 .text-color {
   color: $text-color;
+}
+.text-color-main {
+  color: $main-color;
 }
 .text-color-strong {
   color: $text-color-strong;
