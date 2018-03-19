@@ -149,6 +149,11 @@
         padding: 1rem .5rem .5rem;
         border-bottom: $border-style;
 
+        .image {
+          img {
+            height: 100%;
+          }
+        }
         .content {
           margin-bottom: 0;
 

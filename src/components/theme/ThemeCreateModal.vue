@@ -1,5 +1,17 @@
 <template>
   <modal id="theme-create-modal" class="modal" ref="themeCreateModal" @close="reset">
+    <header class="top-header modal-card-head">
+      <span class="back-button icon" @click="close">
+        <i class="material-icons">arrow_back</i>
+      </span>
+
+      <span class="modal-card-title title is-6 has-text-white">テーマ作成</span>
+
+      <guard-button :click="ok" class="ok-button is-success is-inverted is-outlined">
+        <span class="icon"><i class="material-icons">check</i></span>
+      </guard-button>
+    </header>
+
     <div class="modal-card-body columns">
       <div class="column">
         <div class="field">
@@ -74,7 +86,7 @@
       </div>
     </div>
 
-    <footer class="modal-card-foot has-right">
+    <footer class="modal-card-foot has-right is-hidden-touch">
       <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
       <a @click="close" class="button">キャンセル</a>
       <guard-button :click="ok" class="is-info">作成</guard-button>
