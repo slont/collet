@@ -11,7 +11,7 @@
     letter-spacing: -5px;
 
     .star-icon {
-      font-size: 1rem;
+      font-size: 1rem !important;
     }
   }
 </style>

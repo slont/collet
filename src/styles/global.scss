@@ -25,7 +25,14 @@ body {
   flex-direction: column;
 }
 
-input {
+.textarea {
+  font-size: 16px;
+  transform: scale(0.875);
+  margin-left: -1.7rem;
+  min-width: 114%;
+}
+
+.input {
   &.label,
   &.is-size-6 ,
   &.is-size-7 {
