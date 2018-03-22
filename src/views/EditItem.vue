@@ -385,7 +385,11 @@
         .item-elements {
           &.is-fullwidth {
             .element-field {
-              margin-left: -.75rem;
+              margin-left: -.125rem;
+
+              .cl-element {
+                flex: .95;
+              }
             }
           }
           .element-field {
@@ -396,11 +400,11 @@
 
             .sort-buttons {
               display: flex;
-              flex: .025;
+              flex: .05;
               flex-direction: column;
 
               .button {
-                width: 2rem;
+                width: 1.5rem;
                 border: none;
 
                 .material-icons {
@@ -418,7 +422,7 @@
               padding: 0 .5rem;
             }
             .delete {
-              flex: .05;
+              flex: .025;
             }
             &:first-child {
               .up-button {

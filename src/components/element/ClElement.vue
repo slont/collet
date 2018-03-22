@@ -54,7 +54,7 @@
       align-items: center;
 
       .label {
-        margin-bottom: -1px;
+        margin-bottom: -3px;
         padding-bottom: 0;
         box-shadow: none;
         border-top: none;

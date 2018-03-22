@@ -173,3 +173,8 @@ input {
 .text-color-weak {
   color: $text-color-weak;
 }
+
+svg:not(:root).svg-inline--fa {
+  height: 1.25rem;
+  width: auto;
+}

@@ -13,7 +13,7 @@
           <span class="subtitle is-7">検索</span>
         </router-link>
 
-        <a @click="onClickAdd" class="navbar-item button is-primary is-rounded is-outlined">
+        <a @click="onClickAdd" class="navbar-item button is-primary is-rounded">
           <span class="icon"><i class="material-icons">edit</i></span>
         </a>
 
@@ -121,9 +121,9 @@
           padding: 5px 0;
         }
         .button {
-          height: 40px;
-          width: 40px;
-          margin: auto 12px;
+          height: 46px;
+          width: 46px;
+          margin: -3px 12px;
         }
       }
       &.logged-out {
