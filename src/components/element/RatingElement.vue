@@ -1,6 +1,7 @@
 <template>
   <cl-element class="rating-element" :params="params" placeholder="ラベル（オプション）"
-              @remove="$emit('remove')" :editable="editable">
+              @remove="$emit('remove')" :editable="editable"
+              @focus="$emit('focus')" @blur="$emit('blur')">
     <span class="element-type-icon icon is-small is-left" v-if="editable"><rating-icon/></span>
     <p class="control">
       <el-rate v-model="params.valueNum" :max="Number(params.valueStr)" :disabled="!editable"/>

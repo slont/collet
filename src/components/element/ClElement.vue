@@ -4,7 +4,8 @@
       {{ params.label }}
     </label>
     <div class="control label-control has-icons-left" v-else-if="editable">
-      <input v-model.trim="params.label" class="input label" type="text" :placeholder="placeholder">
+      <input v-model.trim="params.label" class="input label" type="text" :placeholder="placeholder"
+             @focus="$emit('focus')" @blur="$emit('blur')">
     </div>
     <slot></slot>
   </div>

@@ -44,11 +44,11 @@
             <div class="media">
               <div class="media-content">
                 <router-link class="theme-title subtitle text-color-weak is-size-7" tag="div"
-                             :to="`/u/${item.theme.createdUser.id}/${item.theme.id}`">
+                             :to="`/u/${user.id}/${item.theme.id}`">
                   {{ item.theme.title }}
                 </router-link>
                 <router-link class="item-title text-color-strong is-size-6 has-text-weight-bold" tag="div"
-                             :to="`/u/${item.theme.createdUser.id}/${item.theme.id}/${item.id}`">
+                             :to="`/u/${user.id}/${item.theme.id}/${item.id}`">
                   {{ item.name }}
                 </router-link>
               </div>

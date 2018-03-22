@@ -1,12 +1,13 @@
 <template>
   <cl-element class="text-element" :params="params" placeholder="ラベル（オプション）"
-              @remove="$emit('remove')" :editable="editable">
+              @remove="$emit('remove')" :editable="editable"
+              @focus="$emit('focus')" @blur="$emit('blur')">
     <span class="element-type-icon icon is-small is-left" v-if="editable">
       <i class="material-icons">text_fields</i>
     </span>
     <p class="control">
       <textarea v-model="params.valueStr" v-autosize="params.valueStr" class="textarea" rows="2" placeholder="Text"
-                v-if="editable"></textarea>
+                @focus="$emit('focus')" @blur="$emit('blur')" v-if="editable"></textarea>
 
       <span class="value" v-else>{{ params.valueStr }}</span>
     </p>

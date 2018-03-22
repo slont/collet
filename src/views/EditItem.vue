@@ -17,8 +17,8 @@
       </guard-button>
     </header>
     <header class="theme-header modal-card-head header-shadow">
-      <a class="text-color">
-        <span class="is-size-7">{{ theme.title }}</span>
+      <a class="text-color-base">
+        <span class="theme-title is-size-7">{{ theme.title }}</span>
       </a>
     </header>
 
@@ -27,7 +27,8 @@
         <div class="field">
           <div class="item-name control">
             <input v-model.trim="item.name" class="input title is-4 is-primary text-color-main" type="text" placeholder="Cullet Name"
-                   name="itemName" v-validate="'required'" :class="{ 'is-danger': errors.has('itemName') }">
+                   name="itemName" v-validate="'required'" :class="{ 'is-danger': errors.has('itemName') }"
+                   @focus="onFocusInput" @blur="onBlurInput">
             <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
           </div>
         </div>
@@ -51,25 +52,28 @@
             <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
           </div>
 
-          <text-element :params="element" v-if="'text' === element.type" editable/>
-          <image-element :params="element" v-else-if="'image' === element.type" editable/>
-          <location-element :params="element" v-else-if="'location' === element.type" editable/>
-          <datetime-element :params="element" v-else-if="'date' === element.type" editable/>
-          <datetime-element :params="element" v-else-if="'time' === element.type" editable/>
-          <datetime-element :params="element" v-else-if="'datetime' === element.type" editable/>
-          <tag-element :params="element" v-else-if="'tag' === element.type" editable/>
-          <link-element :params="element" v-else-if="'link' === element.type" editable/>
-          <phone-element :params="element" v-else-if="'phone' === element.type" editable/>
-          <email-element :params="element" v-else-if="'email' === element.type" editable/>
-          <rating-element :params="element" v-else-if="'rating' === element.type" editable/>
-          <switch-element :params="element" v-else-if="'switch' === element.type" editable/>
+          <text-element :params="element" v-if="'text' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
+          <image-element :params="element" v-else-if="'image' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
+          <location-element :params="element" v-else-if="'location' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
+          <datetime-element :params="element" v-else-if="'date' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
+          <datetime-element :params="element" v-else-if="'time' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
+          <datetime-element :params="element" v-else-if="'datetime' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
+          <tag-element :params="element" v-else-if="'tag' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
+          <link-element :params="element" v-else-if="'link' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
+          <phone-element :params="element" v-else-if="'phone' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
+          <email-element :params="element" v-else-if="'email' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
+          <rating-element :params="element" v-else-if="'rating' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
+          <switch-element :params="element" v-else-if="'switch' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
 
           <a @click="removeElement(i)" class="delete" v-if="isEditable"></a>
         </div>
       </div>
     </div>
 
-    <footer class="modal-card-foot slider">
+    <footer class="modal-card-foot-expander" @click="onBlurInput" v-if="!isActiveFooter">
+      <span class="icon has-text-grey-light is-medium"><i class="material-icons">arrow_drop_up</i></span>
+    </footer>
+    <footer class="modal-card-foot slider" :class="{ 'is-active': isActiveFooter }">
       <cl-buttons @add="addElement"/>
     </footer>
   </modal>
@@ -125,6 +129,7 @@
         selectedTemplateNo: 0,
         isTemplate: false,
         isEditable: false,
+        isActiveFooter: true,
         errorMessage: ''
       }
     },
@@ -185,6 +190,12 @@
           })
           this.$router.go(-1)
         }).catch(err => this.$message.error(err))
+      },
+      onFocusInput(e) {
+        this.isActiveFooter = false
+      },
+      onBlurInput(e) {
+        this.isActiveFooter = true
       },
       changeTemplate(index) {
         this.selectedTemplateNo = index
@@ -295,10 +306,7 @@
           width: 100%;
           padding: .5em 1rem;
 
-          .is-size-7 {
-            display: inline-flex;
-            width: 90%;
-            margin-right: auto;
+          .theme-title {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -441,13 +449,30 @@
           }
         }
       }
+      .modal-card-foot-expander {
+        background-color: white;
+        height: 1rem;
+        text-align: center;
+        box-shadow: $box-shadow;
+        z-index: 1;
+
+        .icon {
+          height: 1rem;
+        }
+      }
       .modal-card-foot.slider {
         height: $element-button-size;
+        max-height: 0;
         width: 100%;
         margin: 0;
         padding: 0;
         border-radius: 0;
         overflow: scroll;
+        transition: max-height .2s;
+
+        &.is-active {
+          max-height: $element-button-size;
+        }
 
         .buttons {
           flex-direction: row;
