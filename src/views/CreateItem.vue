@@ -196,6 +196,8 @@
             this.templates = []
             this.item.elements = []
           }
+        }).catch(() => {
+          this.$router.replace('/')
         })
       },
       close() {

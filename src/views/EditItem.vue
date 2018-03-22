@@ -158,6 +158,7 @@
             message: 'データ取得に失敗しました',
             type: 'error'
           })
+          this.$router.replace('/')
         })
       },
       close() {

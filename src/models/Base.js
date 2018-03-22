@@ -77,7 +77,9 @@ export default class Base {
           case 440:
             require('@/store').default.dispatch('setLoggedIn', false)
             // window.location.href = `/signin?redirect=${encodeURIComponent(window.location.pathname)}`
-            break
+            return Promise.reject({
+              status: response.status
+            })
           default:
             console.log('Network response was not ok.')
             return response.json().then(json => Promise.reject(json))
