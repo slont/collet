@@ -45,7 +45,7 @@
             <a><span>白紙</span></a>
           </li>
           <li class="actions-tab">
-            <span class="icon" @click="isEditable = !isEditable">
+            <span class="icon" @click="isEditable = !isEditable" v-if="item.elements.length">
               <i class="material-icons" :class="[isEditable ? 'has-text-dark' : 'has-text-grey-light']">settings</i>
             </span>
           </li>
