@@ -1,8 +1,8 @@
 <template>
   <div class="rating-icon">
-    <i class="material-icons">star</i>
-    <i class="material-icons">star</i>
-    <i class="material-icons">star</i>
+    <i class="star-icon material-icons">star</i>
+    <i class="star-icon material-icons">star</i>
+    <i class="star-icon material-icons">star</i>
   </div>
 </template>
 
@@ -10,7 +10,7 @@
   .rating-icon {
     letter-spacing: -5px;
 
-    > .material-icons {
+    .star-icon {
       font-size: 1rem;
     }
   }
