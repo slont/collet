@@ -43,6 +43,15 @@ Vue.use({
         loggedIn() {
           return this.$store.state.loggedIn
         }
+      },
+      filters: {
+        fromNow(datetime, format = 'YYYY/MM/DD') {
+          if (3 >= moment().diff(datetime, 'days')) {
+            return datetime.fromNow()
+          } else {
+            return datetime.format(format)
+          }
+        }
       }
     })
   }

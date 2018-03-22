@@ -18,7 +18,7 @@
               <span class="user-name has-text-white has-text-weight-bold">
                 {{ theme.createdUser.name }}</span><span class="user-id has-text-grey-lighter">@{{ theme.createdUser.id }}</span>
             </div>
-            <div class="updated-at has-text-grey-lighter">{{ theme.updatedAt && theme.updatedAt.format('YYYY/MM/DD HH:mm') }}</div>
+            <div class="updated-at has-text-grey-lighter" v-if="theme.updatedAt">{{ theme.updatedAt | fromNow('YYYY/MM/DD HH:mm') }}</div>
           </div>
         </div>
       </div>

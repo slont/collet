@@ -3,7 +3,10 @@
     <div class="card-content">
       <div class="media">
         <div class="media-content">
-          <router-link class="item-title text-color-strong is-size-6 has-text-weight-bold" tag="div"
+          <div class="updated-at text-color-weak is-size-8 has-text-right">
+            {{ item.updatedAt | fromNow }}
+          </div>
+          <router-link class="item-title text-color-strong is-size-5 has-text-weight-bold" tag="div"
                        :to="`/u/${theme.createdUser.id}/${theme.id}/${item.id}`">
             {{ item.name }}
           </router-link>
@@ -45,16 +48,15 @@
     .card-content {
       .media {
         align-items: center;
-        $size: 3rem;
-        height: $size;
+        $size: 3.5rem;
+        max-height: $size;
 
         .media-content {
-          max-height: $size;
           overflow: hidden;
 
           .item-title {
             display: flex;
-            height: 2.5em;
+            max-height: 2.5em;
             line-height: 1.25;
             overflow: hidden;
           }

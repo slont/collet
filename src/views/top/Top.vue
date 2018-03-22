@@ -51,6 +51,9 @@
                              :to="`/u/${user.id}/${item.theme.id}/${item.id}`">
                   {{ item.name }}
                 </router-link>
+                <div class="updated-at text-color-weak is-size-8">
+                  {{ item.updatedAt | fromNow }}
+                </div>
               </div>
 
               <div class="media-right" v-if="item.theme.image">
@@ -87,7 +90,7 @@
                   <router-link :to="`/u/${item.theme.createdUser.id}`" class="user-name text-color-weak">
                     {{ item.theme.createdUser.name }}
                   </router-link>
-                  <span class="updated-at text-color-weak">- {{ item.updatedAt.fromNow() }}</span>
+                  <span class="updated-at text-color-weak is-size-8">- {{ item.updatedAt | fromNow }}</span>
                 </div>
               </div>
 

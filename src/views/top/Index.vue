@@ -1,7 +1,7 @@
 <template>
   <div id="top-index">
     <transition name="slide-fade" mode="out-in" class="content">
-      <router-view></router-view>
+      <router-view/>
     </transition>
   </div>
 </template>
