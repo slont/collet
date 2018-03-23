@@ -346,7 +346,7 @@
               }
               .media-right {
                 .image {
-                  height: 34px;
+                  height: 3rem;
                   overflow: hidden;
 
                   img {

@@ -9,7 +9,7 @@
         <label class="label">{{ $t('views.signin.email') }}</label>
         <p class="control is-expanded has-icons-left">
           <input v-model="email" name="email" class="input" :class="{ 'is-danger': errors.has('email') }"
-                 placeholder="slont.maytry@gmail.com" type="text" v-validate="'required|email'">
+                 placeholder="some@sample.com" type="text" v-validate="'required|email'">
           <span class="icon is-small is-left"><i class="material-icons">email</i></span>
           <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
         </p>
