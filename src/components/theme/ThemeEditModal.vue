@@ -135,10 +135,13 @@
         await this.$validator.validateAll().then(async result => {
           if (!result) return
 
-          const body = Object.assign({}, this.theme, {
+          const body = {
+            title: this.theme.title,
+            description: this.theme.description,
+            image: this.theme.image,
             tags: this.tags,
             private: false === this.theme.private ? 0 : 1
-          })
+          }
           await new ThemeModel().update(this.theme.id, body).catch(err => {
             this.errorMessage = err
             throw new Error(err)
