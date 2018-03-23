@@ -4,28 +4,24 @@
     <template v-if="loggedIn">
       <div class="navbar-brand logged-in">
         <router-link to="/" class="navbar-item" exact>
-          <span class="icon"><i class="material-icons">home</i></span>
-          <span class="subtitle is-7">ホーム</span>
+          <span class="icon"><i class="material-icons is-size-2">home</i></span>
         </router-link>
 
         <router-link to="/search" class="navbar-item">
-          <span class="icon"><i class="material-icons">search</i></span>
-          <span class="subtitle is-7">検索</span>
+          <span class="icon"><i class="material-icons is-size-2">search</i></span>
         </router-link>
 
         <a @click="onClickAdd" class="navbar-item button is-primary is-rounded">
-          <span class="icon"><i class="material-icons">edit</i></span>
+          <span class="icon"><i class="material-icons is-size-2">edit</i></span>
         </a>
 
         <router-link :to="`/u/${user.id}/favorites`" class="navbar-item">
-          <span class="icon"><i class="material-icons">favorite_border</i></span>
-          <span class="subtitle is-7">お気に入り</span>
+          <span class="icon"><i class="material-icons is-size-2">favorite_border</i></span>
         </router-link>
 
         <router-link :to="`/u/${user.id}`" class="navbar-item" exact>
           <img :src="user.image" class="circle" v-if="user.image"/>
-          <span class="icon" v-else><i class="material-icons">account_circle</i></span>
-          <span class="subtitle is-7">マイページ</span>
+          <span class="icon" v-else><i class="material-icons is-size-2">account_circle</i></span>
         </router-link>
       </div>
     </template>
@@ -108,18 +104,19 @@
           background: transparent;
 
           span {
+            height: 2rem;
             color: $primary;
           }
         }
         img {
-          max-height: 1.5rem;
-          width: 1.5rem;
+          max-height: 2rem;
+          width: 2rem;
         }
       }
       &.logged-in {
         .navbar-item {
           width: 20%;
-          padding: 5px 0;
+          padding: 8px 0;
         }
         .button {
           height: 46px;
