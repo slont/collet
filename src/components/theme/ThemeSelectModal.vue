@@ -9,14 +9,6 @@
     </header>
 
     <div class="modal-card-body">
-      <div class="field search-field">
-        <div class="control has-icons-right">
-          <input v-model="query" class="input is-rounded"
-                 placeholder="テーマ検索"/>
-          <span class="icon is-small is-right"><i class="material-icons">search</i></span>
-        </div>
-      </div>
-
       <aside class="theme-menu menu">
         <ul class="menu-list">
           <li class="create-item" @click="openThemeCreateModal">

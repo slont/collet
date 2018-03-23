@@ -7,21 +7,6 @@
                       @open-edit-modal="$refs.themeEditModal.open(theme)"
                       @refresh="refresh"/>
 
-          <!--<div class="theme-sub-header">
-            <div class="search-box">
-              <div class="field has-addons">
-                <div class="input-control control">
-                  <input class="input" type="text" placeholder="Find a repository">
-                </div>
-                <div class="control">
-                  <a class="button is-info">
-                    <span class="icon"><i class="material-icons">search</i></span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>-->
-
           <div class="theme-items">
             <el-button type="primary" plain round size="mini" class="add-button is-hidden-mobile"
                        @click="$refs.itemCreateModal.open(theme)" v-if="loggedIn && isMyPage">
@@ -134,13 +119,8 @@
             const res2 = await themeModel.findOneFavorite(this.theme.id, this.selfUser.id).catch(() => ({}))
             this.theme.favorite = res2.data && !!res2.data.themeId
           }
-        }).catch(err => {
-          console.log(err)
-          this.$message({
-            showClose: true,
-            message: 'データ取得に失敗しました',
-            type: 'error'
-          })
+        }).catch(() => {
+          this.$router.replace(`/u/${this.urlUserId}`)
         })
       },
       async refreshItem(itemId) {

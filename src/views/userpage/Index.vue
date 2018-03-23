@@ -51,7 +51,7 @@
 
     <transition name="slide-fade" mode="out-in">
       <favorites ref="child" @open-edit-modal="openEditModal" v-if="$route.path.endsWith('/favorites')"/>
-      <themes ref="child" @open-edit-modal="openEditModal" v-if="$route.path.endsWith('/themes')"/>
+      <themes ref="child" @open-edit-modal="openEditModal" v-else-if="$route.path.endsWith('/themes')"/>
       <items ref="child" @open-edit-modal="openEditModal" v-else/>
     </transition>
 
