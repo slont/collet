@@ -1,5 +1,17 @@
 <template>
   <modal id="theme-edit-modal" class="modal" ref="themeEditModal" @close="reset">
+    <header class="action-modal-header modal-card-head">
+      <span class="back-button icon" @click="close">
+        <i class="material-icons">arrow_back</i>
+      </span>
+
+      <span class="modal-card-title title is-6 has-text-white">テーマ編集</span>
+
+      <guard-button :click="ok" class="ok-button is-success is-inverted is-outlined">
+        保存
+      </guard-button>
+    </header>
+
     <div class="modal-card-body columns">
       <div class="column">
         <div class="field">
@@ -74,14 +86,14 @@
       </div>
     </div>
 
-    <footer class="modal-card-foot has-right">
+    <footer class="modal-card-foot has-right is-hidden-touch">
       <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
       <a @click="$refs.themeDeleteModal.open(theme)" class="button is-danger is-outlined is-left">削除</a>
       <a @click="close" class="button">キャンセル</a>
       <guard-button :click="ok" class="is-info">保存</guard-button>
     </footer>
 
-    <theme-delete-modal ref="themeDeleteModal" @refresh="refreshClose"></theme-delete-modal>
+    <theme-delete-modal ref="themeDeleteModal" @refresh="refreshClose"/>
   </modal>
 </template>
 

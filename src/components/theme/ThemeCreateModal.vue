@@ -1,6 +1,6 @@
 <template>
   <modal id="theme-create-modal" class="modal" ref="themeCreateModal" @close="reset">
-    <header class="top-header modal-card-head">
+    <header class="action-modal-header modal-card-head">
       <span class="back-button icon" @click="close">
         <i class="material-icons">arrow_back</i>
       </span>
@@ -8,7 +8,7 @@
       <span class="modal-card-title title is-6 has-text-white">テーマ作成</span>
 
       <guard-button :click="ok" class="ok-button is-success is-inverted is-outlined">
-        <span class="icon"><i class="material-icons">check</i></span>
+        保存
       </guard-button>
     </header>
 

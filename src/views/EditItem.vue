@@ -13,7 +13,7 @@
       </div>
 
       <guard-button :click="save" class="ok-button is-success is-inverted is-outlined">
-        <span class="icon"><i class="material-icons">check</i></span>
+        保存
       </guard-button>
     </header>
     <header class="theme-header modal-card-head header-shadow">

@@ -99,6 +99,17 @@
 <style lang="scss" rel="stylesheet/scss">
   #theme-select-modal {
     > .modal-card {
+      .modal-card-head {
+        height: 3rem;
+        padding: 1em;
+        color: white;
+        background-color: $main-color;
+        border: none;
+
+        .back-button {
+          margin-right: 1em;
+        }
+      }
       .modal-card-body {
         margin-bottom: 0;
         padding: 1rem;

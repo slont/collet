@@ -1,6 +1,6 @@
 <template>
   <modal id="create-item" class="modal" ref="createItem">
-    <header class="top-header modal-card-head">
+    <header class="action-modal-header modal-card-head">
       <span class="back-button icon" @click="$router.go(-1)">
         <i class="material-icons">arrow_back</i>
       </span>
@@ -13,7 +13,7 @@
       </div>
 
       <guard-button :click="save" class="ok-button is-success is-inverted is-outlined">
-        <span class="icon"><i class="material-icons">check</i></span>
+        保存
       </guard-button>
     </header>
     <header class="theme-header modal-card-head header-shadow" @click="openThemeSelectModal">
@@ -316,24 +316,9 @@
       .modal-card-foot {
         border-radius: 0;
       }
-      .top-header {
-        height: $header-nav-height;
-        padding: 1em;
-        color: white;
-        background-color: $main-color;
-        border: none;
-
-        .back-button {
-          margin-right: 1em;
-        }
-        .modal-card-title {
-          margin-bottom: 0;
-        }
+      .action-modal-header {
         .template-checkbox {
           margin-bottom: 0;
-        }
-        .ok-button {
-          border: none;
         }
       }
       .theme-header {
