@@ -1,5 +1,5 @@
 <template>
-  <div class="cl-element">
+  <div class="cl-element" :class="{ 'is-editable': editable }">
     <label class="view-label label control" v-if="params.label && !editable">
       {{ params.label }}
     </label>

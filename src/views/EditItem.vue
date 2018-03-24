@@ -209,7 +209,7 @@
         this.item.elements.push(element)
         this.setOrder()
         this.$nextTick(() => {
-          const container = this.$el.querySelector('.main-column')
+          const container = this.$el.querySelector('.modal-card-body')
           container.scrollTop = container.scrollHeight
         })
       },
