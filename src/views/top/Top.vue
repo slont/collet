@@ -40,7 +40,11 @@
       </div>
       <div class="card">
         <transition-group tag="div" name="slide-fade" mode="out-in" class="item-list column is-12 card-content">
-          <div v-for="item in updatedItems" class="updated-cullet" :key="item.id">
+          <div v-for="(item, i) in updatedItems" class="updated-cullet flexbox" :key="item.id">
+            <div class="updated-at text-color-weak has-text-weight-bold has-text-right">
+              <div v-if="visibleUpdatedAt(item.updatedAt, i)">{{ item.updatedAt | fromNow('M/D') }}</div>
+            </div>
+
             <div class="media">
               <div class="media-content">
                 <router-link class="theme-title subtitle text-color-weak is-size-7" tag="div"
@@ -51,9 +55,6 @@
                              :to="`/u/${user.id}/${item.theme.id}/${item.id}`">
                   {{ item.name }}
                 </router-link>
-                <div class="updated-at text-color-weak is-size-8">
-                  {{ item.updatedAt | fromNow }}
-                </div>
               </div>
 
               <div class="media-right" v-if="item.theme.image">
@@ -186,6 +187,12 @@
       },
       openEditModal(theme) {
         this.$refs.themeEditModal.open(theme)
+      },
+      visibleUpdatedAt(updatedAt, index) {
+        if (index === this.updatedItems.length - 1) {
+          return true
+        }
+        return 0 !== this.updatedItems[index + 1].updatedAt.diff(updatedAt, 'days')
       }
     }
   }
@@ -299,6 +306,7 @@
           padding: 0;
 
           .updated-cullet {
+            align-items: flex-end;
             padding: .5em 1em;
 
             &:first-child {
@@ -308,11 +316,22 @@
               padding-top: 0;
             }
             &:last-child {
+              .updated-at div,
               .media {
                 border-bottom: none;
               }
             }
+            > div {
+              min-width: 54px;
+            }
+            .updated-at {
+              div {
+                padding-right: 1em;
+                border-bottom: $border-style;
+              }
+            }
             .media {
+              flex: 1;
               padding-bottom: .5em;
               border-bottom: $border-style;
 
@@ -331,17 +350,6 @@
                   max-height: 2.5em;
                   line-height: 1.25;
                   overflow: hidden;
-                }
-                .user-profile {
-                  display: flex;
-                  align-items: center;
-
-                  > :not(:last-child) {
-                    margin-right: .35em;
-                  }
-                  .image img {
-                    max-height: 100%;
-                  }
                 }
               }
               .media-right {
