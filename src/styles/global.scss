@@ -66,6 +66,16 @@ body {
   }
 }
 
+.icon {
+  height: 1em;
+  width: 1em;
+  vertical-align: -.1em;
+
+  .material-icons {
+    font-size: 1em;
+  }
+}
+
 .title:not(.is-spaced) + .subtitle {
   margin-top: -.5rem;
 }

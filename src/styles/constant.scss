@@ -5,6 +5,7 @@ $text-color-weak: rgba($text-color-base, .5);
 $main-color: #ff7600;
 $sub-color: #069dff;
 $bg-color: #ffffff;
+$bg-color-main: rgba($main-color, .15);
 $border: rgba($text-color-weak, .1);
 $label-color: rgba($text-color, .8);
 $border-style: 1px solid $border;

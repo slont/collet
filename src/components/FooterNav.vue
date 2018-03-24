@@ -4,27 +4,27 @@
     <template v-if="loggedIn">
       <div class="navbar-brand logged-in">
         <router-link to="/" class="navbar-item" exact>
-          <span class="icon"><i class="material-icons">home</i></span>
+          <span class="icon is-size-3"><i class="material-icons">home</i></span>
           <span class="subtitle is-7 has-text-weight-bold">Home</span>
         </router-link>
 
         <router-link to="/search" class="navbar-item">
-          <span class="icon"><i class="material-icons">search</i></span>
+          <span class="icon is-size-3"><i class="material-icons">search</i></span>
           <span class="subtitle is-7 has-text-weight-bold">Search</span>
         </router-link>
 
         <a @click="onClickAdd" class="navbar-item button is-primary is-rounded">
-          <span class="icon"><i class="material-icons">edit</i></span>
+          <span class="icon is-size-3"><i class="material-icons">edit</i></span>
         </a>
 
         <router-link :to="`/u/${user.id}/favorites`" class="navbar-item">
-          <span class="icon"><i class="material-icons">favorite_border</i></span>
+          <span class="icon is-size-3"><i class="material-icons">favorite_border</i></span>
           <span class="subtitle is-7 has-text-weight-bold">Favorite</span>
         </router-link>
 
         <router-link :to="`/u/${user.id}`" class="navbar-item" exact>
           <img :src="user.image" class="circle" v-if="user.image"/>
-          <span class="icon" v-else><i class="material-icons">account_circle</i></span>
+          <span class="icon is-size-3" v-else><i class="material-icons">account_circle</i></span>
           <span class="subtitle is-7 has-text-weight-bold">My Page</span>
         </router-link>
       </div>

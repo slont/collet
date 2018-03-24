@@ -13,6 +13,10 @@
                            :to="`/u/${item.theme.createdUser.id}/${item.theme.id}/${item.id}`">
                 {{ item.name }}
               </router-link>
+              <div class="updated-at text-color-weak is-size-8">
+                <span class="icon"><i class="material-icons">access_time</i></span>
+                <span>{{ item.updatedAt | fromNow }}</span>
+              </div>
             </div>
 
             <div class="media-right" v-if="item.theme.image">
@@ -96,10 +100,8 @@
 
       .item-list {
         padding: 0;
+        margin: 1em 0;
 
-        &:not(:last-child) {
-          margin-bottom: 1em;
-        }
         .new-cullet-card {
           .card-content {
             .media {

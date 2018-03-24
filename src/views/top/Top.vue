@@ -196,7 +196,7 @@
     max-width: $width;
     margin-left: auto;
     margin-right: auto;
-    background-color: rgba($main-color, .15);
+    background-color: $bg-color-main;
 
     .new-cullet-list {
       .new-cullet-label {

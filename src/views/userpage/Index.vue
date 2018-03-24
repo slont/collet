@@ -125,6 +125,8 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-index {
+    background-color: $bg-color-main;
+
     .userpage-header {
       background-color: white;
 
