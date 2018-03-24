@@ -89,9 +89,6 @@
     }
     .input,
     .textarea {
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-
       &:focus {
         z-index: 2;
       }

@@ -5,10 +5,12 @@
     <span class="element-type-icon icon is-left" v-if="editable">
       <i class="material-icons">label_outline</i>
     </span>
-    <p class="control">
-      <input v-model.trim="params.valueStr" class="input" type="text"
-             @focus="$emit('focus')" @blur="$emit('blur')">
-    </p>
+    <div class="control flexbox">
+      <el-tag v-for="(tag, i) in tags" :key="tag" type="warning" :closable="editable"
+              :disable-transitions="true" @close="remove(i)">{{tag}}</el-tag>
+      <input v-model="inputVal" class="input-new-tag input" v-if="editable"
+             @keyup.enter="confirmInput" @focus="$emit('focus')" @blur="onBlur"/>
+    </div>
   </cl-element>
 </template>
 
@@ -32,7 +34,26 @@
     },
     data() {
       return {
-        strs: this.value.valueStr.split(DELIMITER)
+        tags: this.params.valueStr ? this.params.valueStr.split(DELIMITER) : [],
+        inputVal: ''
+      }
+    },
+    methods: {
+      remove(i) {
+        this.$delete(this.tags, i)
+        this.params.valueStr = this.tags.join(DELIMITER)
+      },
+      confirmInput() {
+        const inputVal = this.inputVal
+        if (inputVal) {
+          this.tags.push(inputVal)
+        }
+        this.inputVal = ''
+        this.params.valueStr = this.tags.join(DELIMITER)
+      },
+      onBlur() {
+        this.confirmInput()
+        this.$emit('blur')
       }
     }
   }
@@ -40,5 +61,21 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .tag-element {
+    .view-label.label {
+      margin-bottom: .25rem;
+    }
+    .control.flexbox {
+      flex-wrap: wrap;
+      margin-left: -.5rem;
+
+      .el-tag {
+        font-size: $size-6;
+        margin-left: .5rem;
+      }
+      .input-new-tag {
+        margin-left: .5rem;
+        width: auto;
+      }
+    }
   }
 </style>
