@@ -3,9 +3,18 @@
               @remove="$emit('remove')" :editable="editable"
               @focus="$emit('focus')" @blur="$emit('blur')">
     <span class="element-type-icon icon is-left" v-if="editable"><rating-icon/></span>
-    <p class="control">
+    <div class="control flexbox">
       <el-rate v-model="params.valueNum" :max="Number(params.valueStr)" :disabled="!editable"/>
-    </p>
+
+      <div class="buttons has-addons is-justify-end">
+        <button class="toggle-button button is-outlined is-justify-end" @click="minus" v-if="editable">
+          <span class="icon"><i class="material-icons">remove</i></span>
+        </button>
+        <button class="toggle-button button is-outlined is-justify-end" @click="plus" v-if="editable">
+          <span class="icon"><i class="material-icons">add</i></span>
+        </button>
+      </div>
+    </div>
   </cl-element>
 </template>
 
@@ -20,12 +29,20 @@
         type: Object,
         default: {
           label: '',
-          valueStr: '',
+          valueStr: '1',
           valueNum: 0,
           valueDbl: 0.0
         }
       },
       editable: Boolean
+    },
+    methods: {
+      plus() {
+        this.params.valueStr = String(Math.min(10, Number(this.params.valueStr) + 1))
+      },
+      minus() {
+        this.params.valueStr = String(Math.max(1, Number(this.params.valueStr) - 1))
+      }
     }
   }
 </script>

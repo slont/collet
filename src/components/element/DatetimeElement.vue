@@ -13,7 +13,7 @@
                       :placeholder="`Select ${params.type}`"
                       @focus="$emit('focus')" @blur="$emit('blur')"/>
 
-      <button class="toggle-button button is-justify-end" v-if="editable" @click="toggle">
+      <button class="toggle-button button is-outlined is-justify-end" v-if="editable" @click="toggle">
         <span v-if="'date' === params.type">日</span>
         <span v-if="'time' === params.type">時</span>
         <span v-if="'datetime' === params.type">日時</span>
