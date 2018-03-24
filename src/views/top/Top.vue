@@ -329,6 +329,7 @@
             .updated-at {
               div {
                 padding-right: 1em;
+                padding-bottom: .5em;
                 border-bottom: $border-style;
               }
             }

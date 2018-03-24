@@ -8,7 +8,7 @@
       <div class="dark-mask" @click="$router.push(`/u/${theme.createdUser.id}/${theme.id}`)">
         <span class="private-icon icon" v-if="theme.private"><i class="material-icons">lock</i></span>
 
-        <div class="title is-6 has-text-white">{{ theme.title }}</div>
+        <div class="title is-5 has-text-white">{{ theme.title }}</div>
         <div class="user-profile is-size-7">
           <figure class="image is-32x32" v-if="theme.createdUser.image">
             <img class="circle" :src="theme.createdUser.image">

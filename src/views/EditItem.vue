@@ -71,7 +71,7 @@
     </div>
 
     <footer class="modal-card-foot-expander" @click="onBlurInput" v-if="!isActiveFooter">
-      <span class="icon has-text-grey-light is-medium"><i class="material-icons">arrow_drop_up</i></span>
+      <span class="icon has-text-grey-light is-size-5"><i class="material-icons">arrow_drop_up</i></span>
     </footer>
     <footer class="modal-card-foot slider" :class="{ 'is-active': isActiveFooter }">
       <cl-buttons @add="addElement"/>
@@ -451,14 +451,9 @@
       }
       .modal-card-foot-expander {
         background-color: white;
-        height: 1rem;
         text-align: center;
         box-shadow: $box-shadow;
         z-index: 1;
-
-        .icon {
-          height: 1rem;
-        }
       }
       .modal-card-foot.slider {
         height: $element-button-size;
