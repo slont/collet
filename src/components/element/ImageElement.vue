@@ -2,7 +2,7 @@
   <cl-element class="image-element" :params="params" placeholder="ラベル（オプション）"
               @remove="$emit('remove')" :editable="editable"
               @focus="$emit('focus')" @blur="$emit('blur')">
-    <span class="element-type-icon icon is-small is-left" v-if="editable">
+    <span class="element-type-icon icon is-left" v-if="editable">
       <i class="material-icons">photo</i>
     </span>
     <div class="control file" v-if="editable">

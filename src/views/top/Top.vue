@@ -36,7 +36,9 @@
 
     <div class="updated-cullet-list columns is-multiline" v-if="user.id && updatedItems.length">
       <div class="updated-cullet-label column is-12" key="label">
-        <label class="label">{{ user.name }}の更新一覧</label>
+        <router-link :to="`/u/${user.id}`" tag="label" class="label is-size-5 has-text-centered">
+          {{ user.name }}の更新一覧
+        </router-link>
       </div>
       <div class="card">
         <transition-group tag="div" name="slide-fade" mode="out-in" class="item-list column is-12 card-content">
@@ -68,7 +70,7 @@
 
     <transition-group tag="div" name="slide-fade" mode="out-in" class="new-cullet-list columns is-multiline">
       <div class="new-cullet-label column is-12" key="label">
-        <label class="label">新着カレット一覧</label>
+        <label class="label is-size-5 has-text-centered">新着カレット一覧</label>
       </div>
       <div v-for="item in newItems" class="item-list column is-half" :key="item.id">
         <div class="new-cullet-card card">

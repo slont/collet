@@ -19,7 +19,7 @@
     <header class="theme-header modal-card-head header-shadow" @click="openThemeSelectModal">
       <a class="text-color-base">
         <span class="theme-title is-size-7">{{ theme.title }}</span>
-        <span class="icon has-text-grey-light is-small"><i class="material-icons">arrow_drop_down</i></span>
+        <span class="icon has-text-grey-light is-size-4"><i class="material-icons">arrow_drop_down</i></span>
       </a>
     </header>
 
@@ -45,7 +45,7 @@
             <a><span>白紙</span></a>
           </li>
           <li class="actions-tab">
-            <span class="icon" @click="isEditable = !isEditable" v-if="item.elements.length">
+            <span class="icon is-size-4" @click="isEditable = !isEditable" v-if="item.elements.length">
               <i class="material-icons" :class="[isEditable ? 'has-text-dark' : 'has-text-grey-light']">settings</i>
             </span>
           </li>

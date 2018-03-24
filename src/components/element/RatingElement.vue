@@ -2,7 +2,7 @@
   <cl-element class="rating-element" :params="params" placeholder="ラベル（オプション）"
               @remove="$emit('remove')" :editable="editable"
               @focus="$emit('focus')" @blur="$emit('blur')">
-    <span class="element-type-icon icon is-small is-left" v-if="editable"><rating-icon/></span>
+    <span class="element-type-icon icon is-left" v-if="editable"><rating-icon/></span>
     <p class="control">
       <el-rate v-model="params.valueNum" :max="Number(params.valueStr)" :disabled="!editable"/>
     </p>
@@ -36,7 +36,7 @@
       display: flex;
 
       > .material-icons {
-        font-size: .5em;
+        font-size: .35em !important;
         color: gainsboro;
       }
     }

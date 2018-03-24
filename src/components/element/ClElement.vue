@@ -7,7 +7,7 @@
       <input v-model.trim="params.label" class="input label" type="text" :placeholder="placeholder"
              @focus="$emit('focus')" @blur="$emit('blur')">
     </div>
-    <slot></slot>
+    <slot/>
   </div>
 </template>
 
@@ -66,9 +66,10 @@
         background-color: transparent;
       }
       + .element-type-icon {
+        font-size: 1.5em;
         position: absolute;
-        top: .75em;
-        left: 1em;
+        top: .5em;
+        left: .5em;
 
         > .material-icons {
           color: gainsboro;
