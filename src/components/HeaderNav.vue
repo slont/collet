@@ -1,5 +1,5 @@
 <template>
-  <nav id="header-nav" class="navbar is-fixed-top">
+  <nav id="header-nav" class="navbar is-fixed-top" :class="{ 'is-active': activeHeader }">
     <div class="container">
       <div class="navbar-brand">
         <div class="navbar-item logo" @click="$router.push(`/`)">
@@ -79,6 +79,9 @@
       }
     },
     computed: {
+      activeHeader() {
+        return this.$store.state.activeHeader
+      },
       user() {
         return this.$store.state.user
       }

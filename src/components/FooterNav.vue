@@ -1,5 +1,5 @@
 <template>
-  <nav id="footer-nav" class="navbar is-fixed-bottom">
+  <nav id="footer-nav" class="navbar is-fixed-bottom" :class="{ 'is-active': activeFooter }">
     <!-- ログイン済 -->
     <template v-if="loggedIn">
       <div class="navbar-brand logged-in">
@@ -61,6 +61,9 @@
       }
     },
     computed: {
+      activeFooter() {
+        return this.$store.state.activeFooter
+      },
       user() {
         return this.$store.state.user
       }

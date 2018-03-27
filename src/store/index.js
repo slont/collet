@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import AuthModel from '@/models/Auth'
 import { LOCALES } from '@/constant'
-import { SET_USER, SET_LOCALE, SET_LOGGED_IN, SET_LOGIN_INFO } from './mutation-types'
+import { SET_USER, SET_LOCALE, SET_LOGGED_IN, SET_LOGIN_INFO, SET_HEADER_ACTIVE, SET_FOOTER_ACTIVE } from './mutation-types'
 
 Vue.use(Vuex)
 
@@ -12,7 +12,9 @@ export default new Vuex.Store({
     locale: LOCALES.JA,
     user: {},
     loggedIn: false,
-    loginInfo: {}
+    loginInfo: {},
+    activeHeader: true,
+    activeFooter: true
   },
   getters: {},
   actions: {
@@ -74,6 +76,12 @@ export default new Vuex.Store({
         }
         return Promise.reject(err)
       })
+    },
+    setActiveHeader({ commit }, active) {
+      commit(SET_HEADER_ACTIVE, active)
+    },
+    setActiveFooter({ commit }, active) {
+      commit(SET_FOOTER_ACTIVE, active)
     }
   },
   mutations: {
@@ -88,6 +96,12 @@ export default new Vuex.Store({
     },
     [SET_LOGIN_INFO](state, loginInfo) {
       state.loginInfo = loginInfo
+    },
+    [SET_HEADER_ACTIVE](state, active) {
+      state.activeHeader = active
+    },
+    [SET_FOOTER_ACTIVE](state, active) {
+      state.activeFooter = active
     }
   },
   plugins: [createPersistedState()]
