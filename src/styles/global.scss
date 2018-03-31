@@ -120,15 +120,21 @@ body {
   }
 }
 
-.control.loading-mask.is-loading {
-  opacity: .75;
 
-  &:after {
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
+.control {
+  font-size: $size-5;
+
+  .loading-mask.is-loading {
+    opacity: .75;
+
+    &:after {
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+    }
   }
 }
+
 
 .field {
   .label {
@@ -176,6 +182,10 @@ body {
   .is-justify-end {
     margin-left: auto;
   }
+}
+
+.fullwidth {
+  width: 100%;
 }
 
 .el-input__inner {

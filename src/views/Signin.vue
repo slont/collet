@@ -1,8 +1,10 @@
 <template>
   <div id="signin">
     <div class="box">
-      <div class="title has-text-centered">{{ $t('title') }}</div>
-      <p v-if="$route.query.redirect">
+      <div class="title has-text-centered">
+        <img class="cullet-logo" src="/static/img/cullet-logo_orange.png" alt="Colette">
+      </div>
+      <p class="has-text-centered" v-if="$route.query.redirect">
         {{ $t('views.signin.redirectMessage') }}
       </p>
       <div class="field-email field">
@@ -10,7 +12,7 @@
         <p class="control is-expanded has-icons-left">
           <input v-model="email" name="email" class="input" :class="{ 'is-danger': errors.has('email') }"
                  placeholder="some@sample.com" type="text" v-validate="'required|email'">
-          <span class="icon is-small is-left"><i class="material-icons">email</i></span>
+          <span class="icon is-left"><i class="material-icons">email</i></span>
           <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
         </p>
       </div>
@@ -20,7 +22,7 @@
         <p class="control is-expanded has-icons-left">
           <input v-model="password" name="password" class="input" :class="{ 'is-danger': errors.has('password') }"
                  placeholder="password" type="password" v-validate="'required|min:6'">
-          <span class="icon is-small is-left"><i class="material-icons">vpn_key</i></span>
+          <span class="icon is-left"><i class="material-icons">vpn_key</i></span>
           <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
         </p>
       </div>
@@ -35,7 +37,7 @@
       </div>
 
       <div class="has-text-centered">
-        <guard-button :click="ok" class="is-info" :class="{ 'is-loading': isLoading }">
+        <guard-button :click="ok" class="is-primary is-size-5 fullwidth" :class="{ 'is-loading': isLoading }">
           {{ $t('buttons.signin') }}
         </guard-button>
       </div>
@@ -132,6 +134,10 @@
 
     .title {
       text-align: center;
+
+      .cullet-logo {
+        height: 64px;
+      }
     }
     .box {
       max-width: 400px;

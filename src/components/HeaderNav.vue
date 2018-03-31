@@ -3,8 +3,7 @@
     <div class="container">
       <div class="navbar-brand">
         <div class="navbar-item logo" @click="$router.push(`/`)">
-          <img src="/static/img/icons/cullet-256x256.png" alt="Colette">
-          <img src="/static/img/cullet-logo-color-2.png" alt="Colette">
+          <img class="cullet-logo" src="/static/img/cullet-logo_orange.png" alt="Colette">
         </div>
 
         <div class="navbar-item field search-field is-hidden-tablet" v-if="!loggedIn">
@@ -125,7 +124,7 @@
 
       .navbar-brand {
         .logo {
-          padding-left: 0;
+          padding-left: .5em;
           padding-right: 0;
           cursor: pointer;
 
