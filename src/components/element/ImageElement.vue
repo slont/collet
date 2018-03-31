@@ -1,12 +1,17 @@
 <template>
-  <cl-element class="image-element" :params="params" placeholder="画像"
-              @remove="$emit('remove')" :editable="editable">
+  <cl-element class="image-element" :params="params" placeholder="ラベル（オプション）"
+              @remove="$emit('remove')" :editable="editable"
+              @focus="$emit('focus')" @blur="$emit('blur')">
+    <span class="element-type-icon icon is-left" v-if="editable">
+      <i class="material-icons">photo</i>
+    </span>
     <div class="control file" v-if="editable">
       <div class="field image-field">
         <div class="control loading-mask" :class="{ 'is-loading': params.valueStr.substring(0, 4) === 'data' }">
           <div class="file is-boxed">
             <label class="file-label">
-              <input @change="changeImage" class="file-input" type="file" name="resume">
+              <input @change="changeImage" class="file-input" type="file" name="resume"
+                     @focus="$emit('focus')" @blur="$emit('blur')">
               <span class="file-view" v-if="params.valueStr">
                 <img :src="params.valueStr"/>
                 <a @click.stop.prevent="removeImage" class="delete"></a>
@@ -72,6 +77,7 @@
 <style lang="scss" rel="stylesheet/scss">
   .image-element {
     .file-view {
+      margin-top: 0 !important;
       text-align: center;
 
       .delete {

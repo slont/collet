@@ -2,24 +2,23 @@
   <modal id="item-create-modal" class="modal" :class="`page-${pageIndex}`" ref="itemCreateModal" @close="reset">
     <div class="modal-card-body">
       <div class="columns is-gapless">
-        <div class="left-column column">
+        <div class="left-column column is-hidden-mobile">
           <div class="slider">
-            <div class="buttons has-addons is-centered">
-              <text-button @add="addElement"></text-button>
-              <image-button @add="addElement"></image-button>
-              <location-button @add="addElement"></location-button>
-              <datetime-button @add="addElement"></datetime-button>
-              <link-button @add="addElement"></link-button>
-              <rating-button @add="addElement"></rating-button>
-              <tag-button @add="addElement"></tag-button>
-              <phone-button @add="addElement"></phone-button>
-              <email-button @add="addElement"></email-button>
-            </div>
+            <cl-buttons @add="addElement" class="is-centered"/>
           </div>
         </div>
 
         <div class="main-column column">
-          <div class="template-tabs tabs is-small" v-if="templates.length">
+          <div class="theme-dropdown dropdown">
+            <div class="dropdown-trigger" @click="openThemeSelectModal">
+              <a class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                <span>{{ theme.title }}</span>
+                <span class="icon is-small"><i class="material-icons">arrow_drop_down</i></span>
+              </a>
+            </div>
+          </div>
+
+          <div class="template-tabs tabs is-boxed is-small" v-if="templates.length">
             <ul>
               <li v-for="(template, i) in templates"
                   :class="{ 'is-active': selectedTemplateNo === i }" @click="changeTemplate(i)">
@@ -36,7 +35,8 @@
               <div class="content">
                 <div class="field">
                   <div class="item-name control">
-                    <input v-model.trim="item.name" class="input title is-3" type="text" placeholder="Item Name" name="itemName"
+                    <input v-model.trim="item.name" class="input title is-3" type="text" placeholder="Cullet Name"
+                           name="itemName"
                            v-validate="'required'" :class="{ 'is-danger': errors.has('itemName') }">
                     <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
                   </div>
@@ -53,18 +53,18 @@
                 <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
               </div>
 
-              <text-element :params="element" v-if="'text' === element.type" editable></text-element>
-              <image-element :params="element" v-else-if="'image' === element.type" editable></image-element>
-              <location-element :params="element" v-else-if="'location' === element.type" editable></location-element>
-              <datetime-element :params="element" v-else-if="'date' === element.type" editable></datetime-element>
-              <datetime-element :params="element" v-else-if="'time' === element.type" editable></datetime-element>
-              <datetime-element :params="element" v-else-if="'datetime' === element.type" editable></datetime-element>
-              <tag-element :params="element" v-else-if="'tag' === element.type" editable></tag-element>
-              <link-element :params="element" v-else-if="'link' === element.type" editable></link-element>
-              <phone-element :params="element" v-else-if="'phone' === element.type" editable></phone-element>
-              <email-element :params="element" v-else-if="'email' === element.type" editable></email-element>
-              <rating-element :params="element" v-else-if="'rating' === element.type" editable></rating-element>
-              <switch-element :params="element" v-else-if="'switch' === element.type" editable></switch-element>
+              <text-element :params="element" v-if="'text' === element.type" editable/>
+              <image-element :params="element" v-else-if="'image' === element.type" editable/>
+              <location-element :params="element" v-else-if="'location' === element.type" editable/>
+              <datetime-element :params="element" v-else-if="'date' === element.type" editable/>
+              <datetime-element :params="element" v-else-if="'time' === element.type" editable/>
+              <datetime-element :params="element" v-else-if="'datetime' === element.type" editable/>
+              <tag-element :params="element" v-else-if="'tag' === element.type" editable/>
+              <link-element :params="element" v-else-if="'link' === element.type" editable/>
+              <phone-element :params="element" v-else-if="'phone' === element.type" editable/>
+              <email-element :params="element" v-else-if="'email' === element.type" editable/>
+              <rating-element :params="element" v-else-if="'rating' === element.type" editable/>
+              <switch-element :params="element" v-else-if="'switch' === element.type" editable/>
 
               <a @click="removeElement(i)" class="delete"></a>
             </div>
@@ -73,14 +73,20 @@
       </div>
     </div>
 
+    <div class="modal-card-body slider is-hidden-tablet">
+      <cl-buttons @add="addElement"/>
+    </div>
+
     <footer class="modal-card-foot has-right">
       <label class="checkbox">
         <input v-model="isTemplate" type="checkbox">
         テンプレート登録
       </label>
-      <button @click="close" class="button">キャンセル</button>
-      <button @click="ok" class="button is-info">作成</button>
+      <a @click="close" class="button">キャンセル</a>
+      <guard-button :click="ok" class="is-info">作成</guard-button>
     </footer>
+
+    <theme-select-modal ref="themeSelectModal" @refresh="refresh"/>
   </modal>
 </template>
 
@@ -89,17 +95,8 @@
   import ItemModel from '@/models/Item'
   import FileModel from '@/models/File'
   import Modal from '@/components/Modal'
-  import ElementButton from '@/components/element/button/ElementButton'
-  import TextButton from '@/components/element/button/TextButton'
-  import ImageButton from '@/components/element/button/ImageButton'
-  import LocationButton from '@/components/element/button/LocationButton'
-  import DatetimeButton from '@/components/element/button/DatetimeButton'
-  import TagButton from '@/components/element/button/TagButton'
-  import LinkButton from '@/components/element/button/LinkButton'
-  import PhoneButton from '@/components/element/button/PhoneButton'
-  import EmailButton from '@/components/element/button/EmailButton'
-  import RatingButton from '@/components/element/button/RatingButton'
-  import SwitchButton from '@/components/element/button/SwitchButton'
+  import ThemeSelectModal from '@/components/theme/ThemeSelectModal'
+  import ClButtons from '@/components/element/button/ClButtons'
   import TextElement from '@/components/element/TextElement'
   import ImageElement from '@/components/element/ImageElement'
   import LocationElement from '@/components/element/LocationElement'
@@ -114,17 +111,8 @@
   export default {
     components: {
       Modal,
-      ElementButton,
-      TextButton,
-      ImageButton,
-      LocationButton,
-      DatetimeButton,
-      TagButton,
-      LinkButton,
-      PhoneButton,
-      EmailButton,
-      RatingButton,
-      SwitchButton,
+      ThemeSelectModal,
+      ClButtons,
       TextElement,
       ImageElement,
       LocationElement,
@@ -140,10 +128,16 @@
       return {
         pageIndex: 0,
         draggingElement: null,
+        theme: {
+          id: '',
+          title: '',
+          templates: []
+        },
         item: {
           name: '',
           elements: []
         },
+        themes: [],
         templates: [],
         selectedTemplateNo: 0,
         isTemplate: false,
@@ -152,12 +146,16 @@
     },
     computed: {
       themeId() {
-        return this.$route.params.themeId
+        return this.theme.id || this.$route.params.themeId
       }
     },
     methods: {
-      open() {
+      open(theme) {
+        this.refresh(theme)
         this.$refs.itemCreateModal.open()
+      },
+      refresh(theme) {
+        this.theme = theme
 
         new TemplateModel(this.themeId).find({
           p: 0,
@@ -165,7 +163,10 @@
         }).then(res => {
           if (res.data.length) {
             this.templates = res.data
-            Object.assign(this.item.elements, this.templates[0].elements)
+            this.item.elements = this.templates[0].elements
+          } else {
+            this.templates = []
+            this.item.elements = []
           }
         })
       },
@@ -173,26 +174,26 @@
         this.reset()
         this.$refs.itemCreateModal.close()
       },
-      ok() {
-        this.$validator.validateAll().then(result => {
+      async ok() {
+        await this.$validator.validateAll().then(async result => {
           if (!result) return
 
           this.setOrder()
           const body = Object.assign({
             isTemplate: this.isTemplate
           }, this.item)
-          new ItemModel(this.themeId).create(body).then(() => {
-            this.$emit('refresh')
-            this.$message({
-              showClose: true,
-              message: '作成されました',
-              type: 'success'
-            })
-            this.close()
-          }).catch(err => {
+          await new ItemModel(this.themeId).create(body).catch(err => {
             this.errorMessage = err
           })
-        })
+
+          this.$emit('refresh')
+          this.$message({
+            showClose: true,
+            message: '作成されました',
+            type: 'success'
+          })
+          this.close()
+        }).catch(err => this.$message.error(err))
       },
       reset() {
         Object.assign(this.$data, this.$options.data.call(this))
@@ -255,6 +256,9 @@
       },
       removeImage() {
         this.item.image = ''
+      },
+      openThemeSelectModal() {
+        this.$refs.themeSelectModal.open(this.theme)
       }
     }
   }
@@ -262,7 +266,9 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #item-create-modal {
-    .modal-card {
+    $button-count: 9;
+
+    > .modal-card {
       display: flex;
       flex-direction: column;
       height: 95%;
@@ -296,9 +302,6 @@
                   margin-right: 0;
                   margin-bottom: -1px;
                 }
-                .template-button {
-                  @extend .is-primary;
-                }
                 .subtitle {
                   margin-bottom: .5em;
                   color: grey;
@@ -312,11 +315,30 @@
           .main-column {
             $sort-button-size: 2rem;
             $margin-side: $sort-button-size + .5rem;
-            padding: 0 4rem 1.5rem !important;
+            padding: 0 0 1.5rem 3rem !important;
             background-color: white;
             overflow-y: scroll;
             z-index: 0;
 
+            .theme-dropdown {
+              width: 100%;
+
+              .dropdown-trigger {
+                width: 100%;
+
+                .button {
+                  max-width: 70%;
+
+                  :first-child {
+                    max-width: 95%;
+                    overflow: hidden;
+                  }
+                  .icon {
+                    margin-left: auto;
+                  }
+                }
+              }
+            }
             .template-tabs {
               margin-bottom: 1rem;
 
@@ -423,10 +445,48 @@
           }
         }
       }
-    }
-    .modal-card-foot {
-      .checkbox {
-        margin-right: 1rem;
+      .modal-card-body.slider {
+        height: $element-button-size + 1rem;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border-radius: 0;
+        overflow: scroll;
+
+        .buttons {
+          width: $element-button-size * $button-count;
+
+          .el-button {
+            margin-bottom: 0;
+          }
+        }
+      }
+      .modal-card-foot {
+        .checkbox {
+          font-size: $size-small;
+          margin-right: 1rem;
+        }
+      }
+      @media screen and (max-width: 768px) {
+        .modal-card-body {
+          padding-left: 0;
+          padding-right: 0;
+
+          .columns .main-column {
+            margin-bottom: 1rem;
+            padding: 0 2.75rem !important;
+
+            > .dropdown,
+            > .tabs,
+            > .media {
+              margin-left: -1.5rem;
+              margin-right: -1.5rem;
+            }
+          }
+          .buttons .button {
+            margin-bottom: 0;
+          }
+        }
       }
     }
   }

@@ -2,14 +2,14 @@
   <div id="userpage-favorites">
     <transition-group name="slide-fade" mode="out-in" class="columns is-multiline">
       <div v-for="theme in themes" class="column is-half" :key="theme.id">
-        <theme-card :theme="theme" @open-edit-modal="$emit('open-edit-modal', theme)"></theme-card>
+        <theme-card :theme="theme" @open-edit-modal="$emit('open-edit-modal', theme)"/>
       </div>
     </transition-group>
   </div>
 </template>
 
 <script>
-  import ThemeModel from '@/models/Theme'
+  import UserModel from '@/models/User'
   import FavoriteModel from '@/models/Favorite'
   import ThemeCard from '@/components/theme/ThemeCard'
 
@@ -26,9 +26,6 @@
       },
       urlUserId() {
         return this.$route.params.userId
-      },
-      loggedIn() {
-        return this.$store.state.loggedIn
       }
     },
     watch: {
@@ -39,8 +36,7 @@
     },
     methods: {
       refresh() {
-        new ThemeModel().findByFavorite({
-          userId: this.urlUserId,
+        new UserModel().findFavoriteThemes(this.urlUserId, {
           p: 0,
           s: 20
         }).then(res => {
@@ -75,11 +71,20 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-favorites {
-    width: $width;
-    margin: 0 auto;
+    max-width: $width;
 
     > .columns {
       padding-top: 1em;
+    }
+
+    @media screen and (max-width: 768px) {
+      .columns {
+        margin: 0;
+
+        .column {
+          padding: 0;
+        }
+      }
     }
   }
 </style>

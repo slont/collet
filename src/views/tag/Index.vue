@@ -18,8 +18,8 @@
       </transition-group>
     </div>
 
-    <a @click="$refs.themeCreateModal.open()" class="button button-create is-float is-primary circle"
-       v-if="loggedIn">
+    <a @click="$refs.themeCreateModal.open()" v-if="loggedIn"
+       class="button button-create is-float is-primary circle is-hidden-mobile">
       <i class="material-icons">add</i>
     </a>
 
@@ -48,9 +48,6 @@
       },
       tagName() {
         return this.$route.query.name
-      },
-      loggedIn() {
-        return this.$store.state.loggedIn
       }
     },
     watch: {
@@ -104,7 +101,7 @@
       background-color: white;
 
       .media {
-        width: $width;
+        max-width: $width;
         margin-left: auto;
         margin-right: auto;
         padding: 1rem .5rem .5rem;
@@ -115,7 +112,7 @@
       }
     }
     .tag-themes {
-      width: $width;
+      max-width: $width;
       margin: 0 auto;
       padding-top: 1em;
     }
@@ -123,6 +120,16 @@
       position: fixed;
       bottom: 2rem;
       right: 2rem;
+    }
+
+    @media screen and (max-width: 768px) {
+      .columns {
+        margin: 0;
+
+        .column {
+          padding: 0;
+        }
+      }
     }
   }
 </style>

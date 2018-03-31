@@ -1,20 +1,25 @@
 {
-  "name": "collet",
-  "short_name": "collet",
+  "name": "Cullet",
+  "short_name": "Cullet",
   "icons": [
     {
-      "src": "/static/img/icons/android-chrome-192x192.png",
-      "sizes": "192x192",
+      "src": "/static/img/icons/cullet-rabit_orange_96x96.png",
+      "sizes": "96x96",
       "type": "image/png"
     },
     {
-      "src": "/static/img/icons/android-chrome-512x512.png",
+      "src": "/static/img/icons/cullet-rabit_orange_144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/img/icons/cullet-rabit_orange_512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "/",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "background_color": "#ffffff",
+  "theme_color": "#ff7600"
 }

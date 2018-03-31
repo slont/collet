@@ -23,13 +23,18 @@
           </p>
         </div>
 
-
         <div class="has-text-centered">
-          <button @click="ok" class="button is-info" :class="{ 'is-loading': isLoading }">
+          <guard-button :click="ok" class="is-info" :class="{ 'is-loading': isLoading }">
             {{ $t('buttons.signup') }}
-          </button>
+          </guard-button>
         </div>
         <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
+
+        <div class="has-text-centered">
+          <router-link to="/signin" class="label">
+            ログインはこちらから
+          </router-link>
+        </div>
       </template>
 
       <template v-else-if="1 === pageIndex">
@@ -48,8 +53,8 @@
       return {
         pageIndex: 0,
         locale: this.$store.state.locale,
-        email: 'slont.maytry@gmail.com',
-        password: 'password',
+        email: '',
+        password: '',
         isLoading: false,
         errorMessage: ''
       }
@@ -60,21 +65,22 @@
       }
     },
     methods: {
-      ok() {
-        this.$validator.validateAll().then(result => {
+      async ok() {
+        await this.$validator.validateAll().then(async result => {
           if (!result) return
 
           this.isLoading = true
-          new AuthModel().signup({
+          await new AuthModel().signup({
             email: this.email,
             password: this.password
-          }).then(() => {
-            this.isLoading = false
-            this.pageIndex = 1
           }).catch(err => {
             this.isLoading = false
             this.errorMessage = err.message
+            throw new Error(err)
           })
+
+          this.isLoading = false
+          this.pageIndex = 1
         }).catch(() => {
           console.log('Correct them errors!')
         })

@@ -19,7 +19,7 @@ export default class Template extends Base {
     return Object.assign({}, json, {
       elements: new TemplateElement().deserialize(json.elements),
       createdAt: moment(json.createdAt),
-      updatedAt: moment(json.createdAt)
+      updatedAt: moment(json.updatedAt)
     })
   }
 }

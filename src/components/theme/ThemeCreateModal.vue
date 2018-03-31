@@ -1,5 +1,17 @@
 <template>
   <modal id="theme-create-modal" class="modal" ref="themeCreateModal" @close="reset">
+    <header class="action-modal-header modal-card-head">
+      <span class="back-button icon" @click="close">
+        <i class="material-icons">arrow_back</i>
+      </span>
+
+      <span class="modal-card-title title is-6 has-text-white">テーマ作成</span>
+
+      <guard-button :click="ok" class="ok-button is-success is-inverted is-outlined">
+        保存
+      </guard-button>
+    </header>
+
     <div class="modal-card-body columns">
       <div class="column">
         <div class="field">
@@ -74,10 +86,10 @@
       </div>
     </div>
 
-    <footer class="modal-card-foot has-right">
+    <footer class="modal-card-foot has-right is-hidden-touch">
       <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
-      <button @click="close" class="button">キャンセル</button>
-      <button @click="ok" class="button is-info">作成</button>
+      <a @click="close" class="button">キャンセル</a>
+      <guard-button :click="ok" class="is-info">作成</guard-button>
     </footer>
   </modal>
 </template>
@@ -112,23 +124,23 @@
         this.reset()
         this.$refs.themeCreateModal.close()
       },
-      ok() {
-        this.$validator.validateAll().then(result => {
+      async ok() {
+        await this.$validator.validateAll().then(async result => {
           if (!result) return
 
-          new ThemeModel().create(Object.assign({}, this.theme, {
+          await new ThemeModel().create(Object.assign({}, this.theme, {
             private: false === this.theme.private ? 0 : 1
-          })).then(() => {
-            this.$emit('refresh')
-            this.$message({
-              showClose: true,
-              message: '作成されました',
-              type: 'success'
-            })
-            this.close()
-          }).catch(err => {
+          })).catch(err => {
             this.errorMessage = err
           })
+
+          this.$emit('refresh')
+          this.$message({
+            showClose: true,
+            message: '作成されました',
+            type: 'success'
+          })
+          this.close()
         })
       },
       reset() {
@@ -195,9 +207,6 @@
             width: 100%;
 
             .el-tag {
-              @extend .tag;
-              @extend .is-primary;
-
               &:before {
                 content: '#';
               }

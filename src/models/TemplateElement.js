@@ -20,7 +20,7 @@ export default class Element extends Base {
       valueNum: 0,
       valueDbl: 0.0,
       createdAt: moment(json.createdAt),
-      updatedAt: moment(json.createdAt)
+      updatedAt: moment(json.updatedAt)
     })
   }
 }

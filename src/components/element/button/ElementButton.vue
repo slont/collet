@@ -34,15 +34,15 @@
     justify-content: center;
 
     .material-icons {
-      font-size: 2rem;
+      font-size: $size-2;
       height: 2.4rem;
       line-height: 2.4rem;
     }
     .label {
-      font-size: .75rem;
+      font-size: $size-8;
     }
     .element-label {
-      font-size: .75rem;
+      font-size: $size-8;
     }
     .sub-content {
       position: absolute;
@@ -52,8 +52,6 @@
       display: none;
 
       &.has-addons .button {
-        @extend .is-link;
-
         :not(:last-child) {
           margin-right: 0;
         }

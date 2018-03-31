@@ -1,13 +1,7 @@
 <template>
   <div id="top-index">
-    <div class="tabs header-shadow">
-      <ul>
-        <router-link to="/" tag="li"><a>TOP</a></router-link>
-        <router-link to="/recommend" tag="li"><a>おすすめ</a></router-link>
-      </ul>
-    </div>
     <transition name="slide-fade" mode="out-in" class="content">
-      <router-view></router-view>
+      <router-view/>
     </transition>
   </div>
 </template>
@@ -28,6 +22,7 @@
   #top-index {
     .tabs {
       background-color: white;
+      margin-bottom: 0;
 
       > ul {
         max-width: $width;
@@ -40,10 +35,8 @@
             border-bottom-width: 0;
           }
           &.router-link-exact-active {
-            @extend .is-active;
-
             a {
-              border-bottom-width: 2px;
+              border-bottom-width: 3px;
             }
           }
         }

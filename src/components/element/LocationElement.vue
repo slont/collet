@@ -1,8 +1,13 @@
 <template>
-  <cl-element class="location-element" :params="params" placeholder="場所"
-              @remove="$emit('remove')" :editable="editable">
+  <cl-element class="location-element" :params="params" placeholder="ラベル（オプション）"
+              @remove="$emit('remove')" :editable="editable"
+              @focus="$emit('focus')" @blur="$emit('blur')">
+    <span class="element-type-icon icon is-left" v-if="editable">
+      <i class="material-icons">location_on</i>
+    </span>
     <p class="control">
-      <input v-model.trim="params.valueStr" class="input" type="text">
+      <input v-model.trim="params.valueStr" class="input" type="text"
+             @focus="$emit('focus')" @blur="$emit('blur')">
     </p>
   </cl-element>
 </template>

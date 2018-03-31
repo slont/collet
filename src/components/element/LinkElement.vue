@@ -1,10 +1,15 @@
 <template>
-  <cl-element class="link-element" :params="params" placeholder="リンク"
-              @remove="$emit('remove')" :editable="editable">
+  <cl-element class="link-element" :params="params" placeholder="ラベル（オプション）"
+              @remove="$emit('remove')" :editable="editable"
+              @focus="$emit('focus')" @blur="$emit('blur')">
+    <span class="element-type-icon icon is-left" v-if="editable">
+      <i class="material-icons">link</i>
+    </span>
     <p class="control">
-      <input v-model.trim="params.valueStr" class="input value" type="text" v-if="editable">
+      <input v-model.trim="params.valueStr" class="input value" type="text" v-if="editable"
+             @focus="$emit('focus')" @blur="$emit('blur')">
 
-      <span class="value" v-else>{{ params.valueStr }}</span>
+      <a :href="params.valueStr" class="value" v-else>{{ params.valueStr }}</a>
     </p>
   </cl-element>
 </template>

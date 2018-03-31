@@ -4,7 +4,7 @@
     <div class="modal-card">
       <slot></slot>
     </div>
-    <button @click="close" class="modal-close is-large" aria-label="close"></button>
+    <a @click="close" class="button modal-close is-large" aria-label="close" v-if="deletable"></a>
   </div>
 </template>
 
@@ -12,7 +12,8 @@
   export default {
     data() {
       return {
-        active: false
+        active: false,
+        deletable: false
       }
     },
     methods: {
@@ -35,6 +36,19 @@
     .modal-card-foot {
       background: white;
       height: 4rem;
+    }
+
+    @media screen and (max-width: 768px) {
+      .modal-card {
+        height: 100vh !important;
+        width: 100vw !important;
+        max-height: 100vh;
+        margin: 0;
+      }
+      .modal-close:before,
+      .modal-close:after{
+        background-color: $label-color;
+      }
     }
   }
 </style>

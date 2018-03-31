@@ -2,63 +2,48 @@
   <div id="userpage-theme">
     <div class="theme-content">
       <div class="theme-columns columns">
-        <div class="side-column column is-4">
+        <div class="side-column column is-4" :class="{ 'hidden-mobile-only': itemId }">
           <theme-card :theme="theme"
                       @open-edit-modal="$refs.themeEditModal.open(theme)"
-                      @refresh="refresh"></theme-card>
-
-          <!--<div class="theme-sub-header">
-            <div class="search-box">
-              <div class="field has-addons">
-                <div class="input-control control">
-                  <input class="input" type="text" placeholder="Find a repository">
-                </div>
-                <div class="control">
-                  <a class="button is-info">
-                    <span class="icon"><i class="material-icons">search</i></span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>-->
+                      @refresh="refresh"/>
 
           <div class="theme-items">
-            <el-button type="primary" plain round size="mini" class="add-button" @click="$refs.itemCreateModal.open(theme.templates)" v-if="isMyPage">
-              アイテム新規追加
+            <el-button type="primary" plain round size="mini" class="add-button is-hidden-mobile"
+                       @click="$refs.itemCreateModal.open(theme)" v-if="loggedIn && isMyPage">
+              カレット新規追加
+            </el-button>
+            <el-button type="primary" plain round size="mini" class="add-button is-hidden-tablet"
+                       @click="$router.push(`/m/createItem/${theme.id}`)" v-if="loggedIn && isMyPage">
+              カレット新規追加
             </el-button>
             <div class="subtitle is-7">
-              <span>アイテム一覧</span>
+              <span>カレット一覧</span>
             </div>
-            <item-card  v-for="item in theme.items" :key="item.id" :theme="theme" :item="item"
-                        :class="{ 'is-active': currentItem.id === item.id }"
-                        @click.native="$router.push(`/${urlUserId}/${themeId}/${item.id}`)"
-                        @open-edit-modal="$refs.itemEditModal.open(item)"
-                        v-if="theme.items.length"></item-card>
+            <item-card v-for="item in theme.items" :key="item.id" :theme="theme" :item="item"
+                       :class="{ 'is-active': currentItem.id === item.id }"
+                       @click.native="$router.push(`/u/${urlUserId}/${themeId}/${item.id}`)"
+                       @open-edit-modal="$refs.itemEditModal.open(theme, item)"
+                       v-if="theme.items.length"/>
           </div>
         </div>
 
-        <div class="main-column column is-8" v-if="currentItem.id">
-          <item-page :current-item="currentItem"></item-page>
+        <div class="main-column column is-8"
+             :class="{ 'hidden-mobile-only': !itemId }" v-if="currentItem.id">
+          <item-page :current-item="currentItem"/>
         </div>
 
-        <div v-else>
-          まだアイテムはありません
-          <template v-if="isMyPage">
-            <br/>右下のボタンからアイテムを追加してみましょう！
-          </template>
-        </div>
+        <div class="is-loading" v-else></div>
       </div>
     </div>
 
-
-    <a @click="$refs.itemCreateModal.open(theme.templates)" class="button button-create is-float is-info circle"
-        v-if="loggedIn">
+    <a @click="$refs.itemCreateModal.open(theme)" v-if="loggedIn"
+       class="button button-create is-float is-info circle is-hidden-mobile">
       <i class="material-icons">add</i>
     </a>
 
-    <theme-edit-modal ref="themeEditModal" @refresh="refresh"></theme-edit-modal>
-    <item-create-modal ref="itemCreateModal" @refresh="refresh"></item-create-modal>
-    <item-edit-modal ref="itemEditModal" @refresh="refresh"></item-edit-modal>
+    <theme-edit-modal ref="themeEditModal" @refresh="refresh"/>
+    <item-create-modal ref="itemCreateModal" @refresh="refresh"/>
+    <item-edit-modal ref="itemEditModal" @refresh="refresh"/>
   </div>
 </template>
 
@@ -108,9 +93,6 @@
       },
       themeId() {
         return this.$route.params.themeId
-      },
-      loggedIn() {
-        return this.$store.state.loggedIn
       }
     },
     watch: {
@@ -125,35 +107,28 @@
       refresh() {
         const itemId = this.itemId
         const themeModel = new ThemeModel()
-        themeModel.findOne(this.themeId).then(res => {
-          Object.assign(this.theme, res.data)
+        themeModel.findOne(this.themeId).then(async res1 => {
+          Object.assign(this.theme, res1.data)
 
           if (itemId) {
-            this.refreshItem(itemId)
+            await this.refreshItem(itemId)
           } else if (this.theme.items.length) {
             this.currentItem = this.theme.items[0]
           }
           if (this.loggedIn) {
-            return themeModel.findOneFavorite(this.theme.id, this.selfUser.id)
+            const res2 = await themeModel.findOneFavorite(this.theme.id, this.selfUser.id).catch(() => ({}))
+            this.theme.favorite = res2.data && !!res2.data.themeId
           }
-        }).then(res => {
-          if (this.loggedIn) {
-            this.theme.favorite = !!res.data.themeId
-          }
-        }, () => {
-          // through the NotFound favorite error
-        }).catch(err => {
-          console.log(err)
-          this.$message({
-            showClose: true,
-            message: 'データ取得に失敗しました',
-            type: 'error'
-          })
+        }).catch(() => {
+          this.$router.replace(`/u/${this.urlUserId}`)
         })
       },
-      refreshItem(itemId) {
-        new ItemModel(this.theme.id).findOne(itemId).then(res => {
+      async refreshItem(itemId) {
+        await new ItemModel(this.theme.id).findOne(itemId).then(res => {
           this.currentItem = res.data
+          this.$nextTick(() => {
+            window.scrollTo(0, 0)
+          })
         })
       },
       onClickFavorite() {
@@ -186,7 +161,6 @@
     background-color: white;
 
     .theme-content {
-      height: 100vh;
       width: 90%;
       margin: 0 auto;
 
@@ -195,7 +169,18 @@
         width: 100%;
         margin: 0;
 
-        .main-column {
+        .side-column {
+          .theme-card {
+            .media-content {
+              height: 100%;
+
+              .theme-description {
+                max-height: 100%;
+              }
+            }
+          }
+        }
+        > .main-column {
           padding-left: 2rem;
         }
         > .column {
@@ -446,6 +431,29 @@
       position: fixed;
       bottom: 2rem;
       right: 2rem;
+    }
+
+    @media screen and (max-width: 768px) {
+      .theme-content {
+        width: 100%;
+        margin: 0;
+
+        .theme-columns {
+          > .main-column {
+            padding: 1.5rem 1rem;
+          }
+          .hidden-mobile-only {
+            display: none;
+          }
+        }
+      }
+      .columns {
+        margin: 0;
+
+        .column {
+          padding: 0;
+        }
+      }
     }
   }
 </style>

@@ -3,19 +3,19 @@
     <div class="card-content">
       <div class="media">
         <div class="media-content">
-          <span class="title is-6">{{ item.name }}</span>
+          <div class="updated-at text-color-weak is-size-8 has-text-right">
+            {{ item.updatedAt | fromNow }}
+          </div>
+          <router-link class="item-title text-color-strong is-size-5 has-text-weight-bold" tag="div"
+                       :to="`/u/${theme.createdUser.id}/${theme.id}/${item.id}`">
+            {{ item.name }}
+          </router-link>
         </div>
       </div>
-      <div class="content">
-        <element-view :element="item.elements[0]" v-if="item.elements[0]"></element-view>
-        <div v-else>まだコンテンツがありません</div>
+      <div class="content" v-if="item.elements.length">
+        <element-view :element="item.elements[0]"/>
+        <element-view :element="item.elements[1]" v-if="item.elements[1]"/>
       </div>
-
-      <a class="edit-button button is-info is-outlined" v-if="isMyPage"
-         @click.stop="$emit('open-edit-modal')">
-        <span class="icon"><i class="material-icons">edit</i></span>
-        <span>編集</span>
-      </a>
     </div>
   </div>
 </template>
@@ -48,12 +48,18 @@
     .card-content {
       .media {
         align-items: center;
-        $size: 3rem;
-        height: $size;
+        $size: 3.5rem;
+        max-height: $size;
 
         .media-content {
-          height: $size;
           overflow: hidden;
+
+          .item-title {
+            display: flex;
+            max-height: 2.5em;
+            line-height: 1.25;
+            overflow: hidden;
+          }
         }
         .media-right {
           display: flex;
@@ -74,9 +80,8 @@
         }
         .cl-element {
           .view-label {
-            font-size: 1em;
-            line-height: 1.5;
-            color: darkgrey;
+            font-size: $size-7;
+            color: $text-color-weak;
           }
           figure {
             display: flex;

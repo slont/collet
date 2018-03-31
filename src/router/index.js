@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/views/Index'
-import Signup from '@/views/Signup.vue'
-import Signin from '@/views/Signin.vue'
-import Confirm from '@/views/Confirm.vue'
+import Signup from '@/views/Signup'
+import Signin from '@/views/Signin'
+import Confirm from '@/views/Confirm'
+import CreateItem from '@/views/CreateItem'
+import EditItem from '@/views/EditItem'
 import TopIndex from '@/views/top/Index'
 import TopTop from '@/views/top/Top'
 import TagIndex from '@/views/tag/Index'
@@ -53,17 +55,29 @@ export default new Router({
           path: 'tag',
           component: TagIndex
         }, {
-          path: ':userId/favorites',
+          path: 'u/:userId/themes',
           component: UserpageIndex
         }, {
-          path: ':userId/:themeId/:itemId',
-          component: UserpageTheme
-        }, {
-          path: ':userId/:themeId',
-          component: UserpageTheme
-        }, {
-          path: ':userId',
+          path: 'u/:userId/favorites',
           component: UserpageIndex
+        }, {
+          path: 'u/:userId/:themeId/:itemId',
+          component: UserpageTheme
+        }, {
+          path: 'u/:userId/:themeId',
+          component: UserpageTheme
+        }, {
+          path: 'u/:userId',
+          component: UserpageIndex
+        },
+        // モバイル向け
+        {
+          path: 'm/createItem/:themeId',
+          component: CreateItem
+        },
+        {
+          path: 'm/editItem/:themeId/:itemId',
+          component: EditItem
         }
       ]
     }

@@ -1,8 +1,13 @@
 <template>
-  <cl-element class="switch-element" :params="params" placeholder="ON/OFF"
-              @remove="$emit('remove')" :editable="editable">
+  <cl-element class="switch-element" :params="params" placeholder="ラベル（オプション）"
+              @remove="$emit('remove')" :editable="editable"
+              @focus="$emit('focus')" @blur="$emit('blur')">
+    <span class="element-type-icon icon is-left" v-if="editable">
+      <i class="material-icons">toll</i>
+    </span>
     <p class="control">
-      <input v-model.trim="params.valueStr" class="input" type="text">
+      <input v-model.trim="params.valueStr" class="input" type="text"
+             @focus="$emit('focus')" @blur="$emit('blur')">
     </p>
   </cl-element>
 </template>

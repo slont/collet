@@ -1,17 +1,17 @@
 <template>
   <div class="element-view">
-    <text-element :params="element" v-if="'text' === element.type"></text-element>
-    <image-element :params="element" v-else-if="'image' === element.type"></image-element>
-    <location-element :params="element" v-else-if="'location' === element.type"></location-element>
-    <datetime-element :params="element" v-else-if="'date' === element.type"></datetime-element>
-    <datetime-element :params="element" v-else-if="'time' === element.type"></datetime-element>
-    <datetime-element :params="element" v-else-if="'datetime' === element.type"></datetime-element>
-    <tag-element :params="element" v-else-if="'tag' === element.type"></tag-element>
-    <link-element :params="element" v-else-if="'link' === element.type"></link-element>
-    <phone-element :params="element" v-else-if="'phone' === element.type"></phone-element>
-    <email-element :params="element" v-else-if="'email' === element.type"></email-element>
-    <rating-element :params="element" v-else-if="'rating' === element.type"></rating-element>
-    <switch-element :params="element" v-else-if="'switch' === element.type"></switch-element>
+    <text-element :params="element" v-if="'text' === element.type"/>
+    <image-element :params="element" v-else-if="'image' === element.type"/>
+    <location-element :params="element" v-else-if="'location' === element.type"/>
+    <datetime-element :params="element" v-else-if="'date' === element.type"/>
+    <datetime-element :params="element" v-else-if="'time' === element.type"/>
+    <datetime-element :params="element" v-else-if="'datetime' === element.type"/>
+    <tag-element :params="element" v-else-if="'tag' === element.type"/>
+    <link-element :params="element" v-else-if="'link' === element.type"/>
+    <phone-element :params="element" v-else-if="'phone' === element.type"/>
+    <email-element :params="element" v-else-if="'email' === element.type"/>
+    <rating-element :params="element" v-else-if="'rating' === element.type"/>
+    <switch-element :params="element" v-else-if="'switch' === element.type"/>
   </div>
 </template>
 

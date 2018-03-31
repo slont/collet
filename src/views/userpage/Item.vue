@@ -1,26 +1,38 @@
 <template>
   <div id="userpage-item">
-    <button class="edit-button button is-info is-outlined" @click="$refs.itemEditModal.open(item)"
-            v-if="isMyPage">
-      <span class="icon"><i class="material-icons">edit</i></span>
-      <span>編集</span>
-    </button>
+    <router-link :to="`/u/${$route.params.userId}/${themeId}`" tag="div"
+                 class="theme-title is-size-7 text-color-weak">
+      {{ theme.title }}
+    </router-link>
 
     <div class="item-info">
-      <div class="title is-3">{{ item.name }}</div>
+      <div class="title is-4">
+        {{ item.name }}
+        <a class="edit-button button is-info is-outlined is-hidden-mobile"
+           @click="$refs.itemEditModal.open(theme, item)" v-if="isMyPage">
+          <span class="icon"><i class="material-icons">edit</i></span>
+          <span>編集</span>
+        </a>
+        <a class="edit-button button is-info is-outlined is-hidden-tablet"
+           @click="$router.push(`/m/editItem/${theme.id}/${item.id}`)" v-if="isMyPage">
+          <span class="icon"><i class="material-icons">edit</i></span>
+          <span>編集</span>
+        </a>
+      </div>
     </div>
 
     <div class="item-elements">
       <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
-        <element-view :element="element"></element-view>
+        <element-view :element="element"/>
       </div>
     </div>
 
-    <item-edit-modal ref="itemEditModal" @refresh="refresh"></item-edit-modal>
+    <item-edit-modal ref="itemEditModal" @refresh="refresh"/>
   </div>
 </template>
 
 <script>
+  import ThemeModel from '@/models/Theme'
   import ItemModel from '@/models/Item'
   import ItemEditModal from '@/components/item/ItemEditModal'
   import ElementView from '@/components/element/ElementView'
@@ -37,6 +49,10 @@
     },
     data() {
       return {
+        theme: {
+          id: '',
+          title: ''
+        },
         item: {
           title: '',
           elements: []
@@ -72,6 +88,9 @@
             type: 'error'
           })
         })
+        new ThemeModel().findOne(this.themeId).then(res => {
+          this.theme = res.data
+        })
       }
     }
   }
@@ -79,6 +98,11 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-item {
+    .theme-title {
+      margin-top: -.5rem;
+      margin-bottom: .5rem;
+      text-decoration: underline;
+    }
     .edit-button {
       margin-bottom: .5rem;
 
@@ -100,6 +124,11 @@
           width: 70%;
           margin: auto;
         }
+      }
+    }
+    .item-elements {
+      .element-field:not(:last-child) {
+        margin-bottom: 2em;
       }
     }
   }

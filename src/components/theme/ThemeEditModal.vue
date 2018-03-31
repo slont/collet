@@ -1,5 +1,17 @@
 <template>
   <modal id="theme-edit-modal" class="modal" ref="themeEditModal" @close="reset">
+    <header class="action-modal-header modal-card-head">
+      <span class="back-button icon" @click="close">
+        <i class="material-icons">arrow_back</i>
+      </span>
+
+      <span class="modal-card-title title is-6 has-text-white">テーマ編集</span>
+
+      <guard-button :click="ok" class="ok-button is-success is-inverted is-outlined">
+        保存
+      </guard-button>
+    </header>
+
     <div class="modal-card-body columns">
       <div class="column">
         <div class="field">
@@ -74,14 +86,14 @@
       </div>
     </div>
 
-    <footer class="modal-card-foot has-right">
+    <footer class="modal-card-foot has-right is-hidden-touch">
       <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
-      <button @click="$refs.themeDeleteModal.open(theme)" class="button is-danger is-outlined is-left">削除</button>
-      <button @click="close" class="button">キャンセル</button>
-      <button @click="ok" class="button is-info">保存</button>
+      <a @click="$refs.themeDeleteModal.open(theme)" class="button is-danger is-outlined is-left">削除</a>
+      <a @click="close" class="button">キャンセル</a>
+      <guard-button :click="ok" class="is-info">保存</guard-button>
     </footer>
 
-    <theme-delete-modal ref="themeDeleteModal" @refresh="refreshClose"></theme-delete-modal>
+    <theme-delete-modal ref="themeDeleteModal" @refresh="refreshClose"/>
   </modal>
 </template>
 
@@ -119,25 +131,29 @@
         this.reset()
         this.$refs.themeEditModal.close()
       },
-      ok() {
-        this.$validator.validateAll().then(result => {
+      async ok() {
+        await this.$validator.validateAll().then(async result => {
           if (!result) return
 
-          const body = Object.assign({}, this.theme, {
+          const body = {
+            title: this.theme.title,
+            description: this.theme.description,
+            image: this.theme.image,
             tags: this.tags,
             private: false === this.theme.private ? 0 : 1
-          })
-          new ThemeModel().update(this.theme.id, body).then(() => {
-            this.$emit('refresh')
-            this.$message({
-              showClose: true,
-              message: '保存されました',
-              type: 'success'
-            })
-            this.close()
-          }).catch(err => {
+          }
+          await new ThemeModel().update(this.theme.id, body).catch(err => {
             this.errorMessage = err
+            throw new Error(err)
           })
+
+          this.$emit('refresh')
+          this.$message({
+            showClose: true,
+            message: '保存されました',
+            type: 'success'
+          })
+          this.close()
         })
       },
       reset() {
@@ -205,9 +221,6 @@
             width: 100%;
 
             .el-tag {
-              @extend .tag;
-              @extend .is-primary;
-
               &:before {
                 content: '#';
               }
