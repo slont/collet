@@ -28,15 +28,12 @@
       </div>
 
       <div class="field-saved-info field">
-        <p class="control is-expanded">
-          <label class="checkbox">
-            <input v-model="checkedSaveLoginInfo" type="checkbox">
-            ログイン情報を保存
-          </label>
-        </p>
+        <input v-model="checkedSaveLoginInfo" class="is-checkradio is-primary" id="saveInfo" type="checkbox"
+               :checked="checkedSaveLoginInfo" :class="{ 'has-background-color': checkedSaveLoginInfo }">
+        <label for="saveInfo">ログイン情報を保存</label>
       </div>
 
-      <div class="has-text-centered">
+      <div class="field has-text-centered">
         <guard-button :click="ok" class="is-primary is-size-5 fullwidth" :class="{ 'is-loading': isLoading }">
           {{ $t('buttons.signin') }}
         </guard-button>

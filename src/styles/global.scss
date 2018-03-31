@@ -120,7 +120,6 @@ body {
   }
 }
 
-
 .control {
   font-size: $size-5;
 
@@ -135,10 +134,12 @@ body {
   }
 }
 
-
 .field {
   .label {
     color: $text-color-weak;
+  }
+  .is-checkradio[type="checkbox"] + label {
+    margin-left: 0;
   }
 }
 
