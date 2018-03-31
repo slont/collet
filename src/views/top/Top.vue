@@ -194,7 +194,7 @@
         if (index === this.updatedItems.length - 1) {
           return true
         }
-        return 0 !== this.updatedItems[index + 1].updatedAt.diff(updatedAt, 'days')
+        return 0 !== this.updatedItems[index + 1].updatedAt.diff(updatedAt, 'hours')
       }
     }
   }
