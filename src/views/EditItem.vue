@@ -16,9 +16,10 @@
         保存
       </guard-button>
     </header>
-    <header class="theme-header modal-card-head header-shadow">
+    <header class="theme-header modal-card-head header-shadow" @click="openThemeSelectModal">
       <a class="text-color-base">
         <span class="theme-title is-size-7">{{ theme.title }}</span>
+        <span class="icon has-text-grey-light is-size-4"><i class="material-icons">arrow_drop_down</i></span>
       </a>
     </header>
 
@@ -76,6 +77,8 @@
     <footer class="modal-card-foot slider" :class="{ 'is-active': isActiveFooter }">
       <cl-buttons @add="addElement"/>
     </footer>
+
+    <theme-select-modal ref="themeSelectModal" @refresh="refreshTheme"/>
   </modal>
 </template>
 
@@ -84,6 +87,7 @@
   import ItemModel from '@/models/Item'
   import FileModel from '@/models/File'
   import Modal from '@/components/Modal'
+  import ThemeSelectModal from '@/components/theme/ThemeSelectModal'
   import ClButtons from '@/components/element/button/ClButtons'
   import TextElement from '@/components/element/TextElement'
   import ImageElement from '@/components/element/ImageElement'
@@ -99,6 +103,7 @@
   export default {
     components: {
       Modal,
+      ThemeSelectModal,
       ClButtons,
       TextElement,
       ImageElement,
@@ -149,6 +154,8 @@
     },
     methods: {
       async refresh() {
+        console.log(this.$router)
+        console.log(document.referrer)
         new ThemeModel().findOne(this.themeId).then(res => {
           this.theme = res.data
         })
@@ -166,10 +173,13 @@
           this.$router.replace('/')
         })
       },
+      async refreshTheme(theme) {
+        this.theme = theme
+      },
       close() {
         Object.assign(this.$data, this.$options.data.call(this))
         this.$nextTick(() => this.errors.clear())
-        this.$refs.createItem.close()
+        this.$refs.editItem.close()
       },
       async save() {
         await this.$validator.validateAll().then(async result => {
@@ -188,7 +198,8 @@
             message: '更新されました',
             type: 'success'
           })
-          this.$router.go(-1)
+          this.$router.push(`/u/${this.user.id}/${this.theme.id}/${this.item.id}`)
+          this.close()
         }).catch(err => this.$message.error(err))
       },
       onFocusInput(e) {
@@ -254,6 +265,9 @@
       },
       removeImage() {
         this.item.image = ''
+      },
+      openThemeSelectModal() {
+        this.$refs.themeSelectModal.open(this.theme)
       }
     }
   }
