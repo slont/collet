@@ -8,7 +8,7 @@
       <span class="modal-card-title title is-6 has-text-white">新規カレット作成</span>
 
       <div class="template-checkbox field">
-        <input class="is-checkradio has-background-color is-white is-small" id="templateCheckbox" type="checkbox" :checked="isTemplate">
+        <input v-model="isTemplate" class="is-checkradio has-background-color is-white is-small" id="templateCheckbox" type="checkbox" :checked="isTemplate">
         <label for="templateCheckbox">テンプレート登録</label>
       </div>
 
