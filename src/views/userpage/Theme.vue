@@ -28,7 +28,7 @@
         </div>
 
         <div class="main-column column is-8"
-             :class="{ 'hidden-mobile-only': !itemId }" v-if="currentItem.id">
+             :class="{ 'hidden-mobile-only': !itemId }" v-if="itemId">
           <item-page :current-item="currentItem"/>
         </div>
 
