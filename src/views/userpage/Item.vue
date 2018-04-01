@@ -38,10 +38,10 @@
     <div class="cullet-pagination flexbox fullwidth has-text-white" :class="{ 'is-active': activePagination }">
       <div @click="next" class="next cullet-pagination-item flexbox" v-if="currentItem.next.id">
         <span class="icon is-size-3"><i class="fa fas fa-chevron-left"></i></span>
-        <div class="cullet-name is-size-5">{{ currentItem.next.name }}</div>
+        <div class="cullet-name is-size-6">{{ currentItem.next.name }}</div>
       </div>
       <div @click="prev" class="prev cullet-pagination-item flexbox is-justify-end has-text-right" v-if="currentItem.prev.id">
-        <div class="cullet-name is-size-5 is-justify-end has-text-left">{{ currentItem.prev.name }}</div>
+        <div class="cullet-name is-size-6 is-justify-end has-text-left">{{ currentItem.prev.name }}</div>
         <span class="icon is-size-3"><i class="fa fas fa-chevron-right"></i></span>
       </div>
     </div>
@@ -210,8 +210,10 @@
       .cullet-content {
         position: absolute;
         width: 100%;
-        margin-bottom: 100px;
 
+        > :last-child {
+          margin-bottom: 100px;
+        }
         .item-info {
           margin-bottom: 2rem;
 
@@ -249,23 +251,22 @@
       &-item {
         width: 46%;
         height: 4.5em;
+        padding: 0 .5em;
         background-color: rgba($link, .6);
 
         .cullet-name {
           display: -webkit-box;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
-          padding: 0 1em;
+          padding: 0 .5em;
           overflow: hidden;
           line-height: 1.25;
         }
         &.next {
-          padding-left: 1em;
           border-top-right-radius: $size-1;
           border-bottom-right-radius: $size-1;
         }
         &.prev {
-          padding-right: 1em;
           border-top-left-radius: $size-1;
           border-bottom-left-radius: $size-1;
         }

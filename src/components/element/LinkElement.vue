@@ -39,6 +39,7 @@
     .value {
       color: $link;
       text-decoration: underline;
+      word-wrap: break-word;
     }
   }
 </style>
