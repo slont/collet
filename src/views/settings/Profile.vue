@@ -92,6 +92,7 @@
 </template>
 
 <script>
+  import loadImage from 'blueimp-load-image'
   import FileModel from '@/models/File'
   import UserModel from '@/models/User'
 
@@ -149,18 +150,50 @@
 
         this.createImage(files[0])
       },
+      removeImage() {
+        this.params.valueStr = ''
+      },
       createImage(file) {
-        const reader = new FileReader()
-        reader.onload = e => {
-          this.user.image = e.target.result
-        }
-        reader.readAsDataURL(file)
-        new FileModel().create(file).then(res => {
-          this.user.image = res.data.path
+        loadImage.parseMetaData(file, (data) => {
+          const options = {
+            orientation: null,
+            canvas: true
+          }
+          if (data.exif) {
+            options.orientation = data.exif.get('Orientation')
+          }
+          this.getDataUrl(file, options).then(result => {
+            this.params.valueStr = result
+            const block = result.split(';')
+            const realData = block[1].split(',')[1]
+            const blob = this.b64toBlob(realData)
+            new FileModel().create(blob).then(res => {
+              this.params.valueStr = res.data.path
+            })
+          })
         })
       },
-      removeImage() {
-        this.user.image = ''
+      getDataUrl(blobImage, options) {
+        return new Promise(resolve => {
+          loadImage(blobImage, canvas => {
+            resolve(canvas.toDataURL(blobImage.type))
+          }, options)
+        })
+      },
+      b64toBlob(b64Data, sliceSize = 512) {
+        const byteCharacters = atob(b64Data)
+        const byteArrays = []
+
+        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+          const slice = byteCharacters.slice(offset, offset + sliceSize)
+          const byteNumbers = new Array(slice.length)
+          for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i)
+          }
+          const byteArray = new Uint8Array(byteNumbers)
+          byteArrays.push(byteArray)
+        }
+        return new Blob(byteArrays)
       }
     }
   }
