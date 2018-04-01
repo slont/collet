@@ -153,8 +153,6 @@
     },
     methods: {
       async refresh() {
-        console.log(this.$router)
-        console.log(document.referrer)
         new ThemeModel().findOne(this.themeId).then(res => {
           this.theme = res.data
         })
