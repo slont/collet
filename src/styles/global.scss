@@ -68,7 +68,7 @@ body {
 
 .icon {
   height: 1em;
-  width: 1em;
+  min-width: 1em;
   vertical-align: -.1em;
 
   .material-icons {
@@ -189,6 +189,11 @@ body {
   width: 100%;
 }
 
+.divider-vertical {
+  height: 100%;
+  border-left: $border-style;
+}
+
 .el-input__inner {
   height: 36px !important;
 }
@@ -245,6 +250,6 @@ body {
 }
 
 svg:not(:root).svg-inline--fa {
-  height: 1.25rem;
+  height: 1.25em;
   width: auto;
 }

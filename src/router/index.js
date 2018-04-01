@@ -10,6 +10,7 @@ import TopIndex from '@/views/top/Index'
 import TopTop from '@/views/top/Top'
 import TagIndex from '@/views/tag/Index'
 import UserpageIndex from '@/views/userpage/Index'
+import UserpageItem from '@/views/userpage/Item'
 import UserpageTheme from '@/views/userpage/Theme'
 import SettingsIndex from '@/views/settings/Index'
 import SettingsProfile from '@/views/settings/Profile'
@@ -62,7 +63,7 @@ export default new Router({
           component: UserpageIndex
         }, {
           path: 'u/:userId/:themeId/:itemId',
-          component: UserpageTheme
+          component: UserpageItem
         }, {
           path: 'u/:userId/:themeId',
           component: UserpageTheme
