@@ -85,7 +85,6 @@
 <script>
   import ThemeModel from '@/models/Theme'
   import ItemModel from '@/models/Item'
-  import FileModel from '@/models/File'
   import Modal from '@/components/Modal'
   import ThemeSelectModal from '@/components/theme/ThemeSelectModal'
   import ClButtons from '@/components/element/button/ClButtons'
@@ -246,25 +245,6 @@
         this.item.elements.splice(i, 1, this.item.elements[i + 1])
         this.item.elements.splice(i + 1, 1, element)
         this.setOrder()
-      },
-      changeImage(e) {
-        const files = e.target.files || e.dataTransfer.files
-        if (!files.length) return
-
-        this.createImage(files[0])
-      },
-      createImage(file) {
-        const reader = new FileReader()
-        reader.onload = e => {
-          this.item.image = e.target.result
-        }
-        reader.readAsDataURL(file)
-        new FileModel().create(file, this.themeId).then(res => {
-          this.item.image = res.data.path
-        })
-      },
-      removeImage() {
-        this.item.image = ''
       },
       openThemeSelectModal() {
         this.$refs.themeSelectModal.open(this.theme)
