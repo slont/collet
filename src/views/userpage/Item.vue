@@ -26,7 +26,7 @@
             </div>
 
             <div class="item-elements">
-              <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
+              <div v-for="(element, i) in currentItem.elements" :key="i" class="field element-field">
                 <element-view :element="element"/>
               </div>
             </div>
@@ -35,19 +35,13 @@
       </div>
     </div>
 
-    <div class="cullet-pagination flexbox fullwidth" :class="{ 'is-active': activePagination }">
+    <div class="cullet-pagination flexbox fullwidth has-text-white" :class="{ 'is-active': activePagination }">
       <div @click="next" class="next cullet-pagination-item flexbox" v-if="currentItem.next.id">
         <span class="icon is-size-3"><i class="fa fas fa-chevron-left"></i></span>
-        <div>
-          <div class="is-size-7 text-color-weak has-text-weight-bold">Next</div>
-          <div class="cullet-name is-size-5">{{ currentItem.next.name }}</div>
-        </div>
+        <div class="cullet-name is-size-5">{{ currentItem.next.name }}</div>
       </div>
       <div @click="prev" class="prev cullet-pagination-item flexbox is-justify-end has-text-right" v-if="currentItem.prev.id">
-        <div class="is-justify-end">
-          <div class="is-size-7 text-color-weak has-text-weight-bold">Prev</div>
-          <div class="cullet-name is-size-5 has-text-left">{{ currentItem.prev.name }}</div>
-        </div>
+        <div class="cullet-name is-size-5 is-justify-end has-text-left">{{ currentItem.prev.name }}</div>
         <span class="icon is-size-3"><i class="fa fas fa-chevron-right"></i></span>
       </div>
     </div>
@@ -111,7 +105,11 @@
       this.init()
     },
     async beforeRouteUpdate(to, from, next) {
-      await this.refresh(this.itemId)
+      if (this.itemId !== to.params.itemId) {
+        await this.refresh({
+          id: to.params.itemId
+        })
+      }
       next()
     },
     methods: {
@@ -145,7 +143,7 @@
       },
       async refresh(item, transition = 'slide-fade') {
         this.transition = transition
-        new ItemModel(this.themeId).findOne(item.id).then(res => {
+        await new ItemModel(this.themeId).findOne(item.id).then(res => {
           Object.assign(this.currentItem, res.data)
           const first = this.items[0]
           if (first.id === res.data.id) {
@@ -164,13 +162,15 @@
           })
         })
       },
-      next() {
-        this.refresh(this.currentItem.next, 'show-next')
-        this.$router.push(`/u/${this.urlUserId}/${this.themeId}/${this.currentItem.next.id}`)
+      async next() {
+        const itemId = this.currentItem.next.id
+        await this.refresh(this.currentItem.next, 'show-next')
+        this.$router.push(`/u/${this.urlUserId}/${this.themeId}/${itemId}`)
       },
-      prev() {
-        this.refresh(this.currentItem.prev, 'show-prev')
-        this.$router.push(`/u/${this.urlUserId}/${this.themeId}/${this.currentItem.prev.id}`)
+      async prev() {
+        const itemId = this.currentItem.prev.id
+        await this.refresh(this.currentItem.prev, 'show-prev')
+        this.$router.push(`/u/${this.urlUserId}/${this.themeId}/${itemId}`)
       },
       onScrollContainer() {
         const scrollTop = this.$el.querySelector('.scrollable-container').scrollTop
@@ -193,7 +193,6 @@
       overflow-y: scroll;
     }
     .theme-title {
-      margin-top: -.5rem;
       margin-bottom: .5rem;
       text-decoration: underline;
     }
@@ -211,7 +210,7 @@
       .cullet-content {
         position: absolute;
         width: 100%;
-        margin-bottom: 120px;
+        margin-bottom: 100px;
 
         .item-info {
           margin-bottom: 2rem;
@@ -240,7 +239,7 @@
       position: fixed;
       left: 0;
       bottom: -$footer-nav-height * 3;
-      height: 5em;
+      height: 4.5em;
       z-index: 1;
       transition: bottom .4s;
 
@@ -248,26 +247,27 @@
         bottom: $footer-nav-height;
       }
       &-item {
-        width: 49%;
-        height: 5em;
-        border-top: $border-style;
-        border-bottom: $border-style;
-        background-color: rgba(black, .1);
+        width: 46%;
+        height: 4.5em;
+        background-color: rgba($link, .6);
 
-        > :not(.icon) {
-          padding: 0 1em;
-        }
         .cullet-name {
           display: -webkit-box;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
+          padding: 0 1em;
           overflow: hidden;
+          line-height: 1.25;
         }
         &.next {
           padding-left: 1em;
+          border-top-right-radius: $size-1;
+          border-bottom-right-radius: $size-1;
         }
         &.prev {
           padding-right: 1em;
+          border-top-left-radius: $size-1;
+          border-bottom-left-radius: $size-1;
         }
       }
     }
