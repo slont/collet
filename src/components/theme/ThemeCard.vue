@@ -56,7 +56,7 @@
           </div>
           <div class="level-right">
             <a class="edit-action level-item">
-              <span class="icon" @click.stop.prevent="$emit('open-edit-modal')" v-if="isMyTheme">
+              <span class="icon is-size-3" @click.stop.prevent="$emit('open-edit-modal')" v-if="loggedIn && isMyTheme">
                 <i class="material-icons">more_horiz</i>
               </span>
             </a>

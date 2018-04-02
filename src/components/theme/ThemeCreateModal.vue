@@ -53,24 +53,12 @@
 
         <div class="field tags-field">
           <label class="label">タグ</label>
-          <div class="control">
-            <el-select
-                v-model="theme.tags"
-                multiple
-                filterable
-                allow-create
-                default-first-option
-                remote
-                :loading="loading"
-                :remote-method="remoteMethod"
-                placeholder="Choose tags for your article">
-              <el-option
-                  v-for="item in suggests"
-                  :key="item"
-                  :label="item"
-                  :value="item">
-              </el-option>
-            </el-select>
+
+          <div class="control flexbox">
+            <el-tag v-for="(tag, i) in theme.tags" :key="tag" type="warning" closable
+                    @close="$delete(theme.tags, i)">{{ tag }}</el-tag>
+            <input v-model="inputVal" class="input-new-tag input"
+                   @keyup.enter="confirmInput" @focus="$emit('focus')" @blur="onBlur"/>
           </div>
         </div>
 
@@ -113,6 +101,7 @@
           createdUser: this.$store.state.user
         },
         suggests: [],
+        inputVal: '',
         loading: false,
         errorMessage: ''
       }
@@ -224,6 +213,17 @@
           byteArrays.push(byteArray)
         }
         return new Blob(byteArrays)
+      },
+      confirmInput() {
+        const inputVal = this.inputVal
+        if (inputVal) {
+          this.theme.tags.push(inputVal)
+        }
+        this.inputVal = ''
+      },
+      onBlur() {
+        this.confirmInput()
+        this.$emit('blur')
       }
     }
   }
@@ -247,16 +247,13 @@
           }
         }
         .tags-field {
-          .el-select {
-            width: 100%;
+          .control {
+            flex-wrap: wrap;
+            margin-bottom: 0;
 
-            .el-tag {
-              &:before {
-                content: '#';
-              }
-            }
-            .el-tag__close.el-icon-close {
-              background-color: transparent;
+            .input-new-tag {
+              margin-left: .5rem;
+              width: auto;
             }
           }
         }
