@@ -16,11 +16,10 @@
                        @click="$router.push(`/m/createItem/${theme.id}`)" v-if="loggedIn && isMyPage">
               カレット新規追加
             </el-button>
-            <div class="subtitle is-7">
+            <div class="label is-size-5 has-text-centered">
               <span>カレット一覧</span>
             </div>
             <item-card v-for="item in theme.items" :key="item.id" :theme="theme" :item="item"
-                       :class="{ 'is-active': currentItem.id === item.id }"
                        @click.native="$router.push(`/u/${urlUserId}/${themeId}/${item.id}`)"
                        @open-edit-modal="$refs.itemEditModal.open(theme, item)"
                        v-if="theme.items.length"/>
@@ -158,7 +157,7 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-theme {
-    background-color: white;
+    background-color: $bg-color-main;
 
     .theme-content {
       width: 90%;
@@ -351,7 +350,7 @@
         }
         .theme-items {
           position: relative;
-          margin-top: 1.5rem;
+          margin-top: .5em;
 
           .add-button {
             position: absolute;
@@ -367,6 +366,9 @@
             margin: .75rem auto;
           }
           .item-card {
+            &:not(:last-child) {
+              margin-bottom: .5em;
+            }
             &.is-active {
               .card-content {
                 padding: calc(1rem - 3px);

@@ -9,7 +9,7 @@
         <span class="private-icon icon is-size-2 has-text-white" v-if="theme.private"><i class="material-icons">lock</i></span>
 
         <div class="title is-5 has-text-white">{{ theme.title }}</div>
-        <div class="user-profile is-size-7">
+        <div class="user-profile flexbox has-align-centered is-size-7">
           <figure class="image is-32x32" v-if="theme.createdUser.image">
             <img class="circle" :src="theme.createdUser.image">
           </figure>
@@ -162,16 +162,10 @@
           }
         }
         .user-profile {
-          display: flex;
-          align-items: center;
           cursor: pointer;
 
           .image {
             margin-right: .5em;
-
-            img {
-              height: 100%;
-            }
           }
           .user-name {
             &:hover {

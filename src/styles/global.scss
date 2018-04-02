@@ -177,10 +177,17 @@ body {
   }
 }
 
+.user-profile .image img {
+  height: 100%;
+}
+
 .flexbox {
   display: flex;
   align-items: center;
 
+  &.has-align-centered {
+    align-items: center;
+  }
   .is-justify-end {
     margin-left: auto;
   }

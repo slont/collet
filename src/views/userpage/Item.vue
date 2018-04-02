@@ -15,8 +15,24 @@
       <div class="cullet-container">
         <transition :name="transition">
           <div v-for="item in items" class="cullet-content" v-if="currentItem.id === item.id" :key="item.id">
-            <div class="cullet-name">
+            <div class="cullet-info">
               <div class="title is-3">{{ item.name }}</div>
+              <div class="user-profile flexbox has-align-centered is-size-7">
+                <figure class="image is-32x32" v-if="theme.createdUser.image">
+                  <img class="circle" :src="theme.createdUser.image">
+                </figure>
+                <div>
+                  <div @click.stop="$router.push(`/u/${theme.createdUser.id}`)">
+                    <span class="user-name">
+                      {{ theme.createdUser.name }}</span><span class="user-id text-color-weak">@{{ theme.createdUser.id }}</span>
+                  </div>
+                  <div class="updated-at text-color-weak" v-if="theme.updatedAt">
+                    <span class="icon"><i class="material-icons">access_time</i></span>
+                    {{ theme.updatedAt | fromNow('YYYY/MM/DD HH:mm') }}
+                  </div>
+                </div>
+              </div>
+
               <a class="edit-button button is-info is-outlined is-hidden-tablet fullwidth"
                  @click="$router.push(`/m/editItem/${theme.id}/${item.id}`)" v-if="loggedIn && isMyPage">
                 <span class="icon"><i class="material-icons">edit</i></span>
@@ -67,7 +83,12 @@
         theme: {
           id: '',
           title: '',
-          tags: []
+          tags: [],
+          createdUser: {
+            id: '',
+            name: '',
+            image: ''
+          }
         },
         currentItem: {
           id: '',
@@ -194,21 +215,17 @@
   #userpage-item {
     .scrollable-container {
       overflow-y: scroll;
-      padding: 1em;
+      margin: 1em auto;
+      width: 90%;
     }
-    .theme-title {
-      margin-bottom: .5rem;
-    }
-    .edit-button {
-      margin-left: auto;
-
-      .icon i {
-        font-size: $size-5;
-      }
+    .theme-tags {
+      margin-top: .5em;
+      margin-bottom: 0;
     }
     .cullet-container {
       position: relative;
-      min-height: 72vh;
+      min-height: 80vh;
+      margin-top: 1em;
 
       .cullet-content {
         position: absolute;
@@ -217,20 +234,19 @@
         > :last-child {
           margin-bottom: 100px;
         }
-        .cullet-name {
+        .cullet-info {
           margin-bottom: 2rem;
           border-bottom: $border-style;
 
           .title {
-            margin-bottom: 0;
+            margin-bottom: .5em;
           }
           .subtitle {
             line-height: inherit;
           }
-          .image {
-            img {
-              width: 70%;
-              margin: auto;
+          .user-profile {
+            .image {
+              margin-right: .5em;
             }
           }
         }
