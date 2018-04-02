@@ -9,7 +9,7 @@
       <input v-model.trim="params.valueStr" class="input value" type="text" v-if="editable"
              @focus="$emit('focus')" @blur="$emit('blur')">
 
-      <a :href="params.valueStr" class="value" v-else>{{ params.valueStr }}</a>
+      <a :href="params.valueStr" class="value" target="_blank" v-else>{{ params.valueStr }}</a>
     </p>
   </cl-element>
 </template>
