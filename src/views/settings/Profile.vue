@@ -151,7 +151,7 @@
         this.createImage(files[0])
       },
       removeImage() {
-        this.params.valueStr = ''
+        this.user.image = ''
       },
       createImage(file) {
         loadImage.parseMetaData(file, (data) => {
@@ -164,22 +164,22 @@
           }
           if (options.orientation) {
             this.getDataUrl(file, options).then(result => {
-              this.params.valueStr = result
+              this.user.image = result
               const block = result.split(';')
               const realData = block[1].split(',')[1]
               const blob = this.b64toBlob(realData)
               new FileModel().create(blob).then(res => {
-                this.params.valueStr = res.data.path
+                this.user.image = res.data.path
               })
             })
           } else {
             const reader = new FileReader()
             reader.onload = e => {
-              this.params.valueStr = e.target.result
+              this.user.image = e.target.result
             }
             reader.readAsDataURL(file)
             new FileModel().create(file).then(res => {
-              this.params.valueStr = res.data.path
+              this.user.image = res.data.path
             })
           }
         })
