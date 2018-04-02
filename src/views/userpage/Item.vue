@@ -4,21 +4,28 @@
       <router-link :to="`/u/${$route.params.userId}/${themeId}`" tag="div"
                    class="theme-title is-size-7 text-color-weak">
         {{ theme.title }}
+
+        <div class="theme-tags tags" v-if="theme.tags.length">
+          <el-tag v-for="tag in theme.tags" :key="tag.tagId" type="warning"
+                  @click.native.stop="$router.push(`/tag?name=${tag.name}`)">
+            #{{ tag.name }}
+          </el-tag>
+        </div>
       </router-link>
 
       <div class="cullet-container">
         <transition :name="transition">
           <div v-for="item in items" class="cullet-content" v-if="currentItem.id === item.id" :key="item.id">
             <div class="item-info">
-              <div class="title is-3">
+              <div class="title is-3 flexbox">
                 {{ item.name }}
-                <a class="edit-button button is-info is-outlined is-hidden-mobile"
-                   @click="$refs.itemEditModal.open(theme, item)" v-if="isMyPage">
+                <a class="edit-button button is-info is-outlined is-hidden-tablet"
+                   @click="$router.push(`/m/editItem/${theme.id}/${item.id}`)" v-if="loggedIn && isMyPage">
                   <span class="icon"><i class="material-icons">edit</i></span>
                   <span>編集</span>
                 </a>
-                <a class="edit-button button is-info is-outlined is-hidden-tablet"
-                   @click="$router.push(`/m/editItem/${theme.id}/${item.id}`)" v-if="isMyPage">
+                <a class="edit-button button is-info is-outlined is-hidden-mobile"
+                   @click="$refs.itemEditModal.open(theme, item)" v-if="loggedIn && isMyPage">
                   <span class="icon"><i class="material-icons">edit</i></span>
                   <span>編集</span>
                 </a>
@@ -62,7 +69,8 @@
       return {
         theme: {
           id: '',
-          title: ''
+          title: '',
+          tags: []
         },
         currentItem: {
           id: '',
@@ -187,17 +195,16 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-item {
-    padding: 1em;
-
     .scrollable-container {
       overflow-y: scroll;
+      padding: 1em;
     }
     .theme-title {
       margin-bottom: .5rem;
       text-decoration: underline;
     }
     .edit-button {
-      margin-bottom: .5rem;
+      margin-left: auto;
 
       .icon i {
         font-size: $size-5;
@@ -218,6 +225,7 @@
           margin-bottom: 2rem;
 
           .title {
+            margin-top: 1rem;
             border-bottom: $border-style;
           }
           .subtitle {

@@ -253,3 +253,15 @@ svg:not(:root).svg-inline--fa {
   height: 1.25em;
   width: auto;
 }
+
+.el-tag {
+  font-size: 1em;
+  padding: 0 .5em;
+  height: 2em;
+  line-height: 1.8em;
+}
+.tags {
+  :not(:last-child) {
+    margin-right: .5rem;
+  }
+}

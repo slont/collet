@@ -28,9 +28,11 @@
 
     <div class="card-content media">
       <div class="media-content">
-        <div class="tags" v-if="theme.tags.length">
-          <router-link v-for="tag in theme.tags" class="tag" :key="tag.name"
-             :to="`/tag?name=${tag.name}`">#{{ tag.name }}</router-link>
+        <div class="theme-tags tags" v-if="theme.tags.length">
+          <el-tag v-for="tag in theme.tags" :key="tag.tagId" type="warning"
+                  @click.native.stop="$router.push(`/tag?name=${tag.name}`)">
+            #{{ tag.name }}
+          </el-tag>
         </div>
 
         <div class="theme-description content is-size-7" v-if="theme.description">{{ theme.description }}</div>
@@ -192,9 +194,6 @@
       .media-content {
         overflow: initial;
 
-        .tags {
-          margin-bottom: 0;
-        }
         .theme-description + .actions {
           padding-top: .5em;
           border-top: $border-style;
