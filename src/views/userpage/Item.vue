@@ -5,7 +5,7 @@
                    class="theme-title is-size-7 has-text-underline text-color-weak">
         {{ theme.title }}
       </router-link>
-      <div class="theme-tags tags is-size-7" v-if="theme.tags.length">
+      <div class="theme-tags tags is-size-8" v-if="theme.tags.length">
         <el-tag v-for="tag in theme.tags" :key="tag.tagId" type="warning"
                 @click.native="$router.push(`/tag?name=${tag.name}`)">
           #{{ tag.name }}
@@ -15,20 +15,18 @@
       <div class="cullet-container">
         <transition :name="transition">
           <div v-for="item in items" class="cullet-content" v-if="currentItem.id === item.id" :key="item.id">
-            <div class="item-info">
-              <div class="title is-3 flexbox">
-                {{ item.name }}
-                <a class="edit-button button is-info is-outlined is-hidden-tablet"
-                   @click="$router.push(`/m/editItem/${theme.id}/${item.id}`)" v-if="loggedIn && isMyPage">
-                  <span class="icon"><i class="material-icons">edit</i></span>
-                  <span>編集</span>
-                </a>
-                <a class="edit-button button is-info is-outlined is-hidden-mobile"
-                   @click="$refs.itemEditModal.open(theme, item)" v-if="loggedIn && isMyPage">
-                  <span class="icon"><i class="material-icons">edit</i></span>
-                  <span>編集</span>
-                </a>
-              </div>
+            <div class="cullet-name">
+              <div class="title is-3">{{ item.name }}</div>
+              <a class="edit-button button is-info is-outlined is-hidden-tablet fullwidth"
+                 @click="$router.push(`/m/editItem/${theme.id}/${item.id}`)" v-if="loggedIn && isMyPage">
+                <span class="icon"><i class="material-icons">edit</i></span>
+                <span>編集</span>
+              </a>
+              <a class="edit-button button is-info is-outlined is-hidden-mobile"
+                 @click="$refs.itemEditModal.open(theme, item)" v-if="loggedIn && isMyPage">
+                <span class="icon"><i class="material-icons">edit</i></span>
+                <span>編集</span>
+              </a>
             </div>
 
             <div class="item-elements">
@@ -219,12 +217,12 @@
         > :last-child {
           margin-bottom: 100px;
         }
-        .item-info {
+        .cullet-name {
           margin-bottom: 2rem;
+          border-bottom: $border-style;
 
           .title {
-            margin-top: 1rem;
-            border-bottom: $border-style;
+            margin-bottom: 0;
           }
           .subtitle {
             line-height: inherit;

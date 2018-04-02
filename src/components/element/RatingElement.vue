@@ -4,7 +4,8 @@
               @focus="$emit('focus')" @blur="$emit('blur')">
     <span class="element-type-icon icon is-left" v-if="editable"><rating-icon/></span>
     <div class="control flexbox">
-      <el-rate v-model="params.valueNum" :max="Number(params.valueStr)" :disabled="!editable"/>
+      <el-rate v-model="params.valueDbl" :max="Number(params.valueStr)" allow-half
+               :disabled="!editable"/>
 
       <div class="buttons has-addons is-justify-end">
         <button class="toggle-button button is-outlined is-justify-end" @click="minus" v-if="editable">
@@ -49,6 +50,9 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .rating-element {
+    .el-rate__icon {
+      font-size: 24px;
+    }
     .element-type-icon .rating-icon {
       display: flex;
 

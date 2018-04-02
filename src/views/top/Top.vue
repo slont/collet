@@ -130,8 +130,10 @@
       visibleUpdatedAt(updatedAt, index) {
         if (index === this.updatedItems.length - 1) {
           return true
+        } else if (24 > this.$moment().diff(updatedAt, 'hours')) {
+          return true
         }
-        return 0 !== this.updatedItems[index + 1].updatedAt.diff(updatedAt, 'hours')
+        return 0 !== this.updatedItems[index + 1].updatedAt.diff(updatedAt, 'days')
       }
     }
   }
