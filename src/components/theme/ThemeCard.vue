@@ -6,7 +6,7 @@
         <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image" v-else>
       </figure>
       <div class="dark-mask" @click="$router.push(`/u/${theme.createdUser.id}/${theme.id}`)">
-        <span class="private-icon icon" v-if="theme.private"><i class="material-icons">lock</i></span>
+        <span class="private-icon icon is-size-2 has-text-white" v-if="theme.private"><i class="material-icons">lock</i></span>
 
         <div class="title is-5 has-text-white">{{ theme.title }}</div>
         <div class="user-profile is-size-7">
@@ -37,7 +37,7 @@
 
         <div class="theme-description content is-size-7" v-if="theme.description">{{ theme.description }}</div>
 
-        <nav class="actions level is-mobile">
+        <nav class="actions level is-mobile is-size-4">
           <div class="level-left">
             <a class="favorite-action level-item">
               <span class="icon" @click.stop.prevent="onClickFavorite">
@@ -208,7 +208,6 @@
             }
             .count {
               margin-left: .25rem;
-              margin-bottom: -.25rem;
               color: #4a4a4a;
             }
           }
@@ -220,7 +219,6 @@
             }
             .favorite-count {
               margin-left: .25rem;
-              margin-bottom: -.25rem;
               color: #4a4a4a;
             }
             &:hover {

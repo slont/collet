@@ -68,6 +68,7 @@ body {
 
 .icon {
   height: 1em;
+  width: 1em;
   min-width: 1em;
   vertical-align: -.1em;
 
@@ -230,6 +231,10 @@ body {
 
 .has-left {
   text-align: left;
+}
+
+.has-text-underline {
+  text-decoration: underline;
 }
 
 .text-color-base {

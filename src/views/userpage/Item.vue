@@ -2,16 +2,15 @@
   <div id="userpage-item">
     <div class="scrollable-container" @scroll="onScrollContainer">
       <router-link :to="`/u/${$route.params.userId}/${themeId}`" tag="div"
-                   class="theme-title is-size-7 text-color-weak">
+                   class="theme-title is-size-7 has-text-underline text-color-weak">
         {{ theme.title }}
-
-        <div class="theme-tags tags" v-if="theme.tags.length">
-          <el-tag v-for="tag in theme.tags" :key="tag.tagId" type="warning"
-                  @click.native.stop="$router.push(`/tag?name=${tag.name}`)">
-            #{{ tag.name }}
-          </el-tag>
-        </div>
       </router-link>
+      <div class="theme-tags tags is-size-7" v-if="theme.tags.length">
+        <el-tag v-for="tag in theme.tags" :key="tag.tagId" type="warning"
+                @click.native="$router.push(`/tag?name=${tag.name}`)">
+          #{{ tag.name }}
+        </el-tag>
+      </div>
 
       <div class="cullet-container">
         <transition :name="transition">
@@ -201,7 +200,6 @@
     }
     .theme-title {
       margin-bottom: .5rem;
-      text-decoration: underline;
     }
     .edit-button {
       margin-left: auto;
