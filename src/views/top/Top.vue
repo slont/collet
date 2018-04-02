@@ -1,39 +1,5 @@
 <template>
   <div id="top-top">
-    <carousel :per-page="1"
-              :pagination-enabled="false"
-              navigation-enabled
-              navigation-prev-label=""
-              navigation-next-label=""
-              :autoplay-timeout="4000"
-              autoplay loop>
-      <slide v-for="theme in themes" :key="theme.id">
-        <div class="card-image">
-          <figure class="image is-16by9">
-            <img :src="theme.image" v-if="theme.image">
-            <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image" v-else>
-          </figure>
-          <div class="dark-mask" @click="$router.push(`/u/${theme.createdUser.id}/${theme.id}`)">
-            <span class="private-icon icon" v-if="theme.private"><i class="material-icons">lock</i></span>
-
-            <div class="title is-5 has-text-white">{{ theme.title }}</div>
-            <div class="user-profile is-size-7">
-              <figure class="image is-32x32" v-if="theme.createdUser.image">
-                <img class="circle" :src="theme.createdUser.image">
-              </figure>
-              <div>
-                <div @click.stop="$router.push(`/u/${theme.createdUser.id}`)">
-              <span class="user-name has-text-white has-text-weight-bold">
-                {{ theme.createdUser.name }}</span><span class="user-id has-text-grey-lighter">@{{ theme.createdUser.id }}</span>
-                </div>
-                <div class="updated-at has-text-grey-lighter">{{ theme.updatedAt && theme.updatedAt.format('YYYY/MM/DD HH:mm') }}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </slide>
-    </carousel>
-
     <div class="updated-cullet-list columns is-multiline" v-if="user.id && updatedItems.length">
       <div class="updated-cullet-label column is-12" key="label">
         <router-link :to="`/u/${user.id}`" tag="label" class="label is-size-5 has-text-centered">
@@ -116,10 +82,8 @@
 </template>
 
 <script>
-  import ThemeModel from '@/models/Theme'
   import ItemModel from '@/models/Item'
   import UserModel from '@/models/User'
-  import FavoriteModel from '@/models/Favorite'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
   import ThemeCard from '@/components/theme/ThemeCard'
   import ItemCard from '@/components/item/ItemCard'
@@ -130,7 +94,6 @@
     data() {
       return {
         topThemes: [],
-        themes: [],
         updatedItems: [],
         newItems: []
       }
@@ -159,32 +122,6 @@
           s: 20
         }).then(res => {
           this.newItems = res.data
-        })
-
-        new ThemeModel().findByNew({
-          p: 0,
-          s: 20
-        }).then(async res1 => {
-          this.themes = res1.data.map(theme => {
-            theme.favorite = false
-            return theme
-          })
-          if (this.loggedIn) {
-            const res2 = await new FavoriteModel().find({
-              themeIds: res1.data.map(theme => theme.id),
-              userId: this.user.id
-            })
-            this.themes.forEach((theme, i) => Object.assign(theme, {
-              favorite: !!res2.data[i].themeId
-            }))
-          }
-        }).catch(err => {
-          console.log(err)
-          this.$message({
-            showClose: true,
-            message: 'データ取得に失敗しました',
-            type: 'error'
-          })
         })
       },
       openEditModal(theme) {
@@ -224,83 +161,6 @@
     }
 
     @media screen and (max-width: 768px) {
-      .VueCarousel {
-        .VueCarousel-navigation-prev {
-          left: 10%;
-          height: 100%;
-          width: 10%;
-        }
-        .VueCarousel-navigation-next {
-          right: 10%;
-          height: 100%;
-          width: 10%;
-        }
-        .card-image {
-          overflow: visible;
-
-          .image {
-            overflow: hidden;
-          }
-          .dark-mask {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            position: absolute;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            padding: 1rem;
-            background: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .6));
-            transition: all .3s ease;
-
-            &:hover {
-              background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .7));
-              cursor: pointer;
-            }
-            .private-icon {
-              position: absolute;
-              top: .25rem;
-              left: 1rem;
-              height: 3rem;
-            }
-            .title {
-              margin: 0;
-            }
-            .title {
-              max-height: 80px;
-              width: 100%;
-              margin-bottom: 1rem;
-              line-height: 1.25;
-              display: -webkit-box;
-              -webkit-box-orient: vertical;
-              -webkit-line-clamp: 3;
-              overflow: hidden;
-
-              &:hover {
-                text-decoration: underline;
-              }
-            }
-            .user-profile {
-              display: flex;
-              align-items: center;
-              cursor: pointer;
-
-              .image {
-                margin-right: .5em;
-
-                img {
-                  height: 100%;
-                }
-              }
-              .user-name {
-                &:hover {
-                  text-decoration: underline;
-                }
-              }
-            }
-          }
-        } // .card-image
-      } // VueCarousel
       .updated-cullet-list {
         margin: 0;
 
@@ -324,12 +184,12 @@
               }
             }
             > div {
-              min-width: 54px;
+              min-width: 74px;
             }
             .updated-at {
-              div {
+              > div {
                 padding-right: 1em;
-                padding-bottom: .5em;
+                padding-bottom: .45em;
                 border-bottom: $border-style;
               }
             }
