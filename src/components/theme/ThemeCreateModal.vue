@@ -1,13 +1,13 @@
 <template>
   <modal id="theme-create-modal" class="modal" ref="themeCreateModal" @close="reset">
     <header class="action-modal-header modal-card-head">
-      <span class="back-button icon" @click="close">
+      <span class="back-button icon is-size-3" @click="close">
         <i class="material-icons">arrow_back</i>
       </span>
 
       <span class="modal-card-title title is-6 has-text-white">テーマ作成</span>
 
-      <guard-button :click="ok" class="ok-button is-success is-inverted is-outlined">
+      <guard-button :click="ok" class="ok-button is-success is-inverted is-outlined is-size-5">
         保存
       </guard-button>
     </header>

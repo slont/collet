@@ -1,7 +1,7 @@
 <template>
   <modal id="edit-item" class="modal" ref="editItem">
     <header class="top-header modal-card-head">
-      <span class="back-button icon" @click="$router.go(-1)">
+      <span class="back-button icon is-size-3" @click="$router.go(-1)">
         <i class="material-icons">arrow_back</i>
       </span>
 
@@ -12,7 +12,7 @@
         <label for="templateCheckbox">テンプレート登録</label>
       </div>
 
-      <guard-button :click="save" class="ok-button is-success is-inverted is-outlined">
+      <guard-button :click="save" class="ok-button is-success is-inverted is-outlined is-size-5">
         保存
       </guard-button>
     </header>

@@ -1,7 +1,7 @@
 <template>
   <modal id="theme-select-modal" class="modal" ref="themeSelectModal" @close="reset">
     <header class="top-header modal-card-head">
-      <span class="back-button icon" @click="close">
+      <span class="back-button icon is-size-3" @click="close">
         <i class="material-icons">arrow_back</i>
       </span>
 
@@ -12,9 +12,8 @@
       <aside class="theme-menu menu">
         <ul class="menu-list">
           <li class="create-item" @click="openThemeCreateModal">
-            <a class="button is-primary is-outlined">
+            <a class="button is-primary is-outlined is-size-5">
               <span>テーマ新規作成</span>
-              <span class="icon"><i class="material-icons">add</i></span>
             </a>
             <div class="divider"></div>
           </li>
@@ -22,11 +21,11 @@
           <li v-for="theme in themes" :key="theme.id" class="theme-item"
               @click="select(theme)">
             <a>
-              <span class="selected-icon icon">
+              <span class="selected-icon icon is-size-4">
                 <i class="material-icons text-color-main" v-show="selectedTheme.id === theme.id">check</i>
               </span>
               <span class="theme-title is-size-6 has-text-weight-bold">{{ theme.title }}</span>
-              <span class="icon has-text-success" v-if="theme.private"><i class="material-icons">lock</i></span>
+              <span class="icon has-text-success is-size-4" v-if="theme.private"><i class="material-icons">lock</i></span>
               <span class="item-count text-color-weak">({{ theme.itemCount }})</span>
             </a>
             <div class="divider"></div>
@@ -128,10 +127,6 @@
           display: flex;
           align-items: center;
           justify-content: center;
-
-          i {
-            font-size: $size-medium;
-          }
         }
         .theme-item a {
           display: flex;

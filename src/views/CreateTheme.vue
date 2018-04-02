@@ -1,7 +1,7 @@
 <template>
   <modal id="create-theme" class="modal">
     <header class="modal-card-head">
-      <span class="icon"><i class="material-icons">arrow_back</i></span>
+      <span class="icon is-size-3"><i class="material-icons">arrow_back</i></span>
       <p class="modal-card-title">新規テーマ作成</p>
       <span class="icon"><i class="material-icons">clear</i></span>
     </header>
