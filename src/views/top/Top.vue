@@ -52,7 +52,7 @@
                   {{ item.name }}
                 </router-link>
 
-                <div class="user-profile is-size-7">
+                <div class="user-profile flexbox has-align-centered is-size-7">
                   <figure class="image is-16x16" v-if="item.theme.createdUser.image">
                     <img class="circle" :src="item.theme.createdUser.image">
                   </figure>
@@ -275,9 +275,6 @@
                     overflow: hidden;
                   }
                   .user-profile {
-                    display: flex;
-                    align-items: center;
-
                     > :not(:last-child) {
                       margin-right: .35em;
                     }

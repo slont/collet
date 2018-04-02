@@ -27,7 +27,7 @@
           </div>
         </div>
 
-        <a class="password-setting-expand" @click="expandedPasswordSetting = !expandedPasswordSetting">
+        <a class="password-setting-expand flexbox has-align-centered" @click="expandedPasswordSetting = !expandedPasswordSetting">
           パスワード再設定
           <span class="icon" v-if="expandedPasswordSetting"><i class="material-icons">keyboard_arrow_up</i></span>
           <span class="icon" v-else><i class="material-icons">keyboard_arrow_down</i></span>
@@ -213,8 +213,6 @@
 <style lang="scss" rel="stylesheet/scss">
   #settings-profile {
     .password-setting-expand {
-      display: flex;
-      align-items: center;
       margin-top: 1.5rem;
     }
     .password-setting-area {

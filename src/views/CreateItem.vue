@@ -53,8 +53,8 @@
       </div>
 
       <div class="item-elements" :class="{ 'is-fullwidth': !isEditable }">
-        <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
-          <div class="sort-buttons" v-if="isEditable">
+        <div v-for="(element, i) in item.elements" :key="i" class="field element-field flexbox has-align-centered">
+          <div class="sort-buttons flexbox" v-if="isEditable">
             <a class="button up-button is-white" @click="upOrder(i)"><i class="material-icons">arrow_upward</i></a>
             <span class="element-order">{{ element.order + 1 }}</span>
             <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
@@ -410,13 +410,10 @@
             }
           }
           .element-field {
-            display: flex;
-            align-items: center;
             justify-content: center;
             min-height: 78px;
 
             .sort-buttons {
-              display: flex;
               flex: .05;
               flex-direction: column;
 

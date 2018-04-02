@@ -123,17 +123,6 @@
                   line-height: 1.25;
                   overflow: hidden;
                 }
-                .user-profile {
-                  display: flex;
-                  align-items: center;
-
-                  > :not(:last-child) {
-                    margin-right: .35em;
-                  }
-                  .image img {
-                    max-height: 100%;
-                  }
-                }
               }
               .media-right {
                 .image {
@@ -147,7 +136,7 @@
                 }
               }
               + .content {
-                margin-top: .5em;
+                margin-top: 1.5em;
               }
             } // .media
             .content {

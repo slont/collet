@@ -1,5 +1,5 @@
 <template>
-  <a class="button element-button is-info is-outlined">
+  <a class="button element-button is-info is-outlined has-align-centered">
     <i class="material-icons" v-if="icon">{{ icon }}</i>
     <span class="element-label" v-if="label">{{ label }}</span>
 
@@ -30,7 +30,6 @@
     }
     position: relative;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
 
     .material-icons {

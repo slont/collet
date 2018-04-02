@@ -204,25 +204,6 @@
                 line-height: 1.25;
                 overflow: hidden;
               }
-              .user-profile {
-                font-size: .875rem;
-                display: flex;
-                align-items: center;
-                cursor: pointer;
-
-                :not(:last-child) {
-                  margin-right: .3em;
-                }
-                .user-name:hover {
-                  text-decoration: underline;
-                }
-                .user-id {
-                  color: $label-color;
-                }
-                .updated-at {
-                  color: $label-color;
-                }
-              }
               > :not(:last-child) {
                 margin-bottom: .5rem;
               }
@@ -241,29 +222,6 @@
                 }
                 .title {
                   color: white;
-                }
-                .user-profile {
-                  font-size: .875rem;
-                  display: flex;
-                  align-items: center;
-                  cursor: pointer;
-
-                  :not(:last-child) {
-                    margin-right: .3em;
-                  }
-                  .user-name {
-                    color: white;
-
-                    &:hover {
-                      text-decoration: underline;
-                    }
-                  }
-                  .user-id {
-                    color: gainsboro;
-                  }
-                  .updated-at {
-                    color: gainsboro;
-                  }
                 }
               }
               &.theme-image {

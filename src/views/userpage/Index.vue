@@ -1,7 +1,7 @@
 <template>
   <div id="userpage-index">
     <header class="userpage-header header-shadow">
-      <article class="user-profile media">
+      <article class="user-profile media has-align-centered">
         <figure class="media-left" v-if="user.image">
           <p class="image is-64x64">
             <img :src="user.image" class="circle">
@@ -131,7 +131,6 @@
       background-color: white;
 
       .user-profile {
-        align-items: center;
         max-width: $width;
         margin-left: auto;
         margin-right: auto;
