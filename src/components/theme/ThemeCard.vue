@@ -3,7 +3,7 @@
     <div class="card-image">
       <figure class="image is-16by9">
         <img :src="theme.image" v-if="theme.image">
-        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image" v-else>
+        <img src="/static/img/cullet-logo_orange.png" class="alt-image" alt="Placeholder image" v-else>
       </figure>
       <div class="dark-mask" @click="$router.push(`/u/${theme.createdUser.id}/${theme.id}`)">
         <span class="private-icon icon is-size-2 has-text-white" v-if="theme.private"><i class="material-icons">lock</i></span>
