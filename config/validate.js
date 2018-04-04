@@ -3,10 +3,10 @@ module.exports = {
   fieldsBagName: 'fields',
   delay: 0,
   // locale: store.state.locale,
-  locale: 'en',  // TODO: create ja dict
   dictionary: null,
   strict: true,
   enableAutoClasses: false,
+  events: 'blur',
   classNames: {
     touched: 'touched', // the control has been blurred
     untouched: 'untouched', // the control hasn't been blurred

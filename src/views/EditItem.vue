@@ -28,9 +28,9 @@
         <div class="field">
           <div class="item-name control">
             <input v-model.trim="item.name" class="input title is-4 is-primary text-color-main" type="text" placeholder="Cullet Name"
-                   name="itemName" v-validate="'required'" :class="{ 'is-danger': errors.has('itemName') }"
+                   name="culletName" v-validate="'required'" :class="{ 'is-danger': errors.has('culletName') }"
                    @focus="onFocusInput" @blur="onBlurInput">
-            <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
+            <span v-show="errors.has('culletName')" class="help is-danger">{{ errors.first('culletName') }}</span>
           </div>
         </div>
       </div>

@@ -22,7 +22,10 @@ Vue.config.productionTip = false
 
 Vue.use(Vuex)
 Vue.use(VueI18n)
-Vue.use(VeeValidate, validateConfig)
+
+Vue.use(VeeValidate, Object.assign({}, validateConfig, {
+  locale: store.state.locale
+}))
 Vue.use(VueAutosize)
 Vue.use(VueMoment, { moment })
 const i18n = new VueI18n({
