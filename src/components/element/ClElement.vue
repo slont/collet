@@ -45,6 +45,9 @@
       &:not(:last-child) {
         margin-bottom: 1em;
       }
+      &:focus, &:active {
+        border-color: $primary;
+      }
     }
     .view-label {
       border-bottom: $border-style;

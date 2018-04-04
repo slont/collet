@@ -7,10 +7,10 @@
     </span>
     <div class="control flexbox">
       <el-time-select v-model="params.valueStr" :readonly="!editable" v-if="'time' === params.type"
-                      placeholder="Select time"
+                      placeholder="Select time" :class="{ 'is-size-5': !editable }"
                       @focus="$emit('focus')" @blur="$emit('blur')"/>
       <el-date-picker v-model="params.valueStr" :type="params.type" :readonly="!editable" v-else
-                      :placeholder="`Select ${params.type}`"
+                      :placeholder="`Select ${params.type}`" :class="{ 'is-size-5': !editable }"
                       @focus="$emit('focus')" @blur="$emit('blur')"/>
 
       <button class="toggle-button button is-outlined is-justify-end" v-if="editable" @click="toggle">
@@ -65,7 +65,8 @@
         margin-bottom: 0;
       }
       .el-input {
-        margin-left: -.75em;
+        width: auto;
+        margin-left: -.5em;
 
         input {
           border: none;

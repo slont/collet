@@ -6,8 +6,8 @@
       <i class="material-icons">link</i>
     </span>
     <p class="control">
-      <input v-model.trim="params.valueStr" class="input value" type="text" v-if="editable"
-             @focus="$emit('focus')" @blur="$emit('blur')">
+      <input v-model.trim="params.valueStr" class="input value" type="text" placeholder="Link"
+             @focus="$emit('focus')" @blur="$emit('blur')" v-if="editable">
 
       <a :href="params.valueStr" class="value" target="_blank" v-else>{{ params.valueStr }}</a>
     </p>
@@ -36,6 +36,19 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .link-element {
+    .input {
+      padding-top: .25em;
+      padding-left: .25em;
+      border-left: none;
+      border-top: none;
+      border-right: none;
+      border-radius: 0;
+      box-shadow: none;
+
+      &:focus, &:active {
+        border-color: $primary;
+      }
+    }
     .value {
       color: $link;
       text-decoration: underline;

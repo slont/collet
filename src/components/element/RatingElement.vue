@@ -50,6 +50,9 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .rating-element {
+    &:not(.is-editable) .label:not(:last-child) {
+      margin-bottom: .5em;
+    }
     .el-rate__icon {
       font-size: 24px;
     }

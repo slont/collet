@@ -5,7 +5,7 @@
         <i class="material-icons">arrow_back</i>
       </span>
 
-      <span class="modal-card-title title is-6 has-text-white">新規カレット作成</span>
+      <span class="modal-card-title title is-6 has-text-white">カレット作成</span>
 
       <div class="template-checkbox field">
         <input v-model="isTemplate" class="is-checkradio has-background-color is-white is-small" id="templateCheckbox" type="checkbox" :checked="isTemplate">
@@ -379,6 +379,10 @@
               margin-bottom: 0;
               padding: 0;
               line-height: $size-1;
+
+              &::placeholder {
+                color: rgba($primary, .25);
+              }
             }
           }
         }

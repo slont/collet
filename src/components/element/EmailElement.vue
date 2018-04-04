@@ -36,5 +36,18 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .email-element {
+    .input {
+      padding-top: .25em;
+      padding-left: .25em;
+      border-left: none;
+      border-top: none;
+      border-right: none;
+      border-radius: 0;
+      box-shadow: none;
+
+      &:focus, &:active {
+        border-color: $primary;
+      }
+    }
   }
 </style>

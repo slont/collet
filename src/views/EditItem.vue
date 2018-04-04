@@ -362,6 +362,10 @@
               margin-bottom: 0;
               padding: 0;
               line-height: $size-1;
+
+              &::placeholder {
+                color: rgba($primary, .25);
+              }
             }
           }
         }

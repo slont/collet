@@ -36,6 +36,19 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .text-element {
+    .textarea {
+      padding-top: .25em;
+      padding-left: .25em;
+      border-left: none;
+      border-top: none;
+      border-right: none;
+      border-radius: 0;
+      box-shadow: none;
+
+      &:focus, &:active {
+        border-color: $primary;
+      }
+    }
     .value {
       white-space: pre-wrap;
       word-break: break-word;
