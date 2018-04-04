@@ -28,6 +28,8 @@ export default class Item extends Base {
   static _deserialize(json) {
     return Object.assign({}, json, {
       elements: (json.elements && new Element().deserialize(json.elements)) || [],
+      prev: json.prev ? Item._deserialize(json.prev) : {},
+      next: json.next ? Item._deserialize(json.next) : {},
       createdAt: moment(json.createdAt),
       updatedAt: moment(json.updatedAt)
     })

@@ -11,33 +11,37 @@
           #{{ tag.name }}
         </el-tag>
       </div>
+      <div class="user-profile flexbox has-align-centered is-size-7">
+        <figure class="image is-16x16" v-if="theme.createdUser.image">
+          <img class="circle" :src="theme.createdUser.image">
+        </figure>
+        <div @click.stop="$router.push(`/u/${theme.createdUser.id}`)">
+          <span class="user-name">{{ theme.createdUser.name }}
+          </span><span class="user-id text-color-weak">@{{ theme.createdUser.id }}</span>
+        </div>
+      </div>
 
       <div class="cullet-container">
         <transition :name="transition">
           <div v-for="item in items" class="cullet-content" v-if="currentItem.id === item.id" :key="item.id">
             <div class="cullet-info">
-              <div class="title is-3">{{ item.name }}</div>
-              <div class="user-profile flexbox has-align-centered is-size-7">
-                <figure class="image is-32x32" v-if="theme.createdUser.image">
-                  <img class="circle" :src="theme.createdUser.image">
-                </figure>
-                <div>
-                  <div @click.stop="$router.push(`/u/${theme.createdUser.id}`)">
-                    <span class="user-name">
-                      {{ theme.createdUser.name }}</span><span class="user-id text-color-weak">@{{ theme.createdUser.id }}</span>
-                  </div>
-                  <div class="updated-at text-color-weak" v-if="theme.updatedAt">
-                    <span class="icon"><i class="material-icons">access_time</i></span>
-                    {{ theme.updatedAt | fromNow('YYYY/MM/DD HH:mm') }}
-                  </div>
-                </div>
+              <div class="updated-at text-color-weak is-size-7 has-text-right" v-if="item.updatedAt">
+                <span class="icon"><i class="material-icons">access_time</i></span>
+                {{ item.createdAt | fromNow('YYYY/MM/DD HH:mm') }}
+                <span class="is-size-8" v-if="1 < item.updatedAt.diff(item.createdAt, 'hours')">
+                  ({{ item.updatedAt.format('YYYY/MM/DD HH:mm') }} 更新)
+                </span>
+              </div>
+              <div class="title is-3">
+                {{ item.name }}
+
+                <a class="edit-button button is-info is-outlined is-size-7 is-hidden-tablet"
+                   @click="$router.push(`/m/editItem/${theme.id}/${item.id}`)" v-if="loggedIn && isMyPage">
+                  <span class="icon"><i class="material-icons">edit</i></span>
+                  <span>編集</span>
+                </a>
               </div>
 
-              <a class="edit-button button is-info is-outlined is-hidden-tablet fullwidth"
-                 @click="$router.push(`/m/editItem/${theme.id}/${item.id}`)" v-if="loggedIn && isMyPage">
-                <span class="icon"><i class="material-icons">edit</i></span>
-                <span>編集</span>
-              </a>
               <a class="edit-button button is-info is-outlined is-hidden-mobile"
                  @click="$refs.itemEditModal.open(theme, item)" v-if="loggedIn && isMyPage">
                 <span class="icon"><i class="material-icons">edit</i></span>
@@ -217,15 +221,28 @@
       overflow-y: scroll;
       margin: 1em auto;
       width: 90%;
+
+      .theme-title {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+      }
     }
     .theme-tags {
       margin-top: .5em;
       margin-bottom: 0;
     }
+    .user-profile {
+      margin-top: .5em;
+
+      .image {
+        margin-right: .5em;
+      }
+    }
     .cullet-container {
       position: relative;
       min-height: 80vh;
-      margin-top: 1em;
 
       .cullet-content {
         position: absolute;
@@ -239,15 +256,10 @@
           border-bottom: $border-style;
 
           .title {
-            margin-bottom: .5em;
+            margin-bottom: .25em;
           }
           .subtitle {
             line-height: inherit;
-          }
-          .user-profile {
-            .image {
-              margin-right: .5em;
-            }
           }
         }
         .item-elements {
@@ -269,8 +281,9 @@
         bottom: $footer-nav-height;
       }
       &-item {
-        width: 46%;
         height: 4.5em;
+        width: 46%;
+        max-width: 14em;
         padding: 0 .5em;
         background-color: rgba($link, .6);
 
