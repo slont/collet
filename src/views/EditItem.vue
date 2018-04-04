@@ -190,6 +190,7 @@
             this.errorMessage = err
           })
 
+          this.$store.dispatch('setTheme', this.theme)
           this.$message({
             showClose: true,
             message: '更新されました',

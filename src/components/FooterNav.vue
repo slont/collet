@@ -57,7 +57,9 @@
     components: { ThemeCreateModal, ItemCreateModal },
     data() {
       return {
-        themes: []
+        theme: {
+          id: ''
+        }
       }
     },
     computed: {
@@ -73,17 +75,20 @@
     },
     methods: {
       fetchThemes() {
-        new UserModel().findThemes(this.user.id, {
-          p: 0,
-          s: 1
-        }).then(res => {
-          this.themes = res.data
-        })
+        if (!this.$store.state.theme.id) {
+          new UserModel().findThemes(this.user.id, {
+            p: 0,
+            s: 1
+          }).then(res => {
+            if (res.data.length) {
+              this.$store.dispatch('setTheme', res.data[0])
+            }
+          })
+        }
       },
       async onClickAdd() {
-        if (this.themes.length) {
-          // this.$refs.itemCreateModal.open(this.themes[0])
-          this.$router.push(`/m/createItem/${this.themes[0].id}`)
+        if (this.$store.state.theme.id) {
+          this.$router.push(`/m/createItem/${this.$store.state.theme.id}`)
         } else {
           this.$refs.themeCreateModal.open()
         }
