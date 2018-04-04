@@ -7,7 +7,8 @@
 
       <span class="modal-card-title title is-6 has-text-white">テーマ編集</span>
 
-      <guard-button :click="ok" class="ok-button is-success is-inverted is-outlined is-size-5">
+      <guard-button :click="ok" class="ok-button is-success is-inverted is-outlined is-size-5"
+                    v-if="!loading">
         保存
       </guard-button>
     </header>
@@ -34,7 +35,7 @@
       <div class="column">
         <div class="field image-field">
           <label class="label">メイン画像（オプショナル）</label>
-          <div class="control">
+          <div class="control loading-mask" :class="{ 'is-loading': loading }">
             <div class="file is-boxed">
               <label class="file-label">
                 <input @change="changeImage" class="file-input" type="file" name="resume">
@@ -78,7 +79,7 @@
       <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
       <a @click="$refs.themeDeleteModal.open(theme)" class="button is-danger is-outlined is-left">削除</a>
       <a @click="close" class="button">キャンセル</a>
-      <guard-button :click="ok" class="is-info">保存</guard-button>
+      <guard-button :click="ok" class="is-info" :disabled="loading">保存</guard-button>
     </footer>
 
     <theme-delete-modal ref="themeDeleteModal" @refresh="refreshClose"/>
@@ -98,7 +99,7 @@
       return {
         theme: {
           title: '',
-          ldescription: '',
+          description: '',
           image: '',
           private: false,
           tags: [],
@@ -107,8 +108,12 @@
         tags: [],
         inputVal: '',
         errorMessage: '',
-        loading: false,
         suggests: []
+      }
+    },
+    computed: {
+      loading() {
+        return /^data:.+/.test(this.theme.image)
       }
     },
     methods: {
