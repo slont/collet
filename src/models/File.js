@@ -5,9 +5,9 @@ export default class File extends Base {
     super('/files')
   }
 
-  create(file, themeId) {
+  create(file, fileName, themeId) {
     const formData = new FormData()
-    formData.append('file', file)
+    formData.append('file', file, fileName)
     if (themeId) {
       formData.append('themeId', themeId)
     }
