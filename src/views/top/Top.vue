@@ -26,7 +26,7 @@
               </div>
 
               <div class="media-right" v-if="item.theme.image">
-                <figure class="image"><img :src="item.theme.image"></figure>
+                <figure class="image"><img :src="item.theme.image" :srcset="`${item.theme.image}_640w 640w`"></figure>
               </div>
             </div>
           </div>
@@ -54,7 +54,7 @@
 
                 <div class="user-profile flexbox has-align-centered is-size-7">
                   <figure class="image is-16x16" v-if="item.theme.createdUser.image">
-                    <img class="circle" :src="item.theme.createdUser.image">
+                    <img class="circle" :src="item.theme.createdUser.image" :srcset="`${item.theme.createdUser.image}_640w 640w`">
                   </figure>
                   <router-link :to="`/u/${item.theme.createdUser.id}`" class="user-name text-color-weak">
                     {{ item.theme.createdUser.name }}
@@ -64,7 +64,7 @@
               </div>
 
               <div class="media-right" v-if="item.theme.image">
-                <figure class="image"><img :src="item.theme.image"></figure>
+                <figure class="image"><img :src="item.theme.image" :srcset="`${item.theme.image}_640w 640w`"></figure>
               </div>
             </div>
 

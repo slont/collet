@@ -32,7 +32,7 @@
             <dropdown ref="accountDropdown">
               <template slot="trigger">
                 <span class="user-name is-size-7">{{ user.name }}</span>
-                <img :src="user.image" class="circle" v-if="user.image"/>
+                <img :src="user.image" :srcset="`${user.image}_640w 640w`" class="circle" v-if="user.image"/>
                 <span class="icon" v-else><i class="material-icons">arrow_drop_down</i></span>
               </template>
 

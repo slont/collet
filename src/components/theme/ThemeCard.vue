@@ -2,7 +2,7 @@
   <div class="theme-card card">
     <div class="card-image">
       <figure class="image is-16by9">
-        <img :src="theme.image" v-if="theme.image">
+        <img :src="theme.image" :srcset="`${theme.image}_640w 640w`" v-if="theme.image">
         <img src="/static/img/cullet-logo_orange.png" class="alt-image" alt="Placeholder image" v-else>
       </figure>
       <div class="dark-mask" @click="$router.push(`/u/${theme.createdUser.id}/${theme.id}`)">
@@ -11,7 +11,7 @@
         <div class="title is-5 has-text-white">{{ theme.title }}</div>
         <div class="user-profile flexbox has-align-centered is-size-7">
           <figure class="image is-32x32" v-if="theme.createdUser.image">
-            <img class="circle" :src="theme.createdUser.image">
+            <img class="circle" :src="theme.createdUser.image" :srcset="`${theme.createdUser.image}_640w 640w`">
           </figure>
           <div>
             <div @click.stop="$router.push(`/u/${theme.createdUser.id}`)">

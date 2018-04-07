@@ -13,7 +13,8 @@
               <input @change="changeImage" class="file-input" type="file" name="resume"
                      @focus="$emit('focus')" @blur="$emit('blur')">
               <span class="file-view" v-if="params.valueStr">
-                <img :src="params.valueStr"/>
+                <img :src="params.valueStr" v-if="params.valueStr.substring(0, 4) === 'data'"/>
+                <img :src="params.valueStr" :srcset="`${params.valueStr}_640w 640w`" v-else/>
                 <a @click.stop.prevent="removeImage" class="delete"></a>
               </span>
               <span class="file-cta" v-else>
@@ -27,7 +28,7 @@
     </div>
 
     <figure class="image file-view" v-else>
-      <img :src="params.valueStr"/>
+      <img :src="params.valueStr" :srcset="`${params.valueStr}_640w 640w`"/>
     </figure>
   </cl-element>
 </template>

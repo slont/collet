@@ -33,7 +33,8 @@
               <label class="file-label">
                 <input @change="changeImage" class="file-input" type="file" name="resume">
                 <span class="file-view" v-if="theme.image">
-                  <img :src="theme.image"/>
+                  <img :src="theme.image" v-if="theme.image.substring(0, 4) === 'data'"/>
+                  <img :src="theme.image" :srcset="`${theme.image}_640w 640w`" v-else/>
                   <a @click.stop.prevent="removeImage" class="delete"></a>
                 </span>
                 <span class="file-cta" v-else>

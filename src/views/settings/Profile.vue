@@ -70,9 +70,10 @@
               <label class="file-label">
                 <input @change="changeImage" class="file-input" type="file" name="resume">
                 <span class="file-view" v-if="user.image">
-              <img :src="user.image"/>
-              <a @click.stop.prevent="removeImage" class="delete"></a>
-            </span>
+                  <img :src="user.image" v-if="user.image.substring(0, 4) === 'data'"/>
+                  <img :src="user.image" :srcset="`${user.image}_640w 640w`" v-else/>
+                  <a @click.stop.prevent="removeImage" class="delete"></a>
+                </span>
                 <span class="file-cta" v-else>
               <span class="file-icon"><i class="material-icons">file_upload</i></span>
               <span class="file-label">Upload Image...</span>

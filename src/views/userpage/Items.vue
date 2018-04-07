@@ -20,7 +20,7 @@
             </div>
 
             <div class="media-right" v-if="item.theme.image">
-              <figure class="image"><img :src="item.theme.image"></figure>
+              <figure class="image"><img :src="item.theme.image" :srcset="`${item.theme.image}_640w 640w`"></figure>
             </div>
           </div>
 

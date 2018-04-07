@@ -23,7 +23,7 @@
         </router-link>
 
         <router-link :to="`/u/${user.id}`" class="navbar-item" exact>
-          <img :src="user.image" class="circle" v-if="user.image"/>
+          <img :src="user.image" :srcset="`${user.image}_640w 640w`" class="circle" v-if="user.image"/>
           <span class="icon is-size-3" v-else><i class="material-icons">account_circle</i></span>
           <span class="subtitle is-7 has-text-weight-bold">My Page</span>
         </router-link>
