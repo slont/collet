@@ -171,17 +171,11 @@
         }
       },
       changeImage(e) {
-        this.theme.image = ''
         const files = e.target.files || e.dataTransfer.files
         if (!files.length) return
+        const file = files[0]
 
-        this.createImage(files[0])
-      },
-      removeImage() {
-        this.theme.image = ''
-      },
-      createImage(file) {
-        loadImage.parseMetaData(file, (data) => {
+        loadImage.parseMetaData(file, data => {
           const options = {
             orientation: null,
             canvas: true
@@ -189,49 +183,31 @@
           if (data.exif) {
             options.orientation = data.exif.get('Orientation')
           }
-          if (options.orientation) {
-            this.getDataUrl(file, options).then(result => {
-              this.theme.image = result
-              const block = result.split(';')
-              const realData = block[1].split(',')[1]
-              const blob = this.b64toBlob(realData)
-              new FileModel().create(blob).then(res => {
+          loadImage(file, canvas => {
+            this.theme.image = canvas.toDataURL(file.type)
+            let _canvas = null
+            if (1080 < canvas.width) {
+              const ratio = canvas.height / canvas.width
+              const oc = document.createElement('canvas')
+              const octx = oc.getContext('2d')
+              oc.width = 1080
+              oc.height = 1080 * ratio
+              octx.drawImage(canvas, 0, 0, oc.width, oc.height)
+              _canvas = oc
+            } else {
+              _canvas = canvas
+            }
+            // upload
+            _canvas.toBlob(blob => {
+              new FileModel().create(blob, file.name).then(res => {
                 this.theme.image = res.data.path
               })
-            })
-          } else {
-            const reader = new FileReader()
-            reader.onload = e => {
-              this.theme.image = e.target.result
-            }
-            reader.readAsDataURL(file)
-            new FileModel().create(file).then(res => {
-              this.theme.image = res.data.path
-            })
-          }
-        })
-      },
-      getDataUrl(blobImage, options) {
-        return new Promise(resolve => {
-          loadImage(blobImage, canvas => {
-            resolve(canvas.toDataURL(blobImage.type))
+            }, file.type)
           }, options)
         })
       },
-      b64toBlob(b64Data, sliceSize = 512) {
-        const byteCharacters = atob(b64Data)
-        const byteArrays = []
-
-        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-          const slice = byteCharacters.slice(offset, offset + sliceSize)
-          const byteNumbers = new Array(slice.length)
-          for (let i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i)
-          }
-          const byteArray = new Uint8Array(byteNumbers)
-          byteArrays.push(byteArray)
-        }
-        return new Blob(byteArrays)
+      removeImage() {
+        this.theme.image = ''
       },
       confirmInput() {
         const inputVal = this.inputVal
