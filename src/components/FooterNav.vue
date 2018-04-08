@@ -31,7 +31,7 @@
     </template>
     <!-- 未ログイン -->
     <template v-else>
-      <div class="navbar-brand logged-out">
+      <div class="navbar-brand logged-out has-text-centered">
         <router-link :to="`/signin?redirect=${encodeURIComponent($route.path)}`"
                      class="navbar-item button is-primary is-outlined is-rounded">
           ログイン

@@ -33,9 +33,9 @@
         <label for="saveInfo">ログイン情報を保存</label>
       </div>
 
-      <div class="field has-text-centered">
+      <div class="field">
         <guard-button :click="ok" class="is-primary is-size-5 fullwidth" :class="{ 'is-loading': isLoading }">
-          {{ $t('buttons.signin') }}
+          <span>{{ $t('buttons.signin') }}</span>
         </guard-button>
       </div>
 
