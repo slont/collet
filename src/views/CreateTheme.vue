@@ -28,19 +28,20 @@
       <div class="column">
         <div class="field image-field">
           <label class="label">メイン画像（オプショナル）</label>
-          <div class="control loading-mask" :class="{ 'is-loading': theme.image.substring(0, 4) === 'data' }">
+          <div class="control">
             <div class="file is-boxed">
               <label class="file-label">
                 <input @change="changeImage" class="file-input" type="file" name="resume">
                 <span class="file-view" v-if="theme.image">
-                  <img :src="theme.image" v-if="theme.image.substring(0, 4) === 'data'"/>
+                  <img :src="theme.image" v-if="loading"/>
                   <img :src="theme.image" :srcset="`${theme.image}_640w 640w`" v-else/>
                   <a @click.stop.prevent="removeImage" class="delete"></a>
                 </span>
-                <span class="file-cta" v-else>
+                <div class="file-cta" v-else>
                   <span class="file-icon"><i class="material-icons">file_upload</i></span>
                   <span class="file-label">Upload Image...</span>
-                </span>
+                </div>
+                <div class="control loading-mask is-size-1" :class="{ 'is-loading': loading }"></div>
               </label>
             </div>
           </div>
@@ -56,7 +57,6 @@
                 allow-create
                 default-first-option
                 remote
-                :loading="loading"
                 :remote-method="remoteMethod"
                 placeholder="Choose tags for your article">
               <el-option
@@ -109,6 +109,11 @@
         suggests: [],
         loading: false,
         errorMessage: ''
+      }
+    },
+    computed: {
+      loading() {
+        return /^data:.+/.test(this.theme.image)
       }
     },
     created() {

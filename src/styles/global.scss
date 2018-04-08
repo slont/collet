@@ -125,12 +125,18 @@ body {
   font-size: $size-5;
 
   .loading-mask.is-loading {
-    opacity: .75;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(white, .7);
 
     &:after {
-      top: 50%;
-      left: 50%;
-      transform: translateX(-50%) translateY(-50%);
+      top: 45%;
+      right: 45%;
+      border-color: rgba($main-color, .7);
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-width: 4px;
     }
   }
 }

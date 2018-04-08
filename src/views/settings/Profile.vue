@@ -65,19 +65,20 @@
       <div class="column is-4">
         <div class="field image-field">
           <label class="label">イメージ画像</label>
-          <div class="control loading-mask" :class="{ 'is-loading': user.image.substring(0, 4) === 'data' }">
+          <div class="control">
             <div class="file is-boxed">
               <label class="file-label">
                 <input @change="changeImage" class="file-input" type="file" name="resume">
-                <span class="file-view" v-if="user.image">
-                  <img :src="user.image" v-if="user.image.substring(0, 4) === 'data'"/>
+                <div class="file-view" v-if="user.image">
+                  <img :src="user.image" v-if="loading"/>
                   <img :src="user.image" :srcset="`${user.image}_640w 640w`" v-else/>
                   <a @click.stop.prevent="removeImage" class="delete"></a>
-                </span>
-                <span class="file-cta" v-else>
-              <span class="file-icon"><i class="material-icons">file_upload</i></span>
-              <span class="file-label">Upload Image...</span>
-            </span>
+                </div>
+                <div class="file-cta" v-else>
+                  <span class="file-icon"><i class="material-icons">file_upload</i></span>
+                  <span class="file-label">Upload Image...</span>
+                </div>
+                <div class="control loading-mask is-size-1" :class="{ 'is-loading': loading }"></div>
               </label>
             </div>
           </div>
@@ -85,7 +86,7 @@
 
         <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
         <div class="save-button has-right">
-          <a @click="save" class="button is-primary">保存</a>
+          <guard-button :click="save" class="button is-primary" :disabled="loading">保存</guard-button>
         </div>
       </div>
     </div>
@@ -111,6 +112,11 @@
         newPassword: '',
         confirmPassword: '',
         errorMessage: ''
+      }
+    },
+    computed: {
+      loading() {
+        return /^data:.+/.test(this.user.image)
       }
     },
     created() {
@@ -161,6 +167,12 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #settings-profile {
+    .delete {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      z-index: 10;
+    }
     .password-setting-expand {
       margin-top: 1.5rem;
     }

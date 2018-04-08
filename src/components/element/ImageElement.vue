@@ -7,20 +7,21 @@
     </span>
     <div class="control file" v-if="editable">
       <div class="field image-field">
-        <div class="control loading-mask" :class="{ 'is-loading': params.valueStr.substring(0, 4) === 'data' }">
+        <div class="control">
           <div class="file is-boxed">
             <label class="file-label">
               <input @change="changeImage" class="file-input" type="file" name="resume"
                      @focus="$emit('focus')" @blur="$emit('blur')">
-              <span class="file-view" v-if="params.valueStr">
-                <img :src="params.valueStr" v-if="params.valueStr.substring(0, 4) === 'data'"/>
+              <div class="file-view" v-if="params.valueStr">
+                <img :src="params.valueStr" v-if="loading"/>
                 <img :src="params.valueStr" :srcset="`${params.valueStr}_640w 640w`" v-else/>
                 <a @click.stop.prevent="removeImage" class="delete"></a>
-              </span>
-              <span class="file-cta" v-else>
+              </div>
+              <div class="file-cta" v-else>
                 <span class="file-icon"><i class="material-icons">file_upload</i></span>
                 <span class="file-label">Upload Image</span>
-              </span>
+              </div>
+              <div class="control loading-mask is-size-1" :class="{ 'is-loading': loading }"></div>
             </label>
           </div>
         </div>
@@ -52,6 +53,9 @@
       editable: Boolean
     },
     computed: {
+      loading() {
+        return /^data:.+/.test(this.params.valueStr)
+      },
       themeId() {
         return this.$route.params.themeId
       }
@@ -74,6 +78,9 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .image-element {
+    > .control.file {
+      justify-content: center;
+    }
     .file-view {
       margin-top: 0 !important;
       text-align: center;
@@ -90,7 +97,7 @@
         opacity: .7;
       }
       img {
-        width: 70%;
+        max-width: 70%;
         margin: 0 auto;
       }
     }
