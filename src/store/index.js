@@ -27,6 +27,10 @@ export default new Vuex.Store({
     },
     setLoggedIn({commit}, loggedIn) {
       commit(SET_LOGGED_IN, loggedIn)
+      if (!loggedIn) {
+        commit(SET_THEME, {})
+        commit(SET_LOGIN_INFO, {})
+      }
     },
     setLoginInfo({commit}, loginInfo) {
       commit(SET_LOGIN_INFO, loginInfo)
@@ -72,6 +76,8 @@ export default new Vuex.Store({
         delete localStorage.authToken
         commit(SET_LOGGED_IN, false)
         commit(SET_USER, {})
+        commit(SET_THEME, {})
+        commit(SET_LOGIN_INFO, {})
         authModel.onChange(false)
         return Promise.resolve()
       }).catch(err => {
