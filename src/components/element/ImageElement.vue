@@ -34,7 +34,6 @@
 </template>
 
 <script>
-  import loadImage from 'blueimp-load-image'
   import FileModel from '@/models/File'
   import ClElement from './ClElement'
 
@@ -59,39 +58,11 @@
     },
     methods: {
       changeImage(e) {
-        const files = e.target.files || e.dataTransfer.files
-        if (!files.length) return
-        const file = files[0]
-
-        loadImage.parseMetaData(file, data => {
-          const options = {
-            orientation: null,
-            canvas: true
-          }
-          if (data.exif) {
-            options.orientation = data.exif.get('Orientation')
-          }
-          loadImage(file, canvas => {
-            this.params.valueStr = canvas.toDataURL(file.type)
-            let _canvas = null
-            if (1080 < canvas.width) {
-              const ratio = canvas.height / canvas.width
-              const oc = document.createElement('canvas')
-              const octx = oc.getContext('2d')
-              oc.width = 1080
-              oc.height = 1080 * ratio
-              octx.drawImage(canvas, 0, 0, oc.width, oc.height)
-              _canvas = oc
-            } else {
-              _canvas = canvas
-            }
-            // upload
-            _canvas.toBlob(blob => {
-              new FileModel().create(blob, file.name, this.themeId).then(res => {
-                this.params.valueStr = res.data.path
-              })
-            }, file.type)
-          }, options)
+        this.createDataUrl(e, (dataUrl, fileName) => {
+          this.params.valueStr = dataUrl
+          new FileModel().create(this.dataURLtoBlob(dataUrl), fileName, this.themeId).then(res => {
+            this.params.valueStr = res.data.path
+          })
         })
       },
       removeImage() {

@@ -1,6 +1,8 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import './styles/global.scss'
+import loadImage from 'blueimp-load-image'
+import dataURLtoBlob from 'blueimp-canvas-to-blob'
 import Vue from 'vue'
 import App from './App'
 import store from './store'
@@ -54,6 +56,44 @@ Vue.use({
           } else {
             return datetime.format(format)
           }
+        }
+      },
+      methods: {
+        dataURLtoBlob: dataURLtoBlob,
+        createDataUrl(e, callback) {
+          const MAX_WIDTH = 1080
+          const MAX_SIZE = 122880 // 120KB
+          const files = e.target.files || e.dataTransfer.files
+          if (!files.length) return
+
+          const file = files[0]
+          loadImage.parseMetaData(file, data => {
+            const options = {
+              orientation: null,
+              canvas: true
+            }
+            if (data.exif) {
+              options.orientation = data.exif.get('Orientation')
+            }
+            loadImage(file, canvas => {
+              let dataUrl = ''
+              if (MAX_WIDTH < canvas.width) {
+                const scaleRatio = canvas.height / canvas.width
+                const oc = document.createElement('canvas')
+                const octx = oc.getContext('2d')
+                oc.width = MAX_WIDTH
+                oc.height = MAX_WIDTH * scaleRatio
+                octx.drawImage(canvas, 0, 0, oc.width, oc.height)
+                const sizeRatio = Math.min(0.9, MAX_SIZE / (file.size * ((MAX_WIDTH / canvas.width) ** 2)) + 0.2)
+                dataUrl = oc.toDataURL(file.type, sizeRatio)
+              } else {
+                const sizeRatio = Math.min(0.92, MAX_SIZE / file.size + 0.2)
+                dataUrl = canvas.toDataURL(file.type, sizeRatio)
+              }
+
+              callback(dataUrl, file.name)
+            }, options)
+          })
         }
       }
     })
