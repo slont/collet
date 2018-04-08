@@ -149,6 +149,24 @@
               }
             }
           } // .card-content
+          .element-view {
+            .text-element {
+              .control {
+                max-height: 180px;
+                overflow: hidden;
+              }
+            }
+            .image-element {
+              .file-view {
+                display: flex;
+                align-items: center;
+                max-height: 18em;
+                margin-left: 0;
+                margin-right: 0;
+                overflow: hidden;
+              }
+            }
+          }
         }
       } // .item-list
     }

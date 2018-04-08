@@ -80,25 +80,26 @@
   .image-element {
     > .control.file {
       justify-content: center;
-    }
-    .file-view {
-      margin-top: 0 !important;
-      text-align: center;
 
-      .delete {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        z-index: 10;
-      }
-      + .file {
-        position: absolute;
-        top: 0;
-        opacity: .7;
-      }
-      img {
-        max-width: 70%;
-        margin: 0 auto;
+      .file-view {
+        margin-top: 0 !important;
+        text-align: center;
+
+        img {
+          max-width: 70%;
+          margin: 0 auto;
+        }
+        .delete {
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          z-index: 10;
+        }
+        + .file {
+          position: absolute;
+          top: 0;
+          opacity: .7;
+        }
       }
     }
   }
