@@ -47,6 +47,7 @@
 
       &:focus, &:active {
         border-color: $primary;
+        -webkit-tap-highlight-color: transparent;
       }
     }
     .value {

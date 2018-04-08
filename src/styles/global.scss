@@ -48,6 +48,12 @@ body {
   flex-direction: column;
 }
 
+.el-input input:not([readonly="readonly"]) {
+  font-size: 16px;
+  transform: scale(0.875);
+  min-width: 114%;
+  margin-left: -1em;
+}
 .textarea {
   font-size: 16px;
   transform: scale(0.875);
