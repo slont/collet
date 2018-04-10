@@ -11,6 +11,14 @@
             <span class="icon is-hidden-tablet"><i class="material-icons">chevron_right</i></span>
           </a>
         </router-link>
+
+        <li class="flexbox">
+          <a class="field flexbox">
+            プッシュ通知
+          </a>
+          <input v-model="activePushNotification" type="checkbox" class="switch is-rtl is-rounded is-primary"/>
+          <label class="push-notification is-justify-end" @click="activePushNotification = !activePushNotification"></label>
+        </li>
       </ul>
       <div class="divider"></div>
 
@@ -25,13 +33,18 @@
     </aside>
 
     <transition name="slide-fade" mode="out-in">
-      <router-view></router-view>
+      <router-view/>
     </transition>
   </div>
 </template>
 
 <script>
   export default {
+    data() {
+      return {
+        activePushNotification: true
+      }
+    },
     computed: {
       isRoot() {
         return '/settings' === this.$route.path
@@ -64,6 +77,11 @@
         margin: .5em;
         height: 1px;
         background-color: $border;
+      }
+      .push-notification {
+        align-self: start;
+        margin-top: .5em;
+        margin-right: 1em;
       }
     }
 
