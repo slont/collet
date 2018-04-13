@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <figure class="image file-view" v-else>
+    <figure class="image file-view" v-else-if="params.valueStr">
       <img :src="params.valueStr" :srcset="`${params.valueStr}_640w 640w`"/>
     </figure>
   </cl-element>
