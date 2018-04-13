@@ -39,7 +39,8 @@
         <label class="label is-size-5 has-text-centered">新着カレット一覧</label>
       </div>
       <div v-for="item in newItems" class="item-list column is-half" :key="item.id">
-        <div class="new-cullet-card card">
+        <router-link :to="`/u/${item.theme.createdUser.id}/${item.theme.id}/${item.id}`"
+                     tag="div" class="new-cullet-card card">
           <div class="card-content">
             <div class="media">
               <div class="media-content">
@@ -47,10 +48,9 @@
                              :to="`/u/${item.theme.createdUser.id}/${item.theme.id}`">
                   {{ item.theme.title }}
                 </router-link>
-                <router-link class="item-title text-color-strong is-size-5 has-text-weight-bold" tag="div"
-                             :to="`/u/${item.theme.createdUser.id}/${item.theme.id}/${item.id}`">
+                <div class="item-title text-color-strong is-size-5 has-text-weight-bold">
                   {{ item.name }}
-                </router-link>
+                </div>
 
                 <div class="user-profile flexbox has-align-centered is-size-7">
                   <figure class="image is-16x16" v-if="item.theme.createdUser.image">
@@ -73,7 +73,7 @@
               <element-view :element="item.elements[1]" v-if="item.elements[1]"/>
             </div>
           </div>
-        </div>
+        </router-link>
       </div>
     </transition-group>
 
@@ -313,15 +313,18 @@
                 .control {
                   max-height: 180px;
                   overflow: hidden;
+
+                  .value {
+                    line-height: 1.5rem;
+                  }
                 }
               }
               .image-element {
                 .file-view {
                   display: flex;
                   align-items: center;
-                  max-height: 18em;
-                  margin-left: 0;
-                  margin-right: 0;
+                  max-height: 16em;
+                  margin: 0;
                   overflow: hidden;
                 }
               }
