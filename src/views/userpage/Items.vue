@@ -36,6 +36,7 @@
 
 <script>
   import UserModel from '@/models/User'
+  import ItemModel from '@/models/Item'
   import FavoriteModel from '@/models/Favorite'
   import itemCard from '@/components/item/ItemCard'
   import ElementView from '@/components/element/ElementView'
@@ -59,6 +60,9 @@
       '$route.params.userId': 'refresh'
     },
     created() {
+      if (this.urlUserId === this.selfUser.id) {
+        Object.assign(this.items, new ItemModel().deserialize(this.$store.state.items))
+      }
       this.refresh()
     },
     methods: {
@@ -69,10 +73,13 @@
         }).then(res => {
           this.items = res.data
           if (this.loggedIn) {
-            return new FavoriteModel().find({
+            new FavoriteModel().find({
               itemIds: res.data.map(item => item.id),
               userId: this.selfUser.id
             })
+            if (this.urlUserId === this.selfUser.id) {
+              this.$store.commit('SET_ITEMS', this.items)
+            }
           }
         }).catch(err => {
           console.log(err)
