@@ -84,6 +84,7 @@
 
 <script>
   import ThemeModel from '@/models/Theme'
+  import TemplateModel from '@/models/Template'
   import ItemModel from '@/models/Item'
   import Modal from '@/components/Modal'
   import ThemeSelectModal from '@/components/theme/ThemeSelectModal'
@@ -153,6 +154,9 @@
     },
     methods: {
       async refresh() {
+        if (this.themeId === this.$store.state.theme.id) {
+          Object.assign(this.theme, new ThemeModel._deserialize(this.$store.state.theme))
+        }
         new ThemeModel().findOne(this.themeId).then(res => {
           this.theme = res.data
         })
@@ -190,7 +194,7 @@
             this.errorMessage = err
           })
 
-          this.$store.dispatch('setTheme', this.theme)
+          this.cacheTheme()
           this.$message({
             showClose: true,
             message: '更新されました',
@@ -247,6 +251,14 @@
       },
       openThemeSelectModal() {
         this.$refs.themeSelectModal.open(this.theme)
+      },
+      cacheTheme() {
+        this.$store.commit('SET_THEME', this.theme)
+        if (this.isTemplate) {
+          new TemplateModel(this.theme.id).find({ p: 0, s: 20 }).then(res => {
+            this.$store.commit('SET_TEMPLATES', res.data)
+          }).catch(err => console.log(err))
+        }
       }
     }
   }

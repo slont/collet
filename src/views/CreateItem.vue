@@ -174,6 +174,9 @@
     },
     methods: {
       async refresh(theme = {}) {
+        if (this.$store.state.theme.id) {
+          Object.assign(this.theme, new ThemeModel._deserialize(this.$store.state.theme))
+        }
         let res = null
         if (theme.id) {
           res = await new ThemeModel().findOne(theme.id)
@@ -221,13 +224,14 @@
             this.errorMessage = err
           })
 
-          this.$store.dispatch('setTheme', this.theme)
+          this.cacheTheme()
           this.$message({
             showClose: true,
             message: '作成されました',
             type: 'success'
           })
           this.$router.push(`/u/${this.user.id}/${this.theme.id}`)
+          this.close()
         }).catch(err => this.$message.error(err))
       },
       onFocusInput(e) {
@@ -277,6 +281,14 @@
       },
       openThemeSelectModal() {
         this.$refs.themeSelectModal.open(this.theme)
+      },
+      cacheTheme() {
+        this.$store.commit('SET_THEME', this.theme)
+        if (this.isTemplate) {
+          new TemplateModel(this.theme.id).find({ p: 0, s: 20 }).then(res => {
+            this.$store.commit('SET_TEMPLATES', res.data)
+          }).catch(err => console.log(err))
+        }
       }
     }
   }

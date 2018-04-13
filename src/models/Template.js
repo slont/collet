@@ -17,7 +17,7 @@ export default class Template extends Base {
 
   static _deserialize(json) {
     return Object.assign({}, json, {
-      elements: new TemplateElement().deserialize(json.elements),
+      elements: (json.elements || []).map(element => TemplateElement._deserialize(element)),
       createdAt: moment(json.createdAt),
       updatedAt: moment(json.updatedAt)
     })

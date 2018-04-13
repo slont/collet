@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import AuthModel from '@/models/Auth'
 import { LOCALES } from '@/constant'
-import { SET_USER, SET_LOCALE, SET_LOGGED_IN, SET_LOGIN_INFO, SET_ITEMS, SET_THEME, SET_HEADER_ACTIVE, SET_FOOTER_ACTIVE } from './mutation-types'
+import { SET_USER, SET_LOCALE, SET_LOGGED_IN, SET_LOGIN_INFO, SET_ITEMS, SET_THEME, SET_TEMPLATES, SET_HEADER_ACTIVE, SET_FOOTER_ACTIVE } from './mutation-types'
 
 Vue.use(Vuex)
 
@@ -106,6 +106,9 @@ export default new Vuex.Store({
     },
     [SET_THEME](state, theme) {
       state.theme = theme
+    },
+    [SET_TEMPLATES](state, templates) {
+      state.theme.templates = templates
     },
     [SET_ITEMS](state, items) {
       state.items = items
