@@ -138,6 +138,7 @@
         isTemplate: false,
         isEditable: false,
         isActiveFooter: true,
+        isSaved: false,
         errorMessage: ''
       }
     },
@@ -160,7 +161,9 @@
         this.$refs.themeSelectModal.close()
         next(false)
       } else {
-        this.$refs.exitConfirmModal.open(next)
+        if (!this.isSaved) {
+          this.$refs.exitConfirmModal.open(next)
+        }
       }
     },
     beforeRouteLeave(to, from, next) {
@@ -168,7 +171,9 @@
         this.$refs.themeSelectModal.close()
         next(false)
       } else {
-        this.$refs.exitConfirmModal.open(next)
+        if (!this.isSaved) {
+          this.$refs.exitConfirmModal.open(next)
+        }
       }
     },
     methods: {
@@ -213,6 +218,7 @@
             this.errorMessage = err
           })
 
+          this.isSaved = true
           this.cacheTheme()
           this.$message({
             showClose: true,
