@@ -163,6 +163,8 @@
       } else {
         if (!this.isSaved) {
           this.$refs.exitConfirmModal.open(next)
+        } else {
+          next()
         }
       }
     },
@@ -173,6 +175,8 @@
       } else {
         if (!this.isSaved) {
           this.$refs.exitConfirmModal.open(next)
+        } else {
+          next()
         }
       }
     },
