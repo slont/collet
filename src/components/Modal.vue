@@ -1,5 +1,6 @@
 <template>
-  <div class="modal" :class="{ 'is-active': active }">
+  <div class="modal" :class="{ 'is-active': active, 'has-backdrop': backdrop }">
+    <div class="backdrop" @click="close"></div>
     <div @click="close" class="modal-background"></div>
     <div class="modal-card">
       <slot></slot>
@@ -10,6 +11,12 @@
 
 <script>
   export default {
+    props: {
+      backdrop: {
+        type: Boolean,
+        default: false
+      }
+    },
     data() {
       return {
         active: false,
@@ -36,6 +43,19 @@
     .modal-card-foot {
       background: white;
       height: 4rem;
+    }
+    .backdrop {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+    }
+    .has-backdrop {
+      .backdrop {
+        display: block;
+      }
     }
 
     @media screen and (max-width: 768px) {

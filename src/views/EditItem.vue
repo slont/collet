@@ -79,6 +79,7 @@
     </footer>
 
     <theme-select-modal ref="themeSelectModal" @refresh="refreshTheme"/>
+    <exit-confirm-modal ref="exitConfirmModal"/>
   </modal>
 </template>
 
@@ -88,6 +89,7 @@
   import ItemModel from '@/models/Item'
   import Modal from '@/components/Modal'
   import ThemeSelectModal from '@/components/theme/ThemeSelectModal'
+  import ExitConfirmModal from '@/components/ExitConfirmModal'
   import ClButtons from '@/components/element/button/ClButtons'
   import TextElement from '@/components/element/TextElement'
   import ImageElement from '@/components/element/ImageElement'
@@ -104,6 +106,7 @@
     components: {
       Modal,
       ThemeSelectModal,
+      ExitConfirmModal,
       ClButtons,
       TextElement,
       ImageElement,
@@ -151,6 +154,22 @@
     },
     created() {
       this.refresh().then(() => this.$refs.editItem.open())
+    },
+    beforeRouteUpdate(to, from, next) {
+      if (this.$refs.themeSelectModal.$refs.themeSelectModal.active) {
+        this.$refs.themeSelectModal.close()
+        next(false)
+      } else {
+        this.$refs.exitConfirmModal.open(next)
+      }
+    },
+    beforeRouteLeave(to, from, next) {
+      if (this.$refs.themeSelectModal.$refs.themeSelectModal.active) {
+        this.$refs.themeSelectModal.close()
+        next(false)
+      } else {
+        this.$refs.exitConfirmModal.open(next)
+      }
     },
     methods: {
       async refresh() {
