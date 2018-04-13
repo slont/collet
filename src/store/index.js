@@ -23,9 +23,6 @@ export default new Vuex.Store({
     setLocale({ commit }, locale) {
       commit(SET_LOCALE, locale)
     },
-    setUser({commit}, user) {
-      commit(SET_USER, user)
-    },
     setLoggedIn({commit}, loggedIn) {
       commit(SET_LOGGED_IN, loggedIn)
       if (!loggedIn) {

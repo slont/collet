@@ -138,7 +138,7 @@
             const newUser = Object.assign({}, this.user, body)
             delete newUser.password
             delete newUser.newPassword
-            this.$store.dispatch('setUser', newUser)
+            this.$store.commit('SET_USER', newUser)
             this.$message({
               showClose: true,
               message: '保存されました',

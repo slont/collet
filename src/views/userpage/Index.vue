@@ -98,12 +98,18 @@
       '$route.params.userId': 'refresh'
     },
     created() {
+      if (this.isSelf) {
+        Object.assign(this.user, new UserModel().deserialize(this.$store.state.user))
+      }
       this.refresh()
     },
     methods: {
       refresh() {
         new UserModel().findOneWithReport(this.urlUserId).then(res => {
           this.user = res.data
+          if (this.isSelf) {
+            this.$store.commit('SET_USER', res.data)
+          }
         }).catch(err => {
           console.log(err)
           this.$message({
