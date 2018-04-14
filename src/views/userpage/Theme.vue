@@ -142,6 +142,11 @@
         } else {
           return new ThemeModel().updateFavorite(this.theme.id, this.selfUser.id)
         }
+      },
+      infiniteScroll(event) {
+        if (event.target.scrollHeight <= event.target.scrollTop + event.target.offsetHeight) {
+          this.$refs.child.fetch()
+        }
       }
     }
   }
@@ -149,6 +154,7 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-theme {
+    overflow-y: scroll;
     background-color: $bg-color-main;
 
     .theme-content {
@@ -386,6 +392,9 @@
     }
 
     @media screen and (max-width: 768px) {
+      &.container {
+        height: calc(100vh - #{$header-nav-height + $footer-nav-height});
+      }
       .theme-content {
         width: 100%;
         margin: 0;
