@@ -111,7 +111,7 @@
     },
     created() {
       if (this.loggedIn) {
-        Object.assign(this.updatedItems, new ItemModel().deserialize(this.$store.state.items).slice(0, this.size))
+        Object.assign(this.updatedItems, new ItemModel().deserialize(this.$store.state.items).slice(0, 5))
       }
       this.refresh()
     },
@@ -120,7 +120,7 @@
         if (this.loggedIn) {
           new UserModel().findItems(this.user.id, {
             p: 1,
-            s: this.size
+            s: 5
           }).then(res => {
             this.updatedItems = res.data
           })
