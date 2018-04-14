@@ -9,6 +9,7 @@ import EditItem from '@/views/EditItem'
 import TopIndex from '@/views/top/Index'
 import TopTop from '@/views/top/Top'
 import TagIndex from '@/views/tag/Index'
+import SearchIndex from '@/views/search/Index'
 import UserpageIndex from '@/views/userpage/Index'
 import UserpageItem from '@/views/userpage/Item'
 import UserpageTheme from '@/views/userpage/Theme'
@@ -55,6 +56,12 @@ export default new Router({
         }, {
           path: 'tag',
           component: TagIndex
+        }, {
+          path: 's',
+          component: SearchIndex
+        }, {
+          path: 's/:type',
+          component: SearchIndex
         }, {
           path: 'u/:userId/themes',
           component: UserpageIndex

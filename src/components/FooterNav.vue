@@ -8,7 +8,7 @@
           <span class="subtitle is-7 has-text-weight-bold">Home</span>
         </router-link>
 
-        <router-link to="/search" class="navbar-item">
+        <router-link to="/s" class="navbar-item">
           <span class="icon is-size-3"><i class="material-icons">search</i></span>
           <span class="subtitle is-7 has-text-weight-bold">Search</span>
         </router-link>
