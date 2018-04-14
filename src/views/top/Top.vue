@@ -91,6 +91,7 @@
   import ThemeCard from '@/components/theme/ThemeCard'
   import ItemCard from '@/components/item/ItemCard'
   import ElementView from '@/components/element/ElementView'
+  const SIZE = 10
 
   export default {
     components: { ThemeCard, ItemCard, ThemeEditModal, ElementView },
@@ -99,6 +100,7 @@
         topThemes: [],
         updatedItems: [],
         newItems: [],
+        size: SIZE,
         newItemsTotal: 10000
       }
     },
@@ -109,7 +111,7 @@
     },
     created() {
       if (this.loggedIn) {
-        Object.assign(this.updatedItems, new ItemModel().deserialize(this.$store.state.items).slice(0, 5))
+        Object.assign(this.updatedItems, new ItemModel().deserialize(this.$store.state.items).slice(0, this.size))
       }
       this.refresh()
     },
@@ -118,7 +120,7 @@
         if (this.loggedIn) {
           new UserModel().findItems(this.user.id, {
             p: 1,
-            s: 5
+            s: this.size
           }).then(res => {
             this.updatedItems = res.data
           })
@@ -128,10 +130,14 @@
       },
       fetchNewItems() {
         new ItemModel().findByNew({
-          p: Math.floor(this.newItems.length / 5) + 1,
-          s: 5
+          p: Math.floor(this.newItems.length / this.size) + 1,
+          s: this.size
         }).then(res => {
-          this.newItems.push(...res.data)
+          if (0 === Math.floor(this.newItems.length / this.size)) {
+            this.newItems = res.data
+          } else {
+            this.newItems.push(...res.data)
+          }
           this.newItemsTotal = res.headers.get('X-Page-Total')
         })
       },

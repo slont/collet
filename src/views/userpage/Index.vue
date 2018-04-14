@@ -1,5 +1,5 @@
 <template>
-  <div id="userpage-index">
+  <div id="userpage-index" @scroll="infiniteScroll">
     <header class="userpage-header header-shadow">
       <article class="user-profile media has-align-centered">
         <figure class="media-left" v-if="user.image">
@@ -124,6 +124,11 @@
       },
       openEditModal(theme) {
         this.$refs.themeEditModal.open(theme)
+      },
+      infiniteScroll(event) {
+        if (event.target.scrollHeight <= event.target.scrollTop + event.target.offsetHeight) {
+          this.$refs.child.fetch()
+        }
       }
     }
   }
@@ -131,6 +136,7 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-index {
+    overflow-y: scroll;
     background-color: $bg-color-main;
 
     .userpage-header {
@@ -191,6 +197,11 @@
       position: fixed;
       bottom: 2rem;
       right: 2rem;
+    }
+    @media screen and (max-width: 768px) {
+      &.container {
+        height: calc(100vh - #{$header-nav-height + $footer-nav-height});
+      }
     }
   }
 </style>

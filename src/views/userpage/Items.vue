@@ -37,15 +37,17 @@
 <script>
   import UserModel from '@/models/User'
   import ItemModel from '@/models/Item'
-  import FavoriteModel from '@/models/Favorite'
   import itemCard from '@/components/item/ItemCard'
   import ElementView from '@/components/element/ElementView'
+  const SIZE = 10
 
   export default {
     components: { itemCard, ElementView },
     data() {
       return {
-        items: []
+        items: [],
+        size: SIZE,
+        itemsTotal: 10000
       }
     },
     computed: {
@@ -61,34 +63,39 @@
     },
     created() {
       if (this.urlUserId === this.selfUser.id) {
-        Object.assign(this.items, new ItemModel().deserialize(this.$store.state.items))
+        Object.assign(this.items, new ItemModel().deserialize(this.$store.state.items).slice(0, this.size))
       }
       this.refresh()
     },
     methods: {
-      refresh() {
-        new UserModel().findItems(this.urlUserId, {
-          p: 1,
-          s: 20
-        }).then(res => {
-          this.items = res.data
-          if (this.loggedIn) {
-            new FavoriteModel().find({
-              itemIds: res.data.map(item => item.id),
-              userId: this.selfUser.id
+      async refresh() {
+        await this.fetch(1)
+        if (this.loggedIn && this.urlUserId === this.selfUser.id) {
+          this.$store.commit('SET_ITEMS', this.items)
+        }
+      },
+      async fetch(page) {
+        if (this.items.length < this.itemsTotal) {
+          const res = await new UserModel().findItems(this.urlUserId, {
+            p: null != page ? page : Math.floor(this.items.length / this.size) + 1,
+            s: this.size
+          }).catch(err => {
+            console.log(err)
+            this.$message({
+              showClose: true,
+              message: 'データ取得に失敗しました',
+              type: 'error'
             })
-            if (this.urlUserId === this.selfUser.id) {
-              this.$store.commit('SET_ITEMS', this.items)
-            }
-          }
-        }).catch(err => {
-          console.log(err)
-          this.$message({
-            showClose: true,
-            message: 'データ取得に失敗しました',
-            type: 'error'
           })
-        })
+          if (res.data) {
+            if (1 === page || 0 === Math.floor(this.items.length / this.size)) {
+              this.items = res.data
+            } else {
+              this.items.push(...res.data)
+            }
+            this.itemsTotal = res.headers.get('X-Page-Total')
+          }
+        }
       }
     }
   }
