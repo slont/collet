@@ -68,7 +68,7 @@
     methods: {
       refresh() {
         new UserModel().findItems(this.urlUserId, {
-          p: 0,
+          p: 1,
           s: 20
         }).then(res => {
           this.items = res.data

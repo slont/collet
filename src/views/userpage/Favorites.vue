@@ -37,7 +37,7 @@
     methods: {
       refresh() {
         new UserModel().findFavoriteThemes(this.urlUserId, {
-          p: 0,
+          p: 1,
           s: 20
         }).then(res => {
           this.themes = res.data.map(theme => {

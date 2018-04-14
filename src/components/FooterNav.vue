@@ -77,7 +77,7 @@
       fetchThemes() {
         if (!this.$store.state.theme.id) {
           new UserModel().findThemes(this.user.id, {
-            p: 0,
+            p: 1,
             s: 1
           }).then(res => {
             if (res.data.length) {

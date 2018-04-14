@@ -39,7 +39,7 @@
     methods: {
       refresh() {
         new UserModel().findThemes(this.urlUserId, {
-          p: 0,
+          p: 1,
           s: 20
         }).then(res => {
           this.themes = res.data.map(theme => {

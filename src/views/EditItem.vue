@@ -284,7 +284,7 @@
       cacheTheme() {
         this.$store.commit('SET_THEME', this.theme)
         if (this.isTemplate) {
-          new TemplateModel(this.theme.id).find({ p: 0, s: 20 }).then(res => {
+          new TemplateModel(this.theme.id).find({ p: 1, s: 20 }).then(res => {
             this.$store.commit('SET_TEMPLATES', res.data)
           }).catch(err => console.log(err))
         }

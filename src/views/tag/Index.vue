@@ -60,7 +60,7 @@
       refresh() {
         new ThemeModel().findByTagName({
           tagName: this.tagName,
-          p: 0,
+          p: 1,
           s: 20
         }).then(res => {
           this.themes = res.data.map(theme => {

@@ -157,7 +157,7 @@
         this.theme = theme
 
         new TemplateModel(this.themeId).find({
-          p: 0,
+          p: 1,
           s: 20
         }).then(res => {
           if (res.data.length) {
