@@ -183,6 +183,7 @@
           if (last.id === res.data.id) {
             this.items.push(res.data.prev)
           }
+          setTimeout(() => this.scrollToTop(300), 400)
         }).catch(err => {
           console.log(err)
           this.$message({
@@ -210,6 +211,20 @@
           this.activePagination = scrollTop < this.scrolledTop
         }
         this.scrolledTop = scrollTop
+      },
+      scrollToTop(scrollDuration) {
+        const scrollHeight = this.$el.querySelector('.scrollable-container').scrollTop
+        const scrollStep = Math.PI / (scrollDuration / 15)
+        const cosParameter = scrollHeight / 2
+        let scrollCount = 0
+        let scrollMargin
+        let scrollInterval = setInterval(() => {
+          if (0 !== this.$el.querySelector('.scrollable-container').scrollTop) {
+            scrollCount = scrollCount + 1
+            scrollMargin = cosParameter - cosParameter * Math.cos(scrollCount * scrollStep)
+            this.$el.querySelector('.scrollable-container').scrollTop = scrollHeight - scrollMargin
+          } else clearInterval(scrollInterval)
+        }, 15)
       }
     }
   }
