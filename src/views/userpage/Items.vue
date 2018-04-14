@@ -159,7 +159,7 @@
           .element-view {
             .text-element {
               .control {
-                max-height: 180px;
+                max-height: 164px;
                 overflow: hidden;
 
                 .value {
