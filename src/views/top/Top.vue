@@ -1,5 +1,5 @@
 <template>
-  <div id="top-top">
+  <div id="top-top" @scroll="infiniteScroll">
     <div class="updated-cullet-list columns is-multiline" v-if="user.id && updatedItems.length">
       <div class="updated-cullet-label column is-12" key="label">
         <router-link :to="`/u/${user.id}`" tag="label" class="label is-size-5 has-text-centered">
@@ -98,7 +98,8 @@
       return {
         topThemes: [],
         updatedItems: [],
-        newItems: []
+        newItems: [],
+        newItemsTotal: 10000
       }
     },
     computed: {
@@ -116,18 +117,22 @@
       refresh() {
         if (this.loggedIn) {
           new UserModel().findItems(this.user.id, {
-            p: 0,
+            p: 1,
             s: 5
           }).then(res => {
             this.updatedItems = res.data
           })
         }
 
+        this.fetchNewItems()
+      },
+      fetchNewItems() {
         new ItemModel().findByNew({
-          p: 0,
-          s: 20
+          p: Math.floor(this.newItems.length / 5) + 1,
+          s: 5
         }).then(res => {
-          this.newItems = res.data
+          this.newItems.push(...res.data)
+          this.newItemsTotal = res.headers.get('X-Page-Total')
         })
       },
       openEditModal(theme) {
@@ -140,6 +145,11 @@
           return true
         }
         return 0 !== this.updatedItems[index + 1].updatedAt.diff(updatedAt, 'days')
+      },
+      infiniteScroll(event) {
+        if (event.target.scrollHeight <= event.target.scrollTop + event.target.offsetHeight && this.newItems.length < this.newItemsTotal) {
+          this.fetchNewItems()
+        }
       }
     }
   }
@@ -147,9 +157,11 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #top-top {
+    height: calc(100vh - #{$header-nav-height});
     max-width: $width;
     margin-left: auto;
     margin-right: auto;
+    overflow: scroll;
     background-color: $bg-color-main;
 
     .new-cullet-list {
@@ -169,6 +181,8 @@
     }
 
     @media screen and (max-width: 768px) {
+      height: calc(100vh - #{$header-nav-height + $footer-nav-height});
+
       .updated-cullet-list {
         margin: 0;
 
