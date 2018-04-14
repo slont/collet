@@ -161,15 +161,18 @@
               .control {
                 max-height: 180px;
                 overflow: hidden;
+
+                .value {
+                  line-height: 1.5rem;
+                }
               }
             }
             .image-element {
               .file-view {
                 display: flex;
                 align-items: center;
-                max-height: 18em;
-                margin-left: 0;
-                margin-right: 0;
+                max-height: 16em;
+                margin: 0;
                 overflow: hidden;
               }
             }

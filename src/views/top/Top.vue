@@ -107,6 +107,9 @@
       }
     },
     created() {
+      if (this.loggedIn) {
+        Object.assign(this.updatedItems, new ItemModel().deserialize(this.$store.state.items).slice(0, 5))
+      }
       this.refresh()
     },
     methods: {
