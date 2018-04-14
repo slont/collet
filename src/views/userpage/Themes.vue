@@ -6,6 +6,7 @@
                     @open-edit-modal="$emit('open-edit-modal', theme)"
                     @refresh="refresh"/>
       </div>
+      <div class="button is-loading fullwidth is-large" key="loading" v-if="themes.length < themesTotal"></div>
     </transition-group>
   </div>
 </template>

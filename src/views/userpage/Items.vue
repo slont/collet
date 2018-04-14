@@ -31,6 +31,7 @@
         </div>
       </div>
     </div>
+    <div class="button is-loading fullwidth is-large" key="loading" v-if="items.length < itemsTotal"></div>
   </transition-group>
 </template>
 

@@ -4,6 +4,7 @@
       <div v-for="theme in themes" class="column is-half" :key="theme.id">
         <theme-card :theme="theme" @open-edit-modal="$emit('open-edit-modal', theme)"/>
       </div>
+      <div class="button is-loading fullwidth is-large" key="loading" v-if="themes.length < themesTotal"></div>
     </transition-group>
   </div>
 </template>

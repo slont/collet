@@ -78,6 +78,7 @@
           </div>
         </router-link>
       </div>
+      <div class="button is-loading fullwidth is-large" key="loading" v-if="newItems.length < newItemsTotal"></div>
     </transition-group>
 
     <theme-edit-modal ref="themeEditModal" @refresh="refresh"/>
