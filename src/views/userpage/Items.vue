@@ -1,7 +1,8 @@
 <template>
   <transition-group id="userpage-items" tag="div" name="slide-fade" mode="out-in" class="columns is-multiline">
     <div v-for="item in items" class="item-list column is-half" :key="item.id">
-      <div class="new-cullet-card card">
+      <router-link :to="`/u/${$route.params.userId}/${item.theme.id}/${item.id}`"
+                   tag="div" class="new-cullet-card card">
         <div class="card-content">
           <div class="media">
             <div class="media-content">
@@ -9,10 +10,9 @@
                            :to="`/u/${$route.params.userId}/${item.theme.id}`">
                 {{ item.theme.title }}
               </router-link>
-              <router-link class="item-title text-color-strong is-size-5 has-text-weight-bold" tag="div"
-                           :to="`/u/${$route.params.userId}/${item.theme.id}/${item.id}`">
+              <div class="item-title text-color-strong is-size-5 has-text-weight-bold">
                 {{ item.name }}
-              </router-link>
+              </div>
               <div class="updated-at text-color-weak is-size-8">
                 <span class="icon"><i class="material-icons">access_time</i></span>
                 <span>{{ item.updatedAt | fromNow }}</span>
@@ -29,7 +29,7 @@
             <element-view :element="item.elements[1]" v-if="item.elements[1]"/>
           </div>
         </div>
-      </div>
+      </router-link>
     </div>
     <div class="button is-loading fullwidth is-large" key="loading" v-if="items.length < itemsTotal"></div>
   </transition-group>

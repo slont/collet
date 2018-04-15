@@ -11,8 +11,8 @@
     </div>
 
     <footer class="modal-card-foot has-right">
-      <a @click="ok" class="button is-primary">OK</a>
       <a @click="close" class="button">キャンセル</a>
+      <a @click="ok" class="button is-primary">OK</a>
     </footer>
   </modal>
 </template>
