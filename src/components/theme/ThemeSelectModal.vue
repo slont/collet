@@ -104,10 +104,6 @@
         color: white;
         background-color: $main-color;
         border: none;
-
-        .back-button {
-          margin-right: 1em;
-        }
       }
       .modal-card-body {
         margin-bottom: 0;

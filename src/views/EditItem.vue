@@ -154,6 +154,9 @@
       }
     },
     created() {
+      if (this.themeId === this.$store.state.theme.id) {
+        Object.assign(this.theme, new ThemeModel._deserialize(this.$store.state.theme))
+      }
       this.refresh().then(() => this.$refs.editItem.open())
     },
     beforeRouteUpdate(to, from, next) {
@@ -182,9 +185,6 @@
     },
     methods: {
       async refresh() {
-        if (this.themeId === this.$store.state.theme.id) {
-          Object.assign(this.theme, new ThemeModel._deserialize(this.$store.state.theme))
-        }
         new ThemeModel().findOne(this.themeId).then(res => {
           this.theme = res.data
         })
@@ -284,7 +284,7 @@
       cacheTheme() {
         this.$store.commit('SET_THEME', this.theme)
         if (this.isTemplate) {
-          new TemplateModel(this.theme.id).find({ p: 1, s: 20 }).then(res => {
+          new TemplateModel(this.theme.id).find({ p: 1, s: 1 }).then(res => {
             this.$store.commit('SET_TEMPLATES', res.data)
           }).catch(err => console.log(err))
         }
@@ -315,9 +315,6 @@
         background-color: $main-color;
         border: none;
 
-        .back-button {
-          margin-right: 1rem;
-        }
         .modal-card-title {
           margin-bottom: 0;
         }

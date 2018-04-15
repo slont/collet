@@ -30,7 +30,7 @@
         type: Object,
         default: {
           label: '',
-          valueStr: '1',
+          valueStr: '5',
           valueNum: 0,
           valueDbl: 0.0
         }

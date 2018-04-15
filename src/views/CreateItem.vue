@@ -158,6 +158,12 @@
       }
     },
     created() {
+      if (this.$store.state.theme.id) {
+        Object.assign(this.theme, ThemeModel._deserialize(this.$store.state.theme))
+        if (this.$store.state.theme.templates[0] && this.$store.state.theme.templates[0].elements.length) {
+          this.item.elements = this.$store.state.theme.templates[0].elements
+        }
+      }
       this.refresh().then(() => this.$refs.createItem.open())
     },
     beforeRouteUpdate(to, from, next) {
@@ -186,9 +192,6 @@
     },
     methods: {
       async refresh(theme = {}) {
-        if (this.$store.state.theme.id) {
-          Object.assign(this.theme, new ThemeModel._deserialize(this.$store.state.theme))
-        }
         let res = null
         if (theme.id) {
           res = await new ThemeModel().findOne(theme.id)
@@ -204,13 +207,7 @@
         }).then(res => {
           if (res.data.length) {
             this.templates = res.data
-            this.item.elements = this.templates[0].elements.map(e => {
-              if ('rating' === e.type) {
-                return Object.assign(e, { valueStr: '5' })
-              } else {
-                return e
-              }
-            })
+            this.item.elements = this.templates[0].elements
           } else {
             this.templates = []
             this.item.elements = []
@@ -298,7 +295,7 @@
       cacheTheme() {
         this.$store.commit('SET_THEME', this.theme)
         if (this.isTemplate) {
-          new TemplateModel(this.theme.id).find({ p: 1, s: 20 }).then(res => {
+          new TemplateModel(this.theme.id).find({ p: 1, s: 1 }).then(res => {
             this.$store.commit('SET_TEMPLATES', res.data)
           }).catch(err => console.log(err))
         }

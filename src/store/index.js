@@ -14,7 +14,9 @@ export default new Vuex.Store({
     loggedIn: false,
     loginInfo: {},
     items: [],
-    theme: {},
+    theme: {
+      templates: []
+    },
     themes: [],
     activeHeader: true,
     activeFooter: true
