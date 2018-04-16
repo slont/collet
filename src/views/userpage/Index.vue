@@ -3,9 +3,9 @@
     <header class="userpage-header header-shadow">
       <article class="user-profile media has-align-centered">
         <figure class="media-left" v-if="user.image">
-          <p class="image is-64x64">
-            <img :src="user.image" :srcset="`${user.image}_640w 640w`" class="circle">
-          </p>
+          <div class="image circle flexbox is-64x64">
+            <img :src="user.image" :srcset="`${user.image}_640w 640w`">
+          </div>
         </figure>
         <div class="media-content">
           <div class="content">
@@ -149,11 +149,6 @@
         padding: 1rem .5rem .5rem;
         border-bottom: $border-style;
 
-        .image {
-          img {
-            height: 100%;
-          }
-        }
         .content {
           margin-bottom: 0;
 

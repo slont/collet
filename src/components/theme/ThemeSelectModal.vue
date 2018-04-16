@@ -1,6 +1,6 @@
 <template>
   <modal id="theme-select-modal" class="modal" ref="themeSelectModal" @close="reset">
-    <header class="top-header modal-card-head">
+    <header class="top-header action-modal-header modal-card-head">
       <span class="back-button icon is-size-3" @click="close">
         <i class="material-icons">arrow_back</i>
       </span>

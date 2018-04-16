@@ -22,8 +22,10 @@
           <span class="subtitle is-7 has-text-weight-bold">Favorite</span>
         </router-link>
 
-        <router-link :to="`/u/${user.id}`" class="navbar-item" exact>
-          <img :src="user.image" :srcset="`${user.image}_640w 640w`" class="circle" v-if="user.image"/>
+        <router-link :to="`/u/${user.id}`" class="navbar-item user-profile" exact>
+          <figure class="image circle is-24x24 flexbox" v-if="user.image">
+            <img :src="user.image" :srcset="`${user.image}_640w 640w`"/>
+          </figure>
           <span class="icon is-size-3" v-else><i class="material-icons">account_circle</i></span>
           <span class="subtitle is-7 has-text-weight-bold">My Page</span>
         </router-link>
@@ -119,9 +121,10 @@
             color: $primary;
           }
         }
-        img {
-          max-height: 1.5rem;
-          width: 1.5rem;
+        .image {
+          img {
+            max-height: initial;
+          }
         }
       }
       &.logged-in {

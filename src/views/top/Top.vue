@@ -56,8 +56,8 @@
                 </div>
 
                 <div class="user-profile flexbox has-align-centered is-size-7">
-                  <figure class="image is-16x16" v-if="item.theme.createdUser.image">
-                    <img class="circle" :src="item.theme.createdUser.image" :srcset="`${item.theme.createdUser.image}_640w 640w`">
+                  <figure class="image circle is-16x16 flexbox" v-if="item.theme.createdUser.image">
+                    <img :src="item.theme.createdUser.image" :srcset="`${item.theme.createdUser.image}_640w 640w`">
                   </figure>
                   <router-link :to="`/u/${item.theme.createdUser.id}`" class="user-name text-color-weak">
                     {{ item.theme.createdUser.name }}
@@ -304,9 +304,6 @@
                   .user-profile {
                     > :not(:last-child) {
                       margin-right: .35em;
-                    }
-                    .image img {
-                      max-height: 100%;
                     }
                   }
                 }

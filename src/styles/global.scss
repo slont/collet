@@ -194,7 +194,8 @@ body {
 }
 
 .user-profile .image img {
-  height: 100%;
+  min-height: 100%;
+  object-fit: cover;
 }
 
 .flexbox {
@@ -236,6 +237,7 @@ body {
 
 .circle {
   border-radius: 50%;
+  overflow: hidden;
 }
 
 .has-no-margin {

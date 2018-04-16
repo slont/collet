@@ -10,8 +10,8 @@
 
         <div class="title is-4 has-text-white">{{ theme.title }}</div>
         <div class="user-profile flexbox has-align-centered is-size-7">
-          <figure class="image is-32x32" v-if="theme.createdUser.image">
-            <img class="circle" :src="theme.createdUser.image" :srcset="`${theme.createdUser.image}_640w 640w`">
+          <figure class="image circle is-32x32 flexbox" v-if="theme.createdUser.image">
+            <img :src="theme.createdUser.image" :srcset="`${theme.createdUser.image}_640w 640w`">
           </figure>
           <div>
             <div @click.stop="$router.push(`/u/${theme.createdUser.id}`)">

@@ -12,8 +12,8 @@
         </el-tag>
       </div>
       <div class="user-profile flexbox has-align-centered is-size-7">
-        <figure class="image is-16x16" v-if="theme.createdUser.image">
-          <img class="circle" :src="theme.createdUser.image" :srcset="`${theme.createdUser.image}_640w 640w`">
+        <figure class="image circle is-16x16 flexbox" v-if="theme.createdUser.image">
+          <img :src="theme.createdUser.image" :srcset="`${theme.createdUser.image}_640w 640w`">
         </figure>
         <div @click.stop="$router.push(`/u/${theme.createdUser.id}`)">
           <span class="user-name">{{ theme.createdUser.name }}
