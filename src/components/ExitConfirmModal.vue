@@ -48,6 +48,7 @@
   #exit-confirm-modal {
     .modal-card {
       top: 33%;
+      left: 0;
       position: fixed;
 
       .modal-card-body {
