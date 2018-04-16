@@ -202,7 +202,6 @@
     > .modal-card {
       .modal-card-body {
         margin-bottom: 0;
-        padding-bottom: 0;
 
         .image-field {
           .file-view {

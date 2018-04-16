@@ -2,11 +2,11 @@
   <div id="top-top" @scroll="infiniteScroll">
     <div class="updated-cullet-list columns is-multiline" v-if="user.id && updatedItems.length">
       <div class="updated-cullet-label column is-12" key="label">
-        <router-link :to="`/u/${user.id}`" tag="label" class="label is-size-5 has-text-centered">
-          {{ user.name }}の更新一覧
+        <router-link :to="`/u/${user.id}`" tag="label" class="label is-size-5 has-text-white has-text-centered">
+          カレット履歴
         </router-link>
       </div>
-      <div class="card">
+      <div class="updated-cullet-list-card card">
         <transition-group tag="div" name="slide-fade" mode="out-in" class="item-list column is-12 card-content">
           <div v-for="(item, i) in updatedItems" class="updated-cullet flexbox" :key="item.id">
             <div class="updated-at is-size-7 text-color-weak has-text-right">
@@ -39,7 +39,7 @@
 
     <transition-group tag="div" name="slide-fade" mode="out-in" class="new-cullet-list columns is-multiline">
       <div class="new-cullet-label column is-12" key="label">
-        <label class="label is-size-5 has-text-centered">新着カレット一覧</label>
+        <label class="label is-size-5 has-text-white has-text-centered">タイムライン</label>
       </div>
       <div v-for="item in newItems" class="item-list column is-half" :key="item.id">
         <router-link :to="`/u/${item.theme.createdUser.id}/${item.theme.id}/${item.id}`"
@@ -190,9 +190,51 @@
     @media screen and (max-width: 768px) {
       height: calc(100vh - #{$header-nav-height + $footer-nav-height});
 
+      .updated-cullet-label,
+      .new-cullet-label {
+        position: relative;
+        padding: 10px;
+        overflow: hidden;
+        background-color: $main-color;
+
+        &:before {
+          position: absolute;
+          bottom: -30px;
+          right: -90px;
+          width: 200px;
+          height: 200px;
+          background-color: #fff;
+          content: '';
+          opacity: 0.8;
+          transform: rotate(-30deg);
+        }
+        &:after {
+          position: absolute;
+          right: 113px;
+          bottom: -30px;
+          width: 6px;
+          height: 200px;
+          background-color: $main-color;
+          content: '';
+          transform: rotate(-30deg);
+        }
+      }
+      .new-cullet-label {
+        &:before{
+          transform: rotate(30deg);
+          left: -90px;
+        }
+        &:after{
+          transform: rotate(30deg);
+          left: 113px;
+        }
+      }
       .updated-cullet-list {
         margin: 0;
 
+        .updated-cullet-list-card {
+          z-index: 1;
+        }
         .item-list {
           padding: 0;
 
