@@ -9,7 +9,7 @@
       <div class="card">
         <transition-group tag="div" name="slide-fade" mode="out-in" class="item-list column is-12 card-content">
           <div v-for="(item, i) in updatedItems" class="updated-cullet flexbox" :key="item.id">
-            <div class="updated-at text-color-weak has-text-weight-bold has-text-right">
+            <div class="updated-at is-size-7 text-color-weak has-text-right">
               <div v-if="visibleUpdatedAt(item.updatedAt, i)">{{ item.updatedAt | fromNow('M/D') }}</div>
             </div>
 
@@ -213,11 +213,11 @@
               }
             }
             > div {
-              min-width: 74px;
+              min-width: 64px;
             }
             .updated-at {
               > div {
-                padding-right: 1em;
+                padding-right: .75em;
                 padding-bottom: .45em;
                 border-bottom: $border-style;
               }
@@ -342,7 +342,7 @@
                   overflow: hidden;
 
                   .value {
-                    line-height: 1.5rem;
+                    font-size: $size-6;
                   }
                 }
               }

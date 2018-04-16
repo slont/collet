@@ -1,6 +1,6 @@
 <template>
   <modal id="edit-item" class="modal" ref="editItem">
-    <header class="top-header modal-card-head">
+    <header class="top-header action-modal-header modal-card-head">
       <span class="back-button icon is-size-3" @click="$router.go(-1)">
         <i class="material-icons">arrow_back</i>
       </span>
@@ -37,7 +37,12 @@
 
       <div class="template-tabs tabs is-small">
         <ul>
-          <li class="actions-tab">
+          <li class="delete-action actions-tab">
+            <span class="icon is-size-6" @click="openDeleteModal" v-if="isEditable">
+              <i class="fas fa-trash-alt has-text-dark"></i>
+            </span>
+          </li>
+          <li class="config-action actions-tab">
             <span class="icon is-size-4" @click="isEditable = !isEditable" v-if="item.elements.length">
               <i class="material-icons" :class="[isEditable ? 'has-text-dark' : 'has-text-grey-light']">settings</i>
             </span>
@@ -79,6 +84,7 @@
     </footer>
 
     <theme-select-modal ref="themeSelectModal" @refresh="refreshTheme"/>
+    <item-delete-modal ref="itemDeleteModal" @refresh="callbackDelete"/>
     <exit-confirm-modal ref="exitConfirmModal"/>
   </modal>
 </template>
@@ -89,6 +95,7 @@
   import ItemModel from '@/models/Item'
   import Modal from '@/components/Modal'
   import ThemeSelectModal from '@/components/theme/ThemeSelectModal'
+  import ItemDeleteModal from '@/components/item/ItemDeleteModal'
   import ExitConfirmModal from '@/components/ExitConfirmModal'
   import ClButtons from '@/components/element/button/ClButtons'
   import TextElement from '@/components/element/TextElement'
@@ -106,6 +113,7 @@
     components: {
       Modal,
       ThemeSelectModal,
+      ItemDeleteModal,
       ExitConfirmModal,
       ClButtons,
       TextElement,
@@ -163,6 +171,9 @@
       if (this.$refs.themeSelectModal.$refs.themeSelectModal.active) {
         this.$refs.themeSelectModal.close()
         next(false)
+      } else if (this.$refs.itemDeleteModal.$refs.itemDeleteModal.active) {
+        this.$refs.itemDeleteModal.close()
+        next(false)
       } else {
         if (!this.isSaved) {
           this.$refs.exitConfirmModal.open(next)
@@ -174,6 +185,9 @@
     beforeRouteLeave(to, from, next) {
       if (this.$refs.themeSelectModal.$refs.themeSelectModal.active) {
         this.$refs.themeSelectModal.close()
+        next(false)
+      } else if (this.$refs.itemDeleteModal.$refs.itemDeleteModal.active) {
+        this.$refs.itemDeleteModal.close()
         next(false)
       } else {
         if (!this.isSaved) {
@@ -280,6 +294,13 @@
       },
       openThemeSelectModal() {
         this.$refs.themeSelectModal.open(this.theme)
+      },
+      openDeleteModal() {
+        this.$refs.itemDeleteModal.open(this.theme, this.item)
+      },
+      callbackDelete() {
+        this.isSaved = true
+        this.$router.replace(`/u/${this.user.id}/${this.theme.id}`)
       },
       cacheTheme() {
         this.$store.commit('SET_THEME', this.theme)
@@ -416,11 +437,16 @@
             > a {
               margin-top: 0;
             }
-            .actions-tab {
+            .delete-action {
               margin-left: auto;
 
               .icon {
-                margin: 0;
+                margin: 3px 0 0;
+              }
+            }
+            .config-action {
+              .icon {
+                margin-right: 0;
               }
             }
           }
@@ -500,7 +526,6 @@
         &.is-active {
           max-height: $element-button-size;
         }
-
         .buttons {
           flex-direction: row;
           width: $element-button-size * $button-count;

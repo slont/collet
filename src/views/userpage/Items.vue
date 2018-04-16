@@ -171,7 +171,7 @@
                 overflow: hidden;
 
                 .value {
-                  line-height: 1.5rem;
+                  font-size: $size-6;
                 }
               }
             }

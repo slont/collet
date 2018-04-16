@@ -33,6 +33,9 @@
     components: { Modal },
     data() {
       return {
+        theme: {
+          id: ''
+        },
         item: {
           id: '',
           name: ''
@@ -41,7 +44,8 @@
       }
     },
     methods: {
-      open(item) {
+      open(theme, item) {
+        this.theme = theme
         this.item = item
         this.$refs.itemDeleteModal.open()
       },
@@ -50,18 +54,18 @@
         this.$refs.itemDeleteModal.close()
       },
       async ok() {
-        await new ItemModel().delete(this.item.id).catch(err => {
+        await new ItemModel(this.theme.id).delete(this.item.id).catch(err => {
           this.errorMessage = err
           throw new Error(err)
         })
 
-        this.$emit('refresh')
         this.$message({
           showClose: true,
           message: '削除されました',
           type: 'success'
         })
         this.close()
+        this.$emit('refresh')
       },
       reset() {
         Object.assign(this.$data, this.$options.data.call(this))
@@ -73,9 +77,17 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #item-delete-modal {
-    .modal-card-body {
-      .is-danger {
-        color: $danger;
+    .modal-card {
+      top: 33%;
+      left: 0;
+      position: fixed;
+
+      .modal-card-body {
+        max-height: 140px;
+
+        .is-danger {
+          color: $danger;
+        }
       }
     }
   }
