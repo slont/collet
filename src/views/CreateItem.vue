@@ -164,7 +164,10 @@
           this.item.elements = this.$store.state.theme.templates[0].elements
         }
       }
-      this.refresh().then(() => this.$refs.createItem.open())
+      this.refresh(this.$store.state.theme)
+    },
+    mounted() {
+      this.$refs.createItem.open()
     },
     beforeRouteUpdate(to, from, next) {
       if (this.$refs.themeSelectModal.$refs.themeSelectModal.active) {
@@ -192,16 +195,16 @@
     },
     methods: {
       async refresh(theme = {}) {
-        let res = null
         if (theme.id) {
-          res = await new ThemeModel().findOne(theme.id)
           this.theme = theme
         } else {
-          res = await new ThemeModel().findOne(this.themeId)
-          this.theme = res.data
+          new ThemeModel().findOne(this.themeId).then(res => {
+            this.theme = res.data
+          })
         }
 
-        await new TemplateModel(this.theme.id).find({
+        const themeId = theme.id || this.themeId
+        new TemplateModel(themeId).find({
           p: 1,
           s: 20
         }).then(res => {
