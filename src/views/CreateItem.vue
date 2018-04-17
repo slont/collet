@@ -415,16 +415,15 @@
           margin: 0 1rem;
 
           ul {
+            justify-content: flex-end;
             border-bottom: none;
 
             > a {
               margin-top: 0;
             }
-            .actions-tab {
-              margin-left: auto;
-
+            :last-child {
               .icon {
-                margin: 0;
+                margin-right: 0;
               }
             }
           }

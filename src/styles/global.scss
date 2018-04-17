@@ -193,6 +193,18 @@ body {
   }
 }
 
+.file-cta {
+  color: aqua;
+  background-color: white;
+  border: 2px dashed aqua;
+
+  .file-label:hover & {
+    color: deepskyblue;
+    background-color: white;
+    border: 2px dashed deepskyblue;
+  }
+}
+
 .user-profile .image img {
   min-height: 100%;
   object-fit: cover;

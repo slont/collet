@@ -45,8 +45,7 @@
                   <a @click.stop.prevent="removeImage" class="delete"></a>
                 </div>
                 <div class="file-cta" v-else>
-                  <span class="file-icon"><i class="material-icons">file_upload</i></span>
-                  <span class="file-label">Upload Image...</span>
+                  <span class="icon is-size-1"><i class="material-icons">add</i></span>
                 </div>
                 <div class="control loading-mask is-size-1" :class="{ 'is-loading': loading }"></div>
               </label>

@@ -4,21 +4,21 @@
     <template v-if="loggedIn">
       <div class="navbar-brand logged-in">
         <router-link to="/" class="navbar-item" exact>
-          <span class="icon is-size-3"><i class="material-icons">home</i></span>
+          <span class="icon"><i class="fas fa-home"></i></span>
           <span class="subtitle is-7 has-text-weight-bold">Home</span>
         </router-link>
 
         <router-link to="/s" class="navbar-item">
-          <span class="icon is-size-3"><i class="material-icons">search</i></span>
+          <span class="icon"><i class="fas fa-search"></i></span>
           <span class="subtitle is-7 has-text-weight-bold">Search</span>
         </router-link>
 
         <a @click="onClickAdd" class="navbar-item button is-primary is-rounded">
-          <span class="icon is-size-3"><i class="material-icons">edit</i></span>
+          <span class="icon"><i class="fas fa-pencil-alt"></i></span>
         </a>
 
         <router-link :to="`/u/${user.id}/favorites`" class="navbar-item">
-          <span class="icon is-size-3"><i class="material-icons">favorite_border</i></span>
+          <span class="icon"><i class="far fa-heart"></i></span>
           <span class="subtitle is-7 has-text-weight-bold">Favorite</span>
         </router-link>
 
@@ -26,7 +26,7 @@
           <figure class="image circle is-24x24 flexbox" v-if="user.image">
             <img :src="user.image" :srcset="`${user.image}_640w 640w`"/>
           </figure>
-          <span class="icon is-size-3" v-else><i class="material-icons">account_circle</i></span>
+          <span class="icon" v-else><i class="far fa-user-circle"></i></span>
           <span class="subtitle is-7 has-text-weight-bold">My Page</span>
         </router-link>
       </div>
@@ -121,6 +121,10 @@
             color: $primary;
           }
         }
+        .icon {
+          height: 1.5rem;
+          font-size: $size-4;
+        }
         .image {
           img {
             max-height: initial;
@@ -129,6 +133,8 @@
       }
       &.logged-in {
         .navbar-item {
+          justify-content: center;
+          height: 3.25rem;
           width: 20%;
           padding: 5px 0;
         }
@@ -136,6 +142,10 @@
           height: 46px;
           width: 46px;
           margin: -3px 12px;
+
+          .icon {
+            margin-left: -.35em;
+          }
         }
       }
       &.logged-out {

@@ -432,19 +432,18 @@
           margin: 0 1rem;
 
           ul {
+            justify-content: flex-end;
             border-bottom: none;
 
             > a {
               margin-top: 0;
             }
             .delete-action {
-              margin-left: auto;
-
               .icon {
                 margin: 3px 0 0;
               }
             }
-            .config-action {
+            :last-child {
               .icon {
                 margin-right: 0;
               }
