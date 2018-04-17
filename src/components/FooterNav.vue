@@ -123,7 +123,7 @@
         }
         .icon {
           height: 1.5rem;
-          font-size: $size-4;
+          font-size: $size-5;
         }
         .image {
           img {
