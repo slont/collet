@@ -59,6 +59,23 @@
       </div>
     </div>
 
+    <div class="social-sharing" :class="{ 'is-active': activePagination }">
+      <social-sharing :url="href" :title="`${currentItem.name} | Cullet (カレット)`" inline-template>
+        <div>
+          <!--<network network="facebook">
+            <span class="facebook-icon icon circle is-size-1">
+              <i class="fab fa-facebook-f fa-fw is-size-4"></i>
+            </span>
+          </network>-->
+          <network network="twitter">
+            <span class="twitter-icon icon circle is-size-1">
+              <i class="fab fa-twitter fa-fw is-size-4"></i>
+            </span>
+          </network>
+        </div>
+      </social-sharing>
+    </div>
+
     <div class="cullet-pagination flexbox fullwidth has-text-white" :class="{ 'is-active': activePagination }">
       <div @click="next" class="next cullet-pagination-item flexbox" v-if="currentItem.next.id">
         <span class="icon is-size-3"><i class="fa fas fa-chevron-left"></i></span>
@@ -129,6 +146,9 @@
       },
       innerHeight() {
         return this.$el.querySelector('.scrollable-container').scrollHeight - this.$el.querySelector('.scrollable-container').clientHeight
+      },
+      href() {
+        return location.href
       }
     },
     mounted() {
@@ -284,13 +304,52 @@
         }
       }
     }
+
+    .social-sharing {
+      position: fixed;
+      right: -50px;
+      bottom: $footer-nav-height * 2.5;
+      z-index: 1;
+      transition: right .4s;
+
+      &.is-active {
+        right: 1em;
+      }
+      .icon {
+        border-width: 2px;
+        border-style: solid;
+        transition: color .1s, background-color .2s;
+
+        &:hover {
+          color: white;
+        }
+      }
+      .facebook-icon {
+        $color: #3B5998;
+        color: $color;
+        border-color: $color;
+
+        &:hover {
+          background-color: $color;
+        }
+      }
+      .twitter-icon {
+        $color: #55acee;
+        color: $color;
+        border-color: $color;
+
+        &:hover {
+          background-color: $color;
+        }
+      }
+    }
     .cullet-pagination {
       position: fixed;
       left: 0;
       bottom: -$footer-nav-height * 3;
       height: 4.5em;
       z-index: 1;
-      transition: bottom .4s;
+      transition: bottom .35s;
 
       &.is-active {
         bottom: $footer-nav-height;

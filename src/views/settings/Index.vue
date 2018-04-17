@@ -13,7 +13,7 @@
         </router-link>
 
         <li class="flexbox">
-          <a class="field flexbox">
+          <a class="flexbox">
             プッシュ通知
           </a>
           <input v-model="activePushNotification" type="checkbox" class="switch is-rtl is-rounded is-primary"/>

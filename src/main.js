@@ -12,6 +12,7 @@ import VeeValidate from 'vee-validate'
 import VueI18n from 'vue-i18n'
 import VueMoment from 'vue-moment'
 import VueAutosize from 'vue-autosize'
+import SocialSharing from 'vue-social-sharing'
 import Element from 'element-ui'
 import messages from './locales'
 import moment from 'moment'
@@ -37,6 +38,7 @@ const i18n = new VueI18n({
 Vue.use(Element, {
   i18n: (key, value) => i18n.t(key, value)
 })
+Vue.use(SocialSharing)
 
 Vue.filter('truncate', (text, stop) => text.slice(0, stop) + (stop < text.length ? '...' : ''))
 
