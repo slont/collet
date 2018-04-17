@@ -62,7 +62,7 @@ Vue.use({
         dataURLtoBlob: dataURLtoBlob,
         createDataUrl(e, callback) {
           const MAX_WIDTH = 1080
-          const MAX_SIZE = 122880 // 120KB
+          const MAX_SIZE = 60000
           const files = e.target.files || e.dataTransfer.files
           if (!files.length) return
 
