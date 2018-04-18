@@ -3,7 +3,7 @@
     <div class="updated-cullet-list columns is-multiline" v-if="user.id && updatedItems.length">
       <div class="updated-cullet-label column is-12" key="label">
         <router-link :to="`/u/${user.id}`" tag="label" class="label is-size-5 has-text-white has-text-centered">
-          カレット履歴
+          Myカレット履歴
         </router-link>
       </div>
       <div class="updated-cullet-list-card card">
