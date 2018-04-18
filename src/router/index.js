@@ -15,6 +15,7 @@ import UserpageItem from '@/views/userpage/Item'
 import UserpageTheme from '@/views/userpage/Theme'
 import SettingsIndex from '@/views/settings/Index'
 import SettingsProfile from '@/views/settings/Profile'
+import SettingsPassword from '@/views/settings/Password'
 
 Vue.use(Router)
 
@@ -51,6 +52,9 @@ export default new Router({
             {
               path: 'profile',
               component: SettingsProfile
+            }, {
+              path: 'password',
+              component: SettingsPassword
             }
           ]
         }, {

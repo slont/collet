@@ -1,13 +1,24 @@
 <template>
   <div id="settings-profile">
-    <div class="modal-card-body columns">
+    <router-link to="/settings" class="label">/設定</router-link>
+
+    <div class="columns">
       <div class="column is-8">
         <div class="field">
-          <label class="label">ユーザネーム</label>
+          <label class="label">ユーザーID（半角英数字、記号[-_]）</label>
+          <div class="control">
+            <input v-model.trim="user.id" class="input" type="text"
+                   name="userId" v-validate="'required|max:32|regex:^([\\w-]+)$'">
+            <span v-show="errors.has('userId')" class="has-text-danger">{{ errors.first('userId') }}</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">ユーザーネーム</label>
           <div class="control">
             <input v-model.trim="user.name" class="input" type="text"
-                   name="name" v-validate="'required'">
-            <span v-show="errors.has('name')" class="has-text-danger">{{ errors.first('name') }}</span>
+                   name="userName" v-validate="'required|max:32'">
+            <span v-show="errors.has('userName')" class="has-text-danger">{{ errors.first('userName') }}</span>
           </div>
         </div>
 
@@ -15,7 +26,7 @@
           <label class="label">メールアドレス</label>
           <div class="control">
             <input v-model.trim="user.email" class="input" type="email"
-                   name="email" v-validate="'required'">
+                   name="email" v-validate="'required|max:255'">
             <span v-show="errors.has('email')" class="has-text-danger">{{ errors.first('email') }}</span>
           </div>
         </div>
@@ -24,40 +35,6 @@
           <label class="label">自己紹介</label>
           <div class="control">
             <textarea v-model="user.biography" v-autosize="user.biography" class="textarea" rows="2"></textarea>
-          </div>
-        </div>
-
-        <a class="password-setting-expand flexbox has-align-centered" @click="expandedPasswordSetting = !expandedPasswordSetting">
-          パスワード再設定
-          <span class="icon" v-if="expandedPasswordSetting"><i class="material-icons">keyboard_arrow_up</i></span>
-          <span class="icon" v-else><i class="material-icons">keyboard_arrow_down</i></span>
-        </a>
-        <div class="password-setting-area" v-if="expandedPasswordSetting">
-          <div class="field">
-            <label class="label">現在のパスワード</label>
-            <div class="control">
-              <input v-model.trim="user.password" class="input" type="password"
-                     name="password" v-validate="'required'">
-              <span v-show="errors.has('password')" class="has-text-danger">{{ errors.first('password') }}</span>
-            </div>
-          </div>
-
-          <div class="field">
-            <label class="label">新しいパスワード</label>
-            <div class="control">
-              <input v-model.trim="newPassword" class="input" type="password"
-                     name="newPassword" v-validate="'required'">
-              <span v-show="errors.has('newPassword')" class="has-text-danger">{{ errors.first('newPassword') }}</span>
-            </div>
-          </div>
-
-          <div class="field">
-            <label class="label">新しいパスワードの確認</label>
-            <div class="control">
-              <input v-model.trim="confirmPassword" class="input" type="password"
-                     name="confirmPassword" v-validate="'required|confirmed:newPassword'">
-              <span v-show="errors.has('confirmPassword')" class="has-text-danger">{{ errors.first('confirmPassword') }}</span>
-            </div>
           </div>
         </div>
       </div>
@@ -83,9 +60,8 @@
           </div>
         </div>
 
-        <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
         <div class="save-button has-right">
-          <guard-button :click="save" class="button is-primary" :disabled="loading">保存</guard-button>
+          <guard-button :click="save" class="button is-info" :disabled="loading">保存</guard-button>
         </div>
       </div>
     </div>
@@ -99,18 +75,14 @@
   export default {
     data() {
       return {
+        id: '',
         user: {
           id: '',
           name: '',
           email: '',
           biography: '',
-          image: '',
-          password: ''
-        },
-        expandedPasswordSetting: false,
-        newPassword: '',
-        confirmPassword: '',
-        errorMessage: ''
+          image: ''
+        }
       }
     },
     computed: {
@@ -119,6 +91,7 @@
       }
     },
     created() {
+      this.id = this.$store.state.user.id
       this.user = Object.assign({}, this.$store.state.user)
     },
     methods: {
@@ -126,18 +99,15 @@
         this.$validator.validateAll().then(result => {
           if (!result) return
 
-          const body = Object.assign({}, this.user, {
-            newPassword: this.newPassword
-          })
-          if (!this.expandedPasswordSetting) {
-            delete body.password
-            delete body.newPassword
-          }
-          new UserModel().update(this.user.id, body).then(() => {
-            const newUser = Object.assign({}, this.user, body)
-            delete newUser.password
-            delete newUser.newPassword
-            this.$store.commit('SET_USER', newUser)
+          new UserModel().update(this.id, {
+            id: this.user.id,
+            name: this.user.name,
+            email: this.user.email,
+            biography: this.user.biography,
+            image: this.user.image
+          }).then(() => {
+            this.$store.commit('SET_USER', this.user)
+            this.id = this.user.id
             this.$message({
               showClose: true,
               message: '保存されました',
@@ -145,7 +115,11 @@
             })
           }).catch(err => {
             console.log(err)
-            this.errorMessage = err.message
+            this.$message({
+              showClose: true,
+              message: err.message,
+              type: 'error'
+            })
           })
         })
       },
@@ -166,17 +140,13 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #settings-profile {
+    padding: 1rem;
+
     .delete {
       position: absolute;
       top: 5px;
       right: 5px;
       z-index: 10;
-    }
-    .password-setting-expand {
-      margin-top: 1.5rem;
-    }
-    .password-setting-area {
-      padding: 1rem 0;
     }
   }
 </style>

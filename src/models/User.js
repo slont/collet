@@ -9,6 +9,16 @@ export default class User extends Base {
     super(`/users`)
   }
 
+  updatePassword(id, body) {
+    return this.postProcess(fetch(`${this.endpoint}/${id}/_password`, {
+      method: 'PUT',
+      mode: 'cors',
+      credentials: 'include',
+      headers: Base.getHeaders(),
+      body: JSON.stringify(body)
+    }))
+  }
+
   findOneWithReport(id, params = null) {
     return this.postProcess(fetch(`${this.endpoint}/${id}/_report${(params ? '?' + qs.stringify(params, { indices: false }) : '')}`, {
       method: 'GET',

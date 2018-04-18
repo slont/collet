@@ -12,13 +12,12 @@
           </a>
         </router-link>
 
-        <li class="flexbox">
-          <a class="flexbox">
-            プッシュ通知
+        <router-link to="/settings/password" tag="li">
+          <a>
+            <span>パスワード設定</span>
+            <span class="icon is-hidden-tablet"><i class="material-icons">chevron_right</i></span>
           </a>
-          <input v-model="activePushNotification" type="checkbox" class="switch is-rtl is-rounded is-primary"/>
-          <label class="push-notification is-justify-end" @click="activePushNotification = !activePushNotification"></label>
-        </li>
+        </router-link>
       </ul>
       <div class="divider"></div>
 
