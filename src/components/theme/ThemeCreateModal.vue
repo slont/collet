@@ -56,7 +56,7 @@
         <div class="field tags-field">
           <label class="label">タグ</label>
 
-          <div class="control flexbox">
+          <div class="control tags flexbox">
             <el-tag v-for="(tag, i) in theme.tags" :key="tag" type="warning" closable
                     @close="$delete(theme.tags, i)">{{ tag }}</el-tag>
             <input v-model="inputVal" class="input-new-tag input"
@@ -64,14 +64,11 @@
           </div>
         </div>
 
-        <div class="field tags-field">
-          <label class="label">公開設定</label>
-          <div class="control">
-            <el-switch v-model="theme.private" active-color="#ff4949" inactive-color="#409eff"
-                active-text="非公開"
-                inactive-text="公開">
-            </el-switch>
-          </div>
+        <div class="publication-field field">
+          <input v-model="publication" class="is-checkradio has-background-color is-info"
+                 id="publication" type="checkbox">
+          <label class="publication" :class="{ 'is-publication': publication }"
+                 for="publication" @click="publication = !publication">一般公開する</label>
         </div>
       </div>
     </div>
@@ -97,10 +94,10 @@
           title: '',
           description: '',
           image: '',
-          private: false,
           tags: [],
           createdUser: this.$store.state.user
         },
+        publication: false,
         suggests: [],
         inputVal: '',
         errorMessage: ''
@@ -124,7 +121,7 @@
           if (!result) return
 
           await new ThemeModel().create(Object.assign({}, this.theme, {
-            private: false === this.theme.private ? 0 : 1
+            private: this.publication ? 0 : 2
           })).catch(err => {
             this.errorMessage = err
           })
@@ -170,7 +167,7 @@
       },
       confirmInput() {
         const inputVal = this.inputVal
-        if (inputVal) {
+        if (inputVal && -1 === this.theme.tags.indexOf(inputVal)) {
           this.theme.tags.push(inputVal)
         }
         this.inputVal = ''
@@ -206,9 +203,17 @@
             margin-bottom: 0;
 
             .input-new-tag {
-              margin-left: .5rem;
               width: auto;
             }
+          }
+        }
+        .publication-field {
+          .publication:before {
+            border: 2px solid $info !important;
+          }
+          .publication:not(.is-publication):before {
+            background-color: white !important;
+            border: 2px solid darkgrey !important;
           }
         }
       }

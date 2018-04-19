@@ -64,14 +64,11 @@
           </div>
         </div>
 
-        <div class="field tags-field">
-          <div class="control">
-            <label class="label">公開設定</label>
-            <el-switch v-model="theme.private" active-color="#ff4949" inactive-color="#409eff"
-                active-text="非公開"
-                inactive-text="公開">
-            </el-switch>
-          </div>
+        <div class="publication-field field">
+          <input v-model="publication" class="is-checkradio has-background-color is-info"
+                 id="publication" type="checkbox">
+          <label class="publication" :class="{ 'is-publication': publication }" for="publication"
+                 @click="publication = !publication">一般公開する</label>
         </div>
       </div>
     </div>
@@ -101,11 +98,12 @@
           title: '',
           description: '',
           image: '',
-          private: false,
+          private: 0,
           tags: [],
           createdUser: this.$store.state.user
         },
         tags: [],
+        publication: false,
         inputVal: '',
         errorMessage: '',
         suggests: []
@@ -120,6 +118,7 @@
       open(theme) {
         Object.assign(this.theme, theme)
         this.tags = theme.tags.map(tag => tag.name)
+        this.publication = !theme.private
         this.$refs.themeEditModal.open()
       },
       close() {
@@ -135,7 +134,7 @@
             description: this.theme.description,
             image: this.theme.image,
             tags: this.tags,
-            private: false === this.theme.private ? 0 : 1
+            private: this.publication ? 0 : 2
           }
           await new ThemeModel().update(this.theme.id, body).catch(err => {
             this.errorMessage = err
@@ -218,9 +217,17 @@
             margin-bottom: 0;
 
             .input-new-tag {
-              margin-left: .5rem;
               width: auto;
             }
+          }
+        }
+        .publication-field {
+          .publication:before {
+            border: 2px solid $info !important;
+          }
+          .publication:not(.is-publication):before {
+            background-color: white !important;
+            border: 2px solid darkgrey !important;
           }
         }
       }
