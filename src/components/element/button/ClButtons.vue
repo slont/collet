@@ -2,13 +2,10 @@
   <div class="cl-buttons buttons has-addons">
     <text-button @add="addElement"/>
     <image-button @add="addElement"/>
-    <location-button @add="addElement"/>
     <datetime-button @add="addElement"/>
     <link-button @add="addElement"/>
     <rating-button @add="addElement"/>
     <tag-button @add="addElement"/>
-    <phone-button @add="addElement"/>
-    <email-button @add="addElement"/>
   </div>
 </template>
 

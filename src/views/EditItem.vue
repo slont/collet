@@ -316,7 +316,7 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #edit-item {
-    $button-count: 9;
+    $button-count: 6;
 
     > .modal-card {
       display: flex;

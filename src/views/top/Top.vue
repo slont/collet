@@ -121,9 +121,10 @@
         if (this.loggedIn) {
           new UserModel().findItems(this.user.id, {
             p: 1,
-            s: 5
+            s: 10
           }).then(res => {
-            this.updatedItems = res.data
+            this.updatedItems = res.data.slice(0, 5)
+            this.$store.commit('SET_ITEMS', res.data)
           })
         }
 

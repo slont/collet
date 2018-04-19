@@ -309,7 +309,7 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #create-item {
-    $button-count: 9;
+    $button-count: 6;
 
     > .modal-card {
       display: flex;
