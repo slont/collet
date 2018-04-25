@@ -47,6 +47,10 @@ body {
   margin: 0 auto;
 }
 
+.columns.is-gapless-only {
+  margin: 0;
+}
+
 .layout-list {
   display: flex;
   flex-direction: column;

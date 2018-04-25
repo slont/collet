@@ -10,7 +10,7 @@
           <div class="control has-icons-right">
             <input v-model="query" class="input is-rounded"
                  placeholder="キーワード検索"/>
-            <span class="icon is-small is-right"><i class="material-icons">search</i></span>
+            <span class="icon is-small is-right"><i class="fas fa-search"></i></span>
           </div>
         </div>
       </div>
@@ -18,11 +18,11 @@
       <div class="navbar-menu">
         <div class="navbar-start">
           <router-link to="/" class="navbar-item" exact>
-            <span class="icon"><i class="material-icons">home</i></span>
+            <span class="icon"><i class="fas fa-home fa-fw"></i></span>
             <span>ホーム</span>
           </router-link>
           <router-link :to="`/u/${user.id}`" class="navbar-item" v-if="loggedIn">
-            <span class="icon"><i class="material-icons">account_circle</i></span>
+            <span class="icon"><i class="far fa-user-circle fa-fw"></i></span>
             <span>マイページ</span>
           </router-link>
         </div>

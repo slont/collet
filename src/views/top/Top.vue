@@ -1,85 +1,84 @@
 <template>
   <div id="top-top" @scroll="infiniteScroll">
-    <div class="updated-cullet-list columns is-multiline" v-if="user.id && updatedItems.length">
-      <div class="updated-cullet-label column is-12" key="label">
-        <router-link :to="`/u/${user.id}`" tag="label" class="label is-size-5 has-text-white has-text-centered">
-          Myカレット履歴
-        </router-link>
-      </div>
-      <div class="updated-cullet-list-card card">
-        <transition-group tag="div" name="slide-fade" mode="out-in" class="item-list column is-12 card-content">
-          <div v-for="(item, i) in updatedItems" class="updated-cullet flexbox" :key="item.id">
-            <div class="updated-at is-size-7 text-color-weak has-text-right">
-              <div v-if="visibleUpdatedAt(item.updatedAt, i)">{{ item.updatedAt | fromNow('M/D') }}</div>
-            </div>
-
-            <div class="media">
-              <div class="media-content">
-                <router-link class="theme-title subtitle text-color-weak is-size-7" tag="div"
-                             :to="`/u/${user.id}/${item.theme.id}`">
-                  {{ item.theme.title }}
-                </router-link>
-                <router-link class="item-title text-color-strong is-size-6 has-text-weight-bold" tag="div"
-                             :to="`/u/${user.id}/${item.theme.id}/${item.id}`">
-                  {{ item.name }}
-                </router-link>
-              </div>
-
-              <div class="media-right" v-if="item.elements[0] && 'image' === item.elements[0].type && item.elements[0].valueStr">
-                <figure class="image"><img :src="item.elements[0].valueStr" :srcset="`${item.elements[0].valueStr}_640w 640w`"></figure>
-              </div>
-              <div class="media-right" v-else-if="item.elements[1] && 'image' === item.elements[1].type && item.elements[1].valueStr">
-                <figure class="image"><img :src="item.elements[1].valueStr" :srcset="`${item.elements[1].valueStr}_640w 640w`"></figure>
-              </div>
+    <div class="updated-cullet-list" v-if="user.id && updatedItems.length">
+      <router-link :to="`/u/${user.id}`" tag="label" class="updated-cullet-label label is-size-5 has-text-white has-text-centered">
+        Myカレット履歴
+      </router-link>
+      <transition-group tag="div" name="slide-fade" mode="out-in" class="updated-cullet-list-card card item-list columns is-multiline is-gapless-only">
+        <div v-for="(item, i) in updatedItems" class="updated-cullet flexbox column is-4-desktop" :key="item.id">
+          <div class="updated-at text-color-weak has-text-right">
+            <div class="flexbox" :class="{'is-hidden-touch': !visibleUpdatedAt(item.updatedAt, i)}">
+              <div class="updated-at-date is-size-7">{{ item.updatedAt.format('M/D') }}</div>
+              <div class="is-size-8">{{ item.updatedAt.format('ddd') }}</div>
             </div>
           </div>
-        </transition-group>
-      </div>
+
+          <div class="media">
+            <div class="media-content">
+              <router-link class="theme-title subtitle text-color-weak is-size-7" tag="div"
+                           :to="`/u/${user.id}/${item.theme.id}`">
+                {{ item.theme.title }}
+              </router-link>
+              <router-link class="item-title text-color-strong is-size-6 has-text-weight-bold" tag="div"
+                           :to="`/u/${user.id}/${item.theme.id}/${item.id}`">
+                {{ item.name }}
+              </router-link>
+            </div>
+
+            <div class="media-right" v-if="item.elements[0] && 'image' === item.elements[0].type && item.elements[0].valueStr">
+              <figure class="image"><img :src="item.elements[0].valueStr" :srcset="`${item.elements[0].valueStr}_640w 640w`"></figure>
+            </div>
+            <div class="media-right" v-else-if="item.elements[1] && 'image' === item.elements[1].type && item.elements[1].valueStr">
+              <figure class="image"><img :src="item.elements[1].valueStr" :srcset="`${item.elements[1].valueStr}_640w 640w`"></figure>
+            </div>
+          </div>
+        </div>
+      </transition-group>
     </div>
 
-    <transition-group tag="div" name="slide-fade" mode="out-in" class="new-cullet-list columns is-multiline">
-      <div class="new-cullet-label column is-12" key="label">
-        <label class="label is-size-5 has-text-white has-text-centered">タイムライン</label>
-      </div>
-      <div v-for="item in newItems" class="item-list column is-half" :key="item.id">
-        <router-link :to="`/u/${item.theme.createdUser.id}/${item.theme.id}/${item.id}`"
-                     tag="div" class="new-cullet-card card">
-          <div class="card-content">
-            <div class="media">
-              <div class="media-content">
-                <router-link class="theme-title subtitle text-color-weak is-size-7" tag="div"
-                             :to="`/u/${item.theme.createdUser.id}/${item.theme.id}`">
-                  {{ item.theme.title }}
-                </router-link>
-                <div class="item-title text-color-strong is-size-5 has-text-weight-bold">
-                  {{ item.name }}
-                </div>
-
-                <div class="user-profile flexbox has-align-centered is-size-7">
-                  <figure class="image circle is-16x16 flexbox" v-if="item.theme.createdUser.image">
-                    <img :src="item.theme.createdUser.image" :srcset="`${item.theme.createdUser.image}_640w 640w`">
-                  </figure>
-                  <router-link :to="`/u/${item.theme.createdUser.id}`" class="user-name text-color-weak">
-                    {{ item.theme.createdUser.name }}
+    <div class="new-cullet-list">
+      <label class="new-cullet-label label is-size-5 has-text-white has-text-centered">タイムライン</label>
+      <transition-group tag="div" name="slide-fade" mode="out-in" class="columns is-multiline">
+        <div v-for="item in newItems" class="item-list column is-12-touch is-4-desktop" :key="item.id">
+          <router-link :to="`/u/${item.theme.createdUser.id}/${item.theme.id}/${item.id}`"
+                       tag="div" class="new-cullet-card card">
+            <div class="card-content">
+              <div class="media">
+                <div class="media-content">
+                  <router-link class="theme-title subtitle text-color-weak is-size-7" tag="div"
+                               :to="`/u/${item.theme.createdUser.id}/${item.theme.id}`">
+                    {{ item.theme.title }}
                   </router-link>
-                  <span class="updated-at text-color-weak is-size-8">- {{ item.updatedAt | fromNow }}</span>
+                  <div class="item-title text-color-strong is-size-5 has-text-weight-bold">
+                    {{ item.name }}
+                  </div>
+
+                  <div class="user-profile flexbox has-align-centered is-size-7">
+                    <figure class="image circle is-16x16 flexbox" v-if="item.theme.createdUser.image">
+                      <img :src="item.theme.createdUser.image" :srcset="`${item.theme.createdUser.image}_640w 640w`">
+                    </figure>
+                    <router-link :to="`/u/${item.theme.createdUser.id}`" class="user-name text-color-weak">
+                      {{ item.theme.createdUser.name }}
+                    </router-link>
+                    <span class="updated-at text-color-weak is-size-8">- {{ item.updatedAt | fromNow }}</span>
+                  </div>
+                </div>
+
+                <div class="media-right" v-if="item.theme.image">
+                  <figure class="image"><img :src="item.theme.image" :srcset="`${item.theme.image}_640w 640w`"></figure>
                 </div>
               </div>
 
-              <div class="media-right" v-if="item.theme.image">
-                <figure class="image"><img :src="item.theme.image" :srcset="`${item.theme.image}_640w 640w`"></figure>
+              <div class="content" v-if="item.elements.length">
+                <element-view :element="item.elements[0]"/>
+                <element-view :element="item.elements[1]" v-if="item.elements[1]"/>
               </div>
             </div>
-
-            <div class="content" v-if="item.elements.length">
-              <element-view :element="item.elements[0]"/>
-              <element-view :element="item.elements[1]" v-if="item.elements[1]"/>
-            </div>
-          </div>
-        </router-link>
-      </div>
-      <div class="button is-loading fullwidth is-large" key="loading" v-if="newItems.length < newItemsTotal"></div>
-    </transition-group>
+          </router-link>
+        </div>
+        <div class="button is-loading fullwidth is-large" key="loading" v-if="newItems.length < newItemsTotal"></div>
+      </transition-group>
+    </div>
 
     <theme-edit-modal ref="themeEditModal" @refresh="refresh"/>
   </div>
@@ -172,9 +171,101 @@
     overflow: scroll;
     background-color: $bg-color-main;
 
+    .updated-cullet-label,
+    .new-cullet-label {
+      position: relative;
+      padding: .75rem;
+      margin-bottom: 0;
+      overflow: hidden;
+      background-color: $main-color;
+
+      &:before {
+        position: absolute;
+        bottom: -30px;
+        right: -90px;
+        width: 200px;
+        height: 200px;
+        background-color: #fff;
+        content: '';
+        opacity: 0.8;
+        transform: rotate(-30deg);
+      }
+      &:after {
+        position: absolute;
+        right: 113px;
+        bottom: -30px;
+        width: 6px;
+        height: 200px;
+        background-color: $main-color;
+        content: '';
+        transform: rotate(-30deg);
+      }
+    }
+    .updated-cullet-list {
+      .media-right {
+        .image {
+          height: 3rem;
+          overflow: hidden;
+
+          img {
+            height: 100%;
+            width: auto;
+          }
+        }
+      }
+      .updated-cullet {
+        .updated-at {
+          min-width: 54px;
+
+          .flexbox {
+            flex-direction: column;
+            justify-content: center;
+            height: 40px;
+            width: 40px;
+            color: $info;
+            font-weight: bold;
+            border-radius: 50%;
+            border: 2px solid $info;
+
+            .is-size-8 {
+              line-height: 1;
+            }
+          }
+        }
+        .theme-title,
+        .item-title {
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+    .new-cullet-label {
+      &:before{
+        transform: rotate(30deg);
+        left: -90px;
+      }
+      &:after{
+        transform: rotate(30deg);
+        left: 113px;
+      }
+    }
     .new-cullet-list {
-      .new-cullet-label {
-        padding: .75em 1em;
+      > .columns {
+        margin: 0 -.7rem;
+      }
+      .media-right {
+        .image {
+          height: 60px;
+          overflow: hidden;
+
+          img {
+            height: 100%;
+            width: auto;
+          }
+        }
       }
     }
     .meta-data {
@@ -191,45 +282,6 @@
     @media screen and (max-width: 768px) {
       height: calc(100vh - #{$header-nav-height + $footer-nav-height});
 
-      .updated-cullet-label,
-      .new-cullet-label {
-        position: relative;
-        padding: 10px;
-        overflow: hidden;
-        background-color: $main-color;
-
-        &:before {
-          position: absolute;
-          bottom: -30px;
-          right: -90px;
-          width: 200px;
-          height: 200px;
-          background-color: #fff;
-          content: '';
-          opacity: 0.8;
-          transform: rotate(-30deg);
-        }
-        &:after {
-          position: absolute;
-          right: 113px;
-          bottom: -30px;
-          width: 6px;
-          height: 200px;
-          background-color: $main-color;
-          content: '';
-          transform: rotate(-30deg);
-        }
-      }
-      .new-cullet-label {
-        &:before{
-          transform: rotate(30deg);
-          left: -90px;
-        }
-        &:after{
-          transform: rotate(30deg);
-          left: 113px;
-        }
-      }
       .updated-cullet-list {
         margin: 0;
 
@@ -241,33 +293,17 @@
 
           .updated-cullet {
             align-items: flex-end;
-            padding: .5em 1em;
 
-            &:first-child {
-              padding-top: 1em;
-            }
-            &:not(:first-child) {
-              padding-top: 0;
+            &:not(:last-child) {
+              padding-bottom: 0;
             }
             &:last-child {
-              .updated-at div,
               .media {
                 border-bottom: none;
               }
             }
-            > div {
-              min-width: 64px;
-            }
-            .updated-at {
-              > div {
-                padding-right: .75em;
-                padding-bottom: .45em;
-                border-bottom: $border-style;
-              }
-            }
             .media {
               flex: 1;
-              padding-bottom: .5em;
               border-bottom: $border-style;
 
               .media-content {
@@ -285,17 +321,6 @@
                   max-height: 2.5em;
                   line-height: 1.25;
                   overflow: hidden;
-                }
-              }
-              .media-right {
-                .image {
-                  height: 3rem;
-                  overflow: hidden;
-
-                  img {
-                    height: 100%;
-                    width: auto;
-                  }
                 }
               }
               + .content {
@@ -317,6 +342,9 @@
       .new-cullet-list {
         margin: 0;
 
+        > .columns {
+          margin: 0;
+        }
         .item-list {
           padding: 0;
 
@@ -347,17 +375,6 @@
                   .user-profile {
                     > :not(:last-child) {
                       margin-right: .35em;
-                    }
-                  }
-                }
-                .media-right {
-                  .image {
-                    height: 60px;
-                    overflow: hidden;
-
-                    img {
-                      height: 100%;
-                      width: auto;
                     }
                   }
                 }

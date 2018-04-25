@@ -194,7 +194,7 @@
       }
     },
     methods: {
-      async refresh(theme = {}) {
+      refresh(theme = {}) {
         if (theme.id) {
           this.theme = theme
         } else {
