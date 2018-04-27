@@ -73,7 +73,7 @@
       </div>
     </div>
 
-    <footer class="modal-card-foot has-right is-hidden-touch">
+    <footer class="modal-card-foot has-right is-hidden-mobile">
       <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
       <a @click="close" class="button">キャンセル</a>
       <guard-button :click="ok" class="is-info" :disabled="loading">作成</guard-button>

@@ -5,9 +5,9 @@
         Myカレット履歴
       </router-link>
       <transition-group tag="div" name="slide-fade" mode="out-in" class="updated-cullet-list-card card item-list columns is-multiline is-gapless-only">
-        <div v-for="(item, i) in updatedItems" class="updated-cullet flexbox column is-4-desktop" :key="item.id">
+        <div v-for="(item, i) in updatedItems" class="updated-cullet flexbox column is-4-tablet" :key="item.id">
           <div class="updated-at text-color-weak has-text-right">
-            <div class="flexbox" :class="{'is-hidden-touch': !visibleUpdatedAt(item.updatedAt, i)}">
+            <div class="flexbox" :class="{'is-hidden-mobile': !visibleUpdatedAt(item.updatedAt, i)}">
               <div class="updated-at-date is-size-7">{{ item.updatedAt.format('M/D') }}</div>
               <div class="is-size-8">{{ item.updatedAt.format('ddd') }}</div>
             </div>
@@ -39,7 +39,7 @@
     <div class="new-cullet-list">
       <label class="new-cullet-label label is-size-5 has-text-white has-text-centered">タイムライン</label>
       <transition-group tag="div" name="slide-fade" mode="out-in" class="columns is-multiline">
-        <div v-for="item in newItems" class="item-list column is-12-touch is-4-desktop" :key="item.id">
+        <div v-for="item in newItems" class="item-list column is-12-mobile is-4-tablet" :key="item.id">
           <router-link :to="`/u/${item.theme.createdUser.id}/${item.theme.id}/${item.id}`"
                        tag="div" class="new-cullet-card card">
             <div class="card-content">
@@ -169,7 +169,6 @@
     margin-left: auto;
     margin-right: auto;
     overflow: scroll;
-    background-color: $bg-color-main;
 
     .updated-cullet-label,
     .new-cullet-label {
@@ -281,6 +280,7 @@
 
     @media screen and (max-width: 768px) {
       height: calc(100vh - #{$header-nav-height + $footer-nav-height});
+      background-color: $bg-color-main;
 
       .updated-cullet-list {
         margin: 0;

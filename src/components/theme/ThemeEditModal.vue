@@ -73,7 +73,7 @@
       </div>
     </div>
 
-    <footer class="modal-card-foot has-right is-hidden-touch">
+    <footer class="modal-card-foot has-right is-hidden-mobile">
       <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
       <a @click="$refs.themeDeleteModal.open(theme)" class="button is-danger is-outlined is-left">削除</a>
       <a @click="close" class="button">キャンセル</a>

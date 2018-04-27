@@ -49,6 +49,12 @@ Vue.use({
       computed: {
         loggedIn() {
           return this.$store.state.loggedIn
+        },
+        windowWidth() {
+          return window.innerWidth
+        },
+        isMobile() {
+          return 768 >= this.windowWidth
         }
       },
       filters: {

@@ -14,7 +14,7 @@
         </router-link>
 
         <a @click="onClickAdd" class="navbar-item button is-primary is-rounded">
-          <span class="icon"><i class="fas fa-pencil-alt"></i></span>
+          <span class="icon is-size-4"><i class="fas fa-pencil-alt"></i></span>
         </a>
 
         <router-link :to="`/u/${user.id}/favorites`" class="navbar-item">
@@ -105,6 +105,7 @@
     z-index: 20;
 
     .navbar-brand {
+      max-height: 3.25rem;
       align-items: center;
       justify-content: space-evenly;
 
@@ -139,9 +140,14 @@
           padding: 5px 0;
         }
         .button {
-          height: 46px;
-          width: 46px;
-          margin: -3px 12px;
+          height: 58px;
+          width: 58px;
+          margin: -3px 6px 18px;
+          border-top: 1px solid gainsboro;
+          box-sizing: border-box;
+          border-bottom: none;
+          border-right: none;
+          border-left: none;
 
           .icon {
             margin-left: -.35em;
