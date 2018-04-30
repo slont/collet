@@ -188,33 +188,7 @@
 
     .updated-cullet-label,
     .new-cullet-label {
-      position: relative;
-      padding: .75rem;
-      margin-bottom: 0;
-      overflow: hidden;
-      background-color: $main-color;
-
-      &:before {
-        position: absolute;
-        bottom: -30px;
-        right: -90px;
-        width: 200px;
-        height: 200px;
-        background-color: #fff;
-        content: '';
-        opacity: 0.8;
-        transform: rotate(-30deg);
-      }
-      &:after {
-        position: absolute;
-        right: 113px;
-        bottom: -30px;
-        width: 6px;
-        height: 200px;
-        background-color: $main-color;
-        content: '';
-        transform: rotate(-30deg);
-      }
+      @include label-accent-sp;
     }
     .updated-cullet-list {
       .media-right {
@@ -338,6 +312,7 @@
         margin-right: 3px;
       }
     }
+
     @media screen and (min-width: 769px) {
       .new-cullet-list {
         .item-list {

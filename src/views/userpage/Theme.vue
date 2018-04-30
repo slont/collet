@@ -1,30 +1,44 @@
 <template>
   <div id="userpage-theme">
-    <div class="theme-content">
-      <div class="theme-columns columns">
-        <div class="side-column column is-4" :class="{ 'hidden-mobile-only': itemId }">
-          <theme-card :theme="theme"
-                      @open-edit-modal="$refs.themeEditModal.open(theme)"
-                      @refresh="refresh"/>
+    <theme-card :theme="theme"
+                @open-edit-modal="$refs.themeEditModal.open(theme)"
+                @refresh="refresh"/>
 
-          <div class="theme-items">
-            <div class="label is-size-5 has-text-centered">
-              <span>カレット一覧</span>
-            </div>
-            <item-card v-for="item in theme.items" :key="item.id" :theme="theme" :item="item"
-                       @click.native="$router.push(`/u/${urlUserId}/${themeId}/${item.id}`)"
-                       @open-edit-modal="$refs.itemEditModal.open(theme, item)"
-                       v-if="theme.items.length"/>
+    <div class="theme-items">
+      <div class="label is-size-5 has-text-white has-text-centered">
+        <span>カレット一覧</span>
+      </div>
+      <transition-group id="userpage-items" tag="div" name="slide-fade" mode="out-in" class="columns is-multiline">
+        <div v-for="(key) in Object.keys(itemsColumns)" class="column is-12-mobile is-6-tablet" :key="`column-${key}`">
+          <div v-for="item in itemsColumns[key]" class="item-list" :key="item.id" v-if="itemsColumns[key].length">
+            <router-link :to="`/u/${urlUserId}/${theme.id}/${item.id}`"
+                         tag="div" class="cullet-card card">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-content">
+                    <router-link class="theme-title subtitle text-color-weak is-size-7 clickable" tag="div"
+                                 :to="`/u/${urlUserId}/${theme.id}`">
+                      {{ theme.title }}
+                    </router-link>
+                    <div class="item-title text-color-strong is-size-5 has-text-weight-bold clickable">
+                      {{ item.name }}
+                    </div>
+                    <div class="updated-at text-color-weak is-size-8">
+                      <span class="icon"><i class="material-icons">access_time</i></span>
+                      <span>{{ item.updatedAt | fromNow }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="content" v-if="item.elements.length">
+                  <element-view :element="item.elements[0]"/>
+                  <element-view :element="item.elements[1]" v-if="item.elements[1]"/>
+                </div>
+              </div>
+            </router-link>
           </div>
         </div>
-
-        <div class="main-column column is-8"
-             :class="{ 'hidden-mobile-only': !itemId }" v-if="itemId">
-          <item-page :current-item="currentItem"/>
-        </div>
-
-        <div class="is-loading" v-else></div>
-      </div>
+      </transition-group>
     </div>
 
     <a @click="$refs.itemCreateModal.open(theme)" v-if="loggedIn"
@@ -41,6 +55,7 @@
 <script>
   import ThemeModel from '@/models/Theme'
   import ItemModel from '@/models/Item'
+  import ElementView from '@/components/element/ElementView'
   import ThemeCard from '@/components/theme/ThemeCard'
   import ItemCard from '@/components/item/ItemCard'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
@@ -49,7 +64,7 @@
   import ItemPage from './Item'
 
   export default {
-    components: { ThemeCard, ThemeEditModal, ItemCreateModal, ItemEditModal, ItemCard, ItemPage },
+    components: { ElementView, ThemeCard, ThemeEditModal, ItemCreateModal, ItemEditModal, ItemCard, ItemPage },
     data() {
       return {
         theme: {
@@ -84,6 +99,19 @@
       },
       themeId() {
         return this.$route.params.themeId
+      },
+      itemsColumns() {
+        if (this.isMobile) {
+          return {
+            0: this.theme.items,
+            1: []
+          }
+        } else {
+          return {
+            0: this.theme.items.filter((item, i) => 0 === i % 2),
+            1: this.theme.items.filter((item, i) => 1 === i % 2)
+          }
+        }
       }
     },
     watch: {
@@ -157,186 +185,9 @@
     overflow-y: scroll;
     background-color: $bg-color-main;
 
-    .theme-content {
-      width: 90%;
-      margin: 0 auto;
-
-      .theme-columns {
-        height: 100%;
-        width: 100%;
-        margin: 0;
-
-        .side-column {
-          .theme-card {
-            .media-content {
-              height: 100%;
-
-              .theme-description {
-                max-height: 100%;
-              }
-            }
-          }
-        }
-        > .main-column {
-          padding-left: 2rem;
-        }
-        > .column {
-          overflow: scroll;
-
-          .theme-header {
-            position: relative;
-
-            .theme-header-content {
-              position: relative;
-              max-height: 14rem;
-              min-height: 11.5rem;
-              flex-direction: column;
-              display: flex;
-              justify-content: flex-end;
-
-              .theme-image {
-                width: 100%;
-              }
-              .title {
-                max-height: 4.5rem;
-                line-height: 1.25;
-                overflow: hidden;
-              }
-              > :not(:last-child) {
-                margin-bottom: .5rem;
-              }
-              .dark-mask {
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-end;
-                position: absolute;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                padding: .75rem;
-
-                > :not(:last-child) {
-                  margin-bottom: .5rem;
-                }
-                .title {
-                  color: white;
-                }
-              }
-              &.theme-image {
-                display: flex;
-                align-items: center;
-              }
-              &.theme-profile {
-                padding: .75rem .75rem 0;
-
-                .theme-tags {
-                  border-bottom: $border-style;
-                }
-              }
-            }
-            .private-icon {
-              position: absolute;
-              top: 0;
-              right: 3rem;
-              height: 3rem;
-            }
-            .edit-action {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              position: absolute;
-              top: 0;
-              right: 0;
-              height: 3rem;
-              width: 3rem;
-              cursor: pointer;
-
-              &:hover {
-                opacity: .65;
-              }
-            }
-            .theme-image + .favorite-action + .private-icon,
-            .theme-image + .favorite-action + .edit-action,
-            .theme-image + .favorite-action + .private-icon + .edit-action {
-              color: #e8e8e8;
-            }
-          }
-          .theme-description {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            padding-bottom: .5rem;
-
-            .subtitle {
-              max-height: 3.75rem;
-              margin-bottom: 0;
-              line-height: 1.25;
-              overflow: hidden;
-              transition: max-height .3s;
-            }
-            .is-opened {
-              max-height: 100vh;
-              transition: max-height .5s;
-            }
-            .button {
-              margin: auto;
-            }
-          }
-          .theme-sub-header {
-            .search-box {
-              width: 100%;
-              margin: 0 auto;
-              display: flex;
-              align-items: center;
-              padding: 1rem 0 .5rem;
-
-              .field {
-                width: 100%;
-                margin-bottom: 0;
-
-                .input-control {
-                  width: 100%;
-                }
-              }
-              .action-buttons {
-                margin-left: auto;
-              }
-            }
-          }
-        }
-        .theme-items {
-          position: relative;
-          margin-top: .5em;
-
-          .add-button {
-            position: absolute;
-            top: -6px;
-            right: 0;
-
-            .icon i {
-              font-size: $size-6;
-            }
-          }
-          .subtitle {
-            text-align: center;
-            margin: .75rem auto;
-          }
-          .item-card {
-            &:not(:last-child) {
-              margin-bottom: .5em;
-            }
-            &.is-active {
-              .card-content {
-                padding: calc(1rem - 3px);
-                border: 3px solid $info;
-              }
-            }
-            &:hover {
-              transform: scale(1.03);
-              z-index: 1;
-            }
-          }
-        }
+    .theme-items {
+      > .label {
+        @include label-accent-sp;
       }
     }
     .fixed-action-button {
@@ -389,6 +240,13 @@
       position: fixed;
       bottom: 2rem;
       right: 2rem;
+    }
+
+    @media screen and (min-width: 769px) {
+      .theme-card {
+        max-width: 540px;
+        margin: 0 auto;
+      }
     }
 
     @media screen and (max-width: 768px) {
