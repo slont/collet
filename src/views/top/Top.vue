@@ -272,13 +272,13 @@
         margin-top: 0;
       }
       .item-list {
-        &:hover {
-          cursor: pointer;
-        }
         &:not(:last-child) {
           margin-bottom: 1em;
         }
         .new-cullet-card {
+          &:hover {
+            cursor: pointer;
+          }
           .media-right {
             .image {
               height: 60px;

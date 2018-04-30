@@ -139,6 +139,9 @@
     overflow-y: scroll;
     background-color: $bg-color-main;
 
+    &.container {
+      height: calc(100vh - #{$header-nav-height});
+    }
     .userpage-header {
       background-color: white;
 
