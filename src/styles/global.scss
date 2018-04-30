@@ -226,6 +226,11 @@ body {
   }
 }
 
+.flexcolumn {
+  display: flex;
+  flex-direction: column;
+}
+
 .fullwidth {
   width: 100%;
 }
@@ -315,4 +320,12 @@ svg:not(:root).svg-inline--fa {
 .alt-image {
   margin: auto;
   padding: 0 16%;
+}
+
+.clickable {
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }

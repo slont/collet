@@ -38,45 +38,48 @@
 
     <div class="new-cullet-list">
       <label class="new-cullet-label label is-size-5 has-text-white has-text-centered">タイムライン</label>
+
       <transition-group tag="div" name="slide-fade" mode="out-in" class="columns is-multiline">
-        <div v-for="item in newItems" class="item-list column is-12-mobile is-4-tablet" :key="item.id">
-          <router-link :to="`/u/${item.theme.createdUser.id}/${item.theme.id}/${item.id}`"
-                       tag="div" class="new-cullet-card card">
-            <div class="card-content">
-              <div class="media">
-                <div class="media-content">
-                  <router-link class="theme-title subtitle text-color-weak is-size-7" tag="div"
-                               :to="`/u/${item.theme.createdUser.id}/${item.theme.id}`">
-                    {{ item.theme.title }}
-                  </router-link>
-                  <div class="item-title text-color-strong is-size-5 has-text-weight-bold">
-                    {{ item.name }}
-                  </div>
-
-                  <div class="user-profile flexbox has-align-centered is-size-7">
-                    <figure class="image circle is-16x16 flexbox" v-if="item.theme.createdUser.image">
-                      <img :src="item.theme.createdUser.image" :srcset="`${item.theme.createdUser.image}_640w 640w`">
-                    </figure>
-                    <router-link :to="`/u/${item.theme.createdUser.id}`" class="user-name text-color-weak">
-                      {{ item.theme.createdUser.name }}
+        <div v-for="(key) in Object.keys(newItemsColumns)" class="column is-12-mobile is-6-tablet" :key="`column-${key}`">
+          <div v-for="item in newItemsColumns[key]" class="item-list" :key="item.id" v-if="newItemsColumns[key].length">
+            <router-link :to="`/u/${item.theme.createdUser.id}/${item.theme.id}/${item.id}`"
+                         tag="div" class="new-cullet-card card">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-content">
+                    <router-link class="theme-title subtitle text-color-weak is-size-7 clickable" tag="div"
+                                 :to="`/u/${item.theme.createdUser.id}/${item.theme.id}`">
+                      {{ item.theme.title }}
                     </router-link>
-                    <span class="updated-at text-color-weak is-size-8">- {{ item.updatedAt | fromNow }}</span>
+                    <div class="item-title text-color-strong is-size-5 has-text-weight-bold clickable">
+                      {{ item.name }}
+                    </div>
+
+                    <div class="user-profile flexbox has-align-centered is-size-7">
+                      <figure class="image circle is-16x16 flexbox" v-if="item.theme.createdUser.image">
+                        <img :src="item.theme.createdUser.image" :srcset="`${item.theme.createdUser.image}_640w 640w`">
+                      </figure>
+                      <router-link :to="`/u/${item.theme.createdUser.id}`" class="user-name text-color-weak clickable">
+                        {{ item.theme.createdUser.name }}
+                      </router-link>
+                      <span class="updated-at text-color-weak is-size-8 is-justify-end">{{ item.updatedAt | fromNow }}</span>
+                    </div>
+                  </div>
+
+                  <div class="media-right" v-if="item.theme.image">
+                    <figure class="image"><img :src="item.theme.image" :srcset="`${item.theme.image}_640w 640w`"></figure>
                   </div>
                 </div>
 
-                <div class="media-right" v-if="item.theme.image">
-                  <figure class="image"><img :src="item.theme.image" :srcset="`${item.theme.image}_640w 640w`"></figure>
+                <div class="content" v-if="item.elements.length">
+                  <element-view :element="item.elements[0]"/>
+                  <element-view :element="item.elements[1]" v-if="item.elements[1]"/>
                 </div>
               </div>
-
-              <div class="content" v-if="item.elements.length">
-                <element-view :element="item.elements[0]"/>
-                <element-view :element="item.elements[1]" v-if="item.elements[1]"/>
-              </div>
-            </div>
-          </router-link>
+            </router-link>
+          </div>
         </div>
-        <div class="button is-loading fullwidth is-large" key="loading" v-if="newItems.length < newItemsTotal"></div>
+        <div class="button is-loading fullwidth is-large" key="loading" v-if="newItems.length && newItems.length < newItemsTotal"></div>
       </transition-group>
     </div>
 
@@ -91,7 +94,7 @@
   import ThemeCard from '@/components/theme/ThemeCard'
   import ItemCard from '@/components/item/ItemCard'
   import ElementView from '@/components/element/ElementView'
-  const SIZE = 10
+  const SIZE = 12
 
   export default {
     components: { ThemeCard, ItemCard, ThemeEditModal, ElementView },
@@ -107,6 +110,19 @@
     computed: {
       user() {
         return this.$store.state.user
+      },
+      newItemsColumns() {
+        if (this.isMobile) {
+          return {
+            0: this.newItems,
+            1: []
+          }
+        } else {
+          return {
+            0: this.newItems.filter((item, i) => 0 === i % 2),
+            1: this.newItems.filter((item, i) => 1 === i % 2)
+          }
+        }
       }
     },
     created() {
@@ -168,7 +184,7 @@
     max-width: $width;
     margin-left: auto;
     margin-right: auto;
-    overflow: scroll;
+    overflow-y: scroll;
 
     .updated-cullet-label,
     .new-cullet-label {
@@ -253,16 +269,61 @@
     }
     .new-cullet-list {
       > .columns {
-        margin: 0 -.7rem;
+        margin-top: 0;
       }
-      .media-right {
-        .image {
-          height: 60px;
-          overflow: hidden;
+      .item-list {
+        &:hover {
+          cursor: pointer;
+        }
+        &:not(:last-child) {
+          margin-bottom: 1em;
+        }
+        .new-cullet-card {
+          .media-right {
+            .image {
+              height: 60px;
+              overflow: hidden;
 
-          img {
-            height: 100%;
-            width: auto;
+              img {
+                height: 100%;
+                width: auto;
+              }
+            }
+          }
+          .user-profile {
+            .image {
+              margin-right: .35em;
+            }
+          }
+          .element-view {
+            .text-element {
+              .control {
+                max-height: 164px;
+                overflow: hidden;
+
+                .value {
+                  font-size: $size-6;
+                }
+              }
+            }
+            .image-element {
+              .file-view {
+                display: flex;
+                align-items: center;
+                max-height: 16em;
+                margin: 0;
+                overflow: hidden;
+              }
+            }
+          }
+          .content {
+            > :not(:last-child) {
+              margin-bottom: 1.5em;
+            }
+            .view-label {
+              font-size: $size-7;
+              color: $text-color-weak;
+            }
           }
         }
       }
@@ -275,6 +336,15 @@
       > figure,
       > div:not(:last-child) {
         margin-right: 3px;
+      }
+    }
+    @media screen and (min-width: 769px) {
+      .new-cullet-list {
+        .item-list {
+          .card {
+            border-radius: 5px;
+          }
+        }
       }
     }
 
@@ -344,13 +414,14 @@
 
         > .columns {
           margin: 0;
+
+          > .column {
+            padding: 0;
+          }
         }
         .item-list {
           padding: 0;
 
-          &:not(:last-child) {
-            margin-bottom: 1em;
-          }
           .new-cullet-card {
             .card-content {
               .media {
@@ -372,49 +443,14 @@
                     line-height: 1.25;
                     overflow: hidden;
                   }
-                  .user-profile {
-                    > :not(:last-child) {
-                      margin-right: .35em;
-                    }
-                  }
                 }
                 + .content {
                   margin-top: 1.25em;
                 }
               } // .media
-              .content {
-                > :not(:last-child) {
-                  margin-bottom: 1.5em;
-                }
-                .view-label {
-                  font-size: $size-7;
-                  color: $text-color-weak;
-                }
-              }
             } // .card-content
-            .element-view {
-              .text-element {
-                .control {
-                  max-height: 164px;
-                  overflow: hidden;
-
-                  .value {
-                    font-size: $size-6;
-                  }
-                }
-              }
-              .image-element {
-                .file-view {
-                  display: flex;
-                  align-items: center;
-                  max-height: 16em;
-                  margin: 0;
-                  overflow: hidden;
-                }
-              }
-            }
           } // .new-cullet-card
-        }
+        } // .item-list
       } // .new-cullet-list
     }
   }
