@@ -1,9 +1,14 @@
 <template>
-  <a class="button element-button is-info is-outlined has-align-centered">
-    <i class="material-icons" v-if="icon">{{ icon }}</i>
+  <a class="element-button button is-info is-outlined has-align-centered">
+    <span class="fa-icon icon" v-if="icon && /^fa.+/.test(icon)">
+      <i class="is-size-4" :class="icon"></i>
+    </span>
+    <span class="icon" v-else-if="icon">
+      <i class="material-icons">{{ icon }}</i>
+    </span>
     <span class="element-label" v-if="label">{{ label }}</span>
 
-    <slot></slot>
+    <slot/>
   </a>
 </template>
 
@@ -32,6 +37,9 @@
     flex-direction: column;
     justify-content: center;
 
+    .icon:first-child:not(:last-child) {
+      margin: .5em 0;
+    }
     .material-icons {
       font-size: $size-2;
       height: 2.4rem;

@@ -3,6 +3,7 @@
     <text-element :params="element" v-if="'text' === element.type"/>
     <image-element :params="element" v-else-if="'image' === element.type"/>
     <location-element :params="element" v-else-if="'location' === element.type"/>
+    <twitter-element :params="element" v-else-if="'twitter' === element.type"/>
     <datetime-element :params="element" v-else-if="'date' === element.type"/>
     <datetime-element :params="element" v-else-if="'time' === element.type"/>
     <datetime-element :params="element" v-else-if="'datetime' === element.type"/>
@@ -19,6 +20,7 @@
   import TextElement from '@/components/element/TextElement'
   import ImageElement from '@/components/element/ImageElement'
   import LocationElement from '@/components/element/LocationElement'
+  import TwitterElement from '@/components/element/TwitterElement'
   import DatetimeElement from '@/components/element/DatetimeElement'
   import TagElement from '@/components/element/TagElement'
   import LinkElement from '@/components/element/LinkElement'
@@ -32,6 +34,7 @@
       TextElement,
       ImageElement,
       LocationElement,
+      TwitterElement,
       DatetimeElement,
       TagElement,
       LinkElement,
