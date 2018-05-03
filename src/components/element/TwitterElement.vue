@@ -2,23 +2,26 @@
   <cl-element class="twitter-element" :params="params" placeholder="ラベル（オプション）"
               @remove="$emit('remove')" :editable="editable"
               @focus="$emit('focus')" @blur="$emit('blur')">
-    <span class="element-type-icon icon is-left" v-if="editable">
+    <span class="element-type-icon fa-icon icon is-left is-size-6" v-if="editable">
       <i class="fab fa-twitter"></i>
     </span>
     <p class="control">
       <input v-model.trim="params.valueStr" class="input" type="text" v-if="editable"
-             @focus="$emit('focus')" @blur="">
+             @focus="$emit('focus')" @blur="$emit('blur')" placeholder="IDまたはリンクURL">
 
-      <span class="value" v-html="params.valueStr" v-else></span>
+      <Tweet :id="id" v-else-if="id"/>
     </p>
   </cl-element>
 </template>
 
 <script>
   import ClElement from './ClElement'
+  import Tweet from 'vue-tweet-embed/tweet'
+
+  const REGEX = /.*(https?:\/\/twitter\.com\/\w+?\/\w+?\/(\d+)).*/
 
   export default {
-    components: { ClElement },
+    components: {ClElement, Tweet},
     props: {
       params: {
         type: Object,
@@ -31,10 +34,22 @@
       },
       editable: Boolean
     },
-    methods: {
-      blur() {
-        this.params.valueStr.replace(/<script.+script>/, '')
-        this.$emit('blur')
+    computed: {
+      id() {
+        if (REGEX.test(this.params.valueStr)) {
+          return this.params.valueStr.replace(REGEX, '$2')
+        } else {
+          return this.params.valueStr
+        }
+      }
+    },
+    watch: {
+      'params.valueStr'(e) {
+        if (REGEX.test(e)) {
+          this.params.valueStr = this.params.valueStr.replace(REGEX, '$1')
+        } else {
+          this.params.valueStr = this.params.valueStr.replace(/.*?(\d+).*/, '$1')
+        }
       }
     }
   }

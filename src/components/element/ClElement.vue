@@ -71,9 +71,11 @@
         position: absolute;
         top: .5em;
         left: .5em;
+        color: gainsboro;
 
-        > .material-icons {
-          color: gainsboro;
+        &.fa-icon {
+          top: 1em;
+          left: 1em;
         }
       }
       .material-icons:not(:last-child) {
