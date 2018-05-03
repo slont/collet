@@ -70,12 +70,13 @@
         border-color: $primary;
       }
       & + div {
-
         .twitter-tweet {
           width: 50% !important;
-          margin: 1em auto;
         }
       }
+    }
+    .twitter-tweet {
+      margin: 1em auto;
     }
   }
 </style>

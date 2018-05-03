@@ -2,11 +2,11 @@
   <div id="userpage-item">
     <div class="scrollable-container" @scroll="onScrollContainer">
       <router-link :to="`/u/${$route.params.userId}/${themeId}`" tag="div"
-                   class="theme-title is-size-7 has-text-underline text-color-weak">
+                   class="theme-title is-size-7 has-text-underline text-color-weak clickable">
         {{ theme.title }}
       </router-link>
       <div class="theme-tags tags is-size-8" v-if="theme.tags.length">
-        <el-tag v-for="tag in theme.tags" :key="tag.tagId" type="warning"
+        <el-tag v-for="tag in theme.tags" :key="tag.tagId" type="warning" class="clickable"
                 @click.native="$router.push(`/tag?name=${tag.name}`)">
           #{{ tag.name }}
         </el-tag>
@@ -16,7 +16,7 @@
           <img :src="theme.createdUser.image" :srcset="`${theme.createdUser.image}_640w 640w`">
         </figure>
         <div @click.stop="$router.push(`/u/${theme.createdUser.id}`)">
-          <span class="user-name">{{ theme.createdUser.name }}
+          <span class="user-name clickable">{{ theme.createdUser.name }}
           </span><span class="user-id text-color-weak">@{{ theme.createdUser.id }}</span>
         </div>
       </div>
@@ -35,18 +35,19 @@
               <div class="title is-3">
                 {{ item.name }}
 
-                <a class="edit-button button is-info is-outlined is-size-7 is-hidden-tablet"
-                   @click="$router.push(`/m/editItem/${theme.id}/${item.id}`)" v-if="loggedIn && isMyPage">
-                  <span class="icon"><i class="material-icons">edit</i></span>
-                  <span>編集</span>
-                </a>
+                <template v-if="loggedIn && isMyPage">
+                  <a class="edit-button button is-info is-outlined is-size-7" v-if="isMobile"
+                     @click="$router.push(`/m/editItem/${theme.id}/${item.id}`)">
+                    <span class="icon"><i class="material-icons">edit</i></span>
+                    <span>編集</span>
+                  </a>
+                  <a class="edit-button button is-info is-outlined" v-else
+                     @click="$refs.itemEditModal.open(theme, item)">
+                    <span class="icon"><i class="material-icons">edit</i></span>
+                    <span>編集</span>
+                  </a>
+                </template>
               </div>
-
-              <a class="edit-button button is-info is-outlined is-hidden-mobile"
-                 @click="$refs.itemEditModal.open(theme, item)" v-if="loggedIn && isMyPage">
-                <span class="icon"><i class="material-icons">edit</i></span>
-                <span>編集</span>
-              </a>
             </div>
 
             <div class="item-elements">
@@ -76,12 +77,12 @@
       </social-sharing>
     </div>
 
-    <div class="cullet-pagination flexbox fullwidth has-text-white" :class="{ 'is-active': activePagination }">
+    <div class="cullet-pagination flexbox fullwidth has-text-white clickable" :class="{ 'is-active': activePagination }">
       <div @click="next" class="next cullet-pagination-item flexbox" v-if="currentItem.next.id">
         <span class="icon is-size-3"><i class="fa fas fa-chevron-left"></i></span>
         <div class="cullet-name is-size-6">{{ currentItem.next.name }}</div>
       </div>
-      <div @click="prev" class="prev cullet-pagination-item flexbox is-justify-end has-text-right" v-if="currentItem.prev.id">
+      <div @click="prev" class="prev cullet-pagination-item flexbox is-justify-end has-text-right clickable" v-if="currentItem.prev.id">
         <div class="cullet-name is-size-6 is-justify-end has-text-left">{{ currentItem.prev.name }}</div>
         <span class="icon is-size-3"><i class="fa fas fa-chevron-right"></i></span>
       </div>
@@ -252,10 +253,12 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-item {
+    max-width: 680px;
+    margin: auto;
+
     .scrollable-container {
+      padding: 1rem;
       overflow-y: scroll;
-      margin: 1em auto;
-      width: 90%;
 
       .theme-title {
         display: -webkit-box;
@@ -284,7 +287,7 @@
         width: 100%;
 
         > :last-child {
-          margin-bottom: 100px;
+          margin-bottom: 120px;
         }
         .cullet-info {
           margin-bottom: 2rem;
