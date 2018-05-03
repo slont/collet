@@ -4,17 +4,7 @@
       <div class="columns is-gapless">
         <div class="left-column column is-hidden-mobile">
           <div class="slider">
-            <div class="buttons has-addons is-centered">
-              <text-button @add="addElement"/>
-              <image-button @add="addElement"/>
-              <location-button @add="addElement"/>
-              <datetime-button @add="addElement"/>
-              <link-button @add="addElement"/>
-              <rating-button @add="addElement"/>
-              <tag-button @add="addElement"/>
-              <phone-button @add="addElement"/>
-              <email-button @add="addElement"/>
-            </div>
+            <cl-buttons @add="addElement" class="is-centered"/>
           </div>
         </div>
 
@@ -53,6 +43,7 @@
               <text-element :params="element" v-if="'text' === element.type" editable/>
               <image-element :params="element" v-else-if="'image' === element.type" editable/>
               <location-element :params="element" v-else-if="'location' === element.type" editable/>
+              <twitter-element :params="element" v-else-if="'twitter' === element.type" editable/>
               <datetime-element :params="element" v-else-if="'date' === element.type" editable/>
               <datetime-element :params="element" v-else-if="'time' === element.type" editable/>
               <datetime-element :params="element" v-else-if="'datetime' === element.type" editable/>
@@ -67,20 +58,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div class="modal-card-body slider is-hidden-tablet">
-      <div class="buttons has-addons">
-        <text-button @add="addElement"/>
-        <image-button @add="addElement"/>
-        <location-button @add="addElement"/>
-        <datetime-button @add="addElement"/>
-        <link-button @add="addElement"/>
-        <rating-button @add="addElement"/>
-        <tag-button @add="addElement"/>
-        <phone-button @add="addElement"/>
-        <email-button @add="addElement"/>
       </div>
     </div>
 
@@ -102,20 +79,11 @@
 <script>
   import ItemModel from '@/models/Item'
   import Modal from '@/components/Modal'
-  import ElementButton from '@/components/element/button/ElementButton'
-  import TextButton from '@/components/element/button/TextButton'
-  import ImageButton from '@/components/element/button/ImageButton'
-  import LocationButton from '@/components/element/button/LocationButton'
-  import DatetimeButton from '@/components/element/button/DatetimeButton'
-  import TagButton from '@/components/element/button/TagButton'
-  import LinkButton from '@/components/element/button/LinkButton'
-  import PhoneButton from '@/components/element/button/PhoneButton'
-  import EmailButton from '@/components/element/button/EmailButton'
-  import RatingButton from '@/components/element/button/RatingButton'
-  import SwitchButton from '@/components/element/button/SwitchButton'
+  import ClButtons from '@/components/element/button/ClButtons'
   import TextElement from '@/components/element/TextElement'
   import ImageElement from '@/components/element/ImageElement'
   import LocationElement from '@/components/element/LocationElement'
+  import TwitterElement from '@/components/element/TwitterElement'
   import DatetimeElement from '@/components/element/DatetimeElement'
   import TagElement from '@/components/element/TagElement'
   import LinkElement from '@/components/element/LinkElement'
@@ -128,20 +96,11 @@
   export default {
     components: {
       Modal,
-      ElementButton,
-      TextButton,
-      ImageButton,
-      LocationButton,
-      DatetimeButton,
-      TagButton,
-      LinkButton,
-      PhoneButton,
-      EmailButton,
-      RatingButton,
-      SwitchButton,
+      ClButtons,
       TextElement,
       ImageElement,
       LocationElement,
+      TwitterElement,
       DatetimeElement,
       TagElement,
       LinkElement,

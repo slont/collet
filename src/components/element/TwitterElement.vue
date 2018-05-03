@@ -9,7 +9,7 @@
       <input v-model.trim="params.valueStr" class="input" type="text" v-if="editable"
              @focus="$emit('focus')" @blur="$emit('blur')" placeholder="IDまたはリンクURL">
 
-      <Tweet :id="id" v-else-if="id"/>
+      <Tweet :id="id" v-if="id"/>
     </p>
   </cl-element>
 </template>
@@ -56,7 +56,7 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-  .email-element {
+  .twitter-element {
     .input {
       padding-top: .25em;
       padding-left: .25em;
@@ -68,6 +68,13 @@
 
       &:focus, &:active {
         border-color: $primary;
+      }
+      & + div {
+
+        .twitter-tweet {
+          width: 50% !important;
+          margin: 1em auto;
+        }
       }
     }
   }

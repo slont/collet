@@ -63,6 +63,7 @@
           <text-element :params="element" v-if="'text' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
           <image-element :params="element" v-else-if="'image' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
           <location-element :params="element" v-else-if="'location' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
+          <twitter-element :params="element" v-else-if="'twitter' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
           <datetime-element :params="element" v-else-if="'date' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
           <datetime-element :params="element" v-else-if="'time' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
           <datetime-element :params="element" v-else-if="'datetime' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
@@ -101,6 +102,7 @@
   import TextElement from '@/components/element/TextElement'
   import ImageElement from '@/components/element/ImageElement'
   import LocationElement from '@/components/element/LocationElement'
+  import TwitterElement from '@/components/element/TwitterElement'
   import DatetimeElement from '@/components/element/DatetimeElement'
   import TagElement from '@/components/element/TagElement'
   import LinkElement from '@/components/element/LinkElement'
@@ -118,6 +120,7 @@
       TextElement,
       ImageElement,
       LocationElement,
+      TwitterElement,
       DatetimeElement,
       TagElement,
       LinkElement,
@@ -309,7 +312,7 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #create-item {
-    $button-count: 6;
+    $button-count: 7;
 
     > .modal-card {
       display: flex;

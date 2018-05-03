@@ -56,6 +56,7 @@
               <text-element :params="element" v-if="'text' === element.type" editable/>
               <image-element :params="element" v-else-if="'image' === element.type" editable/>
               <location-element :params="element" v-else-if="'location' === element.type" editable/>
+              <twitter-element :params="element" v-else-if="'twitter' === element.type" editable/>
               <datetime-element :params="element" v-else-if="'date' === element.type" editable/>
               <datetime-element :params="element" v-else-if="'time' === element.type" editable/>
               <datetime-element :params="element" v-else-if="'datetime' === element.type" editable/>
@@ -71,10 +72,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="modal-card-body slider is-hidden-tablet">
-      <cl-buttons @add="addElement"/>
     </div>
 
     <footer class="modal-card-foot has-right">
@@ -99,6 +96,7 @@
   import TextElement from '@/components/element/TextElement'
   import ImageElement from '@/components/element/ImageElement'
   import LocationElement from '@/components/element/LocationElement'
+  import TwitterElement from '@/components/element/TwitterElement'
   import DatetimeElement from '@/components/element/DatetimeElement'
   import TagElement from '@/components/element/TagElement'
   import LinkElement from '@/components/element/LinkElement'
@@ -115,6 +113,7 @@
       TextElement,
       ImageElement,
       LocationElement,
+      TwitterElement,
       DatetimeElement,
       TagElement,
       LinkElement,
