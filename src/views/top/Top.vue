@@ -33,6 +33,16 @@
             </div>
           </div>
         </div>
+        <div class="updated-cullet-link updated-cullet flexbox column is-4-tablet" key="link" v-if="!isMobile">
+          <div class="media">
+            <div class="media-content">
+              <router-link :to="`/u/${user.id}`" class="item-title flexbox text-color-strong is-size-5 has-text-weight-bold clickable">
+                Myカレット一覧へ
+                <span class="icon"><i class="fas fa-angle-double-right fa-fw"></i></span>
+              </router-link>
+            </div>
+          </div>
+        </div>
       </transition-group>
     </div>
 
@@ -229,6 +239,15 @@
             text-decoration: underline;
           }
         }
+        &.updated-cullet-link {
+          justify-content: center;
+
+          .item-title {
+            .icon {
+              margin-left: .5rem;
+            }
+          }
+        }
       }
     }
     .new-cullet-label {
@@ -246,9 +265,6 @@
         margin-top: 0;
       }
       .item-list {
-        &:not(:last-child) {
-          margin-bottom: 1em;
-        }
         .new-cullet-card {
           &:hover {
             cursor: pointer;
@@ -315,7 +331,13 @@
 
     @media screen and (min-width: 769px) {
       .new-cullet-list {
+        > .columns {
+          padding: 0 1px;
+        }
         .item-list {
+          &:not(:last-child) {
+            margin-bottom: 1.5rem;
+          }
           .card {
             border-radius: 5px;
           }
@@ -397,6 +419,9 @@
         .item-list {
           padding: 0;
 
+          &:not(:last-child) {
+            margin-bottom: 1em;
+          }
           .new-cullet-card {
             .card-content {
               .media {
