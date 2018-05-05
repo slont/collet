@@ -3,6 +3,7 @@
     <text-button @add="addElement"/>
     <image-button @add="addElement"/>
     <twitter-button @add="addElement"/>
+    <instagram-button @add="addElement"/>
     <datetime-button @add="addElement"/>
     <link-button @add="addElement"/>
     <rating-button @add="addElement"/>
@@ -16,6 +17,7 @@
   import ImageButton from './ImageButton'
   import LocationButton from './LocationButton'
   import TwitterButton from './TwitterButton'
+  import InstagramButton from './InstagramButton'
   import DatetimeButton from './DatetimeButton'
   import TagButton from './TagButton'
   import LinkButton from './LinkButton'
@@ -31,6 +33,7 @@
       ImageButton,
       LocationButton,
       TwitterButton,
+      InstagramButton,
       DatetimeButton,
       TagButton,
       LinkButton,
