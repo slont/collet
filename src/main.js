@@ -42,6 +42,7 @@ Vue.use(SocialSharing)
 
 Vue.filter('truncate', (text, stop) => text.slice(0, stop) + (stop < text.length ? '...' : ''))
 
+let isLoadedInstgrm = false
 // Custom Plugin
 Vue.use({
   install: (Vue, options) => {
@@ -64,6 +65,17 @@ Vue.use({
           } else {
             return datetime.format(format)
           }
+        }
+      },
+      async mounted() {
+        if (!isLoadedInstgrm) {
+          const s = document.createElement('script')
+          s.setAttribute('src', 'https://www.instagram.com/embed.js')
+          document.body.appendChild(s)
+          await new Promise(resolve => {
+            s.onload = () => resolve(window.twttr)
+            isLoadedInstgrm = true
+          })
         }
       },
       methods: {
@@ -102,6 +114,11 @@ Vue.use({
               callback(dataUrl, file.name)
             }, options)
           })
+        },
+        reloadInstgrm() {
+          if (window.instgrm) {
+            window.instgrm.Embeds.process()
+          }
         }
       }
     })
