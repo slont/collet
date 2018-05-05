@@ -57,6 +57,7 @@
               <image-element :params="element" v-else-if="'image' === element.type" editable/>
               <location-element :params="element" v-else-if="'location' === element.type" editable/>
               <twitter-element :params="element" v-else-if="'twitter' === element.type" editable/>
+              <instagram-element :params="element" v-else-if="'instagram' === element.type" editable/>
               <datetime-element :params="element" v-else-if="'date' === element.type" editable/>
               <datetime-element :params="element" v-else-if="'time' === element.type" editable/>
               <datetime-element :params="element" v-else-if="'datetime' === element.type" editable/>
@@ -94,6 +95,7 @@
   import ThemeSelectModal from '@/components/theme/ThemeSelectModal'
   import ClButtons from '@/components/element/button/ClButtons'
   import TextElement from '@/components/element/TextElement'
+  import InstagramElement from '@/components/element/InstagramElement'
   import ImageElement from '@/components/element/ImageElement'
   import LocationElement from '@/components/element/LocationElement'
   import TwitterElement from '@/components/element/TwitterElement'
@@ -114,6 +116,7 @@
       ImageElement,
       LocationElement,
       TwitterElement,
+      InstagramElement,
       DatetimeElement,
       TagElement,
       LinkElement,

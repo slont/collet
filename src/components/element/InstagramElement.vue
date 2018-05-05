@@ -9,7 +9,6 @@
       <input v-model.trim="params.valueStr" class="input" type="text" v-if="editable"
              @focus="$emit('focus')" @blur="$emit('blur')" placeholder="IDまたはリンクURL">
 
-      {{url}}
       <blockquote class="instagram-media" v-if="url"
                   :data-instgrm-permalink="url" data-instgrm-version="8"></blockquote>
     </div>
@@ -48,8 +47,12 @@
       'params.valueStr'(e) {
         if (REGEX.test(e)) {
           this.params.valueStr = this.params.valueStr.replace(REGEX, '$1')
+          this.reloadInstgrm()
         }
       }
+    },
+    mounted() {
+      this.reloadInstgrm()
     }
   }
 </script>
@@ -68,6 +71,14 @@
       &:focus, &:active {
         border-color: $primary;
       }
+    }
+    .instagram-media.instagram-media-rendered {
+      width: 100%;
+      max-width: 480px;
+      margin: auto !important;
+    }
+    .HoverCardCTA {
+      display: none !important;
     }
   }
 </style>

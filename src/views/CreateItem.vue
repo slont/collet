@@ -64,6 +64,7 @@
           <image-element :params="element" v-else-if="'image' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
           <location-element :params="element" v-else-if="'location' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
           <twitter-element :params="element" v-else-if="'twitter' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
+          <instagram-element :params="element" v-else-if="'instagram' === element.type" editable/>
           <datetime-element :params="element" v-else-if="'date' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
           <datetime-element :params="element" v-else-if="'time' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
           <datetime-element :params="element" v-else-if="'datetime' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
@@ -103,6 +104,7 @@
   import ImageElement from '@/components/element/ImageElement'
   import LocationElement from '@/components/element/LocationElement'
   import TwitterElement from '@/components/element/TwitterElement'
+  import InstagramElement from '@/components/element/InstagramElement'
   import DatetimeElement from '@/components/element/DatetimeElement'
   import TagElement from '@/components/element/TagElement'
   import LinkElement from '@/components/element/LinkElement'
@@ -121,6 +123,7 @@
       ImageElement,
       LocationElement,
       TwitterElement,
+      InstagramElement,
       DatetimeElement,
       TagElement,
       LinkElement,
@@ -312,7 +315,7 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #create-item {
-    $button-count: 7;
+    $button-count: 8;
 
     > .modal-card {
       display: flex;
