@@ -275,6 +275,7 @@
               width: 100%;
               padding: 0;
               overflow-y: scroll;
+              -webkit-overflow-scrolling : touch;
 
               > .buttons {
                 flex-direction: column;
@@ -300,6 +301,7 @@
             padding: 0 0 1.5rem 3rem !important;
             background-color: white;
             overflow-y: scroll;
+            -webkit-overflow-scrolling : touch;
             z-index: 0;
 
             .theme-dropdown {
@@ -430,6 +432,7 @@
         padding: 0;
         border-radius: 0;
         overflow: scroll;
+        -webkit-overflow-scrolling : touch;
 
         .buttons {
           width: $element-button-size * $button-count;

@@ -138,6 +138,7 @@
   #userpage-index {
     overflow-y: scroll;
     background-color: $bg-color-main;
+    -webkit-overflow-scrolling : touch;
 
     &.container {
       height: calc(100vh - #{$header-nav-height});

@@ -259,6 +259,7 @@
     .scrollable-container {
       padding: 1rem;
       overflow-y: scroll;
+      -webkit-overflow-scrolling : touch;
 
       .theme-title {
         display: -webkit-box;

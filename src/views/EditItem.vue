@@ -378,6 +378,7 @@
         padding: .5rem 0;
         background-color: white;
         overflow-y: scroll;
+        -webkit-overflow-scrolling : touch;
         z-index: 0;
 
         .theme-field {
@@ -526,6 +527,7 @@
         padding: 0;
         border-radius: 0;
         overflow: scroll;
+        -webkit-overflow-scrolling : touch;
         transition: max-height .2s;
 
         &.is-active {

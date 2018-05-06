@@ -195,6 +195,7 @@
     margin-left: auto;
     margin-right: auto;
     overflow-y: scroll;
+    -webkit-overflow-scrolling : touch;
 
     .updated-cullet-label,
     .new-cullet-label {

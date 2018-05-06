@@ -182,8 +182,9 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-theme {
-    overflow-y: scroll;
     background-color: $bg-color-main;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling : touch;
 
     .theme-items {
       > .label {
