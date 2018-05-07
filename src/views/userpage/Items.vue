@@ -15,7 +15,7 @@
                   {{ item.name }}
                 </div>
                 <div class="updated-at text-color-weak is-size-8">
-                  <span class="icon"><i class="material-icons">access_time</i></span>
+                  <span class="icon"><i class="far fa-clock"></i></span>
                   <span>{{ item.updatedAt | fromNow }}</span>
                 </div>
               </div>

@@ -18,11 +18,11 @@
       <div class="navbar-menu">
         <div class="navbar-start">
           <router-link to="/" class="navbar-item" exact>
-            <span class="icon"><i class="fas fa-home fa-fw"></i></span>
+            <span class="icon"><i class="fas fa-home fa-pull-left"></i></span>
             <span>ホーム</span>
           </router-link>
           <router-link :to="`/u/${user.id}`" class="navbar-item" v-if="loggedIn">
-            <span class="icon"><i class="far fa-user-circle fa-fw"></i></span>
+            <span class="icon"><i class="far fa-user-circle fa-pull-left"></i></span>
             <span>マイページ</span>
           </router-link>
         </div>
@@ -144,6 +144,11 @@
         }
       }
       .navbar-menu {
+        .navbar-start {
+          .icon {
+            font-size: $size-4;
+          }
+        }
         .navbar-end {
           .breadcrumb {
             $color: white;

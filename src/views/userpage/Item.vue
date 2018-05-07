@@ -16,8 +16,7 @@
           <img :src="theme.createdUser.image" :srcset="`${theme.createdUser.image}_640w 640w`">
         </figure>
         <div @click.stop="$router.push(`/u/${theme.createdUser.id}`)">
-          <span class="user-name clickable">{{ theme.createdUser.name }}
-          </span><span class="user-id text-color-weak">@{{ theme.createdUser.id }}</span>
+          <span class="user-name clickable">{{ theme.createdUser.name }}</span><span class="user-id text-color-weak">@{{ theme.createdUser.id }}</span>
         </div>
       </div>
 
@@ -26,7 +25,7 @@
           <div v-for="item in items" class="cullet-content" v-if="currentItem.id === item.id" :key="item.id">
             <div class="cullet-info">
               <div class="updated-at text-color-weak is-size-7 has-text-right" v-if="item.updatedAt">
-                <span class="icon"><i class="material-icons">access_time</i></span>
+                <span class="icon"><i class="far fa-clock"></i></span>
                 {{ item.createdAt | fromNow('YYYY/MM/DD HH:mm') }}
                 <span class="is-size-8" v-if="1 < item.updatedAt.diff(item.createdAt, 'hours')">
                   ({{ item.updatedAt.format('YYYY/MM/DD HH:mm') }} 更新)
@@ -69,8 +68,8 @@
             </span>
           </network>-->
           <network network="twitter">
-            <span class="twitter-icon icon circle is-size-1">
-              <i class="fab fa-twitter fa-fw is-size-4"></i>
+            <span class="twitter-icon is-48x48 icon circle">
+              <i class="fab fa-twitter fa-fw is-size-3"></i>
             </span>
           </network>
         </div>
@@ -320,6 +319,9 @@
         right: 1em;
       }
       .icon {
+        $size: 48px;
+        height: $size;
+        width: $size;
         border-width: 2px;
         border-style: solid;
         transition: color .1s, background-color .2s;
