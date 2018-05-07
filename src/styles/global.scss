@@ -193,6 +193,10 @@ body {
       height: auto;
     }
   }
+  &.is-28x28 {
+    height: 28px;
+    width: 28px;
+  }
 }
 
 .file-cta {

@@ -9,11 +9,11 @@
         </router-link>
 
         <a @click="onClickAdd" class="navbar-item button is-primary is-rounded">
-          <span class="icon is-size-4"><i class="fas fa-pencil-alt"></i></span>
+          <span class="icon is-size-3"><i class="fas fa-pencil-alt"></i></span>
         </a>
 
         <router-link :to="`/u/${user.id}`" class="navbar-item user-profile" exact>
-          <figure class="image circle is-24x24 flexbox" v-if="user.image">
+          <figure class="image circle is-28x28 flexbox" v-if="user.image">
             <img :src="user.image" :srcset="`${user.image}_640w 640w`"/>
           </figure>
           <span class="icon" v-else><i class="far fa-user-circle"></i></span>
@@ -102,19 +102,8 @@
       .navbar-item {
         flex-direction: column;
 
-        &.router-link-active,
-        &.is-active,
-        &:hover {
-          border-bottom: 3px solid $primary;
-          background: transparent;
-
-          span {
-            color: $primary;
-          }
-        }
         .icon {
-          height: 1.5rem;
-          font-size: $size-5;
+          font-size: $size-3;
         }
         .image {
           img {
@@ -124,12 +113,30 @@
       }
       &.logged-in {
         .navbar-item {
-          justify-content: center;
+          justify-content: flex-end;
           height: 3.25rem;
           width: 20%;
           padding: 5px 0;
+
+          &.user-profile {
+            .image {
+              min-height: 28px;
+            }
+          }
+          &.router-link-active,
+          &.is-active,
+          &:hover {
+            border-bottom: 3px solid $primary;
+            padding-bottom: 2px;
+            background: transparent;
+
+            span {
+              color: $primary;
+            }
+          }
         }
         .button {
+          justify-content: center;
           height: 58px;
           width: 58px;
           margin: -3px 6px 18px;
