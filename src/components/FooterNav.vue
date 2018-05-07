@@ -8,19 +8,9 @@
           <span class="subtitle is-7 has-text-weight-bold">Home</span>
         </router-link>
 
-        <router-link to="/s" class="navbar-item">
-          <span class="icon"><i class="fas fa-search"></i></span>
-          <span class="subtitle is-7 has-text-weight-bold">Search</span>
-        </router-link>
-
         <a @click="onClickAdd" class="navbar-item button is-primary is-rounded">
           <span class="icon is-size-4"><i class="fas fa-pencil-alt"></i></span>
         </a>
-
-        <router-link :to="`/u/${user.id}/favorites`" class="navbar-item">
-          <span class="icon"><i class="far fa-heart"></i></span>
-          <span class="subtitle is-7 has-text-weight-bold">Favorite</span>
-        </router-link>
 
         <router-link :to="`/u/${user.id}`" class="navbar-item user-profile" exact>
           <figure class="image circle is-24x24 flexbox" v-if="user.image">
