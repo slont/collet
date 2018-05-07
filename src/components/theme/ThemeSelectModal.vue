@@ -22,10 +22,10 @@
               @click="select(theme)">
             <a>
               <span class="selected-icon icon is-size-4">
-                <i class="material-icons text-color-main" v-show="selectedTheme.id === theme.id">check</i>
+                <i class="fas fa-check text-color-main" v-show="selectedTheme.id === theme.id"></i>
               </span>
               <span class="theme-title is-size-6 has-text-weight-bold">{{ theme.title }}</span>
-              <span class="icon has-text-success is-size-4" v-if="theme.private"><i class="material-icons">lock</i></span>
+              <span class="icon has-text-success is-size-4" v-if="theme.private"><i class="fas fa-lock"></i></span>
               <span class="item-count text-color-weak">({{ theme.itemCount }})</span>
             </a>
             <div class="divider"></div>
@@ -98,13 +98,6 @@
 <style lang="scss" rel="stylesheet/scss">
   #theme-select-modal {
     > .modal-card {
-      .modal-card-head {
-        height: 3rem;
-        padding: 1em;
-        color: white;
-        background-color: $main-color;
-        border: none;
-      }
       .modal-card-body {
         margin-bottom: 0;
         padding: 1rem;

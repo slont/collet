@@ -44,14 +44,14 @@
           <div class="level-left">
             <a class="favorite-action level-item" :class="{ 'is-active': theme.favorite }">
               <span class="icon" @click.stop.prevent="onClickFavorite">
-                <i class="fa-heart fa-fw fa-pull-left" :class="[theme.favorite ? 'fas' : 'far']"></i>
+                <i class="fa-heart fa-pull-left" :class="[theme.favorite ? 'fas' : 'far']"></i>
               </span>
               <span class="favorite-count count has-text-weight-bold" v-if="theme.favoriteCount">
                 {{ theme.favoriteCount }}
               </span>
             </a>
             <a class="item-action level-item">
-              <span class="icon"><i class="fas fa-list-ul fa-fw fa-pull-left"></i></span>
+              <span class="icon"><i class="fas fa-list-ul fa-pull-left"></i></span>
               <span class="item-count count has-text-weight-bold">{{ theme.itemCount }}</span>
             </a>
           </div>
