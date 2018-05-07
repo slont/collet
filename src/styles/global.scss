@@ -82,11 +82,9 @@ body {
 
 .icon {
   height: 1em;
-  width: 1em;
-  min-width: 1em;
-  vertical-align: -.1em;
+  width: auto;
 
-  .material-icons {
+  i {
     font-size: 1em;
   }
 }
@@ -298,11 +296,6 @@ body {
 
 .is-size-8 {
   font-size: $size-8;
-}
-
-svg:not(:root).svg-inline--fa {
-  height: 1.25em;
-  width: auto;
 }
 
 .el-tag {
