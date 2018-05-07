@@ -174,29 +174,29 @@
               font-size: $size-7;
               color: $text-color-weak;
             }
-          }
-        } // .card-content
-        .element-view {
-          .text-element {
-            .control {
-              max-height: 164px;
-              overflow: hidden;
+            .element-view {
+              .text-element {
+                .control {
+                  max-height: 164px;
+                  overflow: hidden;
 
-              .value {
-                font-size: $size-6;
+                  .value {
+                    font-size: $size-6;
+                  }
+                }
+              }
+              .image-element {
+                .file-view {
+                  display: flex;
+                  align-items: center;
+                  max-height: 16em;
+                  margin: 0;
+                  overflow: hidden;
+                }
               }
             }
           }
-          .image-element {
-            .file-view {
-              display: flex;
-              align-items: center;
-              max-height: 16em;
-              margin: 0;
-              overflow: hidden;
-            }
-          }
-        }
+        } // .card-content
       }
     } // .item-list
 

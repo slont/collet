@@ -8,7 +8,7 @@
       <div class="label is-size-5 has-text-white has-text-centered">
         <span>カレット一覧</span>
       </div>
-      <transition-group id="userpage-items" tag="div" name="slide-fade" mode="out-in" class="columns is-multiline">
+      <transition-group tag="div" name="slide-fade" mode="out-in" class="columns is-multiline">
         <div v-for="(key) in Object.keys(itemsColumns)" class="column is-12-mobile is-6-tablet" :key="`column-${key}`">
           <div v-for="item in itemsColumns[key]" class="item-list" :key="item.id" v-if="itemsColumns[key].length">
             <router-link :to="`/u/${urlUserId}/${theme.id}/${item.id}`"
@@ -190,6 +190,78 @@
       > .label {
         @include label-accent-sp;
       }
+      .item-list {
+        padding: 0;
+        margin: 0 0 1em;
+
+        .card-content {
+          .media {
+            margin-bottom: .25em;
+
+            .media-content {
+              > :not(:last-child) {
+                margin-bottom: .3em;
+              }
+              .theme-title {
+                height: 1rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap
+              }
+              .item-title {
+                display: flex;
+                max-height: 2.5em;
+                line-height: 1.25;
+                overflow: hidden;
+              }
+            }
+            .media-right {
+              .image {
+                height: 60px;
+                overflow: hidden;
+
+                img {
+                  height: 100%;
+                  width: auto;
+                }
+              }
+            }
+            + .content {
+              margin-top: 1.5em;
+            }
+          } // .media
+          .content {
+            > :not(:last-child) {
+              margin-bottom: 1.5em;
+            }
+            .view-label {
+              font-size: $size-7;
+              color: $text-color-weak;
+            }
+            .element-view {
+              .text-element {
+                .control {
+                  max-height: 164px;
+                  overflow: hidden;
+
+                  .value {
+                    font-size: $size-6;
+                  }
+                }
+              }
+              .image-element {
+                .file-view {
+                  display: flex;
+                  align-items: center;
+                  max-height: 16em;
+                  margin: 0;
+                  overflow: hidden;
+                }
+              }
+            }
+          }
+        } // .card-content
+      } // .item-list
     }
     .fixed-action-button {
       position: fixed;
