@@ -6,7 +6,7 @@
         <img src="/static/img/cullet-logo_orange.png" class="alt-image" alt="Placeholder image" v-else>
       </figure>
       <div class="dark-mask" @click="$router.push(`/u/${theme.createdUser.id}/${theme.id}`)">
-        <span class="private-icon icon is-size-2 has-text-white" v-if="theme.private"><i class="material-icons">lock</i></span>
+        <span class="private-icon icon is-size-3 has-text-white" v-if="theme.private"><i class="fas fa-lock"></i></span>
 
         <div class="title is-4 has-text-white">{{ theme.title }}</div>
         <div class="user-profile flexbox has-align-centered is-size-7">
@@ -19,7 +19,7 @@
                 {{ theme.createdUser.name }}</span><span class="user-id has-text-grey-lighter">@{{ theme.createdUser.id }}</span>
             </div>
             <div class="updated-at has-text-grey-lighter" v-if="theme.updatedAt">
-              <span class="icon"><i class="material-icons">access_time</i></span>
+              <span class="icon"><i class="far fa-clock"></i></span>
               {{ theme.updatedAt | fromNow('YYYY/MM/DD HH:mm') }}
             </div>
           </div>
@@ -42,15 +42,16 @@
 
         <nav class="actions level is-mobile is-size-4">
           <div class="level-left">
-            <a class="favorite-action level-item">
+            <a class="favorite-action level-item" :class="{ 'is-active': theme.favorite }">
               <span class="icon" @click.stop.prevent="onClickFavorite">
-                <i class="favorite material-icons" v-if="theme.favorite">favorite</i>
-                <i class="material-icons" v-else>favorite_border</i>
+                <i class="fa-heart fa-fw fa-pull-left" :class="[theme.favorite ? 'fas' : 'far']"></i>
               </span>
-              <span class="favorite-count count has-text-weight-bold" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
+              <span class="favorite-count count has-text-weight-bold" v-if="theme.favoriteCount">
+                {{ theme.favoriteCount }}
+              </span>
             </a>
             <a class="item-action level-item">
-              <span class="icon"><i class="material-icons">assignment</i></span>
+              <span class="icon"><i class="fas fa-list-ul fa-fw fa-pull-left"></i></span>
               <span class="item-count count has-text-weight-bold">{{ theme.itemCount }}</span>
             </a>
           </div>
@@ -144,11 +145,9 @@
           color: #e8e8e8;
         }
         .title {
-          margin: 0;
-        }
-        .title {
           max-height: 80px;
           width: 100%;
+          margin: 0;
           margin-bottom: 1rem;
           line-height: 1.25;
           display: -webkit-box;
@@ -199,32 +198,22 @@
           .level-item {
             display: flex;
             align-items: center;
+            color: darkgrey;
 
-            .material-icons {
-              color: darkgrey;
-            }
-            .count {
-              margin-left: .25rem;
-              color: #4a4a4a;
+            .icon {
+              font-size: $size-5;
             }
           }
           .favorite-action {
-            .material-icons {
-              &.favorite {
-                color: deeppink;
-              }
-            }
-            .favorite-count {
-              margin-left: .25rem;
-              color: #4a4a4a;
-            }
             &:hover {
               opacity: .8;
+            }
+            &.is-active {
+              color: deeppink;
             }
           }
           .edit-action {
             margin-right: 0;
-            color: #4a4a4a;
           }
         }
       }
