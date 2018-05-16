@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Index from '@/views/Index'
 import Signup from '@/views/Signup'
 import Signin from '@/views/Signin'
+import Auth from '@/views/Auth'
 import Confirm from '@/views/Confirm'
 import CreateItem from '@/views/CreateItem'
 import EditItem from '@/views/EditItem'
@@ -28,6 +29,9 @@ export default new Router({
     }, {
       path: '/signin',
       component: Signin
+    }, {
+      path: '/auth',
+      component: Auth
     }, {
       path: '/confirm',
       component: Confirm

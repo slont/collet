@@ -1,5 +1,5 @@
 <template>
-  <div id="signin">
+  <div id="auth">
     <div class="box">
       <div class="title has-text-centered">
         <img class="cullet-logo" src="/static/img/cullet-logo_orange.png" alt="Colette">
@@ -98,6 +98,12 @@
         return this.$store.getters.teamKey
       }
     },
+    created() {
+      new AuthModel().callback(this.$route.query).then(res => {
+        console.log(res)
+        this.$router.push('/')
+      })
+    },
     methods: {
       async ok() {
         await this.$validator.validateAll().then(async result => {
@@ -143,7 +149,7 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-  #signin {
+  #auth {
     width: 100%;
 
     .title {
