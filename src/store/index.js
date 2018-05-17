@@ -55,6 +55,11 @@ export default new Vuex.Store({
         return Promise.reject(err)
       })
     },
+    signinTwitter({ commit }, params) {
+      localStorage.authToken = params.authToken
+      commit(SET_LOGGED_IN, true)
+      commit(SET_USER, params.user)
+    },
     confirm({ commit }, params) {
       const authModel = new AuthModel()
       return authModel.confirm(params).then(res => {

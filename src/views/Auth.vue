@@ -99,8 +99,8 @@
       }
     },
     created() {
-      new AuthModel().callback(this.$route.query).then(res => {
-        console.log(res)
+      new AuthModel().callback(this.$route.query).then(async res => {
+        this.$store.dispatch('signinTwitter', res.data)
         this.$router.push('/')
       })
     },
