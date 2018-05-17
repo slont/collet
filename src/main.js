@@ -19,6 +19,7 @@ import moment from 'moment'
 import validateConfig from '../config/validate'
 import VueCarousel from 'vue-carousel'
 import GuardButton from './components/GuardButton'
+import UserImage from './components/UserImage'
 
 moment.locale(store.state.locale)
 Vue.config.productionTip = false
@@ -127,6 +128,7 @@ Vue.use({
 
 Vue.use(VueCarousel)
 Vue.component(GuardButton.name, GuardButton)
+Vue.component(UserImage.name, UserImage)
 
 /* eslint-disable no-new */
 new Vue({

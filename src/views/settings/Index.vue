@@ -53,6 +53,8 @@
       signout() {
         this.$store.dispatch('signout').then(() => {
           this.$router.push('/')
+        }).catch(() => {
+          this.$router.push('/')
         })
       }
     }

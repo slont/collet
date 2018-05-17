@@ -7,6 +7,14 @@
       <p class="has-text-centered" v-if="$route.query.redirect">
         {{ $t('views.signin.redirectMessage') }}
       </p>
+
+      <div class="field">
+        <guard-button :click="signinTwitter" class="is-info fullwidth" :class="{ 'is-loading': isLoading }">
+          <span class="icon"><i class="fab fa-twitter fa-fw"></i></span>
+          <span>Twitterでログイン</span>
+        </guard-button>
+      </div>
+
       <div class="field-email field">
         <label class="label">{{ $t('views.signin.email') }}</label>
         <p class="control is-expanded has-icons-left">
@@ -36,14 +44,6 @@
       <div class="field">
         <guard-button :click="ok" class="is-primary is-size-5 fullwidth" :class="{ 'is-loading': isLoading }">
           <span>{{ $t('buttons.signin') }}</span>
-        </guard-button>
-
-        <guard-button :click="signinTwitter" class="is-info" :class="{ 'is-loading': isLoading }">
-          Twitter
-        </guard-button>
-
-        <guard-button :click="logout" class="is-info" :class="{ 'is-loading': isLoading }">
-          logout
         </guard-button>
       </div>
 
@@ -127,7 +127,8 @@
       },
       signinTwitter() {
         new AuthModel().signinTwitter({}).then(res => {
-          console.log(res)
+          this.$store.dispatch('signinTwitter', res.data)
+          this.$router.push('/')
         })
       },
       logout() {
