@@ -67,7 +67,7 @@
 
                     <div class="user-profile flexbox has-align-centered is-size-7">
                       <figure class="image circle is-16x16 flexbox" v-if="item.theme.createdUser.image">
-                        <img :src="item.theme.createdUser.image" :srcset="`${item.theme.createdUser.image}_640w 640w`">
+                        <user-image :src="item.theme.createdUser.image"/>
                       </figure>
                       <router-link :to="`/u/${item.theme.createdUser.id}`" class="user-name text-color-weak clickable">
                         {{ item.theme.createdUser.name }}

@@ -14,7 +14,7 @@
 
         <router-link :to="`/u/${user.id}`" class="navbar-item user-profile" exact>
           <figure class="image circle is-28x28 flexbox" v-if="user.image">
-            <img :src="user.image" :srcset="`${user.image}_640w 640w`"/>
+            <user-image :src="user.image"/>
           </figure>
           <span class="icon" v-else><i class="far fa-user-circle"></i></span>
           <span class="subtitle is-7 has-text-weight-bold">My Page</span>

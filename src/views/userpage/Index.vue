@@ -4,7 +4,7 @@
       <article class="user-profile media has-align-centered">
         <figure class="media-left" v-if="user.image">
           <div class="image circle flexbox is-64x64">
-            <img :src="user.image" :srcset="`${user.image}_640w 640w`">
+            <user-image :src="user.image"/>
           </div>
         </figure>
         <div class="media-content">

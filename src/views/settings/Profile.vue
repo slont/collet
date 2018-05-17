@@ -48,7 +48,7 @@
                 <input @change="changeImage" class="file-input" type="file" name="resume">
                 <div class="file-view" v-if="user.image">
                   <img :src="user.image" v-if="loading"/>
-                  <img :src="user.image" :srcset="`${user.image}_640w 640w`" v-else/>
+                  <user-image :src="user.image" v-else/>
                   <a @click.stop.prevent="removeImage" class="delete"></a>
                 </div>
                 <div class="file-cta" v-else>
