@@ -54,22 +54,18 @@
       }
     },
     computed: {
-      selfUser() {
-        return this.$store.state.user
-      },
-      urlUserId() {
-        return this.$route.params.userId
-      },
-      itemsColumns() {
-        if (this.isMobile) {
+      selfUser: vue => vue.$store.state.user,
+      urlUserId: vue => vue.$route.params.userId,
+      itemsColumns: vue => {
+        if (vue.isMobile) {
           return {
-            0: this.items,
+            0: vue.items,
             1: []
           }
         } else {
           return {
-            0: this.items.filter((item, i) => 0 === i % 2),
-            1: this.items.filter((item, i) => 1 === i % 2)
+            0: vue.items.filter((item, i) => 0 === i % 2),
+            1: vue.items.filter((item, i) => 1 === i % 2)
           }
         }
       }

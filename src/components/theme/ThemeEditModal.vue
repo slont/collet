@@ -110,9 +110,7 @@
       }
     },
     computed: {
-      loading() {
-        return /^data:.+/.test(this.theme.image)
-      }
+      loading: vue => (/^data:.+/.test(vue.theme.image))
     },
     methods: {
       open(theme) {

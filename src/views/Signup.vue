@@ -60,9 +60,7 @@
       }
     },
     computed: {
-      teamKey() {
-        return this.$store.getters.teamKey
-      }
+      teamKey: vue => vue.$store.getters.teamKey
     },
     methods: {
       async ok() {

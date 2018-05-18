@@ -78,12 +78,8 @@
       }
     },
     computed: {
-      activeHeader() {
-        return this.$store.state.activeHeader
-      },
-      user() {
-        return this.$store.state.user
-      }
+      activeHeader: vue => vue.$store.state.activeHeader,
+      user: vue => vue.$store.state.user
     },
     // created() {
     //   window.addEventListener('scroll', this.handleScroll)

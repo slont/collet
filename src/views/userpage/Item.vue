@@ -132,24 +132,12 @@
       }
     },
     computed: {
-      urlUserId() {
-        return this.$route.params.userId
-      },
-      isMyPage() {
-        return this.$store.state.user.id === this.urlUserId
-      },
-      themeId() {
-        return this.$route.params.themeId
-      },
-      itemId() {
-        return this.currentItem.id || this.$route.params.itemId
-      },
-      innerHeight() {
-        return this.$el.querySelector('.scrollable-container').scrollHeight - this.$el.querySelector('.scrollable-container').clientHeight
-      },
-      href() {
-        return location.href
-      }
+      urlUserId: vue => vue.$route.params.userId,
+      isMyPage: vue => vue.$store.state.user.id === vue.urlUserId,
+      themeId: vue => vue.$route.params.themeId,
+      itemId: vue => vue.currentItem.id || vue.$route.params.itemId,
+      innerHeight: vue => vue.$el.querySelector('.scrollable-container').scrollHeight - vue.$el.querySelector('.scrollable-container').clientHeight,
+      href: () => location.href
     },
     mounted() {
       this.init()

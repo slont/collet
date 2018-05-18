@@ -57,9 +57,7 @@
       }
     },
     computed: {
-      user() {
-        return this.$store.state.user
-      }
+      user: vue => vue.$store.state.user
     },
     methods: {
       open(theme = {}) {

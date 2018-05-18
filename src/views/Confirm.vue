@@ -30,9 +30,7 @@
       }
     },
     computed: {
-      userId() {
-        return this.$route.query.id
-      }
+      userId: vue => vue.$route.query.id
     },
     methods: {
       async ok() {

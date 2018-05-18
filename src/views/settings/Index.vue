@@ -45,9 +45,7 @@
       }
     },
     computed: {
-      isRoot() {
-        return '/settings' === this.$route.path
-      }
+      isRoot: vue => '/settings' === vue.$route.path
     },
     methods: {
       signout() {

@@ -86,12 +86,8 @@
       }
     },
     computed: {
-      urlUserId() {
-        return this.$route.params.userId
-      },
-      isSelf() {
-        return this.$store.state.user.id === this.urlUserId
-      }
+      urlUserId: vue => vue.$route.params.userId,
+      isSelf: vue => vue.$store.state.user.id === vue.urlUserId
     },
     watch: {
       '$route.params.userId': 'refresh'

@@ -43,12 +43,8 @@
       }
     },
     computed: {
-      selfUser() {
-        return this.$store.state.user
-      },
-      tagName() {
-        return this.$route.query.name
-      }
+      selfUser: vue => vue.$store.state.user,
+      tagName: vue => vue.$route.query.name
     },
     watch: {
       '$route.query.name': 'refresh'

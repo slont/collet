@@ -35,11 +35,11 @@
       editable: Boolean
     },
     computed: {
-      id() {
-        if (REGEX.test(this.params.valueStr)) {
-          return this.params.valueStr.replace(REGEX, '$2')
+      id: vue => {
+        if (REGEX.test(vue.params.valueStr)) {
+          return vue.params.valueStr.replace(REGEX, '$2')
         } else {
-          return this.params.valueStr
+          return vue.params.valueStr
         }
       }
     },

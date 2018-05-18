@@ -55,12 +55,8 @@
       }
     },
     computed: {
-      activeFooter() {
-        return this.$store.state.activeFooter
-      },
-      user() {
-        return this.$store.state.user
-      }
+      activeFooter: vue => vue.$store.state.activeFooter,
+      user: vue => vue.$store.state.user
     },
     created() {
       this.fetchThemes()

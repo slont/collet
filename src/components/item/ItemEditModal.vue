@@ -133,9 +133,7 @@
       }
     },
     computed: {
-      themeId() {
-        return this.$route.params.themeId
-      }
+      themeId: vue => vue.$route.params.themeId
     },
     methods: {
       open(theme, item) {

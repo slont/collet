@@ -86,9 +86,7 @@
       }
     },
     computed: {
-      loading() {
-        return /^data:.+/.test(this.user.image)
-      }
+      loading: vue => (/^data:.+/.test(vue.user.image))
     },
     created() {
       this.id = this.$store.state.user.id

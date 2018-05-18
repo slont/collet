@@ -118,19 +118,17 @@
       }
     },
     computed: {
-      user() {
-        return this.$store.state.user
-      },
-      newItemsColumns() {
+      user: vue => vue.$store.state.user,
+      newItemsColumns: vue => {
         if (this.isMobile) {
           return {
-            0: this.newItems,
+            0: vue.newItems,
             1: []
           }
         } else {
           return {
-            0: this.newItems.filter((item, i) => 0 === i % 2),
-            1: this.newItems.filter((item, i) => 1 === i % 2)
+            0: vue.newItems.filter((item, i) => 0 === i % 2),
+            1: vue.newItems.filter((item, i) => 1 === i % 2)
           }
         }
       }

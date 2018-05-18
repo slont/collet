@@ -23,9 +23,7 @@
       }
     },
     computed: {
-      inValid() {
-        return this.disabled | this.processing
-      }
+      inValid: vue => vue.disabled | vue.processing
     },
     methods: {
       async onClick(e) {

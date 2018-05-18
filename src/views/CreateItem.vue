@@ -156,12 +156,8 @@
       }
     },
     computed: {
-      user() {
-        return this.$store.state.user
-      },
-      themeId() {
-        return this.$route.params.themeId
-      }
+      user: vue => vue.$store.state.user,
+      themeId: vue => vue.$route.params.themeId
     },
     created() {
       if (this.$store.state.theme.id) {

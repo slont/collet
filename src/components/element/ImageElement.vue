@@ -52,12 +52,8 @@
       editable: Boolean
     },
     computed: {
-      loading() {
-        return /^data:.+/.test(this.params.valueStr)
-      },
-      themeId() {
-        return this.$route.params.themeId
-      }
+      loading: vue => (/^data:.+/.test(vue.params.valueStr)),
+      themeId: vue => vue.$route.params.themeId
     },
     methods: {
       changeImage(e) {

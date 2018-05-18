@@ -28,12 +28,8 @@
       }
     },
     computed: {
-      selfUser() {
-        return this.$store.state.user
-      },
-      urlUserId() {
-        return this.$route.params.userId
-      }
+      selfUser: vue => vue.$store.state.user,
+      urlUserId: vue => vue.$route.params.userId
     },
     watch: {
       '$route.params.userId': 'refresh'

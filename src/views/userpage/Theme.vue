@@ -85,31 +85,21 @@
       }
     },
     computed: {
-      selfUser() {
-        return this.$store.state.user
-      },
-      urlUserId() {
-        return this.$route.params.userId
-      },
-      itemId() {
-        return this.$route.params.itemId
-      },
-      isMyPage() {
-        return this.$store.state.user.id === this.urlUserId
-      },
-      themeId() {
-        return this.$route.params.themeId
-      },
-      itemsColumns() {
-        if (this.isMobile) {
+      selfUser: vue => vue.$store.state.user,
+      urlUserId: vue => vue.$route.params.userId,
+      itemId: vue => vue.$route.params.itemId,
+      isMyPage: vue => vue.$store.state.user.id === vue.urlUserId,
+      themeId: vue => vue.$route.params.themeId,
+      itemsColumns: vue => {
+        if (vue.isMobile) {
           return {
-            0: this.theme.items,
+            0: vue.theme.items,
             1: []
           }
         } else {
           return {
-            0: this.theme.items.filter((item, i) => 0 === i % 2),
-            1: this.theme.items.filter((item, i) => 1 === i % 2)
+            0: vue.theme.items.filter((item, i) => 0 === i % 2),
+            1: vue.theme.items.filter((item, i) => 1 === i % 2)
           }
         }
       }

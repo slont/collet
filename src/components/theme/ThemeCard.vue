@@ -77,15 +77,9 @@
       visibleAddItem: Boolean
     },
     computed: {
-      user() {
-        return this.$store.state.user
-      },
-      urlUserId() {
-        return this.$route.params.userId
-      },
-      isMyTheme() {
-        return this.$store.state.user.id === this.theme.createdUser.id
-      }
+      user: vue => vue.$store.state.user,
+      urlUserId: vue => vue.$route.params.userId,
+      isMyTheme: vue => vue.$store.state.user.id === vue.theme.createdUser.id
     },
     methods: {
       onClickFavorite() {

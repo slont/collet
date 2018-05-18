@@ -27,12 +27,8 @@
     components: { ElementView },
     props: ['theme', 'item'],
     computed: {
-      urlUserId() {
-        return this.$route.params.userId
-      },
-      isMyPage() {
-        return this.$store.state.user.id === this.urlUserId
-      }
+      urlUserId: vue => vue.$route.params.userId,
+      isMyPage: vue => vue.$store.state.user.id === vue.urlUserId
     }
   }
 </script>
