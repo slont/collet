@@ -120,7 +120,7 @@
     computed: {
       user: vue => vue.$store.state.user,
       newItemsColumns: vue => {
-        if (this.isMobile) {
+        if (vue.isMobile) {
           return {
             0: vue.newItems,
             1: []
