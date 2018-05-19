@@ -59,15 +59,6 @@ Vue.use({
           return 768 >= this.windowWidth
         }
       },
-      filters: {
-        fromNow(datetime, format = 'YYYY/MM/DD') {
-          if (3 >= moment().diff(datetime, 'days')) {
-            return datetime.fromNow()
-          } else {
-            return datetime.format(format)
-          }
-        }
-      },
       async mounted() {
         if (!isLoadedInstgrm) {
           const s = document.createElement('script')
@@ -80,6 +71,13 @@ Vue.use({
         }
       },
       methods: {
+        fromNow(datetime, format = 'YYYY/MM/DD', e) {
+          if (3 >= this.$moment().diff(datetime, 'days')) {
+            return datetime.fromNow()
+          } else {
+            return datetime.format(format)
+          }
+        },
         dataURLtoBlob: dataURLtoBlob,
         createDataUrl(e, callback) {
           const MAX_WIDTH = 1080

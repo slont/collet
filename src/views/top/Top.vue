@@ -72,7 +72,7 @@
                       <router-link :to="`/u/${item.theme.createdUser.id}`" class="user-name text-color-weak clickable">
                         {{ item.theme.createdUser.name }}
                       </router-link>
-                      <span class="updated-at text-color-weak is-size-8 is-justify-end">{{ item.updatedAt | fromNow }}</span>
+                      <span class="updated-at text-color-weak is-size-8 is-justify-end">{{ fromNow(item.updatedAt) }}</span>
                     </div>
                   </div>
 

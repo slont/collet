@@ -26,7 +26,7 @@
             <div class="cullet-info">
               <div class="updated-at text-color-weak is-size-7 has-text-right" v-if="item.updatedAt">
                 <span class="icon"><i class="far fa-clock"></i></span>
-                {{ item.createdAt | fromNow('YYYY/MM/DD HH:mm') }}
+                {{ fromNow(item.createdAt, 'YYYY/MM/DD HH:mm') }}
                 <span class="is-size-8" v-if="1 < item.updatedAt.diff(item.createdAt, 'hours')">
                   ({{ item.updatedAt.format('YYYY/MM/DD HH:mm') }} 更新)
                 </span>

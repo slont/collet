@@ -20,7 +20,7 @@
             </div>
             <div class="updated-at has-text-grey-lighter" v-if="theme.updatedAt">
               <span class="icon"><i class="far fa-clock"></i></span>
-              {{ theme.updatedAt | fromNow('YYYY/MM/DD HH:mm') }}
+              {{ fromNow(theme.updatedAt, 'YYYY/MM/DD HH:mm') }}
             </div>
           </div>
         </div>

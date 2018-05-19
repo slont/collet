@@ -4,7 +4,7 @@
       <div class="media has-align-centered">
         <div class="media-content">
           <div class="updated-at text-color-weak is-size-8 has-text-right">
-            {{ item.updatedAt | fromNow }}
+            {{ fromNow(item.updatedAt) }}
           </div>
           <router-link class="item-title flexbox text-color-strong is-size-5 has-text-weight-bold" tag="div"
                        :to="`/u/${theme.createdUser.id}/${theme.id}/${item.id}`">

@@ -25,7 +25,7 @@
                     </div>
                     <div class="updated-at text-color-weak is-size-8">
                       <span class="icon"><i class="far fa-clock"></i></span>
-                      <span>{{ item.updatedAt | fromNow }}</span>
+                      <span>{{ fromNow(item.updatedAt) }}</span>
                     </div>
                   </div>
                 </div>
