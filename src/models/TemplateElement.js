@@ -1,5 +1,4 @@
 import Base from './Base'
-import moment from 'moment'
 
 export default class Element extends Base {
   constructor(themeId, itemId) {
@@ -18,9 +17,7 @@ export default class Element extends Base {
     return Object.assign({}, json, {
       valueStr: '',
       valueNum: 0,
-      valueDbl: 0.0,
-      createdAt: moment(json.createdAt),
-      updatedAt: moment(json.updatedAt)
+      valueDbl: 0.0
     })
   }
 }
