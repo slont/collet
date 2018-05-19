@@ -8,8 +8,8 @@
         <div v-for="(item, i) in updatedItems" class="updated-cullet flexbox column is-4-tablet" :key="item.id">
           <div class="updated-at text-color-weak has-text-right">
             <div class="flexbox" :class="{'is-hidden-mobile': !visibleUpdatedAt(item.updatedAt, i)}">
-              <div class="updated-at-date is-size-7">{{ item.updatedAt.format('M/D') }}</div>
-              <div class="is-size-8">{{ item.updatedAt.format('ddd') }}</div>
+              <div class="updated-at-date is-size-7">{{ item.updatedAt | moment('M/D') }}</div>
+              <div class="is-size-8">{{ item.updatedAt | moment('ddd') }}</div>
             </div>
           </div>
 
@@ -172,10 +172,10 @@
       visibleUpdatedAt(updatedAt, index) {
         if (index === this.updatedItems.length - 1) {
           return true
-        } else if (24 > this.$moment().diff(updatedAt, 'hours')) {
+        } else if (24 > this.$moment().diff(this.$moment(updatedAt), 'hours')) {
           return true
         }
-        return 0 !== this.updatedItems[index + 1].updatedAt.diff(updatedAt, 'days')
+        return 0 !== this.$moment(this.updatedItems[index + 1].updatedAt).diff(this.$moment(updatedAt), 'days')
       },
       infiniteScroll(event) {
         if (event.target.scrollHeight <= event.target.scrollTop + event.target.offsetHeight && this.newItems.length < this.newItemsTotal) {

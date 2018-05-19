@@ -70,10 +70,11 @@ Vue.use({
       },
       methods: {
         fromNow(datetime, format = 'YYYY/MM/DD', e) {
-          if (3 >= this.$moment().diff(datetime, 'days')) {
-            return datetime.fromNow()
+          const dt = this.$moment(datetime)
+          if (3 >= this.$moment().diff(dt, 'days')) {
+            return dt.fromNow()
           } else {
-            return datetime.format(format)
+            return dt.format(format)
           }
         },
         dataURLtoBlob: dataURLtoBlob,
