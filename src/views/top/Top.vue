@@ -18,6 +18,7 @@
               <router-link class="theme-title subtitle text-color-weak is-size-7" tag="div"
                            :to="`/u/${user.id}/${item.theme.id}`">
                 {{ item.theme.title }}
+                <span class="icon" v-if="item.theme.private"><i class="fas fa-lock fa-fw"></i></span>
               </router-link>
               <router-link class="item-title text-color-strong is-size-6 has-text-weight-bold" tag="div"
                            :to="`/u/${user.id}/${item.theme.id}/${item.id}`">
@@ -72,7 +73,7 @@
                       <router-link :to="`/u/${item.theme.createdUser.id}`" class="user-name text-color-weak clickable">
                         {{ item.theme.createdUser.name }}
                       </router-link>
-                      <span class="updated-at text-color-weak is-size-8 is-justify-end">{{ item.updatedAt | fromNow }}</span>
+                      <span class="updated-at text-color-weak is-size-8 is-justify-end">{{ fromNow(item.updatedAt, 'YYYY/MM/DD') }}</span>
                     </div>
                   </div>
 
