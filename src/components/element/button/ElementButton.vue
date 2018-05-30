@@ -1,5 +1,5 @@
 <template>
-  <a class="element-button button is-info is-outlined has-align-centered">
+  <a class="element-button button is-info is-outlined">
     <span class="fa-icon icon" v-if="icon && /^fa.+/.test(icon)">
       <i class="fa-2x" :class="icon"></i>
     </span>

@@ -3,7 +3,7 @@
     <label class="view-label label control" v-if="params.label && !editable">
       {{ params.label }}
     </label>
-    <div class="control label-control flexbox has-align-centered has-icons-left" v-else-if="editable">
+    <div class="control label-control flexbox has-icons-left" v-else-if="editable">
       <input v-model.trim="params.label" class="input label" type="text" :placeholder="placeholder"
              @focus="$emit('focus')" @blur="$emit('blur')">
     </div>

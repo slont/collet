@@ -65,7 +65,7 @@
                       {{ item.name }}
                     </div>
 
-                    <div class="user-profile flexbox has-align-centered is-size-7">
+                    <div class="user-profile flexbox is-size-7">
                       <figure class="image circle is-16x16 flexbox" v-if="item.theme.createdUser.image">
                         <user-image :src="item.theme.createdUser.image"/>
                       </figure>

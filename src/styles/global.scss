@@ -224,11 +224,12 @@ body {
   display: flex;
   align-items: center;
 
-  &.has-align-centered {
-    align-items: center;
+  &.has-justify-centered {
+    justify-content: center;
   }
   .is-justify-end {
     margin-left: auto;
+    justify-self: flex-end;
   }
 }
 

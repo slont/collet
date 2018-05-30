@@ -51,7 +51,7 @@
       </div>
 
       <div class="item-elements" :class="{ 'is-fullwidth': !isEditable }">
-        <div v-for="(element, i) in item.elements" :key="i" class="field element-field flexbox has-align-centered">
+        <div v-for="(element, i) in item.elements" :key="i" class="field element-field flexbox">
           <div class="sort-buttons flexbox" v-if="isEditable">
             <a class="button up-button is-white" @click="upOrder(i)"><i class="material-icons">arrow_upward</i></a>
             <span class="element-order">{{ element.order + 1 }}</span>

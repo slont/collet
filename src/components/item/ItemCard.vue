@@ -1,7 +1,7 @@
 <template>
   <div class="item-card card">
     <div class="card-content">
-      <div class="media has-align-centered">
+      <div class="media">
         <div class="media-content">
           <div class="updated-at text-color-weak is-size-8 has-text-right">
             {{ item.updatedAt | fromNow }}

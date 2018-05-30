@@ -11,7 +11,7 @@
           #{{ tag.name }}
         </el-tag>
       </div>
-      <div class="user-profile flexbox has-align-centered is-size-7">
+      <div class="user-profile flexbox is-size-7">
         <figure class="image circle is-16x16 flexbox" v-if="theme.createdUser.image">
           <user-image :src="theme.createdUser.image"/>
         </figure>

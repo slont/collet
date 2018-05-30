@@ -9,7 +9,7 @@
         <span class="private-icon icon is-size-3 has-text-white" v-if="theme.private"><i class="fas fa-lock"></i></span>
 
         <div class="title is-4 has-text-white">{{ theme.title }}</div>
-        <div class="user-profile flexbox has-align-centered is-size-7">
+        <div class="user-profile flexbox is-size-7">
           <figure class="image circle is-32x32 flexbox" v-if="theme.createdUser.image">
             <user-image :src="theme.createdUser.image"/>
           </figure>

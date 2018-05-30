@@ -1,7 +1,7 @@
 <template>
   <div id="userpage-index" @scroll="infiniteScroll">
     <header class="userpage-header header-shadow">
-      <article class="user-profile media has-align-centered">
+      <article class="user-profile media">
         <figure class="media-left" v-if="user.image">
           <div class="image circle flexbox is-64x64">
             <user-image :src="user.image"/>
