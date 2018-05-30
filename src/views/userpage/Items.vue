@@ -10,6 +10,7 @@
                 <router-link class="theme-title subtitle text-color-weak is-size-7 clickable" tag="div"
                              :to="`/u/${$route.params.userId}/${item.theme.id}`">
                   {{ item.theme.title }}
+                  <span class="icon" v-if="item.theme.private"><i class="fas fa-lock fa-fw"></i></span>
                 </router-link>
                 <div class="item-title text-color-strong is-size-5 has-text-weight-bold clickable">
                   {{ item.name }}

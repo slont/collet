@@ -218,19 +218,20 @@ body {
 .flexbox {
   display: flex;
   align-items: center;
-
-  &.has-justify-centered {
-    justify-content: center;
-  }
-  .is-justify-end {
-    margin-left: auto;
-    justify-self: flex-end;
-  }
 }
-
 .flexcolumn {
   display: flex;
   flex-direction: column;
+}
+.has-justify-centered {
+  justify-content: center;
+}
+.has-justify-right {
+  justify-content: flex-end;
+}
+.is-justify-end {
+  margin-left: auto;
+  justify-self: flex-end;
 }
 
 .fullwidth {

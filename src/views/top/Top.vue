@@ -34,10 +34,11 @@
             </div>
           </div>
         </div>
-        <div class="updated-cullet-link updated-cullet flexbox column is-4-tablet" key="link" v-if="!isMobile">
+        <div class="updated-cullet-link updated-cullet flexbox column is-4-tablet" key="link">
           <div class="media">
             <div class="media-content">
-              <router-link :to="`/u/${user.id}`" class="item-title flexbox text-color-strong is-size-5 has-text-weight-bold clickable">
+              <router-link :to="`/u/${user.id}`" :class="{'has-justify-right': isMobile}"
+                           class="item-title flexbox text-color-strong is-size-5 has-text-weight-bold clickable">
                 Myカレット一覧へ
                 <span class="icon"><i class="fas fa-angle-double-right fa-fw"></i></span>
               </router-link>
