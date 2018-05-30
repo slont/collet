@@ -450,8 +450,6 @@
                   .theme-title {
                     height: 1rem;
                     overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap
                   }
                   .item-title {
                     display: flex;
