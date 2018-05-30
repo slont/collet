@@ -28,7 +28,7 @@
                 <span class="icon"><i class="far fa-clock"></i></span>
                 {{ fromNow(item.createdAt) }}
                 <span class="is-size-8" v-if="1 < item.updatedAt.diff(item.createdAt, 'hours')">
-                  ({{ item.updatedAt.format('YYYY/MM/DD HH:mm') }} 更新)
+                  ({{ item.updatedAt | moment('YYYY/MM/DD HH:mm') }} 更新)
                 </span>
               </div>
               <div class="title is-3">

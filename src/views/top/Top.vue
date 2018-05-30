@@ -8,8 +8,8 @@
         <div v-for="(item, i) in updatedItems" class="updated-cullet flexbox column is-4-tablet" :key="item.id">
           <div class="updated-at text-color-weak has-text-right">
             <div class="flexbox" :class="{'is-hidden-mobile': !visibleUpdatedAt(item.updatedAt, i)}">
-              <div class="updated-at-date is-size-7">{{ item.updatedAt.format('M/D') }}</div>
-              <div class="is-size-8">{{ item.updatedAt.format('ddd') }}</div>
+              <div class="updated-at-date is-size-7">{{ item.updatedAt | moment('M/D') }}</div>
+              <div class="is-size-8">{{ item.updatedAt | moment('ddd') }}</div>
             </div>
           </div>
 
