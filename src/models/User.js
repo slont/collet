@@ -2,7 +2,6 @@ import Base from './Base'
 import Theme from './Theme'
 import Item from './Item'
 import qs from 'qs'
-import moment from 'moment'
 
 export default class User extends Base {
   constructor() {
@@ -65,9 +64,7 @@ export default class User extends Base {
 
   static _deserialize(json) {
     return Object.assign({}, json, {
-      loggedAt: json.loggedAt ? moment(json.loggedAt) : null,
-      createdAt: moment(json.createdAt),
-      updatedAt: moment(json.updatedAt)
+      loggedAt: json.loggedAt || {}
     })
   }
 }

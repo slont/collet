@@ -27,7 +27,7 @@
               <div class="updated-at text-color-weak is-size-7 has-text-right" v-if="item.updatedAt">
                 <span class="icon"><i class="far fa-clock"></i></span>
                 {{ fromNow(item.createdAt) }}
-                <span class="is-size-8" v-if="1 < item.updatedAt.diff(item.createdAt, 'hours')">
+                <span class="is-size-8" v-if="1 < $moment(item.updatedAt).diff($moment(item.createdAt), 'hours')">
                   ({{ item.updatedAt | moment('YYYY/MM/DD HH:mm') }} 更新)
                 </span>
               </div>

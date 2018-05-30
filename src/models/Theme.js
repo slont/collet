@@ -2,7 +2,6 @@ import Base from './Base'
 import Item from './Item'
 import Template from './Template'
 import qs from 'qs'
-import moment from 'moment'
 
 export default class Theme extends Base {
   constructor() {
@@ -66,9 +65,7 @@ export default class Theme extends Base {
     return Object.assign({}, json, {
       items: (json.items || []).map(item => Item._deserialize(item)),
       templates: (json.templates || []).map(template => Template._deserialize(template)),
-      private: 0 !== json.private,
-      createdAt: moment(json.createdAt),
-      updatedAt: moment(json.updatedAt)
+      private: 0 !== json.private
     })
   }
 }

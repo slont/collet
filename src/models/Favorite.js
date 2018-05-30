@@ -1,5 +1,4 @@
 import Base from './Base'
-import moment from 'moment'
 
 export default class Favorite extends Base {
   constructor() {
@@ -19,8 +18,6 @@ export default class Favorite extends Base {
       return {}
     }
 
-    return Object.assign({}, json, {
-      createdAt: moment(json.createdAt)
-    })
+    return Object.assign({}, json)
   }
 }

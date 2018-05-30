@@ -173,12 +173,13 @@
         this.$refs.themeEditModal.open(theme)
       },
       visibleUpdatedAt(updatedAt, index) {
+        const _updatedAt = this.$moment(updatedAt)
         if (index === this.updatedItems.length - 1) {
           return true
-        } else if (24 > this.$moment().diff(updatedAt, 'hours')) {
+        } else if (24 > this.$moment().diff(_updatedAt, 'hours')) {
           return true
         }
-        return 0 !== this.updatedItems[index + 1].updatedAt.diff(updatedAt, 'days')
+        return 0 !== this.$moment(this.updatedItems[index + 1].updatedAt).diff(_updatedAt, 'days')
       },
       infiniteScroll(event) {
         if (event.target.scrollHeight <= event.target.scrollTop + event.target.offsetHeight && this.newItems.length < this.newItemsTotal) {

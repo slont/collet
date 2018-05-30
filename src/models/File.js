@@ -24,7 +24,6 @@ export default class File extends Base {
   }
 
   deserialize(json) {
-    const result = Object.assign({}, json)
-    return result
+    return Object.assign({}, json)
   }
 }
