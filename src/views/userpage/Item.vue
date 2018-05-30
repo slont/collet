@@ -1,6 +1,6 @@
 <template>
-  <div id="userpage-item">
-    <div class="scrollable-container" @scroll="onScrollContainer">
+  <div id="userpage-item" @scroll="onScrollContainer">
+    <div class="container">
       <router-link :to="`/u/${$route.params.userId}/${themeId}`" tag="div"
                    class="theme-title is-size-7 has-text-underline text-color-weak clickable">
         {{ theme.title }}
@@ -145,7 +145,7 @@
         return this.currentItem.id || this.$route.params.itemId
       },
       innerHeight() {
-        return this.$el.querySelector('.scrollable-container').scrollHeight - this.$el.querySelector('.scrollable-container').clientHeight
+        return this.$el.scrollHeight - this.$el.clientHeight
       },
       href() {
         return location.href
@@ -175,7 +175,7 @@
           }
 
           this.$nextTick(() => {
-            if (80 > this.$el.querySelector('.scrollable-container').scrollHeight - this.$el.querySelector('.scrollable-container').clientHeight) {
+            if (80 > this.$el.scrollHeight - this.$el.clientHeight) {
               this.activePagination = true
             }
           })
@@ -224,7 +224,7 @@
         this.$router.push(`/u/${this.urlUserId}/${this.themeId}/${itemId}`)
       },
       onScrollContainer() {
-        const scrollTop = this.$el.querySelector('.scrollable-container').scrollTop
+        const scrollTop = this.$el.scrollTop
         if (80 > this.innerHeight - scrollTop) {
           this.activePagination = true
         } else {
@@ -233,16 +233,16 @@
         this.scrolledTop = scrollTop
       },
       scrollToTop(scrollDuration) {
-        const scrollHeight = this.$el.querySelector('.scrollable-container').scrollTop
+        const scrollHeight = this.$el.scrollTop
         const scrollStep = Math.PI / (scrollDuration / 15)
         const cosParameter = scrollHeight / 2
         let scrollCount = 0
         let scrollMargin
         let scrollInterval = setInterval(() => {
-          if (0 !== this.$el.querySelector('.scrollable-container').scrollTop) {
+          if (0 !== this.$el.scrollTop) {
             scrollCount = scrollCount + 1
             scrollMargin = cosParameter - cosParameter * Math.cos(scrollCount * scrollStep)
-            this.$el.querySelector('.scrollable-container').scrollTop = scrollHeight - scrollMargin
+            this.$el.scrollTop = scrollHeight - scrollMargin
           } else clearInterval(scrollInterval)
         }, 15)
       }
@@ -252,20 +252,19 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-item {
-    max-width: 680px;
-    margin: auto;
+    height: calc(100vh - #{$header-nav-height});
+    overflow-y: scroll;
+    -webkit-overflow-scrolling : touch;
 
-    .scrollable-container {
+    > .container {
       padding: 1rem;
-      overflow-y: scroll;
-      -webkit-overflow-scrolling : touch;
-
-      .theme-title {
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 1;
-        overflow: hidden;
-      }
+      max-width: 720px;
+    }
+    .theme-title {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
     }
     .theme-tags {
       margin-top: .5em;
@@ -384,6 +383,10 @@
           border-bottom-left-radius: $size-1;
         }
       }
+    }
+
+    @media screen and (max-width: 768px) {
+      height: calc(100vh - #{$header-nav-height + $footer-nav-height});
     }
 
     .show-next-enter-active, .show-next-leave-active,
