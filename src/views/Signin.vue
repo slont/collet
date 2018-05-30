@@ -1,5 +1,5 @@
 <template>
-  <div id="signin">
+  <div id="signin" class="flexbox">
     <div class="box">
       <div class="title has-text-centered">
         <img class="cullet-logo" src="/static/img/cullet-logo_orange.png" alt="Colette">
@@ -56,8 +56,8 @@
         <!--</a>-->
       <!--</div>-->
 
-      <div class="has-text-centered">
-        <div>または</div>
+      <div class="field has-text-centered">
+        <div class="field">または</div>
         <router-link to="/signup" class="is-small">
           メールアドレスで新規登録
         </router-link>
@@ -151,17 +151,20 @@
   #signin {
     width: 100%;
 
-    .title {
-      .cullet-logo {
-        height: 64px;
-      }
-    }
     .box {
-      max-width: 400px;
-      margin: 3em auto;
+      min-width: 400px;
+      margin: 20% auto;
 
-      ul {
-        margin-bottom: 1em;
+      .title {
+        .cullet-logo {
+          height: 64px;
+        }
+      }
+      .field {
+        .button,
+        .input {
+          font-size: 1rem;
+        }
       }
     }
   }

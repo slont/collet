@@ -55,11 +55,6 @@ body {
   margin: 0;
 }
 
-.layout-list {
-  display: flex;
-  flex-direction: column;
-}
-
 .el-input input:not([readonly="readonly"]) {
   font-size: 16px;
   transform: scale(0.875);
