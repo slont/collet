@@ -126,12 +126,14 @@
           &.router-link-active,
           &.is-active,
           &:hover {
-            border-bottom: 3px solid $primary;
-            padding-bottom: 2px;
-            background: transparent;
+            &:not(.button) {
+              border-bottom: 3px solid $primary;
+              padding-bottom: 2px;
+              background: transparent;
 
-            span {
-              color: $primary;
+              span {
+                color: $primary;
+              }
             }
           }
         }
@@ -140,12 +142,11 @@
           height: 58px;
           width: 58px;
           margin: -3px 6px 18px;
-          border-top: 1px solid gainsboro;
-          box-sizing: border-box;
-          border-bottom: none;
-          border-right: none;
-          border-left: none;
+          box-shadow: 0 0 0 3px rgba(255, 255, 255, 1);
 
+          &:hover {
+            background-color: $primary-dark;
+          }
           .icon {
             margin-left: -.35em;
           }
