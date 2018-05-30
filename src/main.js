@@ -15,13 +15,11 @@ import VueAutosize from 'vue-autosize'
 import SocialSharing from 'vue-social-sharing'
 import Element from 'element-ui'
 import messages from './locales'
-import moment from 'moment'
 import validateConfig from '../config/validate'
 import VueCarousel from 'vue-carousel'
 import GuardButton from './components/GuardButton'
 import UserImage from './components/UserImage'
 
-moment.locale(store.state.locale)
 Vue.config.productionTip = false
 
 Vue.use(Vuex)
@@ -31,7 +29,7 @@ Vue.use(VeeValidate, Object.assign({}, validateConfig, {
   locale: store.state.locale
 }))
 Vue.use(VueAutosize)
-Vue.use(VueMoment, { moment })
+Vue.use(VueMoment)
 const i18n = new VueI18n({
   locale: store.state.locale,
   messages

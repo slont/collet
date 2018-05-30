@@ -7,9 +7,12 @@
 </template>
 
 <script>
-export default {
-  name: 'app'
-}
+  export default {
+    name: 'app',
+    created() {
+      this.$moment.locale(this.$store.state.locale)
+    }
+  }
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
