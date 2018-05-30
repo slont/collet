@@ -17,7 +17,6 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #app {
-    position: absolute;
     min-height: 100vh;
     width: 100%;
     top: 0;

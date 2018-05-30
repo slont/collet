@@ -8,7 +8,6 @@ import Confirm from '@/views/Confirm'
 import CreateItem from '@/views/CreateItem'
 import EditItem from '@/views/EditItem'
 import TopIndex from '@/views/top/Index'
-import TopTop from '@/views/top/Top'
 import TagIndex from '@/views/tag/Index'
 import SearchIndex from '@/views/search/Index'
 import UserpageIndex from '@/views/userpage/Index'
@@ -42,13 +41,7 @@ export default new Router({
       children: [
         {
           path: '',
-          component: TopIndex,
-          children: [
-            {
-              path: '',
-              component: TopTop
-            }
-          ]
+          component: TopIndex
         }, {
           path: 'settings',
           component: SettingsIndex,
