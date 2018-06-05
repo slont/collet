@@ -136,7 +136,6 @@
 <style lang="scss" rel="stylesheet/scss">
   #userpage-index {
     overflow-y: scroll;
-    background-color: $bg-color-main;
     -webkit-overflow-scrolling : touch;
 
     &.container {

@@ -86,9 +86,22 @@
 <style lang="scss" rel="stylesheet/scss">
   #userpage-favorites {
     max-width: $width;
+    margin: 0 auto;
 
     > .columns {
       padding-top: 1em;
+    }
+
+    @media screen and (min-width: 769px) {
+      .theme-card {
+        border-radius: 5px;
+
+        .card-image > .image,
+        .dark-mask {
+          border-top-right-radius: 5px;
+          border-top-left-radius: 5px;
+        }
+      }
     }
 
     @media screen and (max-width: 768px) {

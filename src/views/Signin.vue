@@ -152,8 +152,9 @@
     width: 100%;
 
     .box {
-      min-width: 400px;
-      margin: 20% auto;
+      width: 90%;
+      min-width: 360px;
+      margin: 120px auto 0;
 
       .title {
         .cullet-logo {
