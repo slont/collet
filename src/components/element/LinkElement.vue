@@ -9,7 +9,7 @@
       <input v-model.trim="params.valueStr" class="input value" type="text" placeholder="Link"
              @focus="$emit('focus')" @blur="$emit('blur')" v-if="editable">
 
-      <div class="link-card card box" v-if="imageSrc" @click="onClickCard">
+      <div class="link-card card box" v-if="imageSrc || title" @click="onClickCard">
         <figure class="image flexbox">
           <img :src="imageSrc" alt="">
         </figure>
@@ -84,19 +84,13 @@
         if (!this.isStartHttp) {
           Object.assign(this.$data, this.$options.data.call(this))
         } else if (this.isStartHttp && (this.editable || -1 !== this.params.valueNum)) {
-          fetch(this.params.valueStr).then(res => {
+          fetch(`https://opengraph.io/api/1.1/site/${encodeURIComponent(this.params.valueStr)}?app_id=5b16d7821ae11d055fd7c70f`).then(res => {
             if (res.ok) {
-              res.text().then(text => {
-                const lines = text.match(/<meta\s+property="og:(\w+?)"\scontent="([^"]+?)"/g)
-                const map = {}
-                for (let line of lines) {
-                  const params = line.match(/<meta\s+property="og:(\w+?)"\scontent="([^"]+?)"/)
-                  map[params[1]] = params[2]
-                }
-                this.siteName = map.site_name
-                this.title = map.title
-                this.imageSrc = map.image
-                this.description = map.description
+              res.json().then(json => {
+                this.siteName = json.hybridGraph.site_name
+                this.title = json.hybridGraph.title
+                this.imageSrc = json.hybridGraph.image || json.hybridGraph.imageSecureUrl
+                this.description = json.hybridGraph.description
                 this.params.valueNum = 0
               })
             }
@@ -131,7 +125,7 @@
       cursor: pointer;
 
       .image {
-        max-height: 8rem;
+        max-height: 10rem;
         width: 100%;
         overflow: hidden;
         border-top-right-radius: 6px;
