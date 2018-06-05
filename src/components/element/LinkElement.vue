@@ -5,12 +5,36 @@
     <span class="element-type-icon icon is-left" v-if="editable">
       <i class="material-icons">link</i>
     </span>
-    <p class="control">
+    <div class="control">
       <input v-model.trim="params.valueStr" class="input value" type="text" placeholder="Link"
              @focus="$emit('focus')" @blur="$emit('blur')" v-if="editable">
 
-      <a :href="params.valueStr" class="value" target="_blank" v-else>{{ params.valueStr }}</a>
-    </p>
+      <div class="link-card card box" v-if="imageSrc" @click="onClickCard">
+        <figure class="image flexbox">
+          <img :src="imageSrc" alt="">
+        </figure>
+        <div class="card-content media">
+          <div class="media-content">
+            <div class="content">
+              <h5 class="subtitle is-5 has-text-weight-bold">{{ title }}</h5>
+              <p class="description is-size-6">{{ description }}</p>
+            </div>
+
+            <nav class="level is-mobile">
+              <div class="level-left">
+                <div class="level-item">
+                  <p class="subtitle is-7 has-text-grey">{{ siteName }}</p>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <a :href="params.valueStr" class="value" target="_blank" v-else-if="!editable">
+        {{ params.valueStr }}
+      </a>
+    </div>
   </cl-element>
 </template>
 
@@ -30,6 +54,57 @@
         }
       },
       editable: Boolean
+    },
+    data() {
+      return {
+        siteName: '',
+        title: '',
+        imageSrc: '',
+        description: ''
+      }
+    },
+    computed: {
+      isStartHttp() {
+        return /^https?:\/\/.+/.test(this.params.valueStr)
+      }
+    },
+    watch: {
+      'params.valueStr'() {
+        this.fetchImage()
+      }
+    },
+    created() {
+      this.fetchImage()
+    },
+    methods: {
+      onClickCard() {
+        window.open().location.href = this.params.valueStr
+      },
+      fetchImage() {
+        if (!this.isStartHttp) {
+          Object.assign(this.$data, this.$options.data.call(this))
+        } else if (this.isStartHttp && (this.editable || -1 !== this.params.valueNum)) {
+          fetch(this.params.valueStr).then(res => {
+            if (res.ok) {
+              res.text().then(text => {
+                const lines = text.match(/<meta\s+property="og:(\w+?)"\scontent="([^"]+?)"/g)
+                const map = {}
+                for (let line of lines) {
+                  const params = line.match(/<meta\s+property="og:(\w+?)"\scontent="([^"]+?)"/)
+                  map[params[1]] = params[2]
+                }
+                this.siteName = map.site_name
+                this.title = map.title
+                this.imageSrc = map.image
+                this.description = map.description
+                this.params.valueNum = 0
+              })
+            }
+          }).catch(() => {
+            this.params.valueNum = -1
+          })
+        }
+      }
     }
   }
 </script>
@@ -47,6 +122,32 @@
 
       &:focus, &:active {
         border-color: $primary;
+      }
+    }
+    .link-card {
+      max-width: 520px;
+      padding: 0;
+      margin: auto;
+      cursor: pointer;
+
+      .image {
+        max-height: 8rem;
+        width: 100%;
+        overflow: hidden;
+        border-top-right-radius: 6px;
+        border-top-left-radius: 6px;
+      }
+      .card-content {
+        .content {
+          .subtitle,
+          .description {
+            max-height: 4em;
+            overflow: hidden;
+          }
+          .subtitle {
+            line-height: 1.25;
+          }
+        }
       }
     }
     .value {
