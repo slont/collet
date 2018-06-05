@@ -184,7 +184,7 @@
   #theme-create-modal {
     > .modal-card {
       .modal-card-body {
-        margin-bottom: 0;
+        margin: 0;
         padding-bottom: 0;
 
         .image-field {
