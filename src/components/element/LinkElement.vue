@@ -6,8 +6,8 @@
       <i class="material-icons">link</i>
     </span>
     <div class="control">
-      <input v-model.trim="params.valueStr" class="input value" type="text" placeholder="Link"
-             @focus="$emit('focus')" @blur="$emit('blur')" v-if="editable">
+      <input v-model.trim="url" class="input value" type="text" placeholder="Link"
+             @change="fetchImage" @focus="$emit('focus')" @blur="$emit('blur')" v-if="editable">
 
       <div class="link-card card box" v-if="imageSrc || title" @click="onClickCard">
         <figure class="image flexbox">
@@ -31,8 +31,8 @@
         </div>
       </div>
 
-      <a :href="params.valueStr" class="value" target="_blank" v-else-if="!editable">
-        {{ params.valueStr }}
+      <a :href="url" class="value" target="_blank" v-else-if="!editable">
+        {{ url }}
       </a>
     </div>
   </cl-element>
@@ -56,21 +56,23 @@
       editable: Boolean
     },
     data() {
-      return {
+      const data = {
+        url: '',
         siteName: '',
         title: '',
         imageSrc: '',
         description: ''
       }
+      if (this.params.valueStr.startsWith('{')) {
+        Object.assign(data, JSON.parse(this.params.valueStr))
+      } else {
+        data.url = this.params.valueStr
+      }
+      return data
     },
     computed: {
       isStartHttp() {
-        return /^https?:\/\/.+/.test(this.params.valueStr)
-      }
-    },
-    watch: {
-      'params.valueStr'() {
-        this.fetchImage()
+        return /^https?:\/\/.+/.test(this.url)
       }
     },
     created() {
@@ -78,19 +80,23 @@
     },
     methods: {
       onClickCard() {
-        window.open().location.href = this.params.valueStr
+        window.open().location.href = this.url
       },
       fetchImage() {
         if (!this.isStartHttp) {
+          const url = this.url
           Object.assign(this.$data, this.$options.data.call(this))
-        } else if (this.isStartHttp && (this.editable || -1 !== this.params.valueNum)) {
-          fetch(`https://opengraph.io/api/1.1/site/${encodeURIComponent(this.params.valueStr)}?app_id=5b16d7821ae11d055fd7c70f`).then(res => {
+          this.url = url
+          this.params.valueStr = JSON.stringify(this.$data)
+        } else if (this.isStartHttp && this.editable) {
+          fetch(`https://opengraph.io/api/1.1/site/${encodeURIComponent(this.url)}?app_id=5b16d7821ae11d055fd7c70f`).then(res => {
             if (res.ok) {
               res.json().then(json => {
-                this.siteName = json.hybridGraph.site_name
-                this.title = json.hybridGraph.title
-                this.imageSrc = json.hybridGraph.image || json.hybridGraph.imageSecureUrl
-                this.description = json.hybridGraph.description
+                this.siteName = json.hybridGraph.site_name || ''
+                this.title = json.hybridGraph.title || ''
+                this.imageSrc = json.hybridGraph.image || json.hybridGraph.imageSecureUrl || ''
+                this.description = json.hybridGraph.description || ''
+                this.params.valueStr = JSON.stringify(this.$data)
                 this.params.valueNum = 0
               })
             }
