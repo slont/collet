@@ -17,12 +17,11 @@
 
       <div class="navbar-menu">
         <div class="navbar-start">
-          <router-link to="/" class="navbar-item" exact>
-            <span class="icon"><i class="fas fa-home fa-pull-left"></i></span>
-            <span>ホーム</span>
-          </router-link>
           <router-link :to="`/u/${user.id}`" class="navbar-item" v-if="loggedIn">
-            <span class="icon"><i class="far fa-user-circle fa-pull-left"></i></span>
+            <figure class="image circle is-28x28 flexbox" v-if="user.image">
+              <user-image :src="user.image"/>
+            </figure>
+            <span class="icon" v-else><i class="far fa-user-circle fa-pull-left"></i></span>
             <span>マイページ</span>
           </router-link>
         </div>
@@ -49,12 +48,8 @@
           <div class="navbar-item" v-else>
             <div class="field is-grouped">
               <p class="control">
-                <nav class="breadcrumb">
-                  <ul>
-                    <li><router-link :to="`/signin?redirect=${encodeURIComponent($route.path)}`">ログイン</router-link></li>
-                    <li><router-link to="/signup">新規登録</router-link></li>
-                  </ul>
-                </nav>
+                <router-link class="button is-primary" to="/signup">新規登録</router-link>
+                <router-link class="button is-primary is-outlined" :to="`/signin?redirect=${encodeURIComponent($route.path)}`">ログイン</router-link>
               </p>
             </div>
           </div>
@@ -150,17 +145,6 @@
           }
         }
         .navbar-end {
-          .breadcrumb {
-            $color: white;
-
-            a {
-              color: $color;
-
-              &:hover {
-                color: darken($color, 15%);
-              }
-            }
-          }
           .account-item {
             .dropdown-trigger {
               display: flex;

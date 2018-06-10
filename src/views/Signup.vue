@@ -4,7 +4,7 @@
       <template v-if="0 === pageIndex">
         <div class="title has-text-centered">{{ $t('title') }}</div>
         <div class="field-email field">
-            <label class="label">{{ $t('views.signup.email') }}</label>
+          <label class="label">{{ $t('views.signup.email') }}</label>
           <p class="control is-expanded has-icons-left">
             <input v-model="email" name="email" class="input" :class="{ 'is-danger': errors.has('email') }"
                    placeholder="some@sample.com" type="text" v-validate="'required|email'">
@@ -24,13 +24,13 @@
         </div>
 
         <div class="has-text-centered">
-          <guard-button :click="ok" class="is-info" :class="{ 'is-loading': isLoading }">
+          <guard-button :click="ok" class="is-info fullwidth" :class="{ 'is-loading': isLoading }">
             {{ $t('buttons.signup') }}
           </guard-button>
         </div>
         <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
 
-        <div class="has-text-centered">
+        <div class="field has-text-centered">
           <router-link to="/signin" class="label">
             ログインはこちらから
           </router-link>
@@ -96,13 +96,9 @@
   #signup {
     width: 100%;
 
-    .title {
-      text-align: center;
-    }
     .box {
-      width: 30%;
-      min-width: 360px;
-      margin: 3em auto;
+      width: 360px;
+      margin: 120px auto 0;
 
       .label {
         min-width: 120px;

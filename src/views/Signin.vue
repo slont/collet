@@ -152,8 +152,7 @@
     width: 100%;
 
     .box {
-      width: 90%;
-      min-width: 360px;
+      width: 360px;
       margin: 120px auto 0;
 
       .title {
