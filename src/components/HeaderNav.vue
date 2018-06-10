@@ -16,43 +16,46 @@
       </div>
 
       <div class="navbar-menu">
-        <div class="navbar-start">
-          <router-link :to="`/u/${user.id}`" class="navbar-item" v-if="loggedIn">
-            <figure class="image circle is-28x28 flexbox" v-if="user.image">
-              <user-image :src="user.image"/>
-            </figure>
-            <span class="icon" v-else><i class="far fa-user-circle fa-pull-left"></i></span>
+        <div class="navbar-start is-size-5 has-text-weight-bold">
+          <router-link :to="`/u/${user.id}`" class="navbar-item text-color-weak" v-if="loggedIn">
             <span>マイページ</span>
           </router-link>
         </div>
 
         <div class="navbar-end">
-          <div class="account-item navbar-item" v-if="loggedIn">
-            <dropdown ref="accountDropdown">
-              <template slot="trigger">
-                <span class="user-name is-size-7">{{ user.name }}</span>
-                <user-image :src="user.image" class="circle" v-if="user.image"/>
-                <span class="icon" v-else><i class="material-icons">arrow_drop_down</i></span>
-              </template>
+          <template v-if="loggedIn">
+            <div class="account-item navbar-item">
+              <dropdown ref="accountDropdown">
+                <template slot="trigger">
+                  <div class="user-name">
+                    <div class="is-size-7">{{ user.name }}</div>
+                    <div class="is-size-8 text-color-weak">@{{ user.id }}</div>
+                  </div>
+                  <user-image :src="user.image" class="circle" v-if="user.image"/>
+                  <span class="icon" v-else><i class="material-icons">arrow_drop_down</i></span>
+                </template>
 
-              <router-link to="/settings/profile" class="dropdown-item">
-                設定
-              </router-link>
-              <hr class="dropdown-divider">
-              <a @click="signout" class="dropdown-item">
-                <span class="icon"><i class="material-icons">exit_to_app</i></span>
-                サインアウト
-              </a>
-            </dropdown>
-          </div>
-          <div class="navbar-item" v-else>
-            <div class="field is-grouped">
-              <p class="control">
-                <router-link class="button is-primary" to="/signup">新規登録</router-link>
-                <router-link class="button is-primary is-outlined" :to="`/signin?redirect=${encodeURIComponent($route.path)}`">ログイン</router-link>
-              </p>
+                <router-link to="/settings/profile" class="dropdown-item">
+                  設定
+                </router-link>
+                <hr class="dropdown-divider">
+                <a @click="signout" class="dropdown-item">
+                  <span class="icon"><i class="material-icons">exit_to_app</i></span>
+                  サインアウト
+                </a>
+              </dropdown>
             </div>
-          </div>
+          </template>
+          <template v-else>
+            <div class="navbar-item">
+              <div class="field is-grouped">
+                <p class="control">
+                  <router-link class="button is-primary" to="/signup">新規登録</router-link>
+                  <router-link class="button is-primary is-outlined" :to="`/signin?redirect=${encodeURIComponent($route.path)}`">ログイン</router-link>
+                </p>
+              </div>
+            </div>
+          </template>
         </div>
       </div>
     </div>
