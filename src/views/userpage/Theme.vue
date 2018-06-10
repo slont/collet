@@ -182,11 +182,13 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-theme {
-    background-color: $bg-color-main;
     overflow-y: scroll;
     -webkit-overflow-scrolling : touch;
 
     .theme-items {
+      max-width: $width;
+      margin: 0 auto;
+
       > .label {
         @include label-accent-sp;
       }
