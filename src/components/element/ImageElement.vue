@@ -12,15 +12,15 @@
             <label class="file-label">
               <input @change="changeImage" class="file-input" type="file" name="resume"
                      @focus="$emit('focus')" @blur="$emit('blur')">
-              <div class="file-view" v-if="params.valueStr">
+              <span class="file-view" v-if="params.valueStr">
                 <img :src="params.valueStr" v-if="loading"/>
                 <img :src="params.valueStr" :srcset="`${params.valueStr}_640w 640w`" v-else/>
                 <a @click.stop.prevent="removeImage" class="delete"></a>
-              </div>
-              <div class="file-cta" v-else>
+              </span>
+              <span class="file-cta" v-else>
                 <span class="icon is-size-1"><i class="material-icons">add</i></span>
-              </div>
-              <div class="control loading-mask is-size-1" :class="{ 'is-loading': loading }"></div>
+              </span>
+              <span class="control loading-mask is-size-1" :class="{ 'is-loading': loading }"></span>
             </label>
           </div>
         </div>
@@ -100,6 +100,9 @@
           opacity: .7;
         }
       }
+    }
+    .file-view {
+      border-radius: 5px;
     }
   }
 </style>
