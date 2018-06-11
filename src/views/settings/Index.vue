@@ -64,6 +64,8 @@
 <style lang="scss" rel="stylesheet/scss">
   #settings-index {
     display: flex;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling : touch;
 
     .settings-menu {
       width: 200px;
@@ -87,6 +89,9 @@
     }
 
     @media screen and (max-width: 768px) {
+      &.container {
+        height: calc(100vh - #{$header-nav-height + $footer-nav-height});
+      }
       .settings-menu {
         display: none;
         height: 100%;
