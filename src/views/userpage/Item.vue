@@ -372,7 +372,6 @@
           -webkit-line-clamp: 2;
           padding: 0 .5em;
           overflow: hidden;
-          line-height: 1.25;
         }
         &.next {
           border-top-right-radius: $size-1;

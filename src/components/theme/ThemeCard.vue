@@ -149,7 +149,6 @@
           width: 100%;
           margin: 0;
           margin-bottom: 1rem;
-          line-height: 1.25;
           display: -webkit-box;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 3;

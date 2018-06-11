@@ -133,6 +133,7 @@
       .image {
         max-height: 10rem;
         width: 100%;
+        margin: 0;
         overflow: hidden;
         border-top-right-radius: 6px;
         border-top-left-radius: 6px;
@@ -141,11 +142,8 @@
         .content {
           .subtitle,
           .description {
-            max-height: 4em;
+            max-height: 3.5em;
             overflow: hidden;
-          }
-          .subtitle {
-            line-height: 1.25;
           }
         }
       }

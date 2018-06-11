@@ -225,7 +225,6 @@
               .item-title {
                 display: flex;
                 max-height: 2.5em;
-                line-height: 1.25;
                 overflow: hidden;
               }
             }
