@@ -62,7 +62,7 @@
       .modal-card {
         height: 100vh !important;
         width: 100vw !important;
-        max-height: 100vh;
+        max-height: 100%;
         margin: 0;
       }
       .modal-close:before,
