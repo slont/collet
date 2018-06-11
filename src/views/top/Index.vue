@@ -59,24 +59,33 @@
                            tag="div" class="new-cullet-card card">
                 <div class="card-content">
                   <div class="media">
+                    <div class="media-left" v-if="item.theme.createdUser.image">
+                      <figure class="image circle is-32x32 flexbox">
+                        <user-image :src="item.theme.createdUser.image"/>
+                      </figure>
+                    </div>
                     <div class="media-content">
-                      <router-link class="theme-title subtitle text-color-weak is-size-7 clickable" tag="div"
-                                   :to="`/u/${item.theme.createdUser.id}/${item.theme.id}`">
-                        {{ item.theme.title }}
-                      </router-link>
+                      <div class="is-size-7 text-color-weak">
+                        <span>
+                          <router-link :to="`/u/${item.theme.createdUser.id}`" class="text-color-weak">
+                            <span class="has-text-weight-bold clickable">{{ item.theme.createdUser.name }}</span>
+                            <span>@{{ item.theme.createdUser.id }}</span>
+                          </router-link>
+                        </span>
+                        <span>-</span>
+                        <span>
+                          <span class="updated-at">{{ fromNow(item.updatedAt, 'MM/DD') }}</span>
+                        </span>
+                      </div>
+
                       <div class="item-title text-color-strong is-size-5 has-text-weight-bold clickable">
                         {{ item.name }}
                       </div>
 
-                      <div class="user-profile flexbox is-size-7">
-                        <figure class="image circle is-16x16 flexbox" v-if="item.theme.createdUser.image">
-                          <user-image :src="item.theme.createdUser.image"/>
-                        </figure>
-                        <router-link :to="`/u/${item.theme.createdUser.id}`" class="user-name text-color-weak clickable">
-                          {{ item.theme.createdUser.name }}
-                        </router-link>
-                        <span class="updated-at text-color-weak is-size-8 is-justify-end">{{ fromNow(item.updatedAt, 'YYYY/MM/DD') }}</span>
-                      </div>
+                      <router-link class="theme-title subtitle text-color-weak is-size-8 clickable is-justify-end"
+                                   :to="`/u/${item.theme.createdUser.id}/${item.theme.id}`" tag="div">
+                        {{ item.theme.title }}
+                      </router-link>
                     </div>
 
                     <div class="media-right" v-if="item.theme.image">
@@ -394,7 +403,7 @@
                   margin-bottom: .3em;
                 }
                 .theme-title {
-                  height: 1rem;
+                  height: 15px;
                   overflow: hidden;
                   text-overflow: ellipsis;
                   white-space: nowrap
@@ -443,23 +452,30 @@
               .media {
                 margin-bottom: .25em;
 
+                .media-left {
+                  margin-right: .5rem;
+                }
+                .media-right {
+                  margin-left: .5rem;
+                }
                 .media-content {
                   > :not(:last-child) {
-                    margin-bottom: .3em;
+                    margin-bottom: .25rem;
                   }
                   .theme-title {
-                    height: 1rem;
+                    height: 12px;
                     overflow: hidden;
+                    text-overflow: ellipsis;
                   }
                   .item-title {
                     display: flex;
                     max-height: 2.5em;
-                    line-height: 1.25;
+                    line-height: 1.2;
                     overflow: hidden;
                   }
                 }
                 + .content {
-                  margin-top: 1.25em;
+                  margin-top: .5rem;
                 }
               } // .media
             } // .card-content
