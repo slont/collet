@@ -165,7 +165,7 @@
             }
             .media-right {
               .image {
-                height: 60px;
+                height: 54px;
                 overflow: hidden;
 
                 img {
