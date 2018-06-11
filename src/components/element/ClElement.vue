@@ -36,7 +36,7 @@
 <style lang="scss" rel="stylesheet/scss">
   .cl-element {
     position: relative;
-    line-height: 1.25rem;
+    line-height: 1.25;
 
     .control {
       width: 100%;
