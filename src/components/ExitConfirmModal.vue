@@ -10,9 +10,9 @@
       </div>
     </div>
 
-    <footer class="modal-card-foot has-right">
-      <a @click="close" class="button">キャンセル</a>
-      <a @click="ok" class="button is-primary">OK</a>
+    <footer class="modal-card-foot">
+      <a @click="close" class="button is-medium">キャンセル</a>
+      <a @click="ok" class="ok-button button is-medium is-primary">OK</a>
     </footer>
   </modal>
 </template>
@@ -47,12 +47,17 @@
 <style lang="scss" rel="stylesheet/scss">
   #exit-confirm-modal {
     .modal-card {
+      position: fixed;
       top: 33%;
       left: 0;
-      position: fixed;
+      height: initial !important;
+      border-radius: 5px;
 
       .modal-card-body {
         max-height: 86px;
+      }
+      .ok-button {
+        margin-left: auto;
       }
     }
   }
