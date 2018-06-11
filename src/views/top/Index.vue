@@ -94,11 +94,23 @@
                   </div>
 
                   <div class="content" v-if="item.elements.length">
-                    <element-view :element="item.elements[0]"/>
-                    <element-view :element="item.elements[1]" v-if="item.elements[1]"/>
+                    <template v-if="2 <= item.elements.length && 'image' === item.elements[0].type && 'image' === item.elements[1].type">
+                      <div class="images-divided-2 flexbox">
+                        <div class="image-left trim">
+                          <img :src="item.elements[0].valueStr" :srcset="`${item.elements[0].valueStr}_640w 640w`"/>
+                        </div>
+                        <div class="image-right trim">
+                          <img :src="item.elements[1].valueStr" :srcset="`${item.elements[1].valueStr}_640w 640w`"/>
+                        </div>
+                      </div>
+                    </template>
+                    <template v-else>
+                      <element-view :element="item.elements[0]"/>
+                      <element-view :element="item.elements[1]" v-if="item.elements[1]"/>
+                    </template>
                   </div>
-                </div>
-              </router-link>
+                </div><!-- .card-content -->
+              </router-link><!-- .new-cullet-card -->
             </div>
           </div>
           <div class="button is-loading fullwidth is-large" key="loading" v-if="newItems.length && newItems.length < newItemsTotal"></div>

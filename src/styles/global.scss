@@ -334,3 +334,29 @@ body {
     text-decoration: underline;
   }
 }
+
+.images-divided-2 {
+  display: flex;
+  overflow: hidden;
+  max-height: 20rem;
+  border-radius: 5px;
+
+  .image-left {
+    border-right: 1px solid white;
+  }
+  .image-right {
+    border-left: 1px solid white;
+  }
+  .trim {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    overflow: hidden;
+
+    img {
+      height: 100%;
+      max-width: initial;
+    }
+  }
+}
