@@ -371,6 +371,29 @@ body {
   }
 }
 
+.theme-actions {
+  .level-item {
+    display: flex;
+    align-items: center;
+    color: darkgrey;
+
+    .icon {
+      font-size: $size-5;
+    }
+  }
+  .favorite-action {
+    &:hover {
+      opacity: .8;
+    }
+    &.is-active {
+      color: deeppink;
+    }
+  }
+  .edit-action {
+    margin-right: 0;
+  }
+}
+
 @media screen and (min-width: 1088px) {
   .navbar > .container .navbar-brand,
   .container > .navbar .navbar-brand {

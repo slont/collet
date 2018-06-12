@@ -40,7 +40,7 @@
 
         <div class="theme-description content is-size-7" v-if="theme.description">{{ theme.description }}</div>
 
-        <nav class="actions level is-mobile is-size-4">
+        <nav class="theme-actions actions level is-mobile is-size-4">
           <div class="level-left">
             <a class="favorite-action level-item" :class="{ 'is-active': theme.favorite }">
               <span class="icon" @click.stop.prevent="onClickFavorite">
@@ -193,28 +193,7 @@
           padding-top: .5em;
           border-top: $border-style;
         }
-        .actions {
-          .level-item {
-            display: flex;
-            align-items: center;
-            color: darkgrey;
 
-            .icon {
-              font-size: $size-5;
-            }
-          }
-          .favorite-action {
-            &:hover {
-              opacity: .8;
-            }
-            &.is-active {
-              color: deeppink;
-            }
-          }
-          .edit-action {
-            margin-right: 0;
-          }
-        }
       }
     }
   }
