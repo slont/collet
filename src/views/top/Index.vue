@@ -237,6 +237,8 @@
       @include label-accent-sp;
     }
     .updated-cullet-list {
+      background-color: white;
+
       .media-right {
         .image {
           height: 3rem;
@@ -383,7 +385,7 @@
 
     @media screen and (max-width: 768px) {
       height: calc(100vh - #{$header-nav-height + $footer-nav-height});
-      background-color: $bg-color-main;
+      background-color: $bg-color;
 
       .updated-cullet-list {
         margin: 0;
