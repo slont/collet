@@ -259,7 +259,7 @@
 
     > .container {
       padding: 1rem;
-      max-width: 720px;
+      max-width: $width;
     }
     .theme-title {
       display: -webkit-box;
