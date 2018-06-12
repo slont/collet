@@ -122,7 +122,7 @@
 
       .navbar-brand {
         .logo {
-          padding-left: .5em;
+          padding-left: 0;
           padding-right: 0;
           cursor: pointer;
 

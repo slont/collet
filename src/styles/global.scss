@@ -363,3 +363,14 @@ body {
     }
   }
 }
+
+@media screen and (min-width: 1088px) {
+  .navbar > .container .navbar-brand,
+  .container > .navbar .navbar-brand {
+    margin-left: 0;
+  }
+  .navbar > .container .navbar-menu,
+  .container > .navbar .navbar-menu {
+    margin-right: 0;
+  }
+}
