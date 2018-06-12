@@ -255,6 +255,7 @@
     height: calc(100vh - #{$header-nav-height});
     overflow-y: scroll;
     -webkit-overflow-scrolling : touch;
+    background-color: white;
 
     > .container {
       padding: 1rem;
