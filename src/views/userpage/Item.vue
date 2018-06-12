@@ -1,34 +1,37 @@
 <template>
   <div id="userpage-item" @scroll="onScrollContainer">
     <div class="container">
-      <router-link :to="`/u/${$route.params.userId}/${themeId}`" tag="div"
-                   class="theme-title is-size-7 has-text-underline text-color-weak clickable">
-        {{ theme.title }}
-      </router-link>
-      <div class="theme-tags tags is-size-8" v-if="theme.tags.length">
-        <el-tag v-for="tag in theme.tags" :key="tag.tagId" type="warning" class="clickable"
-                @click.native="$router.push(`/tag?name=${tag.name}`)">
-          #{{ tag.name }}
-        </el-tag>
-      </div>
-      <div class="user-profile flexbox is-size-7">
-        <figure class="image circle is-16x16 flexbox" v-if="theme.createdUser.image">
-          <user-image :src="theme.createdUser.image"/>
-        </figure>
-        <div @click.stop="$router.push(`/u/${theme.createdUser.id}`)">
-          <span class="user-name clickable">{{ theme.createdUser.name }}</span><span class="user-id text-color-weak">@{{ theme.createdUser.id }}</span>
+      <div class="media">
+        <div class="media-left">
+          <figure class="image circle flexbox" v-if="theme.createdUser.image">
+            <user-image :src="theme.createdUser.image"/>
+          </figure>
         </div>
-      </div>
+        <div class="media-content">
+          <div @click.stop="$router.push(`/u/${theme.createdUser.id}`)">
+            <router-link :to="`/u/${theme.createdUser.id}`" class="is-size-7 text-color-weak">
+              <span class="has-text-weight-bold clickable">{{ theme.createdUser.name }}</span>
+              <span>@{{ theme.createdUser.id }}</span>
+            </router-link>
+            <router-link :to="`/u/${$route.params.userId}/${themeId}`" tag="div"
+                         class="theme-title is-size clickable">
+              {{ theme.title }}
+            </router-link>
+          </div>
+        </div>
+        <router-link :to="`/u/${$route.params.userId}/${themeId}`" class="media-right clickable" tag="div" v-if="theme.image">
+          <figure class="image"><img :src="theme.image" :srcset="`${theme.image}_640w 640w`"></figure>
+        </router-link>
+      </div><!-- .media -->
 
       <div class="cullet-container">
         <transition :name="transition">
           <div v-for="item in items" class="cullet-content" v-if="currentItem.id === item.id" :key="item.id">
             <div class="cullet-info">
-              <div class="updated-at text-color-weak is-size-7 has-text-right" v-if="item.updatedAt">
-                <span class="icon"><i class="far fa-clock"></i></span>
-                {{ fromNow(item.createdAt) }}
-                <span class="is-size-8" v-if="1 < $moment(item.updatedAt).diff($moment(item.createdAt), 'hours')">
-                  ({{ item.updatedAt | moment('YYYY/MM/DD HH:mm') }} 更新)
+              <div class="updated-at text-color-weak is-size-8" v-if="item.updatedAt">
+                <span>{{ fromNow(item.createdAt, 'YYYY/MM/DD HH:mm') }}</span>
+                <span v-if="1 < $moment(item.updatedAt).diff($moment(item.createdAt), 'hours')">
+                  ({{ item.updatedAt | moment('M/D H:m') }} 更新)
                 </span>
               </div>
               <div class="title is-3">
@@ -259,23 +262,32 @@
 
     > .container {
       padding: 1rem;
-      max-width: $width;
+      max-width: 720px;
     }
-    .theme-title {
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 1;
-      overflow: hidden;
-    }
-    .theme-tags {
-      margin-top: .5em;
-      margin-bottom: 0;
-    }
-    .user-profile {
-      margin-top: .5em;
+    .media {
+      .media-left {
+        margin-right: .5rem;
 
-      .image {
-        margin-right: .5em;
+        .image {
+          height: 2.25rem;
+          width: 2.25rem;
+        }
+      }
+      .theme-title {
+        margin-top: .125rem;
+      }
+      .media-right {
+        .image {
+          display: flex;
+          align-items: center;
+          height: 3.75rem;
+          z-index: 1;
+
+          img {
+            height: 4.5rem;
+            width: auto;
+          }
+        }
       }
     }
     .cullet-container {
@@ -293,11 +305,14 @@
           margin-bottom: 2rem;
           border-bottom: $border-style;
 
-          .title {
-            margin-bottom: .25em;
+          .updated-at {
+            margin-top: -.75rem;
+            margin-bottom: 2rem;
           }
-          .subtitle {
-            line-height: inherit;
+          .title {
+            line-height: 1.5;
+            font-feature-settings: 'palt' 1;
+            letter-spacing: .08em;
           }
         }
         .item-elements {
