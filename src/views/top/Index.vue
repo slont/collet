@@ -310,7 +310,6 @@
           .media-right {
             .image {
               height: 54px;
-              overflow: hidden;
 
               img {
                 height: 100%;

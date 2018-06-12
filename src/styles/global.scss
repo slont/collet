@@ -20,6 +20,12 @@ body {
   line-height: 1.25;
 }
 
+@media screen and (min-width: 769px) {
+  html {
+    font-size: 20px;
+  }
+}
+
 .modal {
   .modal-card-head {
     &.action-modal-header {
@@ -184,6 +190,7 @@ body {
 
 .image {
   border-radius: 5px;
+  overflow: hidden;
 
   &.is-square,
   &.is-1by1,
