@@ -265,6 +265,8 @@
       max-width: 720px;
     }
     .media {
+      min-height: 3.75rem;
+
       .media-left {
         margin-right: .5rem;
 
@@ -275,6 +277,8 @@
       }
       .theme-title {
         margin-top: .125rem;
+        max-height: 1rem;
+        overflow: hidden;
       }
       .media-right {
         .image {
@@ -307,7 +311,7 @@
 
           .updated-at {
             margin-top: -.75rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
           }
           .title {
             line-height: 1.5;
