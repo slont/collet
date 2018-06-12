@@ -60,7 +60,7 @@
                 <div class="card-content">
                   <div class="media">
                     <div class="media-left" v-if="item.theme.createdUser.image">
-                      <figure class="image circle is-32x32 flexbox">
+                      <figure class="image circle flexbox">
                         <user-image :src="item.theme.createdUser.image"/>
                       </figure>
                     </div>
@@ -74,15 +74,11 @@
                         </span>
                         <span>-</span>
                         <span>
-                          <span class="updated-at">{{ fromNow(item.updatedAt, 'MM/DD') }}</span>
+                          <span class="created-at">{{ fromNow(item.createdAt, 'MM/DD') }}</span>
                         </span>
                       </div>
 
-                      <div class="item-title text-color-strong is-size-5 has-text-weight-bold clickable">
-                        {{ item.name }}
-                      </div>
-
-                      <router-link class="theme-title subtitle text-color-weak is-size-8 clickable is-justify-end"
+                      <router-link class="theme-title subtitle text-color-weak is-size-7 clickable is-justify-end"
                                    :to="`/u/${item.theme.createdUser.id}/${item.theme.id}`" tag="div">
                         {{ item.theme.title }}
                       </router-link>
@@ -91,6 +87,10 @@
                     <div class="media-right" v-if="item.theme.image">
                       <figure class="image"><img :src="item.theme.image" :srcset="`${item.theme.image}_640w 640w`"></figure>
                     </div>
+                  </div>
+
+                  <div class="item-title text-color-strong is-size-5 has-text-weight-bold clickable">
+                    {{ item.name }}
                   </div>
 
                   <div class="content" v-if="item.elements.length">
@@ -307,20 +307,58 @@
           &:hover {
             cursor: pointer;
           }
-          .media-right {
-            .image {
-              height: 54px;
+          .media {
+            margin-bottom: .25em;
 
-              img {
-                height: 100%;
-                width: auto;
+            .media-left {
+              margin-right: .5rem;
+
+              .image {
+                height: 2rem;
+                width: 2rem;
               }
+            }
+            .media-content {
+              > :not(:last-child) {
+                margin-bottom: .25rem;
+              }
+            }
+            .media-right {
+              margin-left: .5rem;
+
+              .image {
+                display: flex;
+                align-items: center;
+                height: 2.25rem;
+
+                img {
+                  height: 3rem;
+                  width: auto;
+                }
+              }
+            }
+            + .content {
+              margin-top: 1rem;
             }
           }
           .user-profile {
             .image {
               margin-right: .35em;
             }
+          }
+          .theme-title {
+            height: 1.125em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          .item-title {
+            display: flex;
+            margin: 1rem 0 .75rem;
+            max-height: 2.5em;
+            line-height: 1.2;
+            font-feature-settings: 'palt' 1;
+            letter-spacing: .08em;
+            overflow: hidden;
           }
           .element-view {
             .text-element {
@@ -474,20 +512,6 @@
                   > :not(:last-child) {
                     margin-bottom: .25rem;
                   }
-                  .theme-title {
-                    height: 12px;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                  }
-                  .item-title {
-                    display: flex;
-                    max-height: 2.5em;
-                    line-height: 1.2;
-                    overflow: hidden;
-                  }
-                }
-                + .content {
-                  margin-top: .5rem;
                 }
               } // .media
             } // .card-content
