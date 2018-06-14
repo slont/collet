@@ -21,8 +21,8 @@
             </div>
 
             <nav class="level is-mobile">
-              <div class="level-left">
-                <div class="level-item">
+              <div class="level-left fullwidth">
+                <div class="level-item fullwidth">
                   <p class="subtitle is-7 has-text-grey">{{ siteName }}</p>
                 </div>
               </div>
@@ -134,9 +134,8 @@
         max-height: 10rem;
         width: 100%;
         margin: 0;
-        overflow: hidden;
-        border-top-right-radius: 6px;
-        border-top-left-radius: 6px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
       }
       .card-content {
         .content {
@@ -145,6 +144,11 @@
             max-height: 3.5em;
             overflow: hidden;
           }
+        }
+        .level .level-left .subtitle {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
     }
