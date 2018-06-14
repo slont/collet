@@ -390,12 +390,14 @@ body {
     }
   }
   .favorite-action {
+    color: deeppink;
+
     &:hover {
       opacity: .8;
     }
-    &.is-active {
-      color: deeppink;
-    }
+  }
+  .item-action {
+    color: $info;
   }
   .edit-action {
     margin-right: 0;
