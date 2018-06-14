@@ -51,7 +51,6 @@
       top: 33%;
       left: 0;
       height: initial !important;
-      border-radius: 5px;
 
       .modal-card-body {
         max-height: 86px;

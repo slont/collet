@@ -214,9 +214,6 @@
 
     @media screen and (min-width: 769px) {
       .item-list {
-        .card {
-          border-radius: 5px;
-        }
       }
     }
 

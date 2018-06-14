@@ -103,8 +103,6 @@
 
     @media screen and (min-width: 769px) {
       .theme-card {
-        border-radius: 5px;
-
         .card-image > .image,
         .dark-mask {
           border-top-right-radius: 5px;
