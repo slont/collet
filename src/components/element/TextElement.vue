@@ -51,6 +51,7 @@
       }
     }
     .value {
+      line-height: 1.5;
       white-space: pre-wrap;
       word-break: break-word;
     }
