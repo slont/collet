@@ -2,8 +2,8 @@
   <div id="userpage-item" @scroll="onScrollContainer">
     <div class="container">
       <div class="media">
-        <div class="media-left">
-          <figure class="image circle flexbox" v-if="theme.createdUser.image">
+        <div class="media-left" v-if="theme.createdUser.image">
+          <figure class="image circle flexbox">
             <user-image :src="theme.createdUser.image"/>
           </figure>
         </div>
@@ -14,7 +14,7 @@
               <span>@{{ theme.createdUser.id }}</span>
             </router-link>
             <router-link :to="`/u/${$route.params.userId}/${themeId}`" tag="div"
-                         class="theme-title is-size clickable">
+                         class="theme-title is-size text-color-weak has-text-weight-bold clickable">
               {{ theme.title }}
             </router-link>
           </div>
@@ -34,7 +34,7 @@
                   ({{ item.updatedAt | moment('M/D H:m') }} 更新)
                 </span>
               </div>
-              <div class="title is-3">
+              <div class="title is-3 flexbox">
                 {{ item.name }}
 
                 <template v-if="loggedIn && isMyPage">
@@ -265,7 +265,7 @@
       max-width: 720px;
     }
     .media {
-      min-height: 3.75rem;
+      min-height: 3.5rem;
 
       .media-left {
         margin-right: .5rem;
@@ -281,10 +281,12 @@
         overflow: hidden;
       }
       .media-right {
+        margin-left: .5rem;
+
         .image {
           display: flex;
           align-items: center;
-          height: 3.75rem;
+          height: 3.5rem;
           z-index: 1;
 
           img {
@@ -306,17 +308,21 @@
           margin-bottom: 120px;
         }
         .cullet-info {
-          margin-bottom: 2rem;
+          margin-bottom: 1rem;
           border-bottom: $border-style;
 
           .updated-at {
             margin-top: -.75rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
           }
           .title {
             line-height: 1.5;
             font-feature-settings: 'palt' 1;
-            letter-spacing: .08em;
+            letter-spacing: .04em;
+
+            .edit-button {
+              margin-left: auto;
+            }
           }
         }
         .item-elements {

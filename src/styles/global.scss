@@ -323,10 +323,14 @@ body {
   font-size: $size-8;
 }
 
+.tag-element .tags-control {
+  margin-bottom: -.25rem;
+}
 .el-tag {
   font-size: 1em;
-  padding: 0 .5em;
   height: 2em;
+  padding: 0 .5em;
+  margin-bottom: .25rem;
   line-height: 1.8em;
 }
 .tags {

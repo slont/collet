@@ -78,7 +78,7 @@
                         </span>
                       </div>
 
-                      <router-link class="theme-title subtitle text-color-weak is-size-7 clickable is-justify-end"
+                      <router-link class="theme-title subtitle text-color-weak is-size-7 has-text-weight-bold clickable is-justify-end"
                                    :to="`/u/${item.theme.createdUser.id}/${item.theme.id}`" tag="div">
                         {{ item.theme.title }}
                       </router-link>
@@ -353,11 +353,11 @@
           }
           .item-title {
             display: flex;
-            margin: 1rem 0 .75rem;
+            margin: .75rem 0;
             max-height: 2.5em;
             line-height: 1.2;
             font-feature-settings: 'palt' 1;
-            letter-spacing: .08em;
+            letter-spacing: .04em;
             overflow: hidden;
           }
           .element-view {
@@ -412,9 +412,6 @@
         .item-list {
           &:not(:last-child) {
             margin-bottom: 1.5rem;
-          }
-          .card {
-            border-radius: 5px;
           }
         }
       }
@@ -488,14 +485,14 @@
           margin: 0;
 
           > .column {
-            padding: 0;
+            padding: 0 .25rem;
           }
         }
         .item-list {
           padding: 0;
 
           &:not(:last-child) {
-            margin-bottom: 1em;
+            margin-bottom: .75rem;
           }
           .new-cullet-card {
             .card-content {
