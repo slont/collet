@@ -50,8 +50,8 @@
             <div class="navbar-item">
               <div class="field is-grouped">
                 <p class="control">
-                  <router-link class="button is-primary" to="/signup">新規登録</router-link>
-                  <router-link class="button is-primary is-outlined" :to="`/signin?redirect=${encodeURIComponent($route.path)}`">ログイン</router-link>
+                  <router-link class="button is-primary is-rounded" to="/signup">新規登録</router-link>
+                  <router-link class="button is-primary is-outlined is-rounded" :to="`/signin?redirect=${encodeURIComponent($route.path)}`">ログイン</router-link>
                 </p>
               </div>
             </div>
