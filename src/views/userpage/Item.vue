@@ -8,25 +8,23 @@
           </figure>
         </div>
         <div class="media-content">
-          <div @click.stop="$router.push(`/u/${theme.createdUser.id}`)">
-            <router-link :to="`/u/${theme.createdUser.id}`" class="is-size-7 text-color-weak">
-              <span class="has-text-weight-bold clickable">{{ theme.createdUser.name }}</span>
-              <span>@{{ theme.createdUser.id }}</span>
-            </router-link>
-            <router-link :to="`/u/${$route.params.userId}/${themeId}`" tag="div"
-                         class="theme-title is-size text-color-weak has-text-weight-bold clickable">
-              {{ theme.title }}
-            </router-link>
-            <div class="theme-actions">
-              <span class="favorite-action action">
-                <span class="icon"><i class="fa-heart fa-pull-left" :class="[theme.favorite ? 'fas' : 'far']"></i></span>
-                <span class="favorite-count count has-text-weight-bold" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
-              </span>
-              <span class="item-action action">
-                <span class="icon"><i class="fas fa-list-ul fa-pull-left"></i></span>
-                <span class="item-count count has-text-weight-bold">{{ theme.itemCount }}</span>
-              </span>
-            </div>
+          <router-link :to="`/u/${theme.createdUser.id}`" class="is-size-7 text-color-weak">
+            <span class="has-text-weight-bold clickable">{{ theme.createdUser.name }}</span>
+            <span>@{{ theme.createdUser.id }}</span>
+          </router-link>
+          <router-link :to="`/u/${$route.params.userId}/${themeId}`" tag="div"
+                       class="theme-title is-size text-color-weak has-text-weight-bold clickable">
+            {{ theme.title }}
+          </router-link>
+          <div class="theme-actions">
+            <span class="favorite-action action">
+              <span class="icon"><i class="fa-heart fa-pull-left" :class="[theme.favorite ? 'fas' : 'far']"></i></span>
+              <span class="favorite-count count has-text-weight-bold" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
+            </span>
+            <span class="item-action action">
+              <span class="icon"><i class="fas fa-list-ul fa-pull-left"></i></span>
+              <span class="item-count count has-text-weight-bold">{{ theme.itemCount }}</span>
+            </span>
           </div>
         </div>
         <router-link :to="`/u/${$route.params.userId}/${themeId}`" class="media-right clickable" tag="div" v-if="theme.image">
