@@ -8,15 +8,12 @@
           </figure>
         </div>
         <div class="media-content">
-          <router-link :to="`/u/${theme.createdUser.id}`" class="is-size-7 text-color-weak">
-            <span class="has-text-weight-bold clickable">{{ theme.createdUser.name }}</span>
-            <span>@{{ theme.createdUser.id }}</span>
-          </router-link>
-          <router-link :to="`/u/${$route.params.userId}/${themeId}`" tag="div"
-                       class="theme-title is-size text-color-weak has-text-weight-bold clickable">
-            {{ theme.title }}
-          </router-link>
-          <div class="theme-actions">
+          <div class="flexbox">
+            <router-link :to="`/u/${theme.createdUser.id}`" class="is-size-7 text-color-weak">
+              <span class="has-text-weight-bold clickable">{{ theme.createdUser.name }}</span>
+              <span>@{{ theme.createdUser.id }}</span>
+            </router-link>
+            <span class="theme-actions">
             <span class="favorite-action action">
               <span class="icon"><i class="fa-heart fa-pull-left" :class="[theme.favorite ? 'fas' : 'far']"></i></span>
               <span class="favorite-count count has-text-weight-bold" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
@@ -25,7 +22,12 @@
               <span class="icon"><i class="fas fa-list-ul fa-pull-left"></i></span>
               <span class="item-count count has-text-weight-bold">{{ theme.itemCount }}</span>
             </span>
+          </span>
           </div>
+          <router-link :to="`/u/${$route.params.userId}/${themeId}`" tag="div"
+                       class="theme-title is-size text-color-weak has-text-weight-bold clickable">
+            {{ theme.title }}
+          </router-link>
         </div>
         <router-link :to="`/u/${$route.params.userId}/${themeId}`" class="media-right clickable" tag="div" v-if="theme.image">
           <figure class="image"><img :src="theme.image" :srcset="`${theme.image}_640w 640w`"></figure>
@@ -284,14 +286,10 @@
         }
       }
       .media-content {
-        .theme-title {
-          margin-top: .125rem;
-          max-height: 1rem;
-          overflow: hidden;
-        }
         .theme-actions {
-          display: flex;
+          display: inline-flex;
           margin-top: .25rem;
+          margin-left: auto;
 
           .action {
             display: flex;
@@ -303,6 +301,11 @@
           .item-action {
             margin-left: .5rem;
           }
+        }
+        .theme-title {
+          margin-top: .125rem;
+          max-height: 1rem;
+          overflow: hidden;
         }
       }
       .media-right {
@@ -341,7 +344,7 @@
             margin-bottom: 1rem;
           }
           .title {
-            line-height: 1.5;
+            line-height: 1.25;
             font-feature-settings: 'palt' 1;
             letter-spacing: .04em;
 
