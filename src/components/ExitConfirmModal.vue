@@ -11,8 +11,8 @@
     </div>
 
     <footer class="modal-card-foot">
-      <a @click="close" class="button is-medium">キャンセル</a>
-      <a @click="ok" class="ok-button button is-medium is-primary">OK</a>
+      <a @click="close" class="button is-medium is-rounded">キャンセル</a>
+      <a @click="ok" class="ok-button button is-medium is-primary is-rounded">OK</a>
     </footer>
   </modal>
 </template>
@@ -56,8 +56,10 @@
       .modal-card-body {
         max-height: 86px;
       }
-      .ok-button {
-        margin-left: auto;
+      .modal-card-foot {
+        .button {
+          width: 50%;
+        }
       }
     }
   }
