@@ -1,5 +1,5 @@
 <template>
-  <cl-element class="twitter-element" :params="params" placeholder="ラベル（オプション）"
+  <cl-element class="twitter-element" :params="params" placeholder="ラベル（オプショナル）"
               @remove="$emit('remove')" :editable="editable"
               @focus="$emit('focus')" @blur="$emit('blur')">
     <span class="element-type-icon fa-icon icon is-left is-size-6" v-if="editable">

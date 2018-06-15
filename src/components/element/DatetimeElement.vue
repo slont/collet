@@ -1,5 +1,5 @@
 <template>
-  <cl-element class="datetime-element" :params="params" placeholder="ラベル（オプション）"
+  <cl-element class="datetime-element" :params="params" placeholder="ラベル（オプショナル）"
               @remove="$emit('remove')" :editable="editable"
               @focus="$emit('focus')" @blur="$emit('blur')">
     <span class="element-type-icon icon is-left" v-if="editable">
