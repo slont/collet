@@ -37,6 +37,11 @@
       },
       editable: Boolean
     },
+    created() {
+      if (!this.params.valueStr) {
+        this.params.valueStr = '5'
+      }
+    },
     methods: {
       plus() {
         this.params.valueStr = String(Math.min(10, Number(this.params.valueStr) + 1))
