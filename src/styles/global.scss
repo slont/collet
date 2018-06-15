@@ -66,30 +66,6 @@ body {
   margin: 0;
 }
 
-.el-input input:not([readonly="readonly"]) {
-  font-size: 16px;
-  transform: scale(0.875);
-  min-width: 114%;
-  margin-left: -1em;
-}
-.textarea {
-  font-size: 16px;
-  transform: scale(0.875);
-  margin-left: -1.7rem;
-  min-width: 114%;
-}
-
-.input {
-  &.label,
-  &.is-size-6 ,
-  &.is-size-7 {
-    font-size: 16px !important;
-    transform: scale(0.875);
-    margin-left: -1.7rem;
-    min-width: 114%;
-  }
-}
-
 .icon {
   height: 1em;
   width: auto;
