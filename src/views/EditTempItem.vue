@@ -5,7 +5,7 @@
         <i class="material-icons">arrow_back</i>
       </span>
 
-      <span class="modal-card-title title is-6 has-text-white">カレット作成</span>
+      <span class="modal-card-title title is-6 has-text-white">カレット編集</span>
 
       <guard-button :click="save" class="ok-button is-success is-inverted is-outlined is-size-5">
         保存
@@ -22,19 +22,9 @@
         </div>
       </div>
 
-      <div class="template-tabs tabs is-small">
-        <ul>
-          <li class="actions-tab">
-            <span class="icon is-size-4" @click="isEditable = !isEditable" v-if="item.elements.length">
-              <i class="material-icons" :class="[isEditable ? 'has-text-dark' : 'has-text-grey-light']">settings</i>
-            </span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="item-elements" :class="{ 'is-fullwidth': !isEditable }">
+      <div class="item-elements">
         <div v-for="(element, i) in item.elements" :key="i" class="field element-field flexbox">
-          <div class="sort-buttons flexbox" v-if="isEditable">
+          <div class="sort-buttons flexbox">
             <a class="button up-button is-white" @click="upOrder(i)"><i class="material-icons">arrow_upward</i></a>
             <span class="element-order">{{ element.order + 1 }}</span>
             <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
@@ -55,13 +45,13 @@
           <rating-element :params="element" v-else-if="'rating' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
           <switch-element :params="element" v-else-if="'switch' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
 
-          <a @click="removeElement(i)" class="delete" v-if="isEditable"></a>
+          <span @click="removeElement(i)" class="delete-icon icon is-size-4 has-text-danger"><i class="far fa-times-circle"></i></span>
         </div>
       </div>
     </div>
 
     <footer class="modal-card-foot-expander" @click="onBlurInput" v-if="!isActiveFooter">
-      <span class="icon has-text-grey-light is-size-5"><i class="material-icons">arrow_drop_up</i></span>
+      <span class="icon is-size-4"><i class="material-icons">arrow_drop_up</i></span>
     </footer>
     <footer class="modal-card-foot slider" :class="{ 'is-active': isActiveFooter }">
       <cl-buttons @add="addElement"/>
@@ -115,20 +105,24 @@
           name: '',
           elements: []
         },
-        isEditable: false,
+        itemCacheStr: '',
         isActiveFooter: true,
         isSaved: false,
         errorMessage: ''
       }
     },
+    computed: {
+      isModified: ({item, itemCacheStr}) => itemCacheStr !== JSON.stringify(item)
+    },
     created() {
       this.refresh()
+      this.itemCacheStr = JSON.stringify(this.item)
     },
     mounted() {
       this.$refs.editTempItem.open()
     },
     beforeRouteLeave(to, from, next) {
-      if (!this.isSaved) {
+      if (this.isModified) {
         this.$refs.exitConfirmModal.open(next)
       } else {
         next()
@@ -136,7 +130,11 @@
     },
     methods: {
       refresh() {
-        this.addElement(Object.assign({}, ELEMENT, { type: 'text' }))
+        if (!this.$store.state.tempItem.elements.length) {
+          this.addElement(Object.assign({}, ELEMENT, { type: 'text' }))
+        } else {
+          this.item = JSON.parse(JSON.stringify(this.$store.state.tempItem))
+        }
       },
       close() {
         Object.assign(this.$data, this.$options.data.call(this))
@@ -145,6 +143,8 @@
       },
       save() {
         this.$store.commit('SET_TEMP_ITEM', this.item)
+        this.$router.push(`/`)
+        this.close()
       },
       onFocusInput(e) {
         this.isActiveFooter = false
@@ -260,10 +260,10 @@
               border-bottom-width: 2px;
               border-radius: 0;
               box-shadow: none;
-              height: $size-1;
+              height: $size-2;
               margin-bottom: 0;
               padding: 0;
-              line-height: $size-1;
+              line-height: $size-2;
 
               &::placeholder {
                 color: rgba($primary, .25);
@@ -272,26 +272,15 @@
           }
         }
         .item-elements {
-          &.is-fullwidth {
-            .element-field {
-              margin-left: -.125rem;
-
-              .cl-element {
-                flex: .95;
-              }
-            }
-          }
           .element-field {
             justify-content: center;
             min-height: 78px;
 
             .sort-buttons {
-              flex: .05;
               flex-direction: column;
 
               .button {
-                width: 1.5rem;
-                border: none;
+                padding: 0;
 
                 .material-icons {
                   color: gainsboro;
@@ -299,16 +288,15 @@
               }
               .element-order {
                 font-size: .75em;
-                color: darkgrey;
                 text-align: center;
               }
             }
             .cl-element {
-              flex: .9;
-              padding: 0 .5rem;
+              width: 100%;
+              padding: 0 .25rem;
             }
-            .delete {
-              flex: .025;
+            .delete-icon {
+              margin: 0 .25rem;
             }
             &:first-child {
               .up-button {
@@ -320,9 +308,6 @@
               .down-button {
                 visibility: hidden;
               }
-            }
-            &:not(:last-child) {
-              margin-bottom: .25rem;
             }
           }
         }
@@ -359,6 +344,8 @@
         }
       }
       .modal-card-foot {
+        border-top: none;
+
         .checkbox {
           font-size: $size-small;
           margin-right: 1rem;

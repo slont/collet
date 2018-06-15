@@ -52,7 +52,6 @@
       position: relative;
 
       .label {
-        margin-bottom: -3px;
         padding-bottom: 0;
         box-shadow: none;
         border-top: none;
@@ -65,8 +64,8 @@
       + .element-type-icon {
         font-size: 1.5em;
         position: absolute;
-        top: .5em;
-        left: .5em;
+        top: .375em;
+        left: .25em;
         color: gainsboro;
 
         &.fa-icon {
