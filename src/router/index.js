@@ -5,6 +5,7 @@ import Signup from '@/views/Signup'
 import Signin from '@/views/Signin'
 import Auth from '@/views/Auth'
 import Confirm from '@/views/Confirm'
+import EditTempItem from '@/views/EditTempItem'
 import CreateItem from '@/views/CreateItem'
 import EditItem from '@/views/EditItem'
 import TopIndex from '@/views/top/Index'
@@ -83,6 +84,10 @@ export default new Router({
         {
           path: 'm/createItem/:themeId',
           component: CreateItem
+        },
+        {
+          path: 'm/editTempItem',
+          component: EditTempItem
         },
         {
           path: 'm/editItem/:themeId/:itemId',

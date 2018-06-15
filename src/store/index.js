@@ -18,7 +18,10 @@ export default new Vuex.Store({
       templates: []
     },
     themes: [],
-    tempItem: {},
+    tempItem: {
+      name: '',
+      elements: []
+    },
     activeHeader: true,
     activeFooter: true
   },

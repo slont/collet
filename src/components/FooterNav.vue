@@ -28,6 +28,11 @@
                      class="navbar-item button is-primary is-outlined is-rounded">
           ログイン
         </router-link>
+
+        <a @click="onClickTempAdd" class="navbar-item button is-primary is-rounded">
+          <span class="icon is-size-3"><i class="fas fa-pencil-alt"></i></span>
+        </a>
+
         <router-link to="/signup"
                      class="navbar-item button is-primary is-rounded">
           新規登録
@@ -78,12 +83,15 @@
           })
         }
       },
-      async onClickAdd() {
+      onClickAdd() {
         if (this.$store.state.theme.id) {
           this.$router.push(`/m/createItem/${this.$store.state.theme.id}`)
         } else {
           this.$refs.themeCreateModal.open()
         }
+      },
+      onClickTempAdd() {
+        this.$router.push(`/m/editTempItem`)
       }
     }
   }
