@@ -1,7 +1,32 @@
 <template>
   <div id="top-index" @scroll.passive="infiniteScroll">
     <div class="container">
-      <div class="updated-cullet-list" v-if="user.id && updatedItems.length">
+      <div class="temp-cullet" v-if="!loggedIn && tempItem.createdAt">
+        <router-link :to="`/u/${user.id}`" tag="label" class="temp-cullet-label label is-size-5 has-text-white has-text-centered">
+          Myカレット
+        </router-link>
+        <div class="updated-cullet flexbox column is-4-tablet card">
+          <div class="updated-at text-color-weak has-text-right">
+            <div class="flexbox">
+              <div class="updated-at-date is-size-7">{{ tempItem.updatedAt | moment('M/D') }}</div>
+              <div class="is-size-8">{{ tempItem.updatedAt | moment('ddd') }}</div>
+            </div>
+          </div>
+
+          <div class="media">
+            <div class="media-content">
+              <div class="item-title subtitle text-color-strong is-size-5 has-text-weight-bold">
+                {{ tempItem.name }}
+              </div>
+
+              <div class="content" v-if="tempItem.elements.length">
+                <element-view :element="tempItem.elements[0]"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- .temp-cullet -->
+      <div class="updated-cullet-list" v-else-if="loggedIn && user.id && updatedItems.length">
         <router-link :to="`/u/${user.id}`" tag="label" class="updated-cullet-label label is-size-5 has-text-white has-text-centered">
           Myカレット履歴
         </router-link>
@@ -146,9 +171,8 @@
       }
     },
     computed: {
-      user() {
-        return this.$store.state.user
-      },
+      user: ({$store}) => $store.state.user,
+      tempItem: ({$store}) => $store.state.tempItem,
       newItemsColumns() {
         if (this.isMobile) {
           return {
@@ -232,13 +256,28 @@
     > .container {
       max-width: $width;
     }
-    .updated-cullet-label,
-    .new-cullet-label {
+    [class*="-cullet-label"] {
       @include label-accent-sp;
     }
-    .updated-cullet-list {
-      background-color: white;
+    .updated-cullet {
+      .updated-at {
+        min-width: 54px;
 
+        .flexbox {
+          flex-direction: column;
+          justify-content: center;
+          height: 40px;
+          width: 40px;
+          color: $info;
+          font-weight: bold;
+          border-radius: 50%;
+          border: 2px solid $info;
+
+          .is-size-8 {
+            line-height: 1;
+          }
+        }
+      }
       .media-right {
         .image {
           height: 3rem;
@@ -250,43 +289,41 @@
           }
         }
       }
-      .updated-cullet {
-        .updated-at {
-          min-width: 54px;
+      .theme-title,
+      .item-title {
+        cursor: pointer;
 
-          .flexbox {
-            flex-direction: column;
-            justify-content: center;
-            height: 40px;
-            width: 40px;
-            color: $info;
-            font-weight: bold;
-            border-radius: 50%;
-            border: 2px solid $info;
-
-            .is-size-8 {
-              line-height: 1;
-            }
-          }
+        &:hover {
+          text-decoration: underline;
         }
-        .theme-title,
+      }
+      &.updated-cullet-link {
+        justify-content: center;
+
         .item-title {
-          cursor: pointer;
-
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-        &.updated-cullet-link {
-          justify-content: center;
-
-          .item-title {
-            .icon {
-              margin-left: .5rem;
-            }
+          .icon {
+            margin-left: .5rem;
           }
         }
       }
+    }
+    .temp-cullet {
+      .media {
+        flex: 1;
+
+        .content {
+          > :not(:last-child) {
+            margin-bottom: 1.5em;
+          }
+          .view-label {
+            font-size: $size-7;
+            color: $text-color-weak;
+          }
+        }
+      }
+    }
+    .updated-cullet-list {
+      background-color: white;
     }
     .new-cullet-label {
       &:before{
@@ -299,6 +336,9 @@
       }
     }
     .new-cullet-list {
+      &:not(:first-child) {
+        margin-top: 3px;
+      }
       > .columns {
         margin-top: 0;
       }
@@ -421,6 +461,11 @@
       height: calc(100vh - #{$header-nav-height + $footer-nav-height});
       background-color: $bg-color;
 
+      .temp-cullet {
+        .updated-cullet {
+          margin: 0 .25rem;
+        }
+      }
       .updated-cullet-list {
         margin: 0;
 
@@ -479,8 +524,6 @@
         }
       } // .updated-cullet-list
       .new-cullet-list {
-        margin: 0;
-
         > .columns {
           margin: 0;
 
