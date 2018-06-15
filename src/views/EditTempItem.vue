@@ -103,8 +103,10 @@
         draggingElement: null,
         item: {
           name: '',
-          elements: []
-        },
+          elements: [],
+          createdAt: null,
+          updatedAt: null
+      },
         itemCacheStr: '',
         isActiveFooter: true,
         isSaved: false,
@@ -122,7 +124,7 @@
       this.$refs.editTempItem.open()
     },
     beforeRouteLeave(to, from, next) {
-      if (this.isModified) {
+      if (!this.isSaved && this.isModified) {
         this.$refs.exitConfirmModal.open(next)
       } else {
         next()
@@ -142,8 +144,13 @@
         this.$refs.editTempItem.close()
       },
       save() {
+        if (!this.item.createdAt) {
+          this.item.createdAt = new Date()
+        }
+        this.item.updatedAt = new Date()
         this.$store.commit('SET_TEMP_ITEM', this.item)
-        this.$router.push(`/`)
+        this.isSaved = true
+        this.$router.push('/')
         this.close()
       },
       onFocusInput(e) {
