@@ -15,9 +15,9 @@
 
           <div class="media">
             <div class="media-content">
-              <div class="item-title subtitle text-color-strong is-size-5 has-text-weight-bold">
+              <router-link to="tempItem" class="item-title subtitle text-color-strong is-size-5 has-text-weight-bold">
                 {{ tempItem.name }}
-              </div>
+              </router-link>
 
               <div class="content" v-if="tempItem.elements.length">
                 <element-view :element="tempItem.elements[0]"/>
@@ -338,9 +338,6 @@
     .new-cullet-list {
       &:not(:first-child) {
         margin-top: 3px;
-      }
-      > .columns {
-        margin-top: 0;
       }
       .item-list {
         .new-cullet-card {
