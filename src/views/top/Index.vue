@@ -1,9 +1,9 @@
 <template>
   <div id="top-index" @scroll.passive="infiniteScroll">
     <div class="container">
-      <div class="temp-cullet" v-if="!loggedIn && tempItem.createdAt">
+      <div class="temp-cullet" v-if="tempItem.createdAt">
         <router-link :to="`/u/${user.id}`" tag="label" class="temp-cullet-label label is-size-5 has-text-white has-text-centered">
-          Myカレット
+          メモカレット
         </router-link>
         <div class="updated-cullet flexbox column is-4-tablet card">
           <div class="updated-at text-color-weak has-text-right">
@@ -26,11 +26,11 @@
           </div>
         </div>
       </div><!-- .temp-cullet -->
-      <div class="updated-cullet-list" v-else-if="loggedIn && user.id && updatedItems.length">
+      <div class="updated-cullet-list" v-if="loggedIn && user.id && updatedItems.length">
         <router-link :to="`/u/${user.id}`" tag="label" class="updated-cullet-label label is-size-5 has-text-white has-text-centered">
           Myカレット履歴
         </router-link>
-        <transition-group tag="div" name="slide-fade" mode="out-in" class="updated-cullet-list-card item-list columns is-multiline is-gapless-only">
+        <transition-group tag="div" name="slide-fade" mode="out-in" class="updated-cullet-list-card card item-list columns is-multiline is-gapless-only">
           <div v-for="(item, i) in updatedItems" class="updated-cullet flexbox column is-4-tablet" :key="item.id">
             <div class="updated-at text-color-weak has-text-right">
               <div class="flexbox" :class="{'is-hidden-mobile': !visibleUpdatedAt(item.updatedAt, i)}">
@@ -259,6 +259,11 @@
     [class*="-cullet-label"] {
       @include label-accent-sp;
     }
+    [class*="-cullet-list"] {
+      &:not(:first-child) {
+        margin-top: 3px;
+      }
+    }
     .updated-cullet {
       .updated-at {
         min-width: 54px;
@@ -312,6 +317,8 @@
         flex: 1;
 
         .content {
+          margin-top: .5rem;
+
           > :not(:last-child) {
             margin-bottom: 1.5em;
           }
@@ -321,9 +328,6 @@
           }
         }
       }
-    }
-    .updated-cullet-list {
-      background-color: white;
     }
     .new-cullet-label {
       &:before{
@@ -336,9 +340,6 @@
       }
     }
     .new-cullet-list {
-      &:not(:first-child) {
-        margin-top: 3px;
-      }
       .item-list {
         .new-cullet-card {
           &:hover {
@@ -456,7 +457,6 @@
 
     @media screen and (max-width: 768px) {
       height: calc(100vh - #{$header-nav-height + $footer-nav-height});
-      background-color: $bg-color;
 
       .temp-cullet {
         .updated-cullet {
@@ -467,7 +467,7 @@
         margin: 0;
 
         .updated-cullet-list-card {
-          background-color: white;
+          margin: 0 .25rem;
           z-index: 1;
         }
         .item-list {

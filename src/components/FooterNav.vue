@@ -133,7 +133,7 @@
         }
       }
       &.logged-in {
-        .navbar-item {
+        .navbar-item:not(.button) {
           justify-content: flex-end;
           height: 3.25rem;
           width: 20%;
