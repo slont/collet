@@ -259,7 +259,7 @@
     [class*="-cullet-label"] {
       @include label-accent-sp;
     }
-    [class*="-cullet-list"] {
+    [class$="-cullet-list"] {
       &:not(:first-child) {
         margin-top: 3px;
       }

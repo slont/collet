@@ -206,7 +206,7 @@
       }
       .item-list {
         padding: 0;
-        margin: 0 0 1em;
+        margin: 0 0 .75rem;
 
         .card-content {
           .media {
@@ -353,7 +353,7 @@
         }
       }
       .columns {
-        margin: 0;
+        margin: .25rem;
 
         .column {
           padding: 0;

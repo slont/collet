@@ -15,7 +15,7 @@
           </figure>
           <div>
             <div @click.stop="$router.push(`/u/${theme.createdUser.id}`)">
-              <span class="user-name has-text-white has-text-weight-bold">
+              <span class="user-name has-text-white has-text-weight-bold clickable">
                 {{ theme.createdUser.name }}</span><span class="user-id has-text-grey-lighter">@{{ theme.createdUser.id }}</span>
             </div>
             <div class="updated-at has-text-grey-lighter" v-if="theme.updatedAt">
@@ -119,7 +119,8 @@
       overflow: visible;
 
       .image {
-        overflow: hidden;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
       }
       .dark-mask {
         display: flex;
@@ -165,11 +166,6 @@
           .image {
             margin-right: .5em;
           }
-          .user-name {
-            &:hover {
-              text-decoration: underline;
-            }
-          }
         }
       }
       .add-item-button,
@@ -193,7 +189,6 @@
           padding-top: .5em;
           border-top: $border-style;
         }
-
       }
     }
   }

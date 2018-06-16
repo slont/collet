@@ -116,7 +116,7 @@
         margin: 0;
 
         .column {
-          padding: 0;
+          padding: .25rem;
         }
       }
     }

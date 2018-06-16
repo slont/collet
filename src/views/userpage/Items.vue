@@ -218,7 +218,7 @@
     }
 
     @media screen and (max-width: 768px) {
-      margin: 0;
+      margin: .25rem;
 
       > .column {
         padding: 0;
