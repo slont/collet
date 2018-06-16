@@ -13,8 +13,8 @@
             <div class="title is-3 flexbox">
               {{ item.name }}
 
-              <template v-if="!loggedIn">
-                <a class="edit-button button is-info is-outlined is-size-7" v-if="isMobile"
+              <template>
+                <a class="edit-button button is-info is-outlined is-size-7"
                    @click="$router.push(`/m/editTempItem`)">
                   <span class="icon"><i class="material-icons">edit</i></span>
                   <span>編集</span>

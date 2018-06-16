@@ -106,7 +106,7 @@
           elements: [],
           createdAt: null,
           updatedAt: null
-      },
+        },
         itemCacheStr: '',
         isActiveFooter: true,
         isSaved: false,
@@ -118,7 +118,9 @@
     },
     created() {
       this.refresh()
-      this.itemCacheStr = JSON.stringify(this.item)
+      this.$nextTick(() => {
+        this.itemCacheStr = JSON.stringify(this.item)
+      })
     },
     mounted() {
       this.$refs.editTempItem.open()
