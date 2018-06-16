@@ -341,8 +341,8 @@
         }
         .buttons {
           flex-direction: row;
-          width: $element-button-size * $button-count;
-          min-width: $element-button-size * $button-count;
+          width: calc(#{$element-button-size} * #{$button-count} - #{$button-count - 1}px);
+          min-width: calc(#{$element-button-size} * #{$button-count} - #{$button-count - 1}px);
           margin-bottom: 0;
 
           .button {

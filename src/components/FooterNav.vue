@@ -8,7 +8,7 @@
           <span class="subtitle is-7 has-text-weight-bold">Home</span>
         </router-link>
 
-        <a @click="onClickAdd" class="navbar-item button is-primary is-rounded">
+        <a @click="onClickAdd" class="edit-button navbar-item button is-primary is-rounded">
           <span class="icon is-size-3"><i class="fas fa-pencil-alt"></i></span>
         </a>
 
@@ -24,18 +24,17 @@
     <!-- 未ログイン -->
     <template v-else>
       <div class="navbar-brand logged-out has-text-centered">
-        <router-link :to="`/signin?redirect=${encodeURIComponent($route.path)}`"
-                     class="navbar-item button is-primary is-outlined is-rounded">
-          ログイン
+        <router-link to="/signup" class="navbar-item button is-primary is-rounded">
+          新規登録
         </router-link>
 
-        <a @click="onClickTempAdd" class="navbar-item button is-primary is-rounded">
+        <a @click="onClickTempAdd" class="edit-button navbar-item button is-primary is-rounded">
           <span class="icon is-size-3"><i class="fas fa-pencil-alt"></i></span>
         </a>
 
-        <router-link to="/signup"
-                     class="navbar-item button is-primary is-rounded">
-          新規登録
+        <router-link :to="`/signin?redirect=${encodeURIComponent($route.path)}`"
+                     class="navbar-item button is-primary is-outlined is-rounded">
+          ログイン
         </router-link>
       </div>
     </template>
@@ -119,6 +118,20 @@
           }
         }
       }
+      .edit-button {
+        justify-content: center;
+        height: 58px;
+        width: 58px;
+        margin: -3px 6px 18px;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 1);
+
+        &:hover {
+          background-color: $primary-dark;
+        }
+        .icon {
+          margin-left: -.35em;
+        }
+      }
       &.logged-in {
         .navbar-item {
           justify-content: flex-end;
@@ -145,24 +158,11 @@
             }
           }
         }
-        .button {
-          justify-content: center;
-          height: 58px;
-          width: 58px;
-          margin: -3px 6px 18px;
-          box-shadow: 0 0 0 3px rgba(255, 255, 255, 1);
-
-          &:hover {
-            background-color: $primary-dark;
-          }
-          .icon {
-            margin-left: -.35em;
-          }
-        }
       }
       &.logged-out {
-        .button {
-          padding: 1.125em 4em;
+        .button:not(.edit-button) {
+          font-weight: bold;
+          padding: 1.125em 3em;
         }
       }
     }
