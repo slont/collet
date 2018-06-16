@@ -146,6 +146,9 @@
         this.$refs.editTempItem.close()
       },
       save() {
+        if (!this.item.name) {
+          this.item.name = this.$moment().format('YYYY/MM/DD HH:mm:ss')
+        }
         if (!this.item.createdAt) {
           this.item.createdAt = new Date()
         }

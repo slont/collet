@@ -215,6 +215,9 @@
         this.$refs.editItem.close()
       },
       async save() {
+        if (!this.item.name) {
+          this.item.name = this.$moment().format('YYYY/MM/DD HH:mm:ss')
+        }
         await this.$validator.validateAll().then(async result => {
           if (!result) return
 
