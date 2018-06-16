@@ -89,14 +89,14 @@
       </social-sharing>
     </div>
 
-    <div class="cullet-pagination flexbox fullwidth has-text-white clickable" :class="{ 'is-active': activePagination }">
+    <div class="cullet-pagination flexbox fullwidth has-text-white" :class="{ 'is-active': activePagination }">
       <div @click="next" class="next cullet-pagination-item flexbox" v-if="currentItem.next.id">
-        <span class="icon is-size-3"><i class="fa fas fa-chevron-left"></i></span>
-        <div class="cullet-name is-size-6">{{ currentItem.next.name }}</div>
+        <span class="icon"><i class="fa fas fa-chevron-left"></i></span>
+        <div class="cullet-name">{{ currentItem.next.name }}</div>
       </div>
-      <div @click="prev" class="prev cullet-pagination-item flexbox is-justify-end has-text-right clickable" v-if="currentItem.prev.id">
-        <div class="cullet-name is-size-6 is-justify-end has-text-left">{{ currentItem.prev.name }}</div>
-        <span class="icon is-size-3"><i class="fa fas fa-chevron-right"></i></span>
+      <div @click="prev" class="prev cullet-pagination-item flexbox is-justify-end has-text-right" v-if="currentItem.prev.id">
+        <div class="cullet-name is-justify-end">{{ currentItem.prev.name }}</div>
+        <span class="icon"><i class="fa fas fa-chevron-right"></i></span>
       </div>
     </div>
 
@@ -405,7 +405,7 @@
       position: fixed;
       left: 0;
       bottom: -$footer-nav-height * 3;
-      height: 4.5em;
+      height: 4rem;
       z-index: 1;
       transition: bottom .35s;
 
@@ -413,18 +413,23 @@
         bottom: $footer-nav-height;
       }
       &-item {
-        height: 4.5em;
+        height: 4rem;
         width: 46%;
         max-width: 14em;
         padding: 0 .5em;
         background-color: rgba($link, .6);
 
         .cullet-name {
+          font-size: $size-6;
           display: -webkit-box;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
           padding: 0 .5em;
           overflow: hidden;
+          font-weight: bold;
+        }
+        .icon {
+          font-size: $size-4;
         }
         &.next {
           border-top-right-radius: $size-1;
