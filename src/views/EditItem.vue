@@ -1,6 +1,6 @@
 <template>
   <modal id="edit-item" class="modal" ref="editItem">
-    <header class="top-header action-modal-header modal-card-head">
+    <header class="action-modal-header modal-card-head">
       <span class="back-button icon is-size-3" @click="$router.go(-1)">
         <i class="material-icons">arrow_back</i>
       </span>
@@ -18,7 +18,7 @@
     </header>
     <header class="theme-header modal-card-head header-shadow" @click="openThemeSelectModal">
       <a class="text-color-base">
-        <span class="theme-title is-size-7">{{ theme.title }}</span>
+        <span class="theme-title is-size-6">{{ theme.title }}</span>
         <span class="icon has-text-grey-light is-size-4"><i class="material-icons">arrow_drop_down</i></span>
       </a>
     </header>
@@ -35,24 +35,9 @@
         </div>
       </div>
 
-      <div class="template-tabs tabs is-small">
-        <ul>
-          <li class="delete-action actions-tab">
-            <span class="icon is-size-6" @click="openDeleteModal" v-if="isEditable">
-              <i class="fas fa-trash-alt has-text-dark"></i>
-            </span>
-          </li>
-          <li class="config-action actions-tab">
-            <span class="icon is-size-4" @click="isEditable = !isEditable" v-if="item.elements.length">
-              <i class="material-icons" :class="[isEditable ? 'has-text-dark' : 'has-text-grey-light']">settings</i>
-            </span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="item-elements" :class="{ 'is-fullwidth': !isEditable }">
+      <div class="item-elements">
         <div v-for="(element, i) in item.elements" :key="i" class="field element-field flexbox">
-          <div class="sort-buttons flexbox" v-if="isEditable">
+          <div class="sort-buttons flexbox">
             <a class="button up-button is-white" @click="upOrder(i)"><i class="material-icons">arrow_upward</i></a>
             <span class="element-order">{{ element.order + 1 }}</span>
             <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
@@ -73,13 +58,13 @@
           <rating-element :params="element" v-else-if="'rating' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
           <switch-element :params="element" v-else-if="'switch' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
 
-          <a @click="removeElement(i)" class="delete" v-if="isEditable"></a>
+          <span @click="removeElement(i)" class="delete-icon icon is-size-4 has-text-danger"><i class="far fa-times-circle"></i></span>
         </div>
       </div>
     </div>
 
     <footer class="modal-card-foot-expander" @click="onBlurInput" v-if="!isActiveFooter">
-      <span class="icon has-text-grey-light is-size-5"><i class="material-icons">arrow_drop_up</i></span>
+      <span class="icon is-size-4"><i class="material-icons">arrow_drop_up</i></span>
     </footer>
     <footer class="modal-card-foot slider" :class="{ 'is-active': isActiveFooter }">
       <cl-buttons @add="addElement"/>
@@ -146,26 +131,21 @@
           name: '',
           elements: []
         },
+        itemCacheStr: '',
         themes: [],
         templates: [],
         selectedTemplateNo: 0,
         isTemplate: false,
-        isEditable: false,
         isActiveFooter: true,
         isSaved: false,
         errorMessage: ''
       }
     },
     computed: {
-      user() {
-        return this.$store.state.user
-      },
-      themeId() {
-        return this.$route.params.themeId
-      },
-      itemId() {
-        return this.$route.params.itemId
-      }
+      user: ({$store}) => $store.state.user,
+      themeId: ({$route}) => $route.params.themeId,
+      itemId: ({$route}) => $route.params.itemId,
+      isModified: ({item, itemCacheStr}) => itemCacheStr !== JSON.stringify(item)
     },
     created() {
       if (this.themeId === this.$store.state.theme.id) {
@@ -181,7 +161,7 @@
         this.$refs.itemDeleteModal.close()
         next(false)
       } else {
-        if (!this.isSaved) {
+        if (!this.isSaved && this.isModified) {
           this.$refs.exitConfirmModal.open(next)
         } else {
           next()
@@ -196,7 +176,7 @@
         this.$refs.itemDeleteModal.close()
         next(false)
       } else {
-        if (!this.isSaved) {
+        if (!this.isSaved && this.isModified) {
           this.$refs.exitConfirmModal.open(next)
         } else {
           next()
@@ -212,6 +192,10 @@
         await new ItemModel(this.themeId).findOne(this.itemId).then(res => {
           this.item = res.data
           this.$refs.editItem.open()
+
+          this.$nextTick(() => {
+            this.itemCacheStr = JSON.stringify(this.item)
+          })
         }).catch(err => {
           console.log(err)
           this.$message({
@@ -258,14 +242,6 @@
       },
       onBlurInput(e) {
         this.isActiveFooter = true
-      },
-      changeTemplate(index) {
-        this.selectedTemplateNo = index
-        if (-1 === index) {
-          this.item.elements = []
-        } else {
-          this.item.elements = this.templates[index].elements
-        }
       },
       addElement(element) {
         this.item.elements.push(element)
@@ -335,21 +311,9 @@
       .modal-card-foot {
         border-radius: 0;
       }
-      .top-header {
-        height: $header-nav-height;
-        padding: 1em;
-        color: white;
-        background-color: $main-color;
-        border: none;
-
-        .modal-card-title {
-          margin-bottom: 0;
-        }
+      .action-modal-header {
         .template-checkbox {
           margin-bottom: 0;
-        }
-        .ok-button {
-          border: none;
         }
       }
       .theme-header {
@@ -365,6 +329,8 @@
           padding: .5em 1rem;
 
           .theme-title {
+            width: 95%;
+            margin-right: auto;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -424,10 +390,10 @@
               border-bottom-width: 2px;
               border-radius: 0;
               box-shadow: none;
-              height: $size-1;
+              height: $size-2;
               margin-bottom: 0;
               padding: 0;
-              line-height: $size-1;
+              line-height: $size-2;
 
               &::placeholder {
                 color: rgba($primary, .25);
@@ -435,49 +401,16 @@
             }
           }
         }
-        .template-tabs {
-          margin: 0 1rem;
-
-          ul {
-            justify-content: flex-end;
-            border-bottom: none;
-
-            > a {
-              margin-top: 0;
-            }
-            .delete-action {
-              .icon {
-                margin: 3px 0 0;
-              }
-            }
-            :last-child {
-              .icon {
-                margin-right: 0;
-              }
-            }
-          }
-        }
         .item-elements {
-          &.is-fullwidth {
-            .element-field {
-              margin-left: -.125rem;
-
-              .cl-element {
-                flex: .95;
-              }
-            }
-          }
           .element-field {
             justify-content: center;
             min-height: 78px;
 
             .sort-buttons {
-              flex: .05;
               flex-direction: column;
 
               .button {
-                width: 1.5rem;
-                border: none;
+                padding: 0;
 
                 .material-icons {
                   color: gainsboro;
@@ -490,11 +423,11 @@
               }
             }
             .cl-element {
-              flex: .9;
-              padding: 0 .5rem;
+              width: 100%;
+              padding: 0 .25rem;
             }
-            .delete {
-              flex: .025;
+            .delete-icon {
+              margin: 0 .25rem;
             }
             &:first-child {
               .up-button {
@@ -506,9 +439,6 @@
               .down-button {
                 visibility: hidden;
               }
-            }
-            &:not(:last-child) {
-              margin-bottom: .25rem;
             }
           }
         }
@@ -535,8 +465,8 @@
         }
         .buttons {
           flex-direction: row;
-          width: $element-button-size * $button-count;
-          min-width: $element-button-size * $button-count;
+          width: calc(#{$element-button-size} * #{$button-count} - #{$button-count - 1}px);
+          min-width: calc(#{$element-button-size} * #{$button-count} - #{$button-count - 1}px);
           margin-bottom: 0;
 
           .button {
