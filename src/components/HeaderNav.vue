@@ -9,7 +9,7 @@
         <div class="navbar-item field search-field is-hidden-tablet">
           <div class="control has-icons-right">
             <input v-model="query" class="input is-rounded"
-                   placeholder="キーワード検索" @change="search"/>
+                   placeholder="キーワード検索" @input="search"/>
             <span class="icon is-small is-right"><i class="fas fa-search"></i></span>
           </div>
         </div>
@@ -125,8 +125,12 @@
           margin-left: auto;
           padding-right: .5em;
 
-          .input {
-            border: 1px solid #e07b00;
+          .control {
+            width: 180px;
+
+            .input {
+              border: 1px solid $main-color;
+            }
           }
         }
       }

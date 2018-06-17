@@ -13,14 +13,14 @@
               <span class="label-name">みんなの<br/>カレット</span><br/>
             </a>
           </router-link>
-          <router-link :to="{path: `/s/myItems`, query: $route.query}" class="cullet-tab" tag="li" v-if="loggedIn">
-            <a class="has-text-centered">
-              <span class="label-name">My<br/>カレット</span><br/>
-            </a>
-          </router-link>
           <router-link :to="{path: `/s/myThemes`, query: $route.query}" class="cullet-tab" tag="li" v-if="loggedIn">
             <a class="has-text-centered">
               <span class="label-name">My<br/>テーマ</span><br/>
+            </a>
+          </router-link>
+          <router-link :to="{path: `/s/myItems`, query: $route.query}" class="cullet-tab" tag="li" v-if="loggedIn">
+            <a class="has-text-centered">
+              <span class="label-name">My<br/>カレット</span><br/>
             </a>
           </router-link>
           <router-link :to="{path: `/s/users`, query: $route.query}" class="favorite-tab" tag="li">
