@@ -1,24 +1,24 @@
 <template>
   <modal id="create-item" class="modal" ref="createItem">
     <header class="action-modal-header modal-card-head">
-      <span class="back-button icon" @click="$router.go(-1)">
+      <span class="back-button icon is-size-3" @click="$router.go(-1)">
         <i class="material-icons">arrow_back</i>
       </span>
 
-      <span class="modal-card-title title is-6 has-text-white">新規カレット作成</span>
+      <span class="modal-card-title title is-6 has-text-white">カレット作成</span>
 
       <div class="template-checkbox field">
         <input v-model="isTemplate" class="is-checkradio has-background-color is-white is-small" id="templateCheckbox" type="checkbox" :checked="isTemplate">
         <label for="templateCheckbox">テンプレート登録</label>
       </div>
 
-      <guard-button :click="save" class="ok-button is-success is-inverted is-outlined">
+      <guard-button :click="save" class="ok-button is-success is-inverted is-outlined is-size-5">
         保存
       </guard-button>
     </header>
     <header class="theme-header modal-card-head header-shadow" @click="openThemeSelectModal">
       <a class="text-color-base">
-        <span class="theme-title is-size-7">{{ theme.title }}</span>
+        <span class="theme-title is-size-6">{{ theme.title }}</span>
         <span class="icon has-text-grey-light is-size-4"><i class="material-icons">arrow_drop_down</i></span>
       </a>
     </header>
@@ -28,33 +28,16 @@
         <div class="field">
           <div class="item-name control">
             <input v-model.trim="item.name" class="input title is-4 is-primary text-color-main" type="text" placeholder="Cullet Name"
-                   name="itemName" v-validate="'required'" :class="{ 'is-danger': errors.has('itemName') }"
+                   name="culletName" v-validate="'required'" :class="{ 'is-danger': errors.has('culletName') }"
                    @focus="onFocusInput" @blur="onBlurInput">
-            <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
+            <span v-show="errors.has('culletName')" class="help is-danger">{{ errors.first('culletName') }}</span>
           </div>
         </div>
       </div>
 
-      <div class="template-tabs tabs is-small">
-        <ul>
-          <li v-for="(template, i) in templates"
-              :class="{ 'is-active': selectedTemplateNo === i }" @click="changeTemplate(i)">
-            <a><span>{{ `テンプレート` }}</span></a>
-          </li>
-          <li :class="{ 'is-active': selectedTemplateNo === -1 }" @click="changeTemplate(-1)" v-if="templates.length">
-            <a><span>白紙</span></a>
-          </li>
-          <li class="actions-tab">
-            <span class="icon is-size-4" @click="isEditable = !isEditable" v-if="item.elements.length">
-              <i class="material-icons" :class="[isEditable ? 'has-text-dark' : 'has-text-grey-light']">settings</i>
-            </span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="item-elements" :class="{ 'is-fullwidth': !isEditable }">
-        <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
-          <div class="sort-buttons" v-if="isEditable">
+      <div class="item-elements">
+        <div v-for="(element, i) in item.elements" :key="i" class="field element-field flexbox">
+          <div class="sort-buttons flexbox">
             <a class="button up-button is-white" @click="upOrder(i)"><i class="material-icons">arrow_upward</i></a>
             <span class="element-order">{{ element.order + 1 }}</span>
             <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
@@ -63,6 +46,8 @@
           <text-element :params="element" v-if="'text' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
           <image-element :params="element" v-else-if="'image' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
           <location-element :params="element" v-else-if="'location' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
+          <twitter-element :params="element" v-else-if="'twitter' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
+          <instagram-element :params="element" v-else-if="'instagram' === element.type" editable/>
           <datetime-element :params="element" v-else-if="'date' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
           <datetime-element :params="element" v-else-if="'time' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
           <datetime-element :params="element" v-else-if="'datetime' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
@@ -73,19 +58,20 @@
           <rating-element :params="element" v-else-if="'rating' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
           <switch-element :params="element" v-else-if="'switch' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
 
-          <a @click="removeElement(i)" class="delete" v-if="isEditable"></a>
+          <span @click="removeElement(i)" class="delete-icon icon is-size-4 has-text-danger"><i class="far fa-times-circle"></i></span>
         </div>
       </div>
     </div>
 
     <footer class="modal-card-foot-expander" @click="onBlurInput" v-if="!isActiveFooter">
-      <span class="icon has-text-grey-light is-size-5"><i class="material-icons">arrow_drop_up</i></span>
+      <span class="icon is-size-4"><i class="material-icons">arrow_drop_up</i></span>
     </footer>
     <footer class="modal-card-foot slider" :class="{ 'is-active': isActiveFooter }">
       <cl-buttons @add="addElement"/>
     </footer>
 
     <theme-select-modal ref="themeSelectModal" @refresh="refresh"/>
+    <exit-confirm-modal ref="exitConfirmModal"/>
   </modal>
 </template>
 
@@ -93,13 +79,15 @@
   import ThemeModel from '@/models/Theme'
   import TemplateModel from '@/models/Template'
   import ItemModel from '@/models/Item'
-  import FileModel from '@/models/File'
   import Modal from '@/components/Modal'
   import ThemeSelectModal from '@/components/theme/ThemeSelectModal'
+  import ExitConfirmModal from '@/components/ExitConfirmModal'
   import ClButtons from '@/components/element/button/ClButtons'
   import TextElement from '@/components/element/TextElement'
   import ImageElement from '@/components/element/ImageElement'
   import LocationElement from '@/components/element/LocationElement'
+  import TwitterElement from '@/components/element/TwitterElement'
+  import InstagramElement from '@/components/element/InstagramElement'
   import DatetimeElement from '@/components/element/DatetimeElement'
   import TagElement from '@/components/element/TagElement'
   import LinkElement from '@/components/element/LinkElement'
@@ -112,10 +100,13 @@
     components: {
       Modal,
       ThemeSelectModal,
+      ExitConfirmModal,
       ClButtons,
       TextElement,
       ImageElement,
       LocationElement,
+      TwitterElement,
+      InstagramElement,
       DatetimeElement,
       TagElement,
       LinkElement,
@@ -137,32 +128,43 @@
           name: '',
           elements: []
         },
+        itemCacheStr: '',
         themes: [],
         templates: [],
         selectedTemplateNo: 0,
         isTemplate: false,
-        isEditable: false,
         isActiveFooter: true,
+        isSaved: false,
         errorMessage: ''
       }
     },
     computed: {
-      user() {
-        return this.$store.state.user
-      },
-      themeId() {
-        return this.$route.params.themeId
-      }
+      user: ({$store}) => $store.state.user,
+      themeId: ({$route}) => $route.params.themeId,
+      isModified: ({item, itemCacheStr}) => itemCacheStr !== JSON.stringify(item)
     },
     created() {
-      this.refresh().then(() => this.$refs.createItem.open())
+      if (this.$store.state.theme.id) {
+        Object.assign(this.theme, ThemeModel._deserialize(this.$store.state.theme))
+        if (this.$store.state.theme.templates[0] && this.$store.state.theme.templates[0].elements.length) {
+          this.item.elements = this.$store.state.theme.templates[0].elements
+        }
+      }
+      this.refresh(this.$store.state.theme)
+    },
+    mounted() {
+      this.$refs.createItem.open()
     },
     beforeRouteUpdate(to, from, next) {
       if (this.$refs.themeSelectModal.$refs.themeSelectModal.active) {
         this.$refs.themeSelectModal.close()
         next(false)
       } else {
-        next()
+        if (!this.isSaved && this.isModified) {
+          this.$refs.exitConfirmModal.open(next)
+        } else {
+          next()
+        }
       }
     },
     beforeRouteLeave(to, from, next) {
@@ -170,37 +172,39 @@
         this.$refs.themeSelectModal.close()
         next(false)
       } else {
-        next()
+        if (!this.isSaved && this.isModified) {
+          this.$refs.exitConfirmModal.open(next)
+        } else {
+          next()
+        }
       }
     },
     methods: {
-      async refresh(theme = {}) {
-        let res = null
+      refresh(theme = {}) {
         if (theme.id) {
-          res = await new ThemeModel().findOne(theme.id)
           this.theme = theme
         } else {
-          res = await new ThemeModel().findOne(this.themeId)
-          this.theme = res.data
+          new ThemeModel().findOne(this.themeId).then(res => {
+            this.theme = res.data
+          })
         }
 
-        await new TemplateModel(this.theme.id).find({
-          p: 0,
+        const themeId = theme.id || this.themeId
+        new TemplateModel(themeId).find({
+          p: 1,
           s: 20
         }).then(res => {
           if (res.data.length) {
             this.templates = res.data
-            this.item.elements = this.templates[0].elements.map(e => {
-              if ('rating' === e.type) {
-                return Object.assign(e, { valueStr: '5' })
-              } else {
-                return e
-              }
-            })
+            this.item.elements = this.templates[0].elements
           } else {
             this.templates = []
             this.item.elements = []
           }
+
+          this.$nextTick(() => {
+            this.itemCacheStr = JSON.stringify(this.item)
+          })
         }).catch(() => {
           this.$router.replace('/')
         })
@@ -211,6 +215,9 @@
         this.$refs.createItem.close()
       },
       async save() {
+        if (!this.item.name) {
+          this.item.name = this.$moment().format('YYYY/MM/DD HH:mm:ss')
+        }
         await this.$validator.validateAll().then(async result => {
           if (!result) return
 
@@ -222,12 +229,15 @@
             this.errorMessage = err
           })
 
+          this.isSaved = true
+          this.cacheTheme()
           this.$message({
             showClose: true,
             message: '作成されました',
             type: 'success'
           })
           this.$router.push(`/u/${this.user.id}/${this.theme.id}`)
+          this.close()
         }).catch(err => this.$message.error(err))
       },
       onFocusInput(e) {
@@ -235,14 +245,6 @@
       },
       onBlurInput(e) {
         this.isActiveFooter = true
-      },
-      changeTemplate(index) {
-        this.selectedTemplateNo = index
-        if (-1 === index) {
-          this.item.elements = []
-        } else {
-          this.item.elements = this.templates[index].elements
-        }
       },
       addElement(element) {
         this.item.elements.push(element)
@@ -275,27 +277,16 @@
         this.item.elements.splice(i + 1, 1, element)
         this.setOrder()
       },
-      changeImage(e) {
-        const files = e.target.files || e.dataTransfer.files
-        if (!files.length) return
-
-        this.createImage(files[0])
-      },
-      createImage(file) {
-        const reader = new FileReader()
-        reader.onload = e => {
-          this.item.image = e.target.result
-        }
-        reader.readAsDataURL(file)
-        new FileModel().create(file, this.themeId).then(res => {
-          this.item.image = res.data.path
-        })
-      },
-      removeImage() {
-        this.item.image = ''
-      },
       openThemeSelectModal() {
         this.$refs.themeSelectModal.open(this.theme)
+      },
+      cacheTheme() {
+        this.$store.commit('SET_THEME', this.theme)
+        if (this.isTemplate) {
+          new TemplateModel(this.theme.id).find({ p: 1, s: 1 }).then(res => {
+            this.$store.commit('SET_TEMPLATES', res.data)
+          }).catch(err => console.log(err))
+        }
       }
     }
   }
@@ -303,7 +294,7 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #create-item {
-    $button-count: 9;
+    $button-count: 8;
 
     > .modal-card {
       display: flex;
@@ -349,6 +340,7 @@
         padding: .5rem 0;
         background-color: white;
         overflow-y: scroll;
+        -webkit-overflow-scrolling : touch;
         z-index: 0;
 
         .theme-field {
@@ -394,55 +386,27 @@
               border-bottom-width: 2px;
               border-radius: 0;
               box-shadow: none;
-              height: $size-1;
+              height: $size-2;
               margin-bottom: 0;
               padding: 0;
-              line-height: $size-1;
-            }
-          }
-        }
-        .template-tabs {
-          margin: 0 1rem;
+              line-height: $size-2;
 
-          ul {
-            border-bottom: none;
-
-            > a {
-              margin-top: 0;
-            }
-            .actions-tab {
-              margin-left: auto;
-
-              .icon {
-                margin: 0;
+              &::placeholder {
+                color: rgba($primary, .25);
               }
             }
           }
         }
         .item-elements {
-          &.is-fullwidth {
-            .element-field {
-              margin-left: -.125rem;
-
-              .cl-element {
-                flex: .95;
-              }
-            }
-          }
           .element-field {
-            display: flex;
-            align-items: center;
             justify-content: center;
             min-height: 78px;
 
             .sort-buttons {
-              display: flex;
-              flex: .05;
               flex-direction: column;
 
               .button {
-                width: 1.5rem;
-                border: none;
+                padding: 0;
 
                 .material-icons {
                   color: gainsboro;
@@ -455,11 +419,11 @@
               }
             }
             .cl-element {
-              flex: .9;
-              padding: 0 .5rem;
+              width: 100%;
+              padding: 0 .25rem;
             }
-            .delete {
-              flex: .025;
+            .delete-icon {
+              margin: 0 .25rem;
             }
             &:first-child {
               .up-button {
@@ -471,9 +435,6 @@
               .down-button {
                 visibility: hidden;
               }
-            }
-            &:not(:last-child) {
-              margin-bottom: .25rem;
             }
           }
         }
@@ -492,6 +453,7 @@
         padding: 0;
         border-radius: 0;
         overflow: scroll;
+        -webkit-overflow-scrolling : touch;
         transition: max-height .2s;
 
         &.is-active {
@@ -499,8 +461,8 @@
         }
         .buttons {
           flex-direction: row;
-          width: $element-button-size * $button-count;
-          min-width: $element-button-size * $button-count;
+          width: calc(#{$element-button-size} * #{$button-count} - #{$button-count - 1}px);
+          min-width: calc(#{$element-button-size} * #{$button-count} - #{$button-count - 1}px);
           margin-bottom: 0;
 
           .button {

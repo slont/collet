@@ -6,58 +6,56 @@
           <img class="cullet-logo" src="/static/img/cullet-logo_orange.png" alt="Colette">
         </div>
 
-        <div class="navbar-item field search-field is-hidden-tablet" v-if="!loggedIn">
+        <div class="navbar-item field search-field is-hidden-tablet">
           <div class="control has-icons-right">
             <input v-model="query" class="input is-rounded"
-                 placeholder="キーワード検索"/>
-            <span class="icon is-small is-right"><i class="material-icons">search</i></span>
+                   placeholder="キーワード検索" @input="search"/>
+            <span class="icon is-small is-right"><i class="fas fa-search"></i></span>
           </div>
         </div>
       </div>
 
       <div class="navbar-menu">
-        <div class="navbar-start">
-          <router-link to="/" class="navbar-item" exact>
-            <span class="icon"><i class="material-icons">home</i></span>
-            <span>ホーム</span>
-          </router-link>
-          <router-link :to="`/u/${user.id}`" class="navbar-item" v-if="loggedIn">
-            <span class="icon"><i class="material-icons">account_circle</i></span>
+        <div class="navbar-start is-size-5 has-text-weight-bold">
+          <router-link :to="`/u/${user.id}`" class="navbar-item text-color-weak" v-if="loggedIn">
             <span>マイページ</span>
           </router-link>
         </div>
 
         <div class="navbar-end">
-          <div class="account-item navbar-item" v-if="loggedIn">
-            <dropdown ref="accountDropdown">
-              <template slot="trigger">
-                <span class="user-name is-size-7">{{ user.name }}</span>
-                <img :src="user.image" class="circle" v-if="user.image"/>
-                <span class="icon" v-else><i class="material-icons">arrow_drop_down</i></span>
-              </template>
+          <template v-if="loggedIn">
+            <div class="account-item navbar-item">
+              <dropdown ref="accountDropdown">
+                <template slot="trigger">
+                  <div class="user-name">
+                    <div class="is-size-7">{{ user.name }}</div>
+                    <div class="is-size-8 text-color-weak">@{{ user.id }}</div>
+                  </div>
+                  <user-image :src="user.image" class="circle" v-if="user.image"/>
+                  <span class="icon" v-else><i class="material-icons">arrow_drop_down</i></span>
+                </template>
 
-              <router-link to="/settings/profile" class="dropdown-item">
-                設定
-              </router-link>
-              <hr class="dropdown-divider">
-              <a @click="signout" class="dropdown-item">
-                <span class="icon"><i class="material-icons">exit_to_app</i></span>
-                サインアウト
-              </a>
-            </dropdown>
-          </div>
-          <div class="navbar-item" v-else>
-            <div class="field is-grouped">
-              <p class="control">
-                <nav class="breadcrumb">
-                  <ul>
-                    <li><router-link :to="`/signin?redirect=${encodeURIComponent($route.path)}`">ログイン</router-link></li>
-                    <li><router-link to="/signup">新規登録</router-link></li>
-                  </ul>
-                </nav>
-              </p>
+                <router-link to="/settings/profile" class="dropdown-item">
+                  設定
+                </router-link>
+                <hr class="dropdown-divider">
+                <a @click="signout" class="dropdown-item">
+                  <span class="icon"><i class="material-icons">exit_to_app</i></span>
+                  サインアウト
+                </a>
+              </dropdown>
             </div>
-          </div>
+          </template>
+          <template v-else>
+            <div class="navbar-item">
+              <div class="field is-grouped">
+                <p class="control">
+                  <router-link class="button is-primary is-rounded" to="/signup">新規登録</router-link>
+                  <router-link class="button is-primary is-outlined is-rounded" :to="`/signin?redirect=${encodeURIComponent($route.path)}`">ログイン</router-link>
+                </p>
+              </div>
+            </div>
+          </template>
         </div>
       </div>
     </div>
@@ -66,15 +64,12 @@
 
 <script>
   import Dropdown from '@/components/Dropdown'
-  // const HEADER_HEIGHT = 46
 
   export default {
     components: { Dropdown },
     data() {
       return {
-        // scrolledVal: 0,
-        // headerPos: 0,
-        query: ''
+        query: this.$route.query.q || ''
       }
     },
     computed: {
@@ -85,24 +80,18 @@
         return this.$store.state.user
       }
     },
-    // created() {
-    //   window.addEventListener('scroll', this.handleScroll)
-    // },
-    // destroyed() {
-    //   window.removeEventListener('scroll', this.handleScroll)
-    // },
     methods: {
-      // handleScroll(e) {
-      //   const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-      //   let diff = this.scrolledVal - scrollTop
-      //   if (this.scrolledVal < scrollTop) {
-      //     this.headerPos = Math.max(-HEADER_HEIGHT, this.headerPos + diff)
-      //   } else {
-      //     diff = Math.sign(diff) * Math.min(10, Math.abs(diff))
-      //     this.headerPos = Math.min(0, this.headerPos + diff)
-      //   }
-      //   this.scrolledVal = scrollTop
-      // },
+      search() {
+        const path = /^\/s\/.*/.test(this.$route.path) ? this.$route.path : '/s/themes'
+        this.$router.push({
+          path: path,
+          query: {
+            p: 0,
+            s: 20,
+            q: this.query
+          }
+        })
+      },
       signout() {
         this.$store.dispatch('signout').then(() => {
           this.$router.push('/')
@@ -124,7 +113,7 @@
 
       .navbar-brand {
         .logo {
-          padding-left: .5em;
+          padding-left: .75rem;
           padding-right: 0;
           cursor: pointer;
 
@@ -136,26 +125,22 @@
           margin-left: auto;
           padding-right: .5em;
 
-          .input {
-            background: transparent;
-            color: white;
-            border: 1px solid #e07b00;
+          .control {
+            width: 180px;
+
+            .input {
+              border: 1px solid $main-color;
+            }
           }
         }
       }
       .navbar-menu {
-        .navbar-end {
-          .breadcrumb {
-            $color: white;
-
-            a {
-              color: $color;
-
-              &:hover {
-                color: darken($color, 15%);
-              }
-            }
+        .navbar-start {
+          .icon {
+            font-size: $size-4;
           }
+        }
+        .navbar-end {
           .account-item {
             .dropdown-trigger {
               display: flex;

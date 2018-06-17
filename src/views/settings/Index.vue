@@ -11,6 +11,13 @@
             <span class="icon is-hidden-tablet"><i class="material-icons">chevron_right</i></span>
           </a>
         </router-link>
+
+        <router-link to="/settings/password" tag="li">
+          <a>
+            <span>パスワード設定</span>
+            <span class="icon is-hidden-tablet"><i class="material-icons">chevron_right</i></span>
+          </a>
+        </router-link>
       </ul>
       <div class="divider"></div>
 
@@ -25,13 +32,18 @@
     </aside>
 
     <transition name="slide-fade" mode="out-in">
-      <router-view></router-view>
+      <router-view/>
     </transition>
   </div>
 </template>
 
 <script>
   export default {
+    data() {
+      return {
+        activePushNotification: true
+      }
+    },
     computed: {
       isRoot() {
         return '/settings' === this.$route.path
@@ -40,6 +52,8 @@
     methods: {
       signout() {
         this.$store.dispatch('signout').then(() => {
+          this.$router.push('/')
+        }).catch(() => {
           this.$router.push('/')
         })
       }
@@ -50,6 +64,8 @@
 <style lang="scss" rel="stylesheet/scss">
   #settings-index {
     display: flex;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling : touch;
 
     .settings-menu {
       width: 200px;
@@ -65,9 +81,17 @@
         height: 1px;
         background-color: $border;
       }
+      .push-notification {
+        align-self: start;
+        margin-top: .5em;
+        margin-right: 1em;
+      }
     }
 
     @media screen and (max-width: 768px) {
+      &.container {
+        height: calc(100vh - #{$header-nav-height + $footer-nav-height});
+      }
       .settings-menu {
         display: none;
         height: 100%;

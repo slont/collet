@@ -2,13 +2,12 @@
   <div class="cl-buttons buttons has-addons">
     <text-button @add="addElement"/>
     <image-button @add="addElement"/>
-    <location-button @add="addElement"/>
+    <twitter-button @add="addElement"/>
+    <instagram-button @add="addElement"/>
     <datetime-button @add="addElement"/>
     <link-button @add="addElement"/>
     <rating-button @add="addElement"/>
     <tag-button @add="addElement"/>
-    <phone-button @add="addElement"/>
-    <email-button @add="addElement"/>
   </div>
 </template>
 
@@ -17,6 +16,8 @@
   import TextButton from './TextButton'
   import ImageButton from './ImageButton'
   import LocationButton from './LocationButton'
+  import TwitterButton from './TwitterButton'
+  import InstagramButton from './InstagramButton'
   import DatetimeButton from './DatetimeButton'
   import TagButton from './TagButton'
   import LinkButton from './LinkButton'
@@ -31,6 +32,8 @@
       TextButton,
       ImageButton,
       LocationButton,
+      TwitterButton,
+      InstagramButton,
       DatetimeButton,
       TagButton,
       LinkButton,

@@ -5,9 +5,9 @@ export default class File extends Base {
     super('/files')
   }
 
-  create(file, themeId) {
+  create(file, fileName, themeId) {
     const formData = new FormData()
-    formData.append('file', file)
+    formData.append('file', file, fileName)
     if (themeId) {
       formData.append('themeId', themeId)
     }
@@ -24,7 +24,6 @@ export default class File extends Base {
   }
 
   deserialize(json) {
-    const result = Object.assign({}, json)
-    return result
+    return Object.assign({}, json)
   }
 }

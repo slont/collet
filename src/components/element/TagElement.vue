@@ -1,11 +1,11 @@
 <template>
-  <cl-element class="tag-element" :params="params" placeholder="ラベル（オプション）"
+  <cl-element class="tag-element" :params="params" placeholder="ラベル（オプショナル）"
               @remove="$emit('remove')" :editable="editable"
               @focus="$emit('focus')" @blur="$emit('blur')">
     <span class="element-type-icon icon is-left" v-if="editable">
       <i class="material-icons">label_outline</i>
     </span>
-    <div class="control flexbox">
+    <div class="tags-control control flexbox">
       <el-tag v-for="(tag, i) in tags" :key="tag" type="warning" :closable="editable"
               :disable-transitions="true" @close="remove(i)">{{tag}}</el-tag>
       <input v-model="inputVal" class="input-new-tag input" v-if="editable"
@@ -62,9 +62,9 @@
 <style lang="scss" rel="stylesheet/scss">
   .tag-element {
     .view-label.label {
-      margin-bottom: .25rem;
+      margin-bottom: .5em;
     }
-    .control.flexbox {
+    .tags-control {
       flex-wrap: wrap;
       margin-left: -.5rem;
 

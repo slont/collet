@@ -3,16 +3,21 @@ import Router from 'vue-router'
 import Index from '@/views/Index'
 import Signup from '@/views/Signup'
 import Signin from '@/views/Signin'
+import Auth from '@/views/Auth'
 import Confirm from '@/views/Confirm'
+import TempItem from '@/views/TempItem'
+import EditTempItem from '@/views/EditTempItem'
 import CreateItem from '@/views/CreateItem'
 import EditItem from '@/views/EditItem'
 import TopIndex from '@/views/top/Index'
-import TopTop from '@/views/top/Top'
 import TagIndex from '@/views/tag/Index'
+import SearchIndex from '@/views/search/Index'
 import UserpageIndex from '@/views/userpage/Index'
+import UserpageItem from '@/views/userpage/Item'
 import UserpageTheme from '@/views/userpage/Theme'
 import SettingsIndex from '@/views/settings/Index'
 import SettingsProfile from '@/views/settings/Profile'
+import SettingsPassword from '@/views/settings/Password'
 
 Vue.use(Router)
 
@@ -26,6 +31,9 @@ export default new Router({
       path: '/signin',
       component: Signin
     }, {
+      path: '/auth',
+      component: Auth
+    }, {
       path: '/confirm',
       component: Confirm
     },
@@ -35,13 +43,7 @@ export default new Router({
       children: [
         {
           path: '',
-          component: TopIndex,
-          children: [
-            {
-              path: '',
-              component: TopTop
-            }
-          ]
+          component: TopIndex
         }, {
           path: 'settings',
           component: SettingsIndex,
@@ -49,11 +51,20 @@ export default new Router({
             {
               path: 'profile',
               component: SettingsProfile
+            }, {
+              path: 'password',
+              component: SettingsPassword
             }
           ]
         }, {
           path: 'tag',
           component: TagIndex
+        }, {
+          path: 's/:type',
+          component: SearchIndex
+        }, {
+          path: 's/:type',
+          component: SearchIndex
         }, {
           path: 'u/:userId/themes',
           component: UserpageIndex
@@ -62,7 +73,7 @@ export default new Router({
           component: UserpageIndex
         }, {
           path: 'u/:userId/:themeId/:itemId',
-          component: UserpageTheme
+          component: UserpageItem
         }, {
           path: 'u/:userId/:themeId',
           component: UserpageTheme
@@ -74,6 +85,14 @@ export default new Router({
         {
           path: 'm/createItem/:themeId',
           component: CreateItem
+        },
+        {
+          path: 'tempItem',
+          component: TempItem
+        },
+        {
+          path: 'm/editTempItem',
+          component: EditTempItem
         },
         {
           path: 'm/editItem/:themeId/:itemId',

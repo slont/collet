@@ -4,41 +4,37 @@
     <template v-if="loggedIn">
       <div class="navbar-brand logged-in">
         <router-link to="/" class="navbar-item" exact>
-          <span class="icon is-size-3"><i class="material-icons">home</i></span>
+          <span class="icon"><i class="fas fa-home"></i></span>
           <span class="subtitle is-7 has-text-weight-bold">Home</span>
         </router-link>
 
-        <router-link to="/search" class="navbar-item">
-          <span class="icon is-size-3"><i class="material-icons">search</i></span>
-          <span class="subtitle is-7 has-text-weight-bold">Search</span>
-        </router-link>
-
-        <a @click="onClickAdd" class="navbar-item button is-primary is-rounded">
-          <span class="icon is-size-3"><i class="material-icons">edit</i></span>
+        <a @click="onClickAdd" class="edit-button navbar-item button is-primary is-rounded">
+          <span class="icon is-size-3"><i class="fas fa-pencil-alt"></i></span>
         </a>
 
-        <router-link :to="`/u/${user.id}/favorites`" class="navbar-item">
-          <span class="icon is-size-3"><i class="material-icons">favorite_border</i></span>
-          <span class="subtitle is-7 has-text-weight-bold">Favorite</span>
-        </router-link>
-
-        <router-link :to="`/u/${user.id}`" class="navbar-item" exact>
-          <img :src="user.image" class="circle" v-if="user.image"/>
-          <span class="icon is-size-3" v-else><i class="material-icons">account_circle</i></span>
+        <router-link :to="`/u/${user.id}`" class="navbar-item user-profile" exact>
+          <figure class="image circle is-28x28 flexbox" v-if="user.image">
+            <user-image :src="user.image"/>
+          </figure>
+          <span class="icon" v-else><i class="far fa-user-circle"></i></span>
           <span class="subtitle is-7 has-text-weight-bold">My Page</span>
         </router-link>
       </div>
     </template>
     <!-- 未ログイン -->
     <template v-else>
-      <div class="navbar-brand logged-out">
+      <div class="navbar-brand logged-out has-text-centered">
+        <router-link to="/signup" class="navbar-item button is-primary is-rounded">
+          新規登録
+        </router-link>
+
+        <a @click="onClickTempAdd" class="edit-button navbar-item button is-primary is-rounded">
+          <span class="icon is-size-3"><i class="fas fa-pencil-alt"></i></span>
+        </a>
+
         <router-link :to="`/signin?redirect=${encodeURIComponent($route.path)}`"
                      class="navbar-item button is-primary is-outlined is-rounded">
           ログイン
-        </router-link>
-        <router-link to="/signup"
-                     class="navbar-item button is-primary is-rounded">
-          新規登録
         </router-link>
       </div>
     </template>
@@ -57,7 +53,9 @@
     components: { ThemeCreateModal, ItemCreateModal },
     data() {
       return {
-        themes: []
+        theme: {
+          id: ''
+        }
       }
     },
     computed: {
@@ -73,20 +71,23 @@
     },
     methods: {
       fetchThemes() {
-        new UserModel().findThemes(this.user.id, {
-          p: 0,
-          s: 1
-        }).then(res => {
-          this.themes = res.data
-        })
+        if (this.user.id && !this.$store.state.theme.id) {
+          new UserModel().findThemes(this.user.id, {p: 1, s: 1, q: ''}).then(res => {
+            if (res.data.length) {
+              this.$store.dispatch('setTheme', res.data[0])
+            }
+          })
+        }
       },
-      async onClickAdd() {
-        if (this.themes.length) {
-          // this.$refs.itemCreateModal.open(this.themes[0])
-          this.$router.push(`/m/createItem/${this.themes[0].id}`)
+      onClickAdd() {
+        if (this.$store.state.theme.id) {
+          this.$router.push(`/m/createItem/${this.$store.state.theme.id}`)
         } else {
           this.$refs.themeCreateModal.open()
         }
+      },
+      onClickTempAdd() {
+        this.$router.push(`/m/editTempItem`)
       }
     }
   }
@@ -98,41 +99,67 @@
     z-index: 20;
 
     .navbar-brand {
+      max-height: 3.25rem;
       align-items: center;
       justify-content: space-evenly;
 
       .navbar-item {
         flex-direction: column;
 
-        &.router-link-active,
-        &.is-active,
-        &:hover {
-          border-bottom: 3px solid $primary;
-          background: transparent;
-
-          span {
-            color: $primary;
+        .icon {
+          font-size: $size-3;
+        }
+        .image {
+          img {
+            max-height: initial;
           }
         }
-        img {
-          max-height: 1.5rem;
-          width: 1.5rem;
+      }
+      .edit-button {
+        justify-content: center;
+        height: 58px;
+        width: 58px;
+        margin: -3px 6px 18px;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 1);
+
+        &:hover {
+          background-color: $primary-dark;
+        }
+        .icon {
+          margin-left: -.35em;
         }
       }
       &.logged-in {
-        .navbar-item {
+        .navbar-item:not(.button) {
+          justify-content: flex-end;
+          height: 3.25rem;
           width: 20%;
           padding: 5px 0;
-        }
-        .button {
-          height: 46px;
-          width: 46px;
-          margin: -3px 12px;
+
+          &.user-profile {
+            .image {
+              min-height: 28px;
+            }
+          }
+          &.router-link-active,
+          &.is-active,
+          &:hover {
+            &:not(.button) {
+              border-bottom: 3px solid $primary;
+              padding-bottom: 2px;
+              background: transparent;
+
+              span {
+                color: $primary;
+              }
+            }
+          }
         }
       }
       &.logged-out {
-        .button {
-          padding: 1.125em 4em;
+        .button:not(.edit-button) {
+          font-weight: bold;
+          padding: 1.125em 3em;
         }
       }
     }

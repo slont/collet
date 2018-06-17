@@ -1,10 +1,11 @@
 <template>
-  <cl-element class="rating-element" :params="params" placeholder="ラベル（オプション）"
+  <cl-element class="rating-element" :params="params" placeholder="ラベル（オプショナル）"
               @remove="$emit('remove')" :editable="editable"
               @focus="$emit('focus')" @blur="$emit('blur')">
     <span class="element-type-icon icon is-left" v-if="editable"><rating-icon/></span>
     <div class="control flexbox">
-      <el-rate v-model="params.valueNum" :max="Number(params.valueStr)" :disabled="!editable"/>
+      <el-rate v-model="params.valueDbl" :max="Number(params.valueStr)" allow-half
+               :disabled="!editable"/>
 
       <div class="buttons has-addons is-justify-end">
         <button class="toggle-button button is-outlined is-justify-end" @click="minus" v-if="editable">
@@ -29,12 +30,17 @@
         type: Object,
         default: {
           label: '',
-          valueStr: '1',
+          valueStr: '5',
           valueNum: 0,
           valueDbl: 0.0
         }
       },
       editable: Boolean
+    },
+    created() {
+      if (!this.params.valueStr) {
+        this.params.valueStr = '5'
+      }
     },
     methods: {
       plus() {
@@ -49,6 +55,12 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .rating-element {
+    &:not(.is-editable) .label:not(:last-child) {
+      margin-bottom: .5em;
+    }
+    .el-rate__icon {
+      font-size: 24px;
+    }
     .element-type-icon .rating-icon {
       display: flex;
 

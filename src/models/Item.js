@@ -1,7 +1,6 @@
 import Base from './Base'
 import Element from './Element'
 import qs from 'qs'
-import moment from 'moment'
 
 export default class Item extends Base {
   constructor(themeId) {
@@ -10,6 +9,15 @@ export default class Item extends Base {
 
   findByNew(params) {
     return this.postProcess(fetch(`${process.env.API_ENDPOINT}/items/_new?${qs.stringify(params, { indices: false })}`, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
+      headers: Base.getHeaders()
+    }))
+  }
+
+  findByQuery(params) {
+    return this.postProcess(fetch(`${process.env.API_ENDPOINT}/items/_search?${qs.stringify(params, { indices: false })}`, {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',
@@ -27,9 +35,9 @@ export default class Item extends Base {
 
   static _deserialize(json) {
     return Object.assign({}, json, {
-      elements: (json.elements && new Element().deserialize(json.elements)) || [],
-      createdAt: moment(json.createdAt),
-      updatedAt: moment(json.updatedAt)
+      elements: (json.elements || []).map(element => Element._deserialize(element)),
+      prev: json.prev ? Item._deserialize(json.prev) : {},
+      next: json.next ? Item._deserialize(json.next) : {}
     })
   }
 }

@@ -1,13 +1,14 @@
 <template>
   <modal id="theme-edit-modal" class="modal" ref="themeEditModal" @close="reset">
     <header class="action-modal-header modal-card-head">
-      <span class="back-button icon" @click="close">
+      <span class="back-button icon is-size-3" @click="close">
         <i class="material-icons">arrow_back</i>
       </span>
 
       <span class="modal-card-title title is-6 has-text-white">テーマ編集</span>
 
-      <guard-button :click="ok" class="ok-button is-success is-inverted is-outlined">
+      <guard-button :click="ok" class="ok-button is-success is-inverted is-outlined is-size-5"
+                    v-if="!loading">
         保存
       </guard-button>
     </header>
@@ -38,14 +39,15 @@
             <div class="file is-boxed">
               <label class="file-label">
                 <input @change="changeImage" class="file-input" type="file" name="resume">
-                <span class="file-view" v-if="theme.image">
-                  <img :src="theme.image"/>
+                <div class="file-view" v-if="theme.image">
+                  <img :src="theme.image" v-if="loading"/>
+                  <img :src="theme.image" :srcset="`${theme.image}_640w 640w`" v-else/>
                   <a @click.stop.prevent="removeImage" class="delete"></a>
-                </span>
-                <span class="file-cta" v-else>
-                  <span class="file-icon"><i class="material-icons">file_upload</i></span>
-                  <span class="file-label">Upload Image...</span>
-                </span>
+                </div>
+                <div class="file-cta" v-else>
+                  <span class="icon is-size-1"><i class="material-icons">add</i></span>
+                </div>
+                <div class="control loading-mask is-size-1" :class="{ 'is-loading': loading }"></div>
               </label>
             </div>
           </div>
@@ -53,44 +55,33 @@
 
         <div class="field tags-field">
           <label class="label">タグ</label>
-          <div class="control loading-mask" :class="{ 'is-loading': theme.image.substring(0, 4) === 'data' }">
-            <el-select
-                v-model="tags"
-                multiple
-                filterable
-                allow-create
-                default-first-option
-                remote
-                :loading="loading"
-                :remote-method="remoteMethod"
-                placeholder="Choose tags for your article">
-              <el-option
-                  v-for="item in suggests"
-                  :key="item"
-                  :label="item"
-                  :value="item">
-              </el-option>
-            </el-select>
+
+          <div class="control tags flexbox">
+            <el-tag v-for="(tag, i) in tags" :key="tag" type="warning" closable
+                    @close="$delete(tags, i)">{{ tag }}</el-tag>
+            <input v-model="inputVal" class="input-new-tag input"
+                   @keyup.enter="confirmInput" @focus="$emit('focus')" @blur="onBlur"/>
           </div>
         </div>
 
-        <div class="field tags-field">
-          <div class="control">
-            <label class="label">公開設定</label>
-            <el-switch v-model="theme.private" active-color="#ff4949" inactive-color="#409eff"
-                active-text="非公開"
-                inactive-text="公開">
-            </el-switch>
-          </div>
+        <div class="publication-field field">
+          <input v-model="publication" class="is-checkradio has-background-color is-info"
+                 id="publication" type="checkbox">
+          <label class="publication" :class="{ 'is-publication': publication }" for="publication"
+                 @click="publication = !publication">一般公開する</label>
+        </div>
+
+        <div class="field is-hidden-desktop">
+          <guard-button :click="ok" class="is-info fullwidth" :disabled="loading">保存</guard-button>
         </div>
       </div>
     </div>
 
-    <footer class="modal-card-foot has-right is-hidden-touch">
+    <footer class="modal-card-foot has-right is-hidden-mobile">
       <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
       <a @click="$refs.themeDeleteModal.open(theme)" class="button is-danger is-outlined is-left">削除</a>
       <a @click="close" class="button">キャンセル</a>
-      <guard-button :click="ok" class="is-info">保存</guard-button>
+      <guard-button :click="ok" class="is-info" :disabled="loading">保存</guard-button>
     </footer>
 
     <theme-delete-modal ref="themeDeleteModal" @refresh="refreshClose"/>
@@ -111,20 +102,27 @@
           title: '',
           description: '',
           image: '',
-          private: false,
+          private: 0,
           tags: [],
           createdUser: this.$store.state.user
         },
         tags: [],
+        publication: false,
+        inputVal: '',
         errorMessage: '',
-        loading: false,
         suggests: []
+      }
+    },
+    computed: {
+      loading() {
+        return /^data:.+/.test(this.theme.image)
       }
     },
     methods: {
       open(theme) {
         Object.assign(this.theme, theme)
         this.tags = theme.tags.map(tag => tag.name)
+        this.publication = !theme.private
         this.$refs.themeEditModal.open()
       },
       close() {
@@ -140,7 +138,7 @@
             description: this.theme.description,
             image: this.theme.image,
             tags: this.tags,
-            private: false === this.theme.private ? 0 : 1
+            private: this.publication ? 0 : 2
           }
           await new ThemeModel().update(this.theme.id, body).catch(err => {
             this.errorMessage = err
@@ -176,24 +174,26 @@
         }
       },
       changeImage(e) {
-        this.theme.image = ''
-        const files = e.target.files || e.dataTransfer.files
-        if (!files.length) return
-
-        this.createImage(files[0])
-      },
-      createImage(file) {
-        const reader = new FileReader()
-        reader.onload = e => {
-          this.theme.image = e.target.result
-        }
-        reader.readAsDataURL(file)
-        new FileModel().create(file).then(res => {
-          this.theme.image = res.data.path
+        this.createDataUrl(e, (dataUrl, fileName) => {
+          this.theme.image = dataUrl
+          new FileModel().create(this.dataURLtoBlob(dataUrl), fileName).then(res => {
+            this.theme.image = res.data.path
+          })
         })
       },
       removeImage() {
         this.theme.image = ''
+      },
+      confirmInput() {
+        const inputVal = this.inputVal
+        if (inputVal && -1 === this.tags.indexOf(inputVal)) {
+          this.tags.push(inputVal)
+        }
+        this.inputVal = ''
+      },
+      onBlur() {
+        this.confirmInput()
+        this.$emit('blur')
       }
     }
   }
@@ -204,7 +204,7 @@
     > .modal-card {
       .modal-card-body {
         margin-bottom: 0;
-        padding-bottom: 0;
+        padding-bottom: 5rem;
 
         .image-field {
           .file-view {
@@ -217,17 +217,22 @@
           }
         }
         .tags-field {
-          .el-select {
-            width: 100%;
+          .control {
+            flex-wrap: wrap;
+            margin-bottom: 0;
 
-            .el-tag {
-              &:before {
-                content: '#';
-              }
+            .input-new-tag {
+              width: auto;
             }
-            .el-tag__close.el-icon-close {
-              background-color: transparent;
-            }
+          }
+        }
+        .publication-field {
+          .publication:before {
+            border: 2px solid $info !important;
+          }
+          .publication:not(.is-publication):before {
+            background-color: white !important;
+            border: 2px solid darkgrey !important;
           }
         }
       }

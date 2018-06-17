@@ -1,17 +1,16 @@
 <template>
-  <div id="userpage-index">
+  <div id="userpage-index" @scroll="infiniteScroll">
     <header class="userpage-header header-shadow">
       <article class="user-profile media">
         <figure class="media-left" v-if="user.image">
-          <p class="image is-64x64">
-            <img :src="user.image" class="circle">
-          </p>
+          <div class="image circle flexbox is-64x64">
+            <user-image :src="user.image"/>
+          </div>
         </figure>
         <div class="media-content">
           <div class="content">
             <div class="user-name">
-              <span class="title is-4">{{ user.name }}</span>
-              <span class="subtitle is-6">@{{ urlUserId }}</span>
+              <span class="title is-4">{{ user.name }}</span><span class="subtitle is-6">@{{ urlUserId }}</span>
             </div>
             <router-link to="/settings/profile" v-if="loggedIn && isSelf"
                          class="profile-edit-button button is-info is-outlined is-small">
@@ -29,19 +28,19 @@
         <ul>
           <router-link :to="`/u/${urlUserId}`" class="cullet-tab" tag="li" exact>
             <a class="has-text-centered">
-              <span class="label-name is-size-7">カレット</span><br/>
+              <span class="label-name">カレット</span><br/>
               <span class="label-count">{{ user.itemCount }}</span>
             </a>
           </router-link>
           <router-link :to="`/u/${urlUserId}/themes`" class="theme-tab" tag="li" exact>
             <a class="has-text-centered">
-              <span class="label-name is-size-7">テーマ</span><br/>
+              <span class="label-name">テーマ</span><br/>
               <span class="label-count">{{ user.themeCount }}</span>
             </a>
           </router-link>
           <router-link :to="`/u/${urlUserId}/favorites`" class="favorite-tab" tag="li">
             <a class="has-text-centered">
-              <span class="label-name is-size-7">お気に入り</span><br/>
+              <span class="label-name">お気に入り</span><br/>
               <span class="label-count">{{ user.favoriteCount }}</span>
             </a>
           </router-link>
@@ -98,12 +97,18 @@
       '$route.params.userId': 'refresh'
     },
     created() {
+      if (this.isSelf) {
+        Object.assign(this.user, new UserModel().deserialize(this.$store.state.user))
+      }
       this.refresh()
     },
     methods: {
       refresh() {
         new UserModel().findOneWithReport(this.urlUserId).then(res => {
           this.user = res.data
+          if (this.isSelf) {
+            this.$store.commit('SET_USER', res.data)
+          }
         }).catch(err => {
           console.log(err)
           this.$message({
@@ -118,6 +123,11 @@
       },
       openEditModal(theme) {
         this.$refs.themeEditModal.open(theme)
+      },
+      infiniteScroll(event) {
+        if (event.target.scrollHeight <= event.target.scrollTop + event.target.offsetHeight) {
+          this.$refs.child.fetch()
+        }
       }
     }
   }
@@ -125,24 +135,22 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #userpage-index {
-    background-color: $bg-color-main;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling : touch;
 
+    &.container {
+      height: calc(100vh - #{$header-nav-height});
+    }
     .userpage-header {
       background-color: white;
 
       .user-profile {
-        align-items: center;
         max-width: $width;
         margin-left: auto;
         margin-right: auto;
         padding: 1rem .5rem .5rem;
         border-bottom: $border-style;
 
-        .image {
-          img {
-            height: 100%;
-          }
-        }
         .content {
           margin-bottom: 0;
 
@@ -172,9 +180,11 @@
               border-bottom-width: 0;
 
               .label-name {
+                font-size: $size-7;
                 font-weight: bold;
               }
               .label-count {
+                font-size: $size-5;
                 font-weight: bold;
               }
             }
@@ -186,6 +196,11 @@
       position: fixed;
       bottom: 2rem;
       right: 2rem;
+    }
+    @media screen and (max-width: 768px) {
+      &.container {
+        height: calc(100vh - #{$header-nav-height + $footer-nav-height});
+      }
     }
   }
 </style>

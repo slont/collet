@@ -1,5 +1,5 @@
 <template>
-  <cl-element class="text-element" :params="params" placeholder="ラベル（オプション）"
+  <cl-element class="text-element" :params="params" placeholder="ラベル（オプショナル）"
               @remove="$emit('remove')" :editable="editable"
               @focus="$emit('focus')" @blur="$emit('blur')">
     <span class="element-type-icon icon is-left" v-if="editable">
@@ -36,7 +36,22 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .text-element {
+    .textarea {
+      padding-top: .25em;
+      padding-left: .25em;
+      border-left: none;
+      border-top: none;
+      border-right: none;
+      border-radius: 0;
+      box-shadow: none;
+
+      &:focus, &:active {
+        border-color: $primary;
+        -webkit-tap-highlight-color: transparent;
+      }
+    }
     .value {
+      line-height: 1.5;
       white-space: pre-wrap;
       word-break: break-word;
     }

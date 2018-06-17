@@ -4,15 +4,15 @@
       <div class="media">
         <div class="media-content">
           <div class="updated-at text-color-weak is-size-8 has-text-right">
-            {{ item.updatedAt | fromNow }}
+            {{ fromNow(item.updatedAt, 'YYYY/MM/DD') }}
           </div>
-          <router-link class="item-title text-color-strong is-size-5 has-text-weight-bold" tag="div"
+          <router-link class="item-title flexbox text-color-strong is-size-5 has-text-weight-bold" tag="div"
                        :to="`/u/${theme.createdUser.id}/${theme.id}/${item.id}`">
             {{ item.name }}
           </router-link>
         </div>
       </div>
-      <div class="content" v-if="item.elements.length">
+      <div class="content is-size-7" v-if="item.elements.length">
         <element-view :element="item.elements[0]"/>
         <element-view :element="item.elements[1]" v-if="item.elements[1]"/>
       </div>
@@ -47,7 +47,6 @@
     }
     .card-content {
       .media {
-        align-items: center;
         $size: 3.5rem;
         max-height: $size;
 
@@ -55,23 +54,12 @@
           overflow: hidden;
 
           .item-title {
-            display: flex;
             max-height: 2.5em;
-            line-height: 1.25;
             overflow: hidden;
           }
         }
-        .media-right {
-          display: flex;
-          align-items: center;
-          max-height: 4rem;
-          width: 7rem;
-          margin: auto 0 auto .5rem;
-          overflow: hidden;
-        }
       }
       .content {
-        font-size: $size-small;
         background-color: rgba(255, 255, 255, .8);
         overflow: hidden;
 

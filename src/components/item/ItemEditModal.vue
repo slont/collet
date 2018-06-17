@@ -4,17 +4,7 @@
       <div class="columns is-gapless">
         <div class="left-column column is-hidden-mobile">
           <div class="slider">
-            <div class="buttons has-addons is-centered">
-              <text-button @add="addElement"/>
-              <image-button @add="addElement"/>
-              <location-button @add="addElement"/>
-              <datetime-button @add="addElement"/>
-              <link-button @add="addElement"/>
-              <rating-button @add="addElement"/>
-              <tag-button @add="addElement"/>
-              <phone-button @add="addElement"/>
-              <email-button @add="addElement"/>
-            </div>
+            <cl-buttons @add="addElement" class="is-centered"/>
           </div>
         </div>
 
@@ -43,8 +33,8 @@
           </article>
 
           <div class="item-elements">
-            <div v-for="(element, i) in item.elements" :key="i" class="field element-field">
-              <div class="sort-buttons">
+            <div v-for="(element, i) in item.elements" :key="i" class="field element-field flexbox">
+              <div class="sort-buttons flexbox">
                 <a class="button up-button is-white" @click="upOrder(i)"><i class="material-icons">arrow_upward</i></a>
                 <span class="element-order">{{ element.order + 1 }}</span>
                 <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
@@ -53,6 +43,8 @@
               <text-element :params="element" v-if="'text' === element.type" editable/>
               <image-element :params="element" v-else-if="'image' === element.type" editable/>
               <location-element :params="element" v-else-if="'location' === element.type" editable/>
+              <twitter-element :params="element" v-else-if="'twitter' === element.type" editable/>
+              <instagram-element :params="element" v-else-if="'instagram' === element.type" editable/>
               <datetime-element :params="element" v-else-if="'date' === element.type" editable/>
               <datetime-element :params="element" v-else-if="'time' === element.type" editable/>
               <datetime-element :params="element" v-else-if="'datetime' === element.type" editable/>
@@ -67,20 +59,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div class="modal-card-body slider is-hidden-tablet">
-      <div class="buttons has-addons">
-        <text-button @add="addElement"/>
-        <image-button @add="addElement"/>
-        <location-button @add="addElement"/>
-        <datetime-button @add="addElement"/>
-        <link-button @add="addElement"/>
-        <rating-button @add="addElement"/>
-        <tag-button @add="addElement"/>
-        <phone-button @add="addElement"/>
-        <email-button @add="addElement"/>
       </div>
     </div>
 
@@ -101,22 +79,13 @@
 
 <script>
   import ItemModel from '@/models/Item'
-  import FileModel from '@/models/File'
   import Modal from '@/components/Modal'
-  import ElementButton from '@/components/element/button/ElementButton'
-  import TextButton from '@/components/element/button/TextButton'
-  import ImageButton from '@/components/element/button/ImageButton'
-  import LocationButton from '@/components/element/button/LocationButton'
-  import DatetimeButton from '@/components/element/button/DatetimeButton'
-  import TagButton from '@/components/element/button/TagButton'
-  import LinkButton from '@/components/element/button/LinkButton'
-  import PhoneButton from '@/components/element/button/PhoneButton'
-  import EmailButton from '@/components/element/button/EmailButton'
-  import RatingButton from '@/components/element/button/RatingButton'
-  import SwitchButton from '@/components/element/button/SwitchButton'
+  import ClButtons from '@/components/element/button/ClButtons'
   import TextElement from '@/components/element/TextElement'
   import ImageElement from '@/components/element/ImageElement'
   import LocationElement from '@/components/element/LocationElement'
+  import TwitterElement from '@/components/element/TwitterElement'
+  import InstagramElement from '@/components/element/InstagramElement'
   import DatetimeElement from '@/components/element/DatetimeElement'
   import TagElement from '@/components/element/TagElement'
   import LinkElement from '@/components/element/LinkElement'
@@ -129,20 +98,12 @@
   export default {
     components: {
       Modal,
-      ElementButton,
-      TextButton,
-      ImageButton,
-      LocationButton,
-      DatetimeButton,
-      TagButton,
-      LinkButton,
-      PhoneButton,
-      EmailButton,
-      RatingButton,
-      SwitchButton,
+      ClButtons,
       TextElement,
       ImageElement,
       LocationElement,
+      TwitterElement,
+      InstagramElement,
       DatetimeElement,
       TagElement,
       LinkElement,
@@ -255,25 +216,6 @@
         this.item.elements.splice(i, 1, this.item.elements[i + 1])
         this.item.elements.splice(i + 1, 1, element)
         this.setOrder()
-      },
-      changeImage(e) {
-        const files = e.target.files || e.dataTransfer.files
-        if (!files.length) return
-
-        this.createImage(files[0])
-      },
-      createImage(file) {
-        const reader = new FileReader()
-        reader.onload = e => {
-          this.item.image = e.target.result
-        }
-        reader.readAsDataURL(file)
-        new FileModel().create(file, this.themeId).then(res => {
-          this.item.image = res.data.path
-        })
-      },
-      removeImage() {
-        this.item.image = ''
       }
     }
   }
@@ -308,6 +250,7 @@
               width: 100%;
               padding: 0;
               overflow-y: scroll;
+              -webkit-overflow-scrolling : touch;
 
               > .buttons {
                 flex-direction: column;
@@ -333,6 +276,7 @@
             padding: 0 0 1.5rem 3rem !important;
             background-color: white;
             overflow-y: scroll;
+            -webkit-overflow-scrolling : touch;
             z-index: 0;
 
             .theme-dropdown {
@@ -376,11 +320,7 @@
               margin-right: -$margin-side;
 
               .element-field {
-                display: flex;
-                align-items: center;
-
                 .sort-buttons {
-                  display: flex;
                   flex: .025;
                   flex-direction: column;
 
@@ -456,6 +396,7 @@
         padding: 0;
         border-radius: 0;
         overflow: scroll;
+        -webkit-overflow-scrolling : touch;
 
         .buttons {
           width: $element-button-size * $button-count;

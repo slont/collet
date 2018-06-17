@@ -1,7 +1,7 @@
 <template>
   <modal id="theme-select-modal" class="modal" ref="themeSelectModal" @close="reset">
-    <header class="top-header modal-card-head">
-      <span class="back-button icon" @click="close">
+    <header class="top-header action-modal-header modal-card-head">
+      <span class="back-button icon is-size-3" @click="close">
         <i class="material-icons">arrow_back</i>
       </span>
 
@@ -12,9 +12,8 @@
       <aside class="theme-menu menu">
         <ul class="menu-list">
           <li class="create-item" @click="openThemeCreateModal">
-            <a class="button is-primary is-outlined">
+            <a class="button is-primary is-outlined is-size-5">
               <span>テーマ新規作成</span>
-              <span class="icon"><i class="material-icons">add</i></span>
             </a>
             <div class="divider"></div>
           </li>
@@ -22,11 +21,11 @@
           <li v-for="theme in themes" :key="theme.id" class="theme-item"
               @click="select(theme)">
             <a>
-              <span class="selected-icon icon">
-                <i class="material-icons text-color-main" v-show="selectedTheme.id === theme.id">check</i>
+              <span class="selected-icon icon is-size-4">
+                <i class="fas fa-check text-color-main" v-show="selectedTheme.id === theme.id"></i>
               </span>
               <span class="theme-title is-size-6 has-text-weight-bold">{{ theme.title }}</span>
-              <span class="icon has-text-success" v-if="theme.private"><i class="material-icons">lock</i></span>
+              <span class="icon has-text-success is-size-4" v-if="theme.private"><i class="fas fa-lock"></i></span>
               <span class="item-count text-color-weak">({{ theme.itemCount }})</span>
             </a>
             <div class="divider"></div>
@@ -74,10 +73,7 @@
         this.$refs.themeSelectModal.close()
       },
       refresh() {
-        return new UserModel().findThemes(this.user.id, {
-          p: 0,
-          s: 20
-        }).then(res => {
+        return new UserModel().findThemes(this.user.id, {p: 1, s: 20, q: ''}).then(res => {
           this.themes = res.data
         })
       },
@@ -99,17 +95,6 @@
 <style lang="scss" rel="stylesheet/scss">
   #theme-select-modal {
     > .modal-card {
-      .modal-card-head {
-        height: 3rem;
-        padding: 1em;
-        color: white;
-        background-color: $main-color;
-        border: none;
-
-        .back-button {
-          margin-right: 1em;
-        }
-      }
       .modal-card-body {
         margin-bottom: 0;
         padding: 1rem;
@@ -128,10 +113,6 @@
           display: flex;
           align-items: center;
           justify-content: center;
-
-          i {
-            font-size: $size-medium;
-          }
         }
         .theme-item a {
           display: flex;

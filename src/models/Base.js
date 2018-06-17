@@ -72,6 +72,10 @@ export default class Base {
             }))
         }
       } else {
+        if ('opaqueredirect' === response.type) {
+          location.href = response.url
+          return Promise.resolve()
+        }
         switch (response.status) {
           case 401:
           case 440:

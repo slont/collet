@@ -1,5 +1,5 @@
 <template>
-  <cl-element class="image-element" :params="params" placeholder="ラベル（オプション）"
+  <cl-element class="image-element" :params="params" placeholder="ラベル（オプショナル）"
               @remove="$emit('remove')" :editable="editable"
               @focus="$emit('focus')" @blur="$emit('blur')">
     <span class="element-type-icon icon is-left" v-if="editable">
@@ -7,27 +7,28 @@
     </span>
     <div class="control file" v-if="editable">
       <div class="field image-field">
-        <div class="control loading-mask" :class="{ 'is-loading': params.valueStr.substring(0, 4) === 'data' }">
+        <div class="control">
           <div class="file is-boxed">
             <label class="file-label">
               <input @change="changeImage" class="file-input" type="file" name="resume"
                      @focus="$emit('focus')" @blur="$emit('blur')">
               <span class="file-view" v-if="params.valueStr">
-                <img :src="params.valueStr"/>
+                <img :src="params.valueStr" v-if="loading"/>
+                <img :src="params.valueStr" :srcset="`${params.valueStr}_640w 640w`" v-else/>
                 <a @click.stop.prevent="removeImage" class="delete"></a>
               </span>
               <span class="file-cta" v-else>
-                <span class="file-icon"><i class="material-icons">file_upload</i></span>
-                <span class="file-label">Upload Image</span>
+                <span class="icon is-size-1"><i class="material-icons">add</i></span>
               </span>
+              <span class="control loading-mask is-size-1" :class="{ 'is-loading': loading }"></span>
             </label>
           </div>
         </div>
       </div>
     </div>
 
-    <figure class="image file-view" v-else>
-      <img :src="params.valueStr"/>
+    <figure class="image file-view" v-else-if="params.valueStr">
+      <img :src="params.valueStr" :srcset="`${params.valueStr}_640w 640w`"/>
     </figure>
   </cl-element>
 </template>
@@ -50,21 +51,21 @@
       },
       editable: Boolean
     },
+    computed: {
+      loading() {
+        return /^data:.+/.test(this.params.valueStr)
+      },
+      themeId() {
+        return this.$route.params.themeId
+      }
+    },
     methods: {
       changeImage(e) {
-        const files = e.target.files || e.dataTransfer.files
-        if (!files.length) return
-
-        this.createImage(files[0])
-      },
-      createImage(file) {
-        const reader = new FileReader()
-        reader.onload = e => {
-          this.params.valueStr = e.target.result
-        }
-        reader.readAsDataURL(file)
-        new FileModel().create(file).then(res => {
-          this.params.valueStr = res.data.path
+        this.createDataUrl(e, (dataUrl, fileName) => {
+          this.params.valueStr = dataUrl
+          new FileModel().create(this.dataURLtoBlob(dataUrl), fileName, this.themeId).then(res => {
+            this.params.valueStr = res.data.path
+          })
         })
       },
       removeImage() {
@@ -76,25 +77,32 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .image-element {
-    .file-view {
-      margin-top: 0 !important;
-      text-align: center;
+    > .control.file {
+      justify-content: center;
 
-      .delete {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        z-index: 10;
+      .file-view {
+        margin-top: 0 !important;
+        text-align: center;
+
+        img {
+          max-width: 70%;
+          margin: 0 auto;
+        }
+        .delete {
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          z-index: 10;
+        }
+        + .file {
+          position: absolute;
+          top: 0;
+          opacity: .7;
+        }
       }
-      + .file {
-        position: absolute;
-        top: 0;
-        opacity: .7;
-      }
-      img {
-        width: 70%;
-        margin: 0 auto;
-      }
+    }
+    .file-view {
+      border-radius: 5px;
     }
   }
 </style>

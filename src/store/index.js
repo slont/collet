@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import AuthModel from '@/models/Auth'
 import { LOCALES } from '@/constant'
-import { SET_USER, SET_LOCALE, SET_LOGGED_IN, SET_LOGIN_INFO, SET_HEADER_ACTIVE, SET_FOOTER_ACTIVE } from './mutation-types'
+import { SET_USER, SET_LOCALE, SET_LOGGED_IN, SET_LOGIN_INFO, SET_ITEMS, SET_THEME, SET_THEMES, SET_TEMP_ITEM, SET_TEMPLATES, SET_HEADER_ACTIVE, SET_FOOTER_ACTIVE } from './mutation-types'
 
 Vue.use(Vuex)
 
@@ -13,6 +13,15 @@ export default new Vuex.Store({
     user: {},
     loggedIn: false,
     loginInfo: {},
+    items: [],
+    theme: {
+      templates: []
+    },
+    themes: [],
+    tempItem: {
+      name: '',
+      elements: []
+    },
     activeHeader: true,
     activeFooter: true
   },
@@ -21,14 +30,18 @@ export default new Vuex.Store({
     setLocale({ commit }, locale) {
       commit(SET_LOCALE, locale)
     },
-    setUser({commit}, user) {
-      commit(SET_USER, user)
-    },
     setLoggedIn({commit}, loggedIn) {
       commit(SET_LOGGED_IN, loggedIn)
+      if (!loggedIn) {
+        commit(SET_USER, {})
+        commit(SET_THEME, {})
+      }
     },
     setLoginInfo({commit}, loginInfo) {
       commit(SET_LOGIN_INFO, loginInfo)
+    },
+    setTheme({commit}, theme) {
+      commit(SET_THEME, theme)
     },
     signin({ commit }, params) {
       const authModel = new AuthModel()
@@ -45,6 +58,11 @@ export default new Vuex.Store({
         authModel.onChange(false)
         return Promise.reject(err)
       })
+    },
+    signinTwitter({ commit }, params) {
+      localStorage.authToken = params.authToken
+      commit(SET_LOGGED_IN, true)
+      commit(SET_USER, params.user)
     },
     confirm({ commit }, params) {
       const authModel = new AuthModel()
@@ -68,6 +86,7 @@ export default new Vuex.Store({
         delete localStorage.authToken
         commit(SET_LOGGED_IN, false)
         commit(SET_USER, {})
+        commit(SET_THEME, {})
         authModel.onChange(false)
         return Promise.resolve()
       }).catch(err => {
@@ -96,6 +115,21 @@ export default new Vuex.Store({
     },
     [SET_LOGIN_INFO](state, loginInfo) {
       state.loginInfo = loginInfo
+    },
+    [SET_THEME](state, theme) {
+      state.theme = theme
+    },
+    [SET_THEMES](state, themes) {
+      state.themes = themes
+    },
+    [SET_TEMP_ITEM](state, tempItem) {
+      state.tempItem = tempItem
+    },
+    [SET_TEMPLATES](state, templates) {
+      state.theme.templates = templates
+    },
+    [SET_ITEMS](state, items) {
+      state.items = items
     },
     [SET_HEADER_ACTIVE](state, active) {
       state.activeHeader = active

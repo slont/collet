@@ -3,7 +3,7 @@
     <label class="view-label label control" v-if="params.label && !editable">
       {{ params.label }}
     </label>
-    <div class="control label-control has-icons-left" v-else-if="editable">
+    <div class="control label-control flexbox has-icons-left" v-else-if="editable">
       <input v-model.trim="params.label" class="input label" type="text" :placeholder="placeholder"
              @focus="$emit('focus')" @blur="$emit('blur')">
     </div>
@@ -36,14 +36,13 @@
 <style lang="scss" rel="stylesheet/scss">
   .cl-element {
     position: relative;
-    line-height: 1.25rem;
 
     .control {
       width: 100%;
     }
     .label {
-      &:not(:last-child) {
-        margin-bottom: 1em;
+      &:focus, &:active {
+        border-color: $primary;
       }
     }
     .view-label {
@@ -51,11 +50,8 @@
     }
     .label-control {
       position: relative;
-      display: flex;
-      align-items: center;
 
       .label {
-        margin-bottom: -3px;
         padding-bottom: 0;
         box-shadow: none;
         border-top: none;
@@ -68,11 +64,13 @@
       + .element-type-icon {
         font-size: 1.5em;
         position: absolute;
-        top: .5em;
-        left: .5em;
+        top: .375em;
+        left: .25em;
+        color: gainsboro;
 
-        > .material-icons {
-          color: gainsboro;
+        &.fa-icon {
+          top: 1em;
+          left: 1em;
         }
       }
       .material-icons:not(:last-child) {

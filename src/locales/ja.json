@@ -23,6 +23,11 @@
     "signin": "ログイン"
   },
   "formats": {},
+  "attributes": {
+    "password": "パスワード",
+    "email": "メールアドレス",
+    "culletName": "カレット名"
+  },
   "locales": {
     "ja": "日本語",
     "en": "英語"

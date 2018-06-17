@@ -2,23 +2,26 @@
   <div class="theme-card card">
     <div class="card-image">
       <figure class="image is-16by9">
-        <img :src="theme.image" v-if="theme.image">
-        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image" v-else>
+        <img :src="theme.image" :srcset="`${theme.image}_640w 640w`" v-if="theme.image">
+        <img src="/static/img/cullet-logo_orange.png" class="alt-image" alt="Placeholder image" v-else>
       </figure>
       <div class="dark-mask" @click="$router.push(`/u/${theme.createdUser.id}/${theme.id}`)">
-        <span class="private-icon icon" v-if="theme.private"><i class="material-icons">lock</i></span>
+        <span class="private-icon icon is-size-3 has-text-white" v-if="theme.private"><i class="fas fa-lock"></i></span>
 
-        <div class="title is-5 has-text-white">{{ theme.title }}</div>
-        <div class="user-profile is-size-7">
-          <figure class="image is-32x32" v-if="theme.createdUser.image">
-            <img class="circle" :src="theme.createdUser.image">
+        <div class="title is-4 has-text-white">{{ theme.title }}</div>
+        <div class="user-profile flexbox is-size-7">
+          <figure class="image circle is-32x32 flexbox" v-if="theme.createdUser.image">
+            <user-image :src="theme.createdUser.image"/>
           </figure>
           <div>
             <div @click.stop="$router.push(`/u/${theme.createdUser.id}`)">
-              <span class="user-name has-text-white has-text-weight-bold">
+              <span class="user-name has-text-white has-text-weight-bold clickable">
                 {{ theme.createdUser.name }}</span><span class="user-id has-text-grey-lighter">@{{ theme.createdUser.id }}</span>
             </div>
-            <div class="updated-at has-text-grey-lighter" v-if="theme.updatedAt">{{ theme.updatedAt | fromNow('YYYY/MM/DD HH:mm') }}</div>
+            <div class="updated-at has-text-grey-lighter" v-if="theme.updatedAt">
+              <span class="icon"><i class="far fa-clock"></i></span>
+              {{ fromNow(theme.updatedAt) }}
+            </div>
           </div>
         </div>
       </div>
@@ -28,30 +31,33 @@
 
     <div class="card-content media">
       <div class="media-content">
-        <div class="tags" v-if="theme.tags.length">
-          <router-link v-for="tag in theme.tags" class="tag" :key="tag.name"
-             :to="`/tag?name=${tag.name}`">#{{ tag.name }}</router-link>
+        <div class="theme-tags tags" v-if="theme.tags.length">
+          <el-tag v-for="tag in theme.tags" :key="tag.tagId" type="warning"
+                  @click.native.stop="$router.push(`/tag?name=${tag.name}`)">
+            #{{ tag.name }}
+          </el-tag>
         </div>
 
         <div class="theme-description content is-size-7" v-if="theme.description">{{ theme.description }}</div>
 
-        <nav class="actions level is-mobile">
+        <nav class="theme-actions actions level is-mobile is-size-4">
           <div class="level-left">
-            <a class="favorite-action level-item">
+            <a class="favorite-action level-item" :class="{ 'is-active': theme.favorite }">
               <span class="icon" @click.stop.prevent="onClickFavorite">
-                <i class="favorite material-icons" v-if="theme.favorite">favorite</i>
-                <i class="material-icons" v-else>favorite_border</i>
+                <i class="fa-heart fa-pull-left" :class="[theme.favorite ? 'fas' : 'far']"></i>
               </span>
-              <span class="favorite-count count has-text-weight-bold" v-if="theme.favoriteCount">{{ theme.favoriteCount }}</span>
+              <span class="favorite-count count has-text-weight-bold" v-if="theme.favoriteCount">
+                {{ theme.favoriteCount }}
+              </span>
             </a>
             <a class="item-action level-item">
-              <span class="icon"><i class="material-icons">assignment</i></span>
+              <span class="icon"><i class="fas fa-list-ul fa-pull-left"></i></span>
               <span class="item-count count has-text-weight-bold">{{ theme.itemCount }}</span>
             </a>
           </div>
           <div class="level-right">
             <a class="edit-action level-item">
-              <span class="icon" @click.stop.prevent="$emit('open-edit-modal')" v-if="isMyTheme">
+              <span class="icon is-size-3" @click.stop.prevent="$emit('open-edit-modal')" v-if="loggedIn && isMyTheme">
                 <i class="material-icons">more_horiz</i>
               </span>
             </a>
@@ -113,7 +119,8 @@
       overflow: visible;
 
       .image {
-        overflow: hidden;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
       }
       .dark-mask {
         display: flex;
@@ -139,13 +146,10 @@
           color: #e8e8e8;
         }
         .title {
-          margin: 0;
-        }
-        .title {
           max-height: 80px;
           width: 100%;
+          margin: 0;
           margin-bottom: 1rem;
-          line-height: 1.25;
           display: -webkit-box;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 3;
@@ -157,21 +161,10 @@
           }
         }
         .user-profile {
-          display: flex;
-          align-items: center;
           cursor: pointer;
 
           .image {
             margin-right: .5em;
-
-            img {
-              height: 100%;
-            }
-          }
-          .user-name {
-            &:hover {
-              text-decoration: underline;
-            }
           }
         }
       }
@@ -192,46 +185,9 @@
       .media-content {
         overflow: initial;
 
-        .tags {
-          margin-bottom: 0;
-        }
         .theme-description + .actions {
           padding-top: .5em;
           border-top: $border-style;
-        }
-        .actions {
-          .level-item {
-            display: flex;
-            align-items: center;
-
-            .material-icons {
-              color: darkgrey;
-            }
-            .count {
-              margin-left: .25rem;
-              margin-bottom: -.25rem;
-              color: #4a4a4a;
-            }
-          }
-          .favorite-action {
-            .material-icons {
-              &.favorite {
-                color: deeppink;
-              }
-            }
-            .favorite-count {
-              margin-left: .25rem;
-              margin-bottom: -.25rem;
-              color: #4a4a4a;
-            }
-            &:hover {
-              opacity: .8;
-            }
-          }
-          .edit-action {
-            margin-right: 0;
-            color: #4a4a4a;
-          }
         }
       }
     }
