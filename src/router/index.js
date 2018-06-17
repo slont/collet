@@ -60,7 +60,7 @@ export default new Router({
           path: 'tag',
           component: TagIndex
         }, {
-          path: 's',
+          path: 's/:type',
           component: SearchIndex
         }, {
           path: 's/:type',

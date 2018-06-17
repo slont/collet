@@ -37,6 +37,7 @@
       <items v-else-if="'items' === activeType" ref="items"/>
       <my-themes v-else-if="'myThemes' === activeType" ref="myThemes"/>
       <my-items v-else-if="'myItems' === activeType" ref="myItems"/>
+      <users v-else-if="'users' === activeType" ref="users"/>
     </transition>
   </div>
 </template>
@@ -46,9 +47,10 @@
   import Items from './Items'
   import MyThemes from './MyThemes'
   import MyItems from './MyItems'
+  import Users from './Users'
 
   export default {
-    components: {Themes, Items, MyThemes, MyItems},
+    components: {Themes, Items, MyThemes, MyItems, Users},
     computed: {
       activeType: ({$route}) => $route.params.type
     },
@@ -91,6 +93,7 @@
             }
             a {
               font-size: $size-7;
+              height: $header-height;
               font-weight: bold;
             }
           }

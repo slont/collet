@@ -65,6 +65,10 @@
     max-width: $width;
     margin: 0 auto;
 
+    > .columns {
+      margin: 0;
+    }
+
     @media screen and (max-width: 768px) {
       margin: .25rem;
 
