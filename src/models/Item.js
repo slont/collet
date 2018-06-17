@@ -16,6 +16,15 @@ export default class Item extends Base {
     }))
   }
 
+  findByQuery(params) {
+    return this.postProcess(fetch(`${process.env.API_ENDPOINT}/items/_search?${qs.stringify(params, { indices: false })}`, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
+      headers: Base.getHeaders()
+    }))
+  }
+
   deserialize(json) {
     if (json instanceof Array) {
       return json.map(v => Item._deserialize(v))
