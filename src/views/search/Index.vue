@@ -70,6 +70,7 @@
     padding-top: $header-height;
     height: 100%;
     overflow-y: scroll;
+    -webkit-overflow-scrolling : touch;
 
     .search-header {
       position: fixed;
