@@ -1,0 +1,115 @@
+<template>
+  <themes id="search-themes" v-model="themes" :is-last-fetch="isLastFetch"
+          @open-edit-modal="openEditModal"></themes>
+</template>
+
+<script>
+  import ThemeModel from '@/models/Theme'
+  import FavoriteModel from '@/models/Favorite'
+  import Themes from '@/components/theme/Themes'
+  const SIZE = 10
+
+  export default {
+    components: {Themes},
+    data() {
+      return {
+        themes: [],
+        page: 1,
+        isFetching: false,
+        isLastFetch: false
+      }
+    },
+    computed: {
+      selfUser: ({$store}) => $store.state.user,
+      q: ({$route}) => $route.query.q || ''
+    },
+    watch: {
+      '$route.query.q'(e) {
+        Object.assign(this.$data, this.$options.data.call(this))
+        this.fetch()
+      }
+    },
+    created() {
+      this.fetch()
+    },
+    methods: {
+      fetch() {
+        if (this.isFetching || this.isLastFetch) return
+
+        this.isFetching = true
+        new ThemeModel().findByQuery({p: this.page, s: SIZE, q: this.q}).then(res => {
+          const themes = res.data.map(theme => {
+            theme.favorite = false
+            return theme
+          })
+          if (1 === this.page) {
+            this.themes = themes
+          } else {
+            this.themes.push(...themes)
+          }
+          this.page++
+          this.isFetching = false
+          if (!themes.length) {
+            this.isLastFetch = true
+            return
+          }
+
+          // fetch favorite
+          if (this.loggedIn) {
+            return new FavoriteModel().find({
+              themeIds: themes.map(theme => theme.id),
+              userId: this.selfUser.id
+            })
+          }
+        }).then(res => {
+          if (!res) return
+
+          this.themes.slice(this.themes.length - SIZE).forEach((theme, i) => Object.assign(theme, {
+            favorite: !!res.data[i].themeId
+          }))
+        }).catch(err => {
+          console.log(err)
+          this.$message({
+            showClose: true,
+            message: 'データ取得に失敗しました',
+            type: 'error'
+          })
+        })
+      },
+      openEditModal(theme) {
+        this.$emit('open-edit-modal', theme)
+      }
+    }
+  }
+</script>
+
+<style lang="scss" rel="stylesheet/scss">
+  #search-themes {
+    max-width: $width;
+    margin: 0 auto;
+
+    > .columns {
+      padding-top: 1em;
+    }
+
+    @media screen and (min-width: 769px) {
+      .theme-card {
+        .card-image > .image,
+        .dark-mask {
+          border-top-right-radius: 5px;
+          border-top-left-radius: 5px;
+        }
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .columns {
+        margin: 0;
+
+        .column {
+          padding: .25rem;
+        }
+      }
+    }
+  }
+</style>

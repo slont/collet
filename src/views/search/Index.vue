@@ -1,53 +1,51 @@
 <template>
-  <div id="search-index">
-    <div class="tabs">
-      <ul>
-        <router-link :to="`/s`" class="cullet-tab" tag="li" exact>
-          <a class="has-text-centered">
-            <span class="label-name">Myカレット</span><br/>
-          </a>
-        </router-link>
-        <router-link :to="`/s/items`" class="theme-tab" tag="li" exact>
-          <a class="has-text-centered">
-            <span class="label-name">みんなの投稿</span><br/>
-          </a>
-        </router-link>
-        <router-link :to="`/s/users`" class="favorite-tab" tag="li">
-          <a class="has-text-centered">
-            <span class="label-name">ユーザー</span>
-          </a>
-        </router-link>
-      </ul>
-    </div>
+  <div id="search-index" @scroll="infiniteScroll">
+    <header class="search-header header-shadow">
+      <div class="tabs">
+        <ul>
+          <router-link :to="`/s/themes`" class="cullet-tab" tag="li">
+            <a class="has-text-centered">
+              <span class="label-name">みんなのテーマ</span><br/>
+            </a>
+          </router-link>
+          <router-link :to="`/s/items`" class="cullet-tab" tag="li">
+            <a class="has-text-centered">
+              <span class="label-name">みんなのカレット</span><br/>
+            </a>
+          </router-link>
+          <router-link :to="`/s/myItems`" class="cullet-tab" tag="li" v-if="loggedIn">
+            <a class="has-text-centered">
+              <span class="label-name">Myカレット</span><br/>
+            </a>
+          </router-link>
+          <router-link :to="`/s/users`" class="favorite-tab" tag="li">
+            <a class="has-text-centered">
+              <span class="label-name">ユーザー</span>
+            </a>
+          </router-link>
+        </ul>
+      </div>
+    </header>
 
     <transition name="slide-fade" mode="out-in">
-      <div>commign soon...</div>
+      <themes v-show="'themes' === activeType" ref="themes"/>
     </transition>
   </div>
 </template>
 
 <script>
+  import Themes from './Themes'
+
   export default {
-    data() {
-      return {
-      }
-    },
+    components: {Themes},
     computed: {
-      urlUserId() {
-      },
-      isSelf() {
-      }
-    },
-    watch: {
-    },
-    created() {
+      activeType: ({$route}) => $route.params.type
     },
     methods: {
-      refresh() {
-      },
-      refreshThemes() {
-      },
-      openEditModal() {
+      infiniteScroll($e) {
+        if (this.$el.scrollHeight <= $e.target.scrollTop + $e.target.offsetHeight) {
+          this.$refs[this.activeType].fetch()
+        }
       }
     }
   }
@@ -55,67 +53,40 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #search-index {
-    // background-color: $bg-color-main;
+    $header-height: 33px;
+    padding-top: $header-height;
+    height: 100%;
     background-color: white;
+    overflow-y: scroll;
 
-    .userpage-header {
+    .search-header {
+      position: fixed;
+      top: $header-nav-height;
+      right: 0;
+      left: 0;
+      height: $header-height;
       background-color: white;
+      z-index: 19;
 
-      .user-profile {
-        max-width: $width;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 1rem .5rem .5rem;
-        border-bottom: $border-style;
-
-        .image {
-          img {
-            height: 100%;
-          }
-        }
-        .content {
-          margin-bottom: 0;
-
-          .user-name {
-            margin-bottom: .3rem;
-          }
-          .user-bio {
-            margin-top: .3rem;
-          }
-          .icon.is-small i {
-            font-size: $size-5;
-          }
-        }
-      }
       .tabs {
-        max-width: $width;
-        margin-left: auto;
-        margin-right: auto;
-
         > ul {
+          max-width: $width;
+          margin-left: auto;
+          margin-right: auto;
           border-bottom-color: transparent;
 
           li {
+            &:not(.router-link-active) a {
+              border: none;
+            }
             a {
-              flex-direction: column;
-              line-height: .7;
-              border-bottom-width: 0;
-
               .label-name {
-                font-weight: bold;
-              }
-              .label-count {
                 font-weight: bold;
               }
             }
           }
         }
       }
-    }
-    .button.is-float {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
     }
   }
 </style>
