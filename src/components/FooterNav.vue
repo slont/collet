@@ -72,10 +72,7 @@
     methods: {
       fetchThemes() {
         if (this.user.id && !this.$store.state.theme.id) {
-          new UserModel().findThemes(this.user.id, {
-            p: 1,
-            s: 1
-          }).then(res => {
+          new UserModel().findThemes(this.user.id, {p: 1, s: 1, q: ''}).then(res => {
             if (res.data.length) {
               this.$store.dispatch('setTheme', res.data[0])
             }

@@ -18,8 +18,8 @@ export default class User extends Base {
     }))
   }
 
-  findOneWithReport(id, params = null) {
-    return this.postProcess(fetch(`${this.endpoint}/${id}/_report${(params ? '?' + qs.stringify(params, { indices: false }) : '')}`, {
+  findOneWithReport(id, params = {}) {
+    return this.postProcess(fetch(`${this.endpoint}/${id}/_report?${qs.stringify(params, {indices: false})}`, {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',
@@ -27,8 +27,8 @@ export default class User extends Base {
     }))
   }
 
-  findThemes(userId, params = null) {
-    return this.postProcess(fetch(`${this.endpoint}/${userId}/themes${(params ? '?' + qs.stringify(params, { indices: false }) : '')}`, {
+  findThemes(userId, params = {}) {
+    return this.postProcess(fetch(`${this.endpoint}/${userId}/themes?${qs.stringify(params, {indices: false})}`, {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',
@@ -36,8 +36,8 @@ export default class User extends Base {
     }), new Theme().deserialize)
   }
 
-  findFavoriteThemes(userId, params) {
-    return this.postProcess(fetch(`${this.endpoint}/${userId}/themes/_favorite?${qs.stringify(params, { indices: false })}`, {
+  findFavoriteThemes(userId, params = {}) {
+    return this.postProcess(fetch(`${this.endpoint}/${userId}/themes/_favorite?${qs.stringify(params, {indices: false})}`, {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',
@@ -45,8 +45,8 @@ export default class User extends Base {
     }), new Theme().deserialize)
   }
 
-  findItems(userId, params = null) {
-    return this.postProcess(fetch(`${this.endpoint}/${userId}/items${(params ? '?' + qs.stringify(params, { indices: false }) : '')}`, {
+  findItems(userId, params = {}) {
+    return this.postProcess(fetch(`${this.endpoint}/${userId}/items?${qs.stringify(params, {indices: false})}`, {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',

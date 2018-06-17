@@ -73,10 +73,7 @@
         this.$refs.themeSelectModal.close()
       },
       refresh() {
-        return new UserModel().findThemes(this.user.id, {
-          p: 1,
-          s: 20
-        }).then(res => {
+        return new UserModel().findThemes(this.user.id, {p: 1, s: 20, q: ''}).then(res => {
           this.themes = res.data
         })
       },

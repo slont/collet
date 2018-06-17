@@ -107,7 +107,8 @@
         if (this.items.length < this.itemsTotal) {
           const res = await new UserModel().findItems(this.urlUserId, {
             p: null != page ? page : Math.floor(this.items.length / this.size) + 1,
-            s: this.size
+            s: this.size,
+            q: ''
           }).catch(err => {
             console.log(err)
             this.$message({
