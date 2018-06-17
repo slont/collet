@@ -1,10 +1,10 @@
 <template>
-  <themes id="search-themes" v-model="themes" :is-last-fetch="isLastFetch"
+  <themes id="search-my-themes" v-model="themes" :is-last-fetch="isLastFetch"
           @open-edit-modal="openEditModal"></themes>
 </template>
 
 <script>
-  import ThemeModel from '@/models/Theme'
+  import UserModel from '@/models/User'
   import FavoriteModel from '@/models/Favorite'
   import Themes from '@/components/theme/Themes'
   const SIZE = 10
@@ -39,7 +39,7 @@
         if (this.isFetching || this.isLastFetch) return
 
         this.isFetching = true
-        new ThemeModel().findByQuery({p: this.page, s: SIZE, q: this.q}).then(res => {
+        new UserModel().findThemes(this.selfUser.id, {p: this.page, s: SIZE, q: this.q}).then(res => {
           const themes = res.data.map(theme => {
             theme.favorite = false
             return theme
@@ -57,12 +57,10 @@
           }
 
           // fetch favorite
-          if (this.loggedIn) {
-            return new FavoriteModel().find({
-              themeIds: themes.map(theme => theme.id),
-              userId: this.selfUser.id
-            })
-          }
+          return new FavoriteModel().find({
+            themeIds: themes.map(theme => theme.id),
+            userId: this.selfUser.id
+          })
         }).then(res => {
           if (!res) return
 
@@ -86,7 +84,7 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-  #search-themes {
+  #search-my-themes {
     max-width: $width;
     margin: 0 auto;
 
