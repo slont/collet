@@ -6,10 +6,10 @@
           <img class="cullet-logo" src="/static/img/cullet-logo_orange.png" alt="Colette">
         </div>
 
-        <div class="navbar-item field search-field is-hidden-tablet" v-if="!loggedIn">
+        <div class="navbar-item field search-field is-hidden-tablet">
           <div class="control has-icons-right">
             <input v-model="query" class="input is-rounded"
-                 placeholder="キーワード検索"/>
+                   placeholder="キーワード検索" @change="search"/>
             <span class="icon is-small is-right"><i class="fas fa-search"></i></span>
           </div>
         </div>
@@ -64,15 +64,12 @@
 
 <script>
   import Dropdown from '@/components/Dropdown'
-  // const HEADER_HEIGHT = 46
 
   export default {
     components: { Dropdown },
     data() {
       return {
-        // scrolledVal: 0,
-        // headerPos: 0,
-        query: ''
+        query: this.$route.query.q || ''
       }
     },
     computed: {
@@ -83,24 +80,18 @@
         return this.$store.state.user
       }
     },
-    // created() {
-    //   window.addEventListener('scroll', this.handleScroll)
-    // },
-    // destroyed() {
-    //   window.removeEventListener('scroll', this.handleScroll)
-    // },
     methods: {
-      // handleScroll(e) {
-      //   const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-      //   let diff = this.scrolledVal - scrollTop
-      //   if (this.scrolledVal < scrollTop) {
-      //     this.headerPos = Math.max(-HEADER_HEIGHT, this.headerPos + diff)
-      //   } else {
-      //     diff = Math.sign(diff) * Math.min(10, Math.abs(diff))
-      //     this.headerPos = Math.min(0, this.headerPos + diff)
-      //   }
-      //   this.scrolledVal = scrollTop
-      // },
+      search() {
+        const path = /^\/s\/.*/.test(this.$route.path) ? this.$route.path : '/s/themes'
+        this.$router.push({
+          path: path,
+          query: {
+            p: 0,
+            s: 20,
+            q: this.query
+          }
+        })
+      },
       signout() {
         this.$store.dispatch('signout').then(() => {
           this.$router.push('/')
@@ -135,8 +126,6 @@
           padding-right: .5em;
 
           .input {
-            background: transparent;
-            color: white;
             border: 1px solid #e07b00;
           }
         }
