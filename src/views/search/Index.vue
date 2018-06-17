@@ -34,8 +34,9 @@
 
     <transition name="slide-fade" mode="out-in">
       <themes v-if="'themes' === activeType" ref="themes"/>
-      <items v-if="'items' === activeType" ref="items"/>
+      <items v-else-if="'items' === activeType" ref="items"/>
       <my-themes v-else-if="'myThemes' === activeType" ref="myThemes"/>
+      <my-items v-else-if="'myItems' === activeType" ref="myItems"/>
     </transition>
   </div>
 </template>
@@ -44,9 +45,10 @@
   import Themes from './Themes'
   import Items from './Items'
   import MyThemes from './MyThemes'
+  import MyItems from './MyItems'
 
   export default {
-    components: {Themes, Items, MyThemes},
+    components: {Themes, Items, MyThemes, MyItems},
     computed: {
       activeType: ({$route}) => $route.params.type
     },
