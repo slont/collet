@@ -8,7 +8,7 @@
 
         <div class="navbar-item field search-field is-hidden-tablet">
           <div class="control has-icons-right">
-            <input v-model="query" class="input is-rounded"
+            <input v-model.trim="query" class="input is-rounded"
                    placeholder="キーワード検索" @input="search"/>
             <span class="icon is-small is-right"><i class="fas fa-search"></i></span>
           </div>
