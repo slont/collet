@@ -21,7 +21,7 @@
                 </router-link>
               </p>
 
-              <p>{{ user.description }}             aaaaaaaaaaaaaaaaaaaa</p>
+              <p class="biography">{{ user.biography }}</p>
             </div>
           </div>
         </div>
