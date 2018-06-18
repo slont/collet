@@ -196,7 +196,7 @@
     methods: {
       refresh() {
         if (this.loggedIn) {
-          new UserModel().findItems(this.user.id, {p: 1, s: 10}).then(res => {
+          new UserModel().findItems(this.user.id, {p: 1, s: 10, q: ''}).then(res => {
             this.updatedItems = res.data.slice(0, 5)
             this.$store.commit('SET_ITEMS', res.data)
           })
