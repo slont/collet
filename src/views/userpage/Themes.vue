@@ -65,7 +65,8 @@
         if (this.themes.length < this.themesTotal) {
           const res = await new UserModel().findThemes(this.urlUserId, {
             p: null != page ? page : Math.floor(this.themes.length / this.size) + 1,
-            s: this.size
+            s: this.size,
+            q: ''
           }).catch(err => {
             console.log(err)
             this.$message({
