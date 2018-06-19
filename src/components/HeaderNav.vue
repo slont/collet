@@ -2,7 +2,7 @@
   <nav id="header-nav" class="navbar is-fixed-top" :class="{ 'is-active': activeHeader }">
     <div class="container">
       <div class="navbar-brand">
-        <div class="navbar-item logo" @click="$router.push(`/`)">
+        <div class="navbar-item logo" @click="scrollTop">
           <img class="cullet-logo" src="/static/img/cullet-logo_orange.png" alt="Colette">
         </div>
 
@@ -96,6 +96,10 @@
         this.$store.dispatch('signout').then(() => {
           this.$router.push('/')
         })
+      },
+      scrollTop() {
+        window.document.querySelector('#index > .container').scrollTop = 0
+        this.$router.push(`/`)
       }
     }
   }
