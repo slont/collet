@@ -1,9 +1,9 @@
 <template>
   <div id="signup" class="flexbox">
       <div class="box">
-        <div class="title has-text-centered">
+        <router-link to="/" tag="div" class="title has-text-centered">
           <img class="cullet-logo" src="/static/img/cullet-logo_orange.png" alt="Cullet">
-        </div>
+        </router-link>
 
         <transition name="slide-fade" mode="out-in">
           <div key="0" v-if="0 === pageIndex">
@@ -18,7 +18,8 @@
             </div>
 
             <div class="field has-text-centered">
-              <guard-button :click="confirmEmail" class="is-info fullwidth" :class="{ 'is-loading': isLoading }">
+              <guard-button :click="confirmEmail" class="is-info fullwidth" :class="{ 'is-loading': isLoading }"
+                            :disabled="!email || errors.has('email')">
                 確認メールを送信
               </guard-button>
             </div>
@@ -218,6 +219,11 @@
       }
       > * {
         margin-right: .25rem;
+      }
+      .button,
+      .input {
+        font-size: 1rem;
+        font-weight: bold;
       }
       .input[type="number"] {
         font-size: 3rem;

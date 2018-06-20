@@ -1,9 +1,9 @@
 <template>
   <div id="signin" class="flexbox">
     <div class="box">
-      <div class="title has-text-centered">
+      <router-link to="/" tag="div" class="title has-text-centered">
         <img class="cullet-logo" src="/static/img/cullet-logo_orange.png" alt="Cullet">
-      </div>
+      </router-link>
 
       <div class="field">
         <guard-button :click="signinTwitter" class="is-info fullwidth" :class="{ 'is-loading': isLoadingTwitter }">
@@ -164,6 +164,7 @@
         .button,
         .input {
           font-size: 1rem;
+          font-weight: bold;
         }
       }
     }
