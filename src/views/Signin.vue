@@ -2,7 +2,7 @@
   <div id="signin" class="flexbox">
     <div class="box">
       <div class="title has-text-centered">
-        <img class="cullet-logo" src="/static/img/cullet-logo_orange.png" alt="Colette">
+        <img class="cullet-logo" src="/static/img/cullet-logo_orange.png" alt="Cullet">
       </div>
 
       <div class="field">
