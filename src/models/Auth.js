@@ -7,6 +7,26 @@ export default class Auth extends Base {
     super('')
   }
 
+  confirmEmail(body) {
+    return this.postProcess(fetch(`${this.endpoint}/confirmEmail`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+      headers: Base.getHeaders(),
+      body: JSON.stringify(body)
+    }))
+  }
+
+  confirmCode(body) {
+    return this.postProcess(fetch(`${this.endpoint}/confirmCode`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+      headers: Base.getHeaders(),
+      body: JSON.stringify(body)
+    }))
+  }
+
   signup(body) {
     return this.postProcess(fetch(`${this.endpoint}/signup`, {
       method: 'POST',
