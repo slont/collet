@@ -25,6 +25,12 @@
         その他
       </p>
       <ul class="menu-list">
+        <li>
+          <a href="/terms-of-service" target="_blank">利用規約</a>
+        </li>
+        <li>
+          <a href="/privacy-policy" target="_blank">プライバシーポリシー</a>
+        </li>
         <li @click="signout">
           <a><span>サインアウト</span></a>
         </li>

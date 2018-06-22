@@ -98,7 +98,9 @@
         })
       },
       scrollTop() {
-        window.document.querySelector('#index > .container').scrollTop = 0
+        if (/^\/$/.test(this.$route.path)) {
+          window.document.querySelector('#index > .container').scrollTop = 0
+        }
         this.$router.push(`/`)
       }
     }
