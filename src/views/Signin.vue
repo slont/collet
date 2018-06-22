@@ -100,29 +100,21 @@
     },
     methods: {
       async ok() {
-        await this.$validator.validateAll().then(async result => {
-          if (!result) return
+        if (!await this.$validator.validateAll()) return
 
-          this.isLoading = true
-          const loginInfo = {
-            email: this.email,
-            password: this.password
-          }
-          await this.$store.dispatch('signin', loginInfo).catch(err => {
-            this.errorMessage = err.message
-            this.isLoading = false
-            throw new Error(err)
-          })
-          if (this.checkedSaveLoginInfo) {
-            this.$store.dispatch('setLoginInfo', loginInfo)
-          } else {
-            this.$store.dispatch('setLoginInfo', {})
-          }
-
+        this.isLoading = true
+        const loginInfo = {
+          email: this.email,
+          password: this.password
+        }
+        new AuthModel().signin(loginInfo).then(res => {
+          this.$store.dispatch('signin', res.data)
           this.isLoading = false
           this.$router.push(this.$route.query.redirect || '/')
-        }).catch(() => {
-          console.log('Correct them errors!')
+        }).catch(err => {
+          this.errorMessage = err.message
+          this.isLoading = false
+          throw new Error(err)
         })
       },
       async signinTwitter() {
