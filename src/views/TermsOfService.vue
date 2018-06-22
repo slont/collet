@@ -168,7 +168,9 @@
 
     article {
       width: $width;
-      margin: 3rem auto;
+      max-width: 100%;
+      margin: auto;
+      padding: 1rem 3rem 6rem;
 
       section {
         &:not(:last-child) {

@@ -10,6 +10,7 @@ import EditTempItem from '@/views/EditTempItem'
 import CreateItem from '@/views/CreateItem'
 import EditItem from '@/views/EditItem'
 import TermsOfService from '@/views/TermsOfService'
+import PrivacyPolicy from '@/views/PrivacyPolicy'
 import TopIndex from '@/views/top/Index'
 import TagIndex from '@/views/tag/Index'
 import SearchIndex from '@/views/search/Index'
@@ -40,8 +41,10 @@ export default new Router({
     }, {
       path: '/terms-of-service',
       component: TermsOfService
-    },
-    {
+    }, {
+      path: '/privacy-policy',
+      component: PrivacyPolicy
+    }, {
       path: '/',
       component: Index,
       children: [
@@ -89,16 +92,13 @@ export default new Router({
         {
           path: 'm/createItem/:themeId',
           component: CreateItem
-        },
-        {
+        }, {
           path: 'tempItem',
           component: TempItem
-        },
-        {
+        }, {
           path: 'm/editTempItem',
           component: EditTempItem
-        },
-        {
+        }, {
           path: 'm/editItem/:themeId/:itemId',
           component: EditItem
         }
