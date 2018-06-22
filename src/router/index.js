@@ -9,6 +9,7 @@ import TempItem from '@/views/TempItem'
 import EditTempItem from '@/views/EditTempItem'
 import CreateItem from '@/views/CreateItem'
 import EditItem from '@/views/EditItem'
+import TermsOfService from '@/views/TermsOfService'
 import TopIndex from '@/views/top/Index'
 import TagIndex from '@/views/tag/Index'
 import SearchIndex from '@/views/search/Index'
@@ -36,6 +37,9 @@ export default new Router({
     }, {
       path: '/confirm',
       component: Confirm
+    }, {
+      path: '/terms-of-service',
+      component: TermsOfService
     },
     {
       path: '/',
