@@ -8,7 +8,10 @@
     },
     "signup": {
       "email": "メールアドレス",
-      "password": "パスワード"
+      "userId": "ユーザID",
+      "password": "パスワード",
+      "inputPinCode": "PINコードを入力",
+      "invalidCode": "無効なコードです"
     },
     "signin": {
       "email": "メールアドレス",

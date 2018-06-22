@@ -33,7 +33,7 @@
           </div><!-- page0 -->
 
           <div key="1" v-else-if="1 === pageIndex">
-            <h4 class="title is-5">{{ $t('pages.create.inputPinCode') }}</h4>
+            <h4 class="title is-5">{{ $t('views.signup.inputPinCode') }}</h4>
             <div class="field is-horizontal">
               <input v-model="pinCode1" class="input" type="number" ref="pinCode1"
                      maxlength="1" min="0" max="9" @input="onInput($event, 1)" @focus="$event.target.select()"/>
@@ -56,13 +56,13 @@
           </div><!-- page1 -->
 
           <div key="2" v-else-if="2 === pageIndex">
-            <div class="field-email field">
-              <label class="label">{{ $t('views.signup.email') }}</label>
+            <div class="field-id field">
+              <label class="label">{{ $t('views.signup.userId') }}</label>
               <p class="control is-expanded has-icons-left">
-                <input v-model="email" name="email" class="input" :class="{ 'is-danger': errors.has('email') }"
-                       placeholder="some@sample.com" type="text" v-validate="'required|email'">
-                <span class="icon is-small is-left"><i class="material-icons">email</i></span>
-                <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
+                <input v-model="id" name="userId" class="input" :class="{ 'is-danger': errors.has('userId') }"
+                       placeholder="user-id" type="text" v-validate="'max:32|regex:^([a-zA-Z0-9_-]+)$'">
+                <span class="icon is-left">@</span>
+                <span v-show="errors.has('userId')" class="help is-danger">{{ errors.first('userId') }}</span>
               </p>
             </div>
 
@@ -71,13 +71,13 @@
               <p class="control is-expanded has-icons-left">
                 <input v-model="password" name="password" class="input" :class="{ 'is-danger': errors.has('password') }"
                        placeholder="password" type="password" v-validate="'required|min:6'">
-                <span class="icon is-small is-left"><i class="material-icons">vpn_key</i></span>
+                <span class="icon is-left"><i class="material-icons">vpn_key</i></span>
                 <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
               </p>
             </div>
 
             <div class="field has-text-centered">
-              <guard-button :click="ok" class="is-info fullwidth" :class="{ 'is-loading': isLoading }">
+              <guard-button :click="signup" class="is-info fullwidth" :class="{ 'is-loading': isLoading }">
                 {{ $t('buttons.signup') }}
               </guard-button>
             </div>
@@ -103,6 +103,7 @@
         pageIndex: 0,
         locale: this.$store.state.locale,
         email: '',
+        id: '',
         password: '',
         pinCode1: '',
         pinCode2: '',
@@ -154,26 +155,26 @@
           this.pageIndex++
         }).catch(() => {
           this.isLoading = false
+          this.errorMessage = this.$t('views.signup.invalidCode')
         })
       },
-      async ok() {
-        await this.$validator.validateAll().then(async result => {
-          if (!result) return
+      async signup() {
+        if (!await this.$validator.validateAll()) return
 
-          this.isLoading = true
-          await new AuthModel().signup({
-            email: this.email,
-            password: this.password
-          }).catch(err => {
-            this.isLoading = false
-            this.errorMessage = err.message
-            throw new Error(err)
-          })
-
+        this.isLoading = true
+        new AuthModel().signup({
+          id: this.id,
+          email: this.email,
+          pinCode: this.pinCode,
+          password: this.password
+        }).then(res => {
+          this.$store.dispatch('signin', res.data)
           this.isLoading = false
-          this.pageIndex = 1
-        }).catch(() => {
-          console.log('Correct them errors!')
+          this.$router.push('/')
+        }).catch(err => {
+          this.isLoading = false
+          this.errorMessage = err.message
+          throw new Error(err)
         })
       },
       switchLocale() {

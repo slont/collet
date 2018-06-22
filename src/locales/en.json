@@ -8,7 +8,10 @@
     },
     "signup": {
       "email": "Email",
-      "password": "Password"
+      "userId": "User ID",
+      "password": "Password",
+      "inputPinCode": "Input PIN code",
+      "invalidCode": "Invalid code"
     },
     "signin": {
       "email": "Email",
