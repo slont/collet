@@ -44,20 +44,9 @@ export default new Vuex.Store({
       commit(SET_THEME, theme)
     },
     signin({ commit }, params) {
-      const authModel = new AuthModel()
-      return authModel.signin(params).then(res => {
-        localStorage.authToken = res.data.authToken
-        commit(SET_LOGGED_IN, true)
-        commit(SET_USER, res.data.user)
-        authModel.onChange(true)
-        return Promise.resolve(res)
-      }).catch(err => {
-        if (err) {
-          console.log(err)
-        }
-        authModel.onChange(false)
-        return Promise.reject(err)
-      })
+      localStorage.authToken = params.authToken
+      commit(SET_LOGGED_IN, true)
+      commit(SET_USER, params.user)
     },
     signinTwitter({ commit }, params) {
       localStorage.authToken = params.authToken

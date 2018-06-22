@@ -26,6 +26,11 @@
     "signin": "Sign In"
   },
   "formats": {},
+  "models": {
+    "theme": {
+      "defaultTitle": "My Memo"
+    }
+  },
   "attributes": {
     "password": "Password",
     "email": "Email",

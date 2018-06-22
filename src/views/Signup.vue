@@ -96,6 +96,7 @@
 
 <script>
   import AuthModel from '@/models/Auth'
+  import ThemeModel from '@/models/Theme'
 
   export default {
     data() {
@@ -170,6 +171,17 @@
         }).then(res => {
           this.$store.dispatch('signin', res.data)
           this.isLoading = false
+
+          new ThemeModel().create({
+            title: this.$t('models.theme.defaultTitle'),
+            description: '',
+            image: '',
+            tags: [],
+            createdUser: this.$store.state.user,
+            private: 2
+          }).catch(err => {
+            this.errorMessage = err
+          })
           this.$router.push('/')
         }).catch(err => {
           this.isLoading = false

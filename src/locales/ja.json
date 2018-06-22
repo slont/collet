@@ -26,6 +26,11 @@
     "signin": "ログイン"
   },
   "formats": {},
+  "models": {
+    "theme": {
+      "defaultTitle": "Myメモ"
+    }
+  },
   "attributes": {
     "password": "パスワード",
     "email": "メールアドレス",
