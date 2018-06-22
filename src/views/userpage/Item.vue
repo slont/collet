@@ -288,6 +288,7 @@
       .media-content {
         .theme-actions {
           display: inline-flex;
+          align-items: center;
           margin-left: auto;
 
           .action {
