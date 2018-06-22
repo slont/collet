@@ -12,6 +12,16 @@
         this.$store.dispatch('signinTwitter', res.data)
         this.$router.push('/')
       })
+    },
+    mounted() {
+      if (this.$route.query.client_name) {
+        this.$router.push('/')
+      }
+    },
+    updated() {
+      if (this.$route.query.client_name) {
+        this.$router.push('/')
+      }
     }
   }
 </script>
