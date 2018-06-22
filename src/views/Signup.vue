@@ -30,6 +30,10 @@
                 ログインはこちらから
               </router-link>
             </div>
+
+            <div class="field is-size-8">
+              <a href="/terms-of-service" target="_blank">利用規約</a>、<a href="/privacy-policy" target="_blank">プライバシーポリシー</a>に同意して利用してください
+            </div>
           </div><!-- page0 -->
 
           <div key="1" v-else-if="1 === pageIndex">

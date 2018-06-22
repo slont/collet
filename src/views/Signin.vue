@@ -63,6 +63,10 @@
         </router-link>
       </div>
 
+      <div class="field is-size-8">
+        <a href="/terms-of-service" target="_blank">利用規約</a>、<a href="/privacy-policy" target="_blank">プライバシーポリシー</a>に同意して利用してください
+      </div>
+
       <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
       <!--<router-link to="/">{{ $t('views.signin.passwordReset') }}</router-link>-->
     </div>
