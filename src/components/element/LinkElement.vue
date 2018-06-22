@@ -7,7 +7,7 @@
     </span>
     <div class="control">
       <input v-model.trim="url" class="input value" type="text" placeholder="Link"
-             @change="fetchImage" @focus="$emit('focus')" @blur="$emit('blur')" v-if="editable">
+             @input="fetchImage" @focus="$emit('focus')" @blur="$emit('blur')" v-if="editable">
 
       <div class="link-card card box" v-if="imageSrc || title" @click="onClickCard">
         <figure class="image flexbox">
@@ -61,7 +61,8 @@
         siteName: '',
         title: '',
         imageSrc: '',
-        description: ''
+        description: '',
+        isFetching: false
       }
       if (this.params.valueStr.startsWith('{')) {
         Object.assign(data, JSON.parse(this.params.valueStr))
@@ -88,7 +89,8 @@
           Object.assign(this.$data, this.$options.data.call(this))
           this.url = url
           this.params.valueStr = JSON.stringify(this.$data)
-        } else if (this.isStartHttp && this.editable) {
+        } else if (this.isStartHttp && this.editable && !this.isFetching) {
+          this.isFetching = true
           fetch(`https://opengraph.io/api/1.1/site/${encodeURIComponent(this.url)}?app_id=5b16d7821ae11d055fd7c70f`).then(res => {
             if (res.ok) {
               res.json().then(json => {
@@ -100,8 +102,10 @@
                 this.params.valueNum = 0
               })
             }
+            this.isFetching = false
           }).catch(() => {
             this.params.valueNum = -1
+            this.isFetching = false
           })
         }
       }
