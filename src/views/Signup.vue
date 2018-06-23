@@ -38,7 +38,7 @@
 
           <div key="1" v-else-if="1 === pageIndex">
             <h4 class="title is-5">{{ $t('views.signup.inputPinCode') }}</h4>
-            <div class="field is-horizontal">
+            <div class="field flexbox is-horizontal">
               <input v-model="pinCode1" class="input" type="number" ref="pinCode1"
                      maxlength="1" min="0" max="9" @input="onInput($event, 1)" @focus="$event.target.select()"/>
               <input v-model="pinCode2" class="input" type="number" ref="pinCode2"
