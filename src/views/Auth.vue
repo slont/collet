@@ -1,6 +1,6 @@
 <template>
   <div id="auth">
-    <div>ログイン処理をしています...</div>
+    <div>アカウント情報取得中...</div>
     <div class="control is-loading is-size-1"></div>
   </div>
 </template>
@@ -13,15 +13,15 @@
       await new AuthModel().callback(this.$route.query)
     },
     async mounted() {
-      setTimeout(async _ => {
-        if (!this.loggedIn) {
-          const res = await new AuthModel().signinTwitter()
-          if (res.data.user && 'TwitterClient' === this.$route.query.client_name) {
-            this.$store.dispatch('signinTwitter', res.data)
-          }
+      await new Promise(resolve => setTimeout(resolve, 1500))
+
+      if (!this.loggedIn) {
+        const res = await new AuthModel().signinTwitter()
+        if (res.data.user && 'TwitterClient' === this.$route.query.client_name) {
+          this.$store.dispatch('signinTwitter', res.data)
         }
-        this.$router.push('/')
-      }, 1000)
+      }
+      this.$router.push('/')
     }
   }
 </script>

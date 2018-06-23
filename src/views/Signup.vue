@@ -86,12 +86,6 @@
               </guard-button>
             </div>
             <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
-
-            <div class="field has-text-centered">
-              <router-link to="/signin" class="label">
-                ログインはこちらから
-              </router-link>
-            </div>
           </div><!-- page2 -->
         </transition>
       </div>

@@ -2,7 +2,7 @@
   <div id="privacy-policy">
     <header-nav/>
     <article>
-      <h1 class="title is-1 has-text-centered">個人情報の利用目的</h1>
+      <h1 class="title is-2 has-text-centered">個人情報の利用目的</h1>
       <section>
         Cullet（以下「本サービス」と称します）では、メールでのお問い合わせ、メールマガジンへの登録などの際に、名前（ハンドルネーム）、メールアドレス等の個人情報をご登録いただく場合がございます。これらの個人情報は質問に対する回答や必要な情報を電子メールなどをでご連絡する場合に利用させていただくものであり、個人情報をご提供いただく際の目的以外では利用いたしません。
       </section>

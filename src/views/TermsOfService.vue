@@ -2,7 +2,7 @@
   <div id="terms-of-service">
     <header-nav/>
     <article>
-      <h1 class="title is-1 has-text-centered">利　用　規　約</h1>
+      <h1 class="title is-2 has-text-centered">利用規約</h1>
       <section>
         本規約は、@_slont（以下「当方」と称します）が提供する「Cullet」サービス（以下「本サービス」と称します）をご利用頂く際の取扱いにつき定めるものです。本規約に同意した上で本サービスをご利用ください。
       </section>
