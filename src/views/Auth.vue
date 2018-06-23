@@ -9,6 +9,8 @@
   export default {
     async created() {
       await new AuthModel().callback(this.$route.query).then(async res => {
+        return new AuthModel().signinTwitter()
+      }).then(res => {
         this.$store.dispatch('signinTwitter', res.data)
         this.$router.push('/')
       })

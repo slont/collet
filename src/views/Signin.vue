@@ -125,7 +125,7 @@
         if (this.isLoadingTwitter) return
 
         this.isLoadingTwitter = true
-        await new AuthModel().signinTwitter({}).then(res => {
+        await new AuthModel().signinTwitter().then(res => {
           this.$store.dispatch('signinTwitter', res.data)
           this.$router.push('/')
         })
