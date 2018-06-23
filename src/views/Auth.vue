@@ -1,5 +1,7 @@
 <template>
   <div id="auth">
+    <div>ログイン処理をしています...</div>
+    <div class="control is-loading is-size-1"></div>
   </div>
 </template>
 
@@ -8,27 +10,29 @@
 
   export default {
     async created() {
-      await new AuthModel().callback(this.$route.query).then(async res => {
-        return new AuthModel().signinTwitter()
-      }).then(res => {
-        this.$store.dispatch('signinTwitter', res.data)
-        this.$router.push('/')
-      })
+      await new AuthModel().callback(this.$route.query)
     },
-    mounted() {
-      if (this.$route.query.client_name) {
+    async mounted() {
+      setTimeout(async _ => {
+        if (!this.loggedIn) {
+          const res = await new AuthModel().signinTwitter()
+          if (res.data.user && 'TwitterClient' === this.$route.query.client_name) {
+            this.$store.dispatch('signinTwitter', res.data)
+          }
+        }
         this.$router.push('/')
-      }
-    },
-    updated() {
-      if (this.$route.query.client_name) {
-        this.$router.push('/')
-      }
+      }, 1000)
     }
   }
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
   #auth {
+    padding: 3rem;
+    text-align: center;
+
+    .is-loading {
+      width: 60%;
+    }
   }
 </style>

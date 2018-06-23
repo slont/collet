@@ -26,7 +26,7 @@
             <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
 
             <div class="field has-text-centered">
-              <router-link to="/signin" class="label">
+              <router-link :to="{path: '/signin', replace: true}" class="label">
                 ログインはこちらから
               </router-link>
             </div>

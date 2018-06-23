@@ -58,7 +58,7 @@
 
       <div class="field has-text-centered">
         <div class="field">または</div>
-        <router-link to="/signup" class="is-small">
+        <router-link :to="{path: '/signup', replace: true}" class="is-small">
           メールアドレスで新規登録
         </router-link>
       </div>
