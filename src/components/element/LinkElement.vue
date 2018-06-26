@@ -143,7 +143,13 @@
       }
       .card-content {
         .content {
-          .subtitle,
+          margin-bottom: .5em !important;
+
+          .subtitle {
+            max-height: 3.25em;
+            margin-bottom: .5em !important;
+            overflow: hidden;
+          }
           .description {
             max-height: 3.5em;
             overflow: hidden;
