@@ -9,7 +9,7 @@
       <input v-model.trim="url" class="input value" type="text" placeholder="Link"
              @input="fetchImage" @focus="$emit('focus')" @blur="$emit('blur')" v-if="editable">
 
-      <div class="link-card card box" v-if="imageSrc || title" @click="onClickCard">
+      <div class="link-card card box" v-if="imageSrc || title" @click.stop.prevent="onClickCard">
         <figure class="image flexbox">
           <img :src="imageSrc" alt="">
         </figure>
@@ -31,7 +31,7 @@
         </div>
       </div>
 
-      <a :href="url" class="value" target="_blank" v-else-if="!editable">
+      <a :href="url" class="value" target="_blank" rel="noopener noreferrer" v-else-if="!editable">
         {{ url }}
       </a>
     </div>
@@ -81,7 +81,7 @@
     },
     methods: {
       onClickCard() {
-        window.open().location.href = this.url
+        window.open(this.url, '_blank', 'noopener')
       },
       fetchImage() {
         if (!this.isStartHttp) {
