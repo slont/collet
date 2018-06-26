@@ -6,9 +6,10 @@
         <img src="/static/img/cullet-logo_orange.png" class="alt-image" alt="Placeholder image" v-else>
       </figure>
       <div class="dark-mask" @click="$router.push(`/u/${theme.createdUser.id}/${theme.id}`)">
-        <span class="private-icon icon is-size-3 has-text-white" v-if="theme.private"><i class="fas fa-lock"></i></span>
-
-        <div class="title is-4 has-text-white">{{ theme.title }}</div>
+        <div class="title is-4 has-text-white">
+          <span class="private-icon icon is-size-4 has-text-white" v-if="theme.private"><i class="fas fa-lock"></i></span>
+          <span>{{ theme.title }}</span>
+        </div>
         <div class="user-profile flexbox is-size-7">
           <figure class="image circle is-32x32 flexbox" v-if="theme.createdUser.image">
             <user-image :src="theme.createdUser.image"/>
@@ -31,7 +32,7 @@
 
     <div class="card-content media">
       <div class="media-content">
-        <div class="theme-tags tags" v-if="theme.tags.length">
+        <div class="theme-tags tags is-size-7" v-if="theme.tags.length">
           <el-tag v-for="tag in theme.tags" :key="tag.tagId" type="warning"
                   @click.native.stop="$router.push(`/tag?name=${tag.name}`)">
             #{{ tag.name }}
@@ -132,27 +133,22 @@
         height: 100%;
         padding: 1rem;
         background: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .6));
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
         transition: all .3s ease;
 
         &:hover {
           background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .7));
           cursor: pointer;
         }
-        .private-icon {
-          position: absolute;
-          top: .25rem;
-          left: 1rem;
-          height: 2.5rem;
-          color: #e8e8e8;
-        }
         .title {
           max-height: 80px;
           width: 100%;
           margin: 0;
-          margin-bottom: 1rem;
+          margin-bottom: .5em;
           display: -webkit-box;
           -webkit-box-orient: vertical;
-          -webkit-line-clamp: 3;
+          -webkit-line-clamp: 2;
           overflow: hidden;
           color: white;
 

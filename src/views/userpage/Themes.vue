@@ -98,26 +98,18 @@
     max-width: $width;
     margin: 0 auto;
 
-    > .columns {
-      padding-top: 1em;
-    }
-
-    @media screen and (min-width: 769px) {
-      .theme-card {
-        .card-image > .image,
-        .dark-mask {
-          border-top-right-radius: 5px;
-          border-top-left-radius: 5px;
-        }
-      }
-    }
-
     @media screen and (max-width: 768px) {
       .columns {
         margin: 0;
 
         .column {
           padding: .25rem;
+
+          .theme-card {
+            .image.is-16by9 {
+              padding-top: 30%;
+            }
+          }
         }
       }
     }
