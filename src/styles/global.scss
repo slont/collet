@@ -369,19 +369,19 @@ body {
     .icon {
       font-size: $size-5;
     }
-    &.favorite-action {
-      color: deeppink;
-
-      &:hover {
-        opacity: .8;
-      }
-    }
-    &.item-action {
-      color: $info;
-    }
     &.edit-action {
       margin-right: 0;
     }
+  }
+  .favorite-action {
+    color: deeppink;
+
+    &:hover {
+      opacity: .8;
+    }
+  }
+  .item-action {
+    color: $info;
   }
 }
 

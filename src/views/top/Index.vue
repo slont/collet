@@ -5,7 +5,7 @@
         <router-link :to="`/u/${user.id}`" tag="label" class="temp-cullet-label label is-size-5 has-text-white has-text-centered">
           メモカレット
         </router-link>
-        <div class="updated-cullet flexbox column is-4-tablet card">
+        <div class="updated-cullet flexbox column is-12 card">
           <div class="updated-at text-color-weak has-text-right">
             <div class="flexbox">
               <div class="updated-at-date is-size-7">{{ tempItem.updatedAt | moment('M/D') }}</div>
@@ -31,7 +31,7 @@
           Myカレット履歴
         </router-link>
         <transition-group tag="div" name="slide-fade" mode="out-in" class="updated-cullet-list-card card item-list columns is-multiline is-gapless-only">
-          <div v-for="(item, i) in updatedItems" class="updated-cullet flexbox column is-4-tablet" :key="item.id">
+          <div v-for="(item, i) in updatedItems" class="updated-cullet flexbox column is-4-tablet is-12-mobile" :key="item.id">
             <div class="updated-at text-color-weak has-text-right">
               <div class="flexbox" :class="{'is-hidden-mobile': !visibleUpdatedAt(item.updatedAt, i)}">
                 <div class="updated-at-date is-size-7">{{ item.updatedAt | moment('M/D') }}</div>
@@ -189,7 +189,7 @@
     },
     created() {
       if (this.loggedIn) {
-        Object.assign(this.updatedItems, new ItemModel().deserialize(this.$store.state.items).slice(0, 5))
+        Object.assign(this.updatedItems, new ItemModel().deserialize(this.$store.state.items).slice(0, this.isMobile ? 3 : 5))
       }
       this.refresh()
     },
@@ -197,7 +197,7 @@
       refresh() {
         if (this.loggedIn) {
           new UserModel().findItems(this.user.id, {p: 1, s: 10, q: ''}).then(res => {
-            this.updatedItems = res.data.slice(0, 5)
+            this.updatedItems = res.data.slice(0, this.isMobile ? 3 : 5)
             this.$store.commit('SET_ITEMS', res.data)
           })
         }
