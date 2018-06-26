@@ -142,7 +142,7 @@
           position: absolute;
           top: .25rem;
           left: 1rem;
-          height: 3rem;
+          height: 2.5rem;
           color: #e8e8e8;
         }
         .title {

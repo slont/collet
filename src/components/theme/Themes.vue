@@ -4,7 +4,7 @@
       ヒットする検索結果がありません
     </div>
     <transition-group name="slide-fade" mode="out-in" class="columns is-multiline" v-else>
-      <div v-for="theme in value" class="column is-half" :key="theme.id">
+      <div v-for="theme in value" class="column is-12-mobile is-4-tablet" :key="theme.id">
         <theme-card :theme="theme" @open-edit-modal="$emit('open-edit-modal', theme)"/>
       </div>
       <div class="button is-loading fullwidth is-large" key="loading" v-if="!isLastFetch"></div>

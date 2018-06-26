@@ -148,6 +148,10 @@ body {
   }
 }
 
+.columns {
+  display: flex;
+}
+
 .router-link-active {
   @extend .is-active;
 }
@@ -156,11 +160,11 @@ body {
   border-radius: 5px;
   box-shadow: 0 3px 0 rgba(10, 10, 10, 0.1);
 
-  :first-child {
+  > :first-child {
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
   }
-  :last-child {
+  > :last-child {
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
   }
@@ -365,19 +369,19 @@ body {
     .icon {
       font-size: $size-5;
     }
-  }
-  .favorite-action {
-    color: deeppink;
+    &.favorite-action {
+      color: deeppink;
 
-    &:hover {
-      opacity: .8;
+      &:hover {
+        opacity: .8;
+      }
     }
-  }
-  .item-action {
-    color: $info;
-  }
-  .edit-action {
-    margin-right: 0;
+    &.item-action {
+      color: $info;
+    }
+    &.edit-action {
+      margin-right: 0;
+    }
   }
 }
 
