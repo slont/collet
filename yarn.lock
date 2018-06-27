@@ -9284,6 +9284,10 @@ vue-carousel@^0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/vue-carousel/-/vue-carousel-0.8.0.tgz#2020c45c08b9f36fd7ce339ba34103e73365a403"
 
+vue-head@^2.0.12:
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/vue-head/-/vue-head-2.0.12.tgz#85d23ae6b0f58b72f44e9f8f607d824d3ef82d63"
+
 vue-hot-reload-api@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.2.0.tgz#9a21b35ced3634434a43ee80efb7350ea8fb206d"

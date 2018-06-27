@@ -25,6 +25,7 @@
     "vue": "^2.5.16",
     "vue-autosize": "^1.0.2",
     "vue-carousel": "^0.8.0",
+    "vue-head": "^2.0.12",
     "vue-i18n": "^7.7.0",
     "vue-moment": "^4.0.0-0",
     "vue-router": "^3.0.1",
