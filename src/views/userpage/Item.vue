@@ -214,6 +214,7 @@
         })
         new ThemeModel().findOne(this.themeId).then(res => {
           Object.assign(this.theme, res.data)
+          this.$emit('updateHead')
         })
       },
       async refresh(item, transition = 'slide-fade') {
@@ -277,7 +278,7 @@
         return [
           { property: 'og:title', content: this.ogTitle || this.$store.state.title },
           { property: 'og:description', content: this.ogDescription || this.$store.state.description },
-          { property: 'og:url', content: this.$route.path },
+          { property: 'og:url', content: `'https://www.cullet.me${this.$route.path}` },
           { property: 'og:image', content: this.ogImage || 'https://www.cullet.me/static/img/cullet-logo_orange.png' }
         ]
       }
