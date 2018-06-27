@@ -162,6 +162,17 @@
       },
       href() {
         return location.href
+      },
+      ogTitle() {
+        return this.currentItem.name ? `${this.currentItem.name} - ${this.theme.title}` : ''
+      },
+      ogDescription() {
+        const el = this.currentItem.elements.find(e => 'text' === e.type)
+        return el ? el.valueStr : ''
+      },
+      ogImage() {
+        const el = this.currentItem.elements.find(e => 'image' === e.type)
+        return el ? el.valueStr : ''
       }
     },
     mounted() {
@@ -187,6 +198,7 @@
             this.items.push(res.data.prev)
           }
 
+          this.$emit('updateHead')
           this.$nextTick(() => {
             if (80 > this.$el.scrollHeight - this.$el.clientHeight) {
               this.activePagination = true
@@ -258,6 +270,16 @@
             this.$el.scrollTop = scrollHeight - scrollMargin
           } else clearInterval(scrollInterval)
         }, 15)
+      }
+    },
+    head: {
+      meta() {
+        return [
+          { property: 'og:title', content: this.ogTitle || this.$store.state.title },
+          { property: 'og:description', content: this.ogDescription || this.$store.state.description },
+          { property: 'og:url', content: this.$route.path },
+          { property: 'og:image', content: this.ogImage || 'https://www.cullet.me/static/img/cullet-logo_orange.png' }
+        ]
       }
     }
   }

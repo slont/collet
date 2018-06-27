@@ -23,7 +23,9 @@ export default new Vuex.Store({
       elements: []
     },
     activeHeader: true,
-    activeFooter: true
+    activeFooter: true,
+    title: 'Cullet | 日常のメモをもっと楽しく',
+    description: '日常のメモを簡単に楽しく整理。テーマに合わせた文章や画像、SNS、ニュースなどをまとめてシェアできます。'
   },
   getters: {},
   actions: {
