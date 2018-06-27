@@ -8,6 +8,7 @@ import App from './App'
 import store from './store'
 import router from './router'
 import Vuex from 'vuex'
+import VueHead from 'vue-head'
 import VeeValidate from 'vee-validate'
 import VueI18n from 'vue-i18n'
 import VueMoment from 'vue-moment'
@@ -23,6 +24,9 @@ import UserImage from './components/UserImage'
 Vue.config.productionTip = false
 
 Vue.use(Vuex)
+Vue.use(VueHead, {
+  separator: ' | '
+})
 Vue.use(VueI18n)
 
 Vue.use(VeeValidate, Object.assign({}, validateConfig, {
