@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import AuthModel from '@/models/Auth'
 import { LOCALES } from '@/constant'
-import { SET_USER, SET_LOCALE, SET_LOGGED_IN, SET_LOGIN_INFO, SET_ITEMS, SET_THEME, SET_THEMES, SET_TEMP_ITEM, SET_TEMPLATES, SET_HEADER_ACTIVE, SET_FOOTER_ACTIVE } from './mutation-types'
 
 Vue.use(Vuex)
 
@@ -24,43 +23,44 @@ export default new Vuex.Store({
     },
     activeHeader: true,
     activeFooter: true,
-    title: 'Cullet | 日常のメモをもっと楽しく',
-    description: '日常のメモを簡単に楽しく整理。テーマに合わせた文章や画像、SNS、ニュースなどをまとめてシェアできます。'
+    ogTitle: '',
+    ogDescription: '',
+    ogImage: ''
   },
   getters: {},
   actions: {
     setLocale({ commit }, locale) {
-      commit(SET_LOCALE, locale)
+      commit('SET_LOCALE', locale)
     },
     setLoggedIn({commit}, loggedIn) {
-      commit(SET_LOGGED_IN, loggedIn)
+      commit('SET_LOGGED_IN', loggedIn)
       if (!loggedIn) {
-        commit(SET_USER, {})
-        commit(SET_THEME, {})
+        commit('SET_USER', {})
+        commit('SET_THEME', {})
       }
     },
     setLoginInfo({commit}, loginInfo) {
-      commit(SET_LOGIN_INFO, loginInfo)
+      commit('SET_LOGIN_INFO', loginInfo)
     },
     setTheme({commit}, theme) {
-      commit(SET_THEME, theme)
+      commit('SET_THEME', theme)
     },
     signin({ commit }, params) {
       localStorage.authToken = params.authToken
-      commit(SET_LOGGED_IN, true)
-      commit(SET_USER, params.user)
+      commit('SET_LOGGED_IN', true)
+      commit('SET_USER', params.user)
     },
     signinTwitter({ commit }, params) {
       localStorage.authToken = params.authToken
-      commit(SET_LOGGED_IN, true)
-      commit(SET_USER, params.user)
+      commit('SET_LOGGED_IN', true)
+      commit('SET_USER', params.user)
     },
     confirm({ commit }, params) {
       const authModel = new AuthModel()
       return authModel.confirm(params).then(res => {
         localStorage.authToken = res.data.authToken
-        commit(SET_LOGGED_IN, true)
-        commit(SET_USER, res.data.user)
+        commit('SET_LOGGED_IN', true)
+        commit('SET_USER', res.data.user)
         authModel.onChange(true)
         return Promise.resolve(res)
       }).catch(err => {
@@ -75,9 +75,9 @@ export default new Vuex.Store({
       const authModel = new AuthModel()
       return authModel.signout().then(() => {
         delete localStorage.authToken
-        commit(SET_LOGGED_IN, false)
-        commit(SET_USER, {})
-        commit(SET_THEME, {})
+        commit('SET_LOGGED_IN', false)
+        commit('SET_USER', {})
+        commit('SET_THEME', {})
         authModel.onChange(false)
         return Promise.resolve()
       }).catch(err => {
@@ -88,45 +88,54 @@ export default new Vuex.Store({
       })
     },
     setActiveHeader({ commit }, active) {
-      commit(SET_HEADER_ACTIVE, active)
+      commit('SET_HEADER_ACTIVE', active)
     },
     setActiveFooter({ commit }, active) {
-      commit(SET_FOOTER_ACTIVE, active)
+      commit('SET_FOOTER_ACTIVE', active)
     }
   },
   mutations: {
-    [SET_LOCALE](state, locale) {
+    'SET_LOCALE'(state, locale) {
       state.locale = locale
     },
-    [SET_USER](state, user) {
+    'SET_USER'(state, user) {
       state.user = user
     },
-    [SET_LOGGED_IN](state, loggedIn) {
+    'SET_LOGGED_IN'(state, loggedIn) {
       state.loggedIn = loggedIn
     },
-    [SET_LOGIN_INFO](state, loginInfo) {
+    'SET_LOGIN_INFO'(state, loginInfo) {
       state.loginInfo = loginInfo
     },
-    [SET_THEME](state, theme) {
+    'SET_THEME'(state, theme) {
       state.theme = theme
     },
-    [SET_THEMES](state, themes) {
+    'SET_THEMES'(state, themes) {
       state.themes = themes
     },
-    [SET_TEMP_ITEM](state, tempItem) {
+    'SET_TEMP_ITEM'(state, tempItem) {
       state.tempItem = tempItem
     },
-    [SET_TEMPLATES](state, templates) {
+    'SET_TEMPLATES'(state, templates) {
       state.theme.templates = templates
     },
-    [SET_ITEMS](state, items) {
+    'SET_ITEMS'(state, items) {
       state.items = items
     },
-    [SET_HEADER_ACTIVE](state, active) {
+    'SET_HEADER_ACTIVE'(state, active) {
       state.activeHeader = active
     },
-    [SET_FOOTER_ACTIVE](state, active) {
+    'SET_FOOTER_ACTIVE'(state, active) {
       state.activeFooter = active
+    },
+    'SET_OG_TITLE'(state, ogTitle) {
+      state.ogTitle = ogTitle
+    },
+    'SET_OG_DESCRIPTION'(state, ogDescription) {
+      state.ogDescription = ogDescription
+    },
+    'SET_OG_IMAGE'(state, ogImage) {
+      state.ogImage = ogImage
     }
   },
   plugins: [createPersistedState()]

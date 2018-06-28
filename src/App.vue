@@ -11,18 +11,18 @@
     name: 'app',
     created() {
       this.$moment.locale(this.$store.state.locale)
+      this.$store.commit('SET_OG_TITLE', 'Cullet | 日常のメモをもっと楽しく')
+      this.$store.commit('SET_OG_DESCRIPTION', '日常のメモを簡単に楽しく整理。テーマに合わせた文章や画像、SNS、ニュースなどをまとめてシェアできます。')
+      this.$store.commit('SET_OG_IMAGE', 'https://www.cullet.me/static/img/cullet-logo_orange.png')
+      this.$emit('updateHead')
     },
     head: {
       meta() {
         return [
-          { name: 'description', content: this.$store.state.description },
-          { property: 'og:title', content: this.$store.state.title },
-          { property: 'og:description', content: this.$store.state.description },
-          { property: 'og:type', content: 'website' },
-          { property: 'og:site_name', content: 'Cullet' },
-          { property: 'og:url', content: 'https://www.cullet.me/' },
-          { property: 'og:image', content: 'https://www.cullet.me/static/img/cullet-logo_orange.png' },
-          { name: 'twitter:card', content: 'summary' }
+          { property: 'og:title', content: this.$store.state.ogTitle },
+          { property: 'og:description', content: this.$store.state.ogDescription },
+          { property: 'og:url', content: `https://www.cullet.me${this.$route.fullPath}` },
+          { property: 'og:image', content: this.$store.state.ogImage }
         ]
       }
     }

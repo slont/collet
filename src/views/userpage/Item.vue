@@ -198,6 +198,12 @@
             this.items.push(res.data.prev)
           }
 
+          if (this.ogDescription) {
+            this.$store.commit('SET_OG_DESCRIPTION', this.ogDescription)
+          }
+          if (this.ogImage) {
+            this.$store.commit('SET_OG_IMAGE', this.ogImage)
+          }
           this.$emit('updateHead')
           this.$nextTick(() => {
             if (80 > this.$el.scrollHeight - this.$el.clientHeight) {
@@ -214,6 +220,7 @@
         })
         new ThemeModel().findOne(this.themeId).then(res => {
           Object.assign(this.theme, res.data)
+          this.$store.commit('SET_OG_TITLE', this.ogTitle)
           this.$emit('updateHead')
         })
       },
@@ -276,10 +283,10 @@
     head: {
       meta() {
         return [
-          { property: 'og:title', content: this.ogTitle || this.$store.state.title },
-          { property: 'og:description', content: this.ogDescription || this.$store.state.description },
-          { property: 'og:url', content: `'https://www.cullet.me${this.$route.path}` },
-          { property: 'og:image', content: this.ogImage || 'https://www.cullet.me/static/img/cullet-logo_orange.png' }
+          { property: 'og:title', content: this.$store.state.ogTitle },
+          { property: 'og:description', content: this.$store.state.ogDescription },
+          { property: 'og:url', content: `https://www.cullet.me${this.$route.fullPath}` },
+          { property: 'og:image', content: this.$store.state.ogImage }
         ]
       }
     }
