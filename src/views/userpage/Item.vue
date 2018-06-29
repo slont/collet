@@ -303,57 +303,58 @@
     > .container {
       padding: 1rem;
       max-width: 720px;
-    }
-    .media {
-      min-height: 3.5rem;
 
-      .media-left {
-        margin-right: .5rem;
+      > .media {
+        min-height: 3.5rem;
 
-        .image {
-          height: 2.25rem;
-          width: 2.25rem;
+        .media-left {
+          margin-right: .5rem;
+
+          .image {
+            height: 2.25rem;
+            width: 2.25rem;
+          }
         }
-      }
-      .media-content {
-        .theme-actions {
-          display: inline-flex;
-          align-items: center;
-          margin-left: auto;
+        .media-content {
+          .theme-actions {
+            display: inline-flex;
+            align-items: center;
+            margin-left: auto;
 
-          .action {
+            .action {
+              display: flex;
+              align-items: center;
+            }
+            .favorite-action {
+              margin-left: auto;
+            }
+            .item-action {
+              margin-left: .5rem;
+            }
+          }
+          .theme-title {
+            margin-top: .125rem;
+            max-height: 1rem;
+            overflow: hidden;
+          }
+        }
+        .media-right {
+          margin-left: .5rem;
+
+          .image {
             display: flex;
             align-items: center;
-          }
-          .favorite-action {
-            margin-left: auto;
-          }
-          .item-action {
-            margin-left: .5rem;
-          }
-        }
-        .theme-title {
-          margin-top: .125rem;
-          max-height: 1rem;
-          overflow: hidden;
-        }
-      }
-      .media-right {
-        margin-left: .5rem;
+            height: 3.5rem;
+            z-index: 1;
 
-        .image {
-          display: flex;
-          align-items: center;
-          height: 3.5rem;
-          z-index: 1;
-
-          img {
-            height: 4.5rem;
-            width: auto;
+            img {
+              height: 4.5rem;
+              width: auto;
+            }
           }
         }
-      }
-    }
+      } // .media
+    } // .content
     .cullet-container {
       position: relative;
       min-height: 80vh;

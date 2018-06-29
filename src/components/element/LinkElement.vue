@@ -10,24 +10,20 @@
              @input="fetchImage" @focus="$emit('focus')" @blur="$emit('blur')" v-if="editable">
 
       <div class="link-card card box" v-if="imageSrc || title" @click.stop.prevent="onClickCard">
-        <figure class="image flexbox">
-          <img :src="imageSrc" alt="">
-        </figure>
-        <div class="card-content media">
-          <div class="media-content">
-            <div class="content">
-              <h5 class="subtitle is-5 has-text-weight-bold">{{ title }}</h5>
-              <p class="description is-size-6">{{ description }}</p>
-            </div>
-
-            <nav class="level is-mobile">
-              <div class="level-left fullwidth">
-                <div class="level-item fullwidth">
-                  <p class="subtitle is-7 has-text-grey">{{ siteName }}</p>
-                </div>
-              </div>
-            </nav>
+        <figure class="image flexbox"><img :src="imageSrc" alt=""></figure>
+        <div class="card-content">
+          <div class="content">
+            <h5 class="subtitle is-5 has-text-weight-bold">{{ title }}</h5>
+            <p class="description is-size-6">{{ description }}</p>
           </div>
+
+          <nav class="level is-mobile">
+            <div class="level-left fullwidth">
+              <div class="level-item fullwidth">
+                <p class="subtitle is-size-8 has-text-grey">{{ siteName }}</p>
+              </div>
+            </div>
+          </nav>
         </div>
       </div>
 
@@ -129,30 +125,39 @@
       }
     }
     .link-card {
+      display: flex;
       max-width: 520px;
+      max-height: 8rem;
       padding: 0;
       margin: auto;
       cursor: pointer;
-      box-shadow: 0 3px 3px rgba(10, 10, 10, 0.1);
+      box-shadow: 0 2px 3px rgba(10, 10, 10, .1), 0 0 0 1px rgba(10, 10, 10, .1);
 
       .image {
-        max-height: 10rem;
-        width: 100%;
+        justify-content: center;
+        max-width: 40%;
         margin: 0;
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
+        border-radius: 5px 0 0 5px;
+
+        img {
+          height: 8rem;
+          max-width: initial;
+          width: auto;
+        }
       }
       .card-content {
+        flex: 1;
+
         .content {
           margin-bottom: .5em !important;
 
           .subtitle {
-            max-height: 3.25em;
+            max-height: 2.25em;
             margin-bottom: .5em !important;
             overflow: hidden;
           }
           .description {
-            max-height: 3.5em;
+            max-height: 2.5em;
             overflow: hidden;
           }
         }
@@ -167,6 +172,28 @@
       color: $link;
       text-decoration: underline;
       word-wrap: break-word;
+    }
+
+    @media screen and (min-width: 769px) {
+      .link-card {
+        flex-direction: column;
+        max-height: 20rem;
+
+        .image {
+          max-width: 100%;
+          border-radius: 5px 5px 0 0;
+
+          img {
+            height: initial;
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .link-card {
+      }
     }
   }
 </style>
