@@ -135,7 +135,7 @@
 
       .image {
         justify-content: center;
-        max-width: 40%;
+        max-width: 38%;
         margin: 0;
         border-radius: 5px 0 0 5px;
 
@@ -157,14 +157,9 @@
             overflow: hidden;
           }
           .description {
-            max-height: 2.5em;
+            max-height: 2.25em;
             overflow: hidden;
           }
-        }
-        .level .level-left .subtitle {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
         }
       }
     }
