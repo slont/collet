@@ -35,8 +35,8 @@
         </div>
       </div>
 
-      <div class="item-elements">
-        <div v-for="(element, i) in item.elements" :key="i" class="field element-field flexbox">
+      <transition-group tag="div" name="element-list" class="item-elements">
+        <div v-for="(element, i) in item.elements" :key="element.orderId" class="field element-field flexbox">
           <div class="sort-buttons flexbox">
             <a class="button up-button is-white" @click="upOrder(i)"><i class="material-icons">arrow_upward</i></a>
             <span class="element-order">{{ element.order + 1 }}</span>
@@ -60,7 +60,7 @@
 
           <span @click="removeElement(i)" class="delete-icon icon is-size-4 has-text-danger"><i class="far fa-times-circle"></i></span>
         </div>
-      </div>
+      </transition-group>
     </div>
 
     <footer class="modal-card-foot-expander" @click="onBlurInput" v-if="!isActiveFooter">
@@ -190,7 +190,11 @@
         })
 
         await new ItemModel(this.themeId).findOne(this.itemId).then(res => {
-          this.item = res.data
+          const item = res.data
+          item.elements.forEach(e => {
+            e.orderId = e.order
+          })
+          this.item = item
           this.$refs.editItem.open()
 
           this.$nextTick(() => {
@@ -247,7 +251,9 @@
         this.isActiveFooter = true
       },
       addElement(element) {
-        this.item.elements.push(element)
+        this.item.elements.push(Object.assign(element, {
+          orderId: `${this.item.elements.length}-${new Date().getTime()}`
+        }))
         this.setOrder()
         this.$nextTick(() => {
           const container = this.$el.querySelector('.modal-card-body')

@@ -133,6 +133,7 @@
       padding: 0;
       margin: auto;
       cursor: pointer;
+      box-shadow: 0 3px 3px rgba(10, 10, 10, 0.1);
 
       .image {
         max-height: 10rem;

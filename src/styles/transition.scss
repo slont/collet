@@ -20,6 +20,29 @@
   position: absolute;
 }
 
+.element-list-enter-active,
+.element-list-leave-active,
+.element-list-move {
+  transition: .2s cubic-bezier(.59, .12, .34, .95);
+  transition-property: opacity, transform;
+}
+.element-list-enter {
+  opacity: 0;
+  transform: translateX(50px) scaleY(.5);
+}
+.element-list-enter-to {
+  opacity: 1;
+  transform: translateX(0) scaleY(1);
+}
+.element-list-leave-active {
+  position: absolute;
+}
+.element-list-leave-to {
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: center top;
+}
+
 @media screen and (max-width: 768px) {
   // スライドするとレイアウトが崩れるため
   .slide-fade-enter-active,
