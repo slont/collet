@@ -3,7 +3,7 @@
     <header class="userpage-header header-shadow">
       <article class="user-profile media">
         <figure class="media-left" v-if="user.image">
-          <div class="image circle flexbox is-64x64">
+          <div class="image circle flexbox is-48x48">
             <user-image :src="user.image"/>
           </div>
         </figure>
@@ -148,7 +148,7 @@
         max-width: $width;
         margin-left: auto;
         margin-right: auto;
-        padding: 1rem .5rem .5rem;
+        padding: .5rem .75rem;
         border-bottom: $border-style;
 
         .content {

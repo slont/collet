@@ -107,7 +107,6 @@
 
           .theme-card {
             .image.is-16by9 {
-              padding-top: 30%;
             }
           }
         }

@@ -197,6 +197,14 @@
     overflow-y: scroll;
     -webkit-overflow-scrolling : touch;
 
+    .theme-card {
+      border-radius: 0;
+
+      .dark-mask,
+      .image {
+        border-radius: 0;
+      }
+    }
     .theme-items {
       max-width: $width;
       margin: 0 auto;
