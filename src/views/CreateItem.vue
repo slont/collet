@@ -428,7 +428,7 @@
               }
             }
             .cl-element {
-              width: 100%;
+              flex: 1;
               padding: 0 .25rem;
             }
             .delete-icon {
