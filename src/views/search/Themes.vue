@@ -93,10 +93,6 @@
     max-width: $width;
     margin: 0 auto;
 
-    > .columns {
-      padding-top: 1em;
-    }
-
     @media screen and (min-width: 769px) {
       .theme-card {
         .card-image > .image,
