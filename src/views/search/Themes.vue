@@ -41,7 +41,7 @@
         if (this.isFetching || this.isLastFetch) return
 
         this.isFetching = true
-        new ThemeModel().findByQuery({p: this.page, s: SIZE, q: this.q}).then(res => {
+        new ThemeModel().findByQuery({p: this.page, s: SIZE, q: this.q.replace('　', ' ')}).then(res => {
           const themes = res.data.map(theme => {
             theme.favorite = false
             return theme

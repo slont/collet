@@ -67,7 +67,7 @@
         if (this.isFetching || this.isLastFetch) return
 
         this.isFetching = true
-        new UserModel().find({p: this.page, s: SIZE, q: this.q}).then(res => {
+        new UserModel().find({p: this.page, s: SIZE, q: this.q.replace('　', ' ')}).then(res => {
           if (1 === page) {
             this.users = res.data
           } else {

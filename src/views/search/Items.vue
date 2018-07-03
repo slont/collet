@@ -38,7 +38,7 @@
         if (this.isFetching || this.isLastFetch) return
 
         this.isFetching = true
-        new ItemModel().findByQuery({p: this.page, s: SIZE, q: this.q}).then(res => {
+        new ItemModel().findByQuery({p: this.page, s: SIZE, q: this.q.replace('　', ' ')}).then(res => {
           if (1 === page) {
             this.items = res.data
           } else {
