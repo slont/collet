@@ -73,11 +73,14 @@
       }
     },
     computed: {
-      activeHeader() {
-        return this.$store.state.activeHeader
-      },
-      user() {
-        return this.$store.state.user
+      activeHeader: ({$store}) => $store.state.activeHeader,
+      user: ({$store}) => $store.state.user
+    },
+    watch: {
+      '$route.query.q'(e) {
+        if (null == e) return
+
+        this.query = e
       }
     },
     methods: {

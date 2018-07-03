@@ -14,7 +14,7 @@
         </div>
         <div class="theme-tags tags is-size-8" v-if="theme.tags.length">
           <el-tag v-for="tag in theme.tags" :key="tag.tagId" type="warning"
-                  @click.native.stop="$router.push(`/tag?name=${tag.name}`)">
+                  @click.native.stop="$router.push({path: `/s/themes?p=1&s=20&q=%23${tag.name}`})">
             #{{ tag.name }}
           </el-tag>
         </div>
@@ -83,15 +83,9 @@
       visibleAddItem: Boolean
     },
     computed: {
-      user() {
-        return this.$store.state.user
-      },
-      urlUserId() {
-        return this.$route.params.userId
-      },
-      isMyTheme() {
-        return this.$store.state.user.id === this.theme.createdUser.id
-      }
+      user: ({$store}) => $store.state.user,
+      urlUserId: ({$route}) => $route.params.userId,
+      isMyTheme: ({$store, theme}) => $store.state.user.id === theme.createdUser.id
     },
     methods: {
       onClickFavorite() {
