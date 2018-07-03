@@ -9,7 +9,7 @@
     <div class="dark-mask" @click="$router.push(`/u/${theme.createdUser.id}/${theme.id}`)">
       <header class="">
         <div class="item-count has-text-weight-bold">
-          <span class="count is-size-4">{{ theme.itemCount }}</span>
+          <span class="count is-size-3">{{ theme.itemCount }}</span>
           <span class="is-size-8">カレット</span>
         </div>
         <div class="theme-tags tags is-size-8" v-if="theme.tags.length">
@@ -19,6 +19,7 @@
           </el-tag>
         </div>
       </header>
+
       <div class="user-profile flexbox is-size-7">
         <figure class="image circle is-16x16 flexbox" v-if="theme.createdUser.image">
           <user-image :src="theme.createdUser.image"/>
@@ -31,10 +32,12 @@
           ・{{ fromNow(theme.updatedAt, 'YYYY/MM/DD') }}
         </div>
       </div>
+
       <div class="title is-5 has-text-white">
-        <span class="private-icon icon is-size-6 has-text-white" v-if="theme.private"><i class="fas fa-lock"></i></span>
+        <span class="private-icon icon is-size-6 has-text-white" v-if="theme.private"><i class="fas fa-lock fa-fw"></i></span>
         <span>{{ theme.title }}</span>
       </div>
+
       <nav class="theme-actions actions level is-mobile is-size-4">
         <div class="level-left">
           <a class="favorite-action level-item" :class="{ 'is-active': theme.favorite }">
@@ -48,8 +51,8 @@
         </div>
         <div class="level-right">
           <a class="edit-action level-item">
-            <span class="icon is-size-3" @click.stop.prevent="$emit('open-edit-modal')" v-if="loggedIn && isMyTheme">
-              <i class="material-icons">more_horiz</i>
+            <span class="icon" @click.stop.prevent="$emit('open-edit-modal')" v-if="loggedIn && isMyTheme">
+              <i class="fas fa-ellipsis-h"></i>
             </span>
           </a>
         </div>
@@ -155,14 +158,13 @@
         cursor: pointer;
       }
       header {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
         margin-bottom: auto;
+        text-align: right;
 
         .theme-tags {
-          color: white;
+          justify-content: flex-end;
           margin-bottom: 0;
+          color: white;
 
           .el-tag--warning {
             background-color: rgba(230, 162, 60, 0.5);
@@ -171,7 +173,8 @@
           }
         }
         .item-count {
-          margin-left: 1rem;
+          margin-bottom: .25rem;
+          line-height: 1;
           color: rgba(white, .9);
         }
       }
