@@ -85,11 +85,7 @@
         const path = /^\/s\/.*/.test(this.$route.path) ? this.$route.path : '/s/themes'
         this.$router.push({
           path: path,
-          query: {
-            p: 0,
-            s: 20,
-            q: this.query
-          }
+          query: {p: 1, s: 20, q: this.query}
         })
       },
       signout() {

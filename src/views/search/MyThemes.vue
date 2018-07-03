@@ -27,7 +27,9 @@
       '$route.query.q'(e) {
         if (null == e) return
 
+        const isFetching = this.isFetching
         Object.assign(this.$data, this.$options.data.call(this))
+        this.isFetching = isFetching
         this.fetch()
       }
     },
@@ -68,6 +70,7 @@
             favorite: !!res.data[i].themeId
           }))
         }).catch(err => {
+          this.isFetching = false
           console.log(err)
           this.$message({
             showClose: true,
