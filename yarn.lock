@@ -9273,6 +9273,10 @@ void-elements@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
 
+vue-analytics@^5.12.2:
+  version "5.12.2"
+  resolved "https://registry.yarnpkg.com/vue-analytics/-/vue-analytics-5.12.2.tgz#6318be3cfa0ce7fa6b00cb8a9fcd42268e75fab8"
+
 vue-autosize@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/vue-autosize/-/vue-autosize-1.0.2.tgz#d4159848a7c0f839d49dea45412ce472cdd3a48a"

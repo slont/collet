@@ -13,6 +13,7 @@ import VeeValidate from 'vee-validate'
 import VueI18n from 'vue-i18n'
 import VueMoment from 'vue-moment'
 import VueAutosize from 'vue-autosize'
+import VueAnalytics from 'vue-analytics'
 import SocialSharing from 'vue-social-sharing'
 import Element from 'element-ui'
 import messages from './locales'
@@ -24,20 +25,14 @@ import UserImage from './components/UserImage'
 Vue.config.productionTip = false
 
 Vue.use(Vuex)
-Vue.use(VueHead, {
-  separator: ' | '
-})
+Vue.use(VueHead, {separator: ' | '})
 Vue.use(VueI18n)
-
-Vue.use(VeeValidate, Object.assign({}, validateConfig, {
-  locale: store.state.locale
-}))
+const i18n = new VueI18n({locale: store.state.locale, messages})
+Vue.use(VeeValidate, Object.assign({}, validateConfig, {locale: store.state.locale}))
 Vue.use(VueAutosize)
 Vue.use(VueMoment)
-const i18n = new VueI18n({
-  locale: store.state.locale,
-  messages
-})
+Vue.use(VueAnalytics, {id: 'UA-71892039-2', router})
+
 Vue.use(Element, {
   i18n: (key, value) => i18n.t(key, value)
 })
