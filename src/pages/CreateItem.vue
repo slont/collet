@@ -330,7 +330,7 @@
           display: flex;
           align-items: center;
           width: 100%;
-          padding: .5em 1rem;
+          padding: .5rem 1rem;
 
           .theme-title {
             width: 95%;

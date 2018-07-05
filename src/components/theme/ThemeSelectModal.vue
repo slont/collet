@@ -12,7 +12,7 @@
       <aside class="theme-menu menu">
         <ul class="menu-list">
           <li class="create-item" @click="openThemeCreateModal">
-            <a class="button is-primary is-outlined is-size-5">
+            <a class="button is-primary is-outlined is-size-5 has-text-weight-bold">
               <span>テーマ新規作成</span>
             </a>
             <div class="divider"></div>
@@ -113,6 +113,7 @@
           display: flex;
           align-items: center;
           justify-content: center;
+          margin-bottom: 1rem;
         }
         .theme-item a {
           display: flex;
@@ -127,7 +128,7 @@
             margin-right: .5rem;
           }
           .item-count {
-            min-width: 32px;
+            min-width: 24px;
             text-align: right;
           }
           .theme-title + .icon,
