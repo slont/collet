@@ -366,11 +366,13 @@
           }
         }
       }
-      .columns {
-        margin: .25rem;
+      .theme-items {
+        > .columns {
+          margin: .25rem;
 
-        .column {
-          padding: 0;
+          .column {
+            padding: 0;
+          }
         }
       }
     }

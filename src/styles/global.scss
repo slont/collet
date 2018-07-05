@@ -148,10 +148,6 @@ body {
   }
 }
 
-.columns {
-  display: flex;
-}
-
 .router-link-active {
   @extend .is-active;
 }

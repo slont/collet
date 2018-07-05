@@ -13,8 +13,8 @@
       </guard-button>
     </header>
 
-    <div class="modal-card-body columns">
-      <div class="column">
+    <div class="modal-card-body columns is-multiple">
+      <div class="column is-half-desktop">
         <div class="field">
           <label class="label">タイトル</label>
           <div class="control">
@@ -32,13 +32,13 @@
         </div>
       </div>
 
-      <div class="column">
+      <div class="column is-half-desktop">
         <div class="field image-field">
           <label class="label">メイン画像（オプショナル）</label>
           <div class="control">
             <div class="file is-boxed">
               <label class="file-label">
-                <input @change="changeImage" class="file-input" type="file" name="resume">
+                <input @change="changeImage" class="file-input" type="file" name="resume" v-show="false">
                 <div class="file-view" v-if="theme.image">
                   <img :src="theme.image" v-if="loading"/>
                   <img :src="theme.image" :srcset="`${theme.image}_640w 640w`" v-else/>
@@ -54,7 +54,7 @@
         </div>
 
         <div class="field tags-field">
-          <label class="label">タグ</label>
+          <label class="label">タグ（オプショナル）</label>
 
           <div class="control tags flexbox">
             <el-tag v-for="(tag, i) in theme.tags" :key="tag" type="warning" closable
@@ -184,9 +184,6 @@
   #theme-create-modal {
     > .modal-card {
       .modal-card-body {
-        margin: 0;
-        padding-bottom: 0;
-
         .image-field {
           .file-view {
             .delete {
