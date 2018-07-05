@@ -131,10 +131,14 @@
           padding-right: .5em;
 
           .control {
-            width: 180px;
-
             .input {
+              width: 180px;
               border: 1px solid $main-color;
+              transition: width .2s ease;
+
+              &:focus {
+                width: 240px;
+              }
             }
           }
         }
