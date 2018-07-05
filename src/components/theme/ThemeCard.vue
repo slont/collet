@@ -143,12 +143,12 @@
       width: 100%;
       height: 100%;
       padding: .5rem .75rem;
-      background: linear-gradient(rgba(0, 0, 0, .2), rgba(0, 0, 0, .8));
+      background: linear-gradient(rgba(0, 0, 0, .2), rgba(0, 0, 0, .75));
       border-radius: 5px;
       transition: all .3s ease;
 
       &:hover {
-        background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .7));
+        background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .85));
         cursor: pointer;
       }
       header {

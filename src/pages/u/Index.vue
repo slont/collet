@@ -3,9 +3,7 @@
     <header class="userpage-header header-shadow">
       <article class="user-profile media">
         <figure class="media-left" v-if="user.image">
-          <div class="image circle flexbox is-48x48">
-            <user-image :src="user.image"/>
-          </div>
+          <div class="image circle flexbox"><user-image :src="user.image"/></div>
         </figure>
         <div class="media-content">
           <div class="content">
@@ -20,11 +18,11 @@
                          class="settings-button button is-info is-outlined is-small">
               <span class="icon is-small"><i class="material-icons">settings</i></span>
             </router-link>
-            <p class="user-bio">{{ user.biography }}</p>
+            <p class="user-bio" v-if="user.biography">{{ user.biography }}</p>
           </div>
         </div>
       </article>
-      <div class="tabs">
+      <div class="tabs is-centered">
         <ul>
           <router-link :to="`/u/${urlUserId}`" class="cullet-tab" tag="li" exact>
             <a class="has-text-centered">
@@ -151,14 +149,21 @@
         padding: .5rem .75rem;
         border-bottom: $border-style;
 
+        .media-left {
+          margin-bottom: -1.75rem;
+
+          .image {
+            height: 5rem;
+            width: 5rem;
+            border: 5px solid #ebeded;
+          }
+        }
         .content {
           margin-bottom: 0;
 
-          .user-name {
-            margin-bottom: .3rem;
-          }
           .user-bio {
             margin-top: .3rem;
+            word-break: break-all;
           }
           .icon.is-small i {
             font-size: $size-5;

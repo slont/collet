@@ -70,7 +70,7 @@
 <style lang="scss" rel="stylesheet/scss">
   #settings-index {
     display: flex;
-    width: $width;
+    max-width: $width;
     margin: auto;
     overflow-y: scroll;
     -webkit-overflow-scrolling : touch;
