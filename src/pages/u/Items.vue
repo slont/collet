@@ -12,7 +12,7 @@
                   {{ item.theme.title }}
                   <span class="icon" v-if="item.theme.private"><i class="fas fa-lock fa-fw"></i></span>
                 </router-link>
-                <div class="item-title text-color-strong is-size-5 has-text-weight-bold clickable">
+                <div class="item-title text-color-strong is-size-4 has-text-weight-bold clickable">
                   {{ item.name }}
                 </div>
                 <div class="updated-at text-color-weak is-size-8">
