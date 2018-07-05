@@ -98,17 +98,20 @@
     max-width: $width;
     margin: 0 auto;
 
+    .columns {
+      margin-top: 0;
+
+      .column {
+        padding: .5rem;
+      }
+    }
+
     @media screen and (max-width: 768px) {
       .columns {
         margin: 0;
 
         .column {
           padding: .25rem;
-
-          .theme-card {
-            .image.is-16by9 {
-            }
-          }
         }
       }
     }
