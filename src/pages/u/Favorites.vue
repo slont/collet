@@ -1,7 +1,7 @@
 <template>
   <div id="userpage-favorites">
     <transition-group name="slide-fade" mode="out-in" class="columns is-multiline">
-      <div v-for="theme in themes" class="column is-half" :key="theme.id">
+      <div v-for="theme in themes" class="column is-12-mobile is-4-tablet" :key="theme.id">
         <theme-card :theme="theme" @open-edit-modal="$emit('open-edit-modal', theme)"/>
       </div>
       <div class="button is-loading fullwidth is-large" key="loading" v-if="themes.length < themesTotal"></div>
@@ -25,12 +25,8 @@
       }
     },
     computed: {
-      selfUser() {
-        return this.$store.state.user
-      },
-      urlUserId() {
-        return this.$route.params.userId
-      }
+      selfUser: ({$store}) => $store.state.user,
+      urlUserId: ({$route}) => $route.params.userId
     },
     watch: {
       '$route.params.userId': 'refresh'
@@ -88,17 +84,11 @@
     max-width: $width;
     margin: 0 auto;
 
-    > .columns {
-      padding-top: 1em;
-    }
+    .columns {
+      margin-top: 0;
 
-    @media screen and (min-width: 769px) {
-      .theme-card {
-        .card-image > .image,
-        .dark-mask {
-          border-top-right-radius: 5px;
-          border-top-left-radius: 5px;
-        }
+      .column {
+        padding: .5rem;
       }
     }
 

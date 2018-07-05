@@ -2,9 +2,7 @@
   <div id="userpage-themes">
     <transition-group name="slide-fade" mode="out-in" class="columns is-multiline">
       <div v-for="theme in themes" class="column is-12-mobile is-4-tablet" :key="theme.id">
-        <theme-card :theme="theme"
-                    @open-edit-modal="$emit('open-edit-modal', theme)"
-                    @refresh="refresh"/>
+        <theme-card :theme="theme" @open-edit-modal="$emit('open-edit-modal', theme)"/>
       </div>
       <div class="button is-loading fullwidth is-large" key="loading" v-if="themes.length < themesTotal"></div>
     </transition-group>
@@ -28,12 +26,8 @@
       }
     },
     computed: {
-      selfUser() {
-        return this.$store.state.user
-      },
-      urlUserId() {
-        return this.$route.params.userId
-      }
+      selfUser: ({$store}) => $store.state.user,
+      urlUserId: ({$route}) => $route.params.userId
     },
     watch: {
       '$route.params.userId': 'refresh'
