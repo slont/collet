@@ -1,8 +1,9 @@
 <template>
   <div id="userpage-theme">
-    <theme-card :theme="theme"
-                @open-edit-modal="$refs.themeEditModal.open(theme)"
-                @refresh="refresh"/>
+    <div class="theme-header">
+      <theme-card :theme="theme" @open-edit-modal="$refs.themeEditModal.open(theme)"/>
+      <p class="description">{{ theme.description }}</p>
+    </div>
 
     <div class="theme-items">
       <div class="label is-size-5 has-text-white has-text-centered">
@@ -97,31 +98,21 @@
       }
     },
     computed: {
-      selfUser() {
-        return this.$store.state.user
-      },
-      urlUserId() {
-        return this.$route.params.userId
-      },
-      itemId() {
-        return this.$route.params.itemId
-      },
-      isMyPage() {
-        return this.$store.state.user.id === this.urlUserId
-      },
-      themeId() {
-        return this.$route.params.themeId
-      },
-      itemsColumns() {
-        if (this.isMobile) {
+      selfUser: ({$store}) => $store.state.user,
+      urlUserId: ({$route}) => $route.params.userId,
+      itemId: ({$route}) => $route.params.itemId,
+      isMyPage: ({$store, urlUserId}) => $store.state.user.id === urlUserId,
+      themeId: ({$route}) => $route.params.themeId,
+      itemsColumns: ({isMobile, theme}) => {
+        if (isMobile) {
           return {
-            0: this.theme.items,
+            0: theme.items,
             1: []
           }
         } else {
           return {
-            0: this.theme.items.filter((item, i) => 0 === i % 2),
-            1: this.theme.items.filter((item, i) => 1 === i % 2)
+            0: theme.items.filter((item, i) => 0 === i % 2),
+            1: theme.items.filter((item, i) => 1 === i % 2)
           }
         }
       }
@@ -197,12 +188,25 @@
     overflow-y: scroll;
     -webkit-overflow-scrolling : touch;
 
-    .theme-card {
-      border-radius: 0;
+    &.container {
+      height: calc(100vh - #{$header-nav-height});
+    }
+    .theme-header {
+      max-width: $width;
+      margin: 0 auto;
+      background-color: white;
 
-      .dark-mask,
-      .image {
+      .theme-card {
+        max-width: 100%;
         border-radius: 0;
+
+        .dark-mask,
+        .image {
+          border-radius: 0;
+        }
+      }
+      .description {
+        padding: .75rem;
       }
     }
     .theme-items {
@@ -211,6 +215,9 @@
 
       > .label {
         @include label-accent-sp;
+      }
+      > .columns {
+        margin-top: 0;
       }
       .item-list {
         padding: 0;
@@ -337,9 +344,8 @@
     }
 
     @media screen and (min-width: 769px) {
-      .theme-card {
-        max-width: 540px;
-        margin: 0 auto;
+      .theme-card .theme-image {
+        height: 14rem;
       }
     }
 
