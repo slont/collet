@@ -2,7 +2,7 @@
   <div id="confirm">
     <div class="box">
       <div class="title has-text-centered">{{ $t('title') }}</div>
-      <div class="subtitle has-text-centered">{{ $t('views.confirm.pleaseInputYourName') }}</div>
+      <div class="subtitle has-text-centered">{{ $t('pages.confirm.pleaseInputYourName') }}</div>
 
       <div class="field-name field">
         <input v-model="name" name="name" class="input" :class="{ 'is-danger': errors.has('name') }"

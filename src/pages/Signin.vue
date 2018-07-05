@@ -14,7 +14,7 @@
 
       <template v-if="isVisibleForm">
         <div class="field-email field">
-          <label class="label">{{ $t('views.signin.email') }}</label>
+          <label class="label">{{ $t('pages.signin.email') }}</label>
           <p class="control is-expanded has-icons-left">
             <input v-model="email" name="email" class="input" :class="{ 'is-danger': errors.has('email') }"
                    placeholder="some@sample.com" type="text" v-validate="'required|email'">
@@ -24,7 +24,7 @@
         </div>
 
         <div class="field-password field">
-          <label class="label">{{ $t('views.signin.password') }}</label>
+          <label class="label">{{ $t('pages.signin.password') }}</label>
           <p class="control is-expanded has-icons-left">
             <input v-model="password" name="password" class="input" :class="{ 'is-danger': errors.has('password') }"
                    placeholder="password" type="password" v-validate="'required|min:6'">
@@ -68,7 +68,7 @@
       </div>
 
       <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
-      <!--<router-link to="/">{{ $t('views.signin.passwordReset') }}</router-link>-->
+      <!--<router-link to="/">{{ $t('pages.signin.passwordReset') }}</router-link>-->
     </div>
     <!--<div class="field">-->
       <!--<p class="control select">-->

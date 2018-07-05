@@ -1,6 +1,6 @@
 {
   "title": "Cullet",
-  "views": {
+  "pages": {
     "index": {},
     "confirm": {
       "pleaseInputYourName": "Can you input your name",

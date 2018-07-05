@@ -8,7 +8,7 @@
         <transition name="slide-fade" mode="out-in">
           <div key="0" v-if="0 === pageIndex">
             <div class="field-email field">
-              <label class="label">{{ $t('views.signup.email') }}</label>
+              <label class="label">{{ $t('pages.signup.email') }}</label>
               <p class="control is-expanded has-icons-left">
                 <input v-model="email" name="email" class="input" :class="{ 'is-danger': errors.has('email') }"
                        placeholder="some@sample.com" type="text" v-validate="'required|email'">
@@ -37,7 +37,7 @@
           </div><!-- page0 -->
 
           <div key="1" v-else-if="1 === pageIndex">
-            <h4 class="title is-5">{{ $t('views.signup.inputPinCode') }}</h4>
+            <h4 class="title is-5">{{ $t('pages.signup.inputPinCode') }}</h4>
             <div class="field flexbox is-horizontal">
               <input v-model="pinCode1" class="input" type="number" ref="pinCode1"
                      maxlength="1" min="0" max="9" @input="onInput($event, 1)" @focus="$event.target.select()"/>
@@ -61,7 +61,7 @@
 
           <div key="2" v-else-if="2 === pageIndex">
             <div class="field-id field">
-              <label class="label">{{ $t('views.signup.userId') }}</label>
+              <label class="label">{{ $t('pages.signup.userId') }}</label>
               <p class="control is-expanded has-icons-left">
                 <input v-model="id" name="userId" class="input" :class="{ 'is-danger': errors.has('userId') }"
                        placeholder="user-id" type="text" v-validate="'max:32|regex:^([a-zA-Z0-9_-]+)$'">
@@ -71,7 +71,7 @@
             </div>
 
             <div class="field-password field">
-              <label class="label">{{ $t('views.signup.password') }}</label>
+              <label class="label">{{ $t('pages.signup.password') }}</label>
               <p class="control is-expanded has-icons-left">
                 <input v-model="password" name="password" class="input" :class="{ 'is-danger': errors.has('password') }"
                        placeholder="password" type="password" v-validate="'required|min:6'">
@@ -154,7 +154,7 @@
           this.pageIndex++
         }).catch(() => {
           this.isLoading = false
-          this.errorMessage = this.$t('views.signup.invalidCode')
+          this.errorMessage = this.$t('pages.signup.invalidCode')
         })
       },
       async signup() {
