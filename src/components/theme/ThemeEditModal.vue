@@ -36,7 +36,7 @@
         <div class="field image-field">
           <label class="label">メイン画像（オプショナル）</label>
           <div class="control">
-            <div class="file is-boxed">
+            <div class="file is-boxed is-centered">
               <label class="file-label">
                 <input @change="changeImage" class="file-input" type="file" name="resume" v-show="false">
                 <div class="file-view" v-if="theme.image">

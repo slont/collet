@@ -24,8 +24,8 @@
               <span class="selected-icon icon is-size-4">
                 <i class="fas fa-check text-color-main" v-show="selectedTheme.id === theme.id"></i>
               </span>
+              <span class="private-icon icon is-size-5 text-color-weak" v-if="theme.private"><i class="fas fa-lock fa-fw"></i></span>
               <span class="theme-title is-size-6 has-text-weight-bold">{{ theme.title }}</span>
-              <span class="icon has-text-success is-size-4" v-if="theme.private"><i class="fas fa-lock"></i></span>
               <span class="item-count text-color-weak">({{ theme.itemCount }})</span>
             </a>
             <div class="divider"></div>
@@ -121,6 +121,9 @@
 
           .selected-icon {
             min-width: 32px;
+            margin-right: .5rem;
+          }
+          .private-icon {
             margin-right: .5rem;
           }
           .item-count {
