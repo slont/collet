@@ -12,7 +12,6 @@ import EditItem from '@/pages/EditItem'
 import TermsOfService from '@/pages/TermsOfService'
 import PrivacyPolicy from '@/pages/PrivacyPolicy'
 import TopIndex from '@/pages/top/Index'
-import TagIndex from '@/pages/tag/Index'
 import SearchIndex from '@/pages/search/Index'
 import UserpageIndex from '@/pages/u/Index'
 import UserpageItem from '@/pages/u/Item'
@@ -63,9 +62,6 @@ export default new Router({
               component: SettingsPassword
             }
           ]
-        }, {
-          path: 'tag',
-          component: TagIndex
         }, {
           path: 's/:type',
           component: SearchIndex
