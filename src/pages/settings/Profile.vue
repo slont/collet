@@ -44,7 +44,7 @@
       <label class="label">メールアドレス</label>
       <div class="control">
         <input v-model.trim="user.email" class="input" type="email"
-               name="email" v-validate="'required|max:255'">
+               name="email" v-validate="'email|max:255' + (user.email ? '|required' : '')">
         <span v-show="errors.has('email')" class="has-text-danger">{{ errors.first('email') }}</span>
       </div>
     </div>
@@ -104,6 +104,7 @@
           }).then(() => {
             this.$store.commit('SET_USER', this.user)
             this.id = this.user.id
+            this.$router.push(`/u/${this.user.id}`)
             this.$message({
               showClose: true,
               message: '保存されました',
