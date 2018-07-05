@@ -70,10 +70,6 @@
           <label class="publication" :class="{ 'is-publication': publication }" for="publication"
                  @click="publication = !publication">一般公開する</label>
         </div>
-
-        <div class="field is-hidden-desktop">
-          <guard-button :click="ok" class="is-info fullwidth" :disabled="loading">保存</guard-button>
-        </div>
       </div>
     </div>
 
