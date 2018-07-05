@@ -35,7 +35,7 @@
 
       <div class="title is-5 has-text-white">
         <span class="private-icon icon is-size-6 has-text-white" v-if="theme.private"><i class="fas fa-lock fa-fw"></i></span>
-        <span>{{ theme.title }}</span>
+        <span class="has-text-weight-bold">{{ theme.title }}</span>
       </div>
 
       <nav class="theme-actions actions level is-mobile is-size-4">
