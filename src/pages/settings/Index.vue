@@ -1,5 +1,5 @@
 <template>
-  <div id="settings-index">
+  <div id="settings-index" class="fullheight bg-white">
     <aside class="settings-menu menu" :class="{ 'is-root': isRoot }">
       <p class="menu-label">
         アカウント
@@ -8,14 +8,14 @@
         <router-link to="/settings/profile" tag="li">
           <a>
             <span>プロフィール</span>
-            <span class="icon is-hidden-tablet"><i class="material-icons">chevron_right</i></span>
+            <span class="icon is-hidden-tablet"><i class="fas fa-angle-right fa-lg"></i></span>
           </a>
         </router-link>
 
         <router-link to="/settings/password" tag="li">
           <a>
             <span>パスワード設定</span>
-            <span class="icon is-hidden-tablet"><i class="material-icons">chevron_right</i></span>
+            <span class="icon is-hidden-tablet"><i class="fas fa-angle-right fa-lg"></i></span>
           </a>
         </router-link>
       </ul>
@@ -38,7 +38,7 @@
     </aside>
 
     <transition name="slide-fade" mode="out-in">
-      <router-view/>
+      <router-view class="settings-content"/>
     </transition>
   </div>
 </template>
@@ -70,6 +70,8 @@
 <style lang="scss" rel="stylesheet/scss">
   #settings-index {
     display: flex;
+    width: $width;
+    margin: auto;
     overflow-y: scroll;
     -webkit-overflow-scrolling : touch;
 
@@ -82,6 +84,9 @@
       .menu-label {
         padding-left: .75em;
       }
+      .menu-list li a {
+        padding: .75rem 1rem;
+      }
       .divider {
         margin: .5em;
         height: 1px;
@@ -92,6 +97,9 @@
         margin-top: .5em;
         margin-right: 1em;
       }
+    }
+    .settings-content {
+      flex: 1;
     }
 
     @media screen and (max-width: 768px) {
