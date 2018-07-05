@@ -1,11 +1,18 @@
 <template>
   <div id="settings-profile">
-    <router-link to="/settings" class="label">/設定</router-link>
+    <div class="field">
+      <div class="control">
+        <router-link to="/settings" class="label is-size-5 text-color-weak is-hidden-desktop">
+          <span class="icon"><i class="fas fa-arrow-left fa-fw"></i></span>
+          設定
+        </router-link>
+      </div>
+    </div>
 
     <div class="field image-field">
       <label class="label">イメージ画像</label>
       <div class="control">
-        <div class="file is-boxed">
+        <div class="file is-boxed is-centered">
           <label class="file-label">
             <input @change="changeImage" class="file-input" type="file" name="resume" v-show="false">
             <span class="file-view" v-if="user.image">
@@ -17,7 +24,6 @@
             </span>
             <span class="control loading-mask is-size-1" :class="{ 'is-loading': loading }"></span>
           </label>
-          <a @click.stop.prevent="removeImage" class="has-text-danger" v-if="user.image">削除</a>
         </div>
       </div>
     </div>
@@ -139,11 +145,9 @@
   #settings-profile {
     padding: 1rem;
 
-    .delete {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      z-index: 10;
+    .file-view .circle {
+      height: 5rem;
+      width: 5rem;
     }
   }
 </style>

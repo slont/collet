@@ -1,6 +1,13 @@
 <template>
   <div id="settings-password">
-    <router-link to="/settings" class="label">/設定</router-link>
+    <div class="field">
+      <div class="control">
+        <router-link to="/settings" class="label is-size-5 text-color-weak is-hidden-desktop">
+          <span class="icon"><i class="fas fa-arrow-left fa-fw"></i></span>
+          設定
+        </router-link>
+      </div>
+    </div>
 
     <div class="field">
       <label class="label">現在のパスワード</label>

@@ -84,8 +84,14 @@
       .menu-label {
         padding-left: .75em;
       }
-      .menu-list li a {
-        padding: .75rem 1rem;
+      .menu-list li {
+        a {
+          padding: .75rem 1rem;
+        }
+        &.router-link-active a {
+          color: white;
+          background-color: $primary;
+        }
       }
       .divider {
         margin: .5em;
