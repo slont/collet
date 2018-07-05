@@ -36,5 +36,11 @@
     width: 100%;
     top: 0;
     background-color: $bg-color;
+
+    &.is-active-modal {
+      #userpage-index, #userpage-item, #top-index, #search-index, #userpage-theme {
+        -webkit-overflow-scrolling: initial;
+      }
+    }
   }
 </style>
