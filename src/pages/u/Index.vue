@@ -7,9 +7,9 @@
         </figure>
         <div class="media-content">
           <div class="content">
-            <span class="user-name">
+            <div class="user-name">
               <span class="title is-4">{{ user.name }}</span><span class="subtitle is-6">@{{ urlUserId }}</span>
-            </span>
+            </div>
             <router-link to="/settings/profile" v-if="loggedIn && isSelf"
                          class="profile-edit-button button is-info is-outlined is-small">
               プロフィール編集

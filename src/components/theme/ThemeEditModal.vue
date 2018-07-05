@@ -239,5 +239,17 @@
         }
       }
     }
+
+    @media screen and (max-width: 768px) {
+      > .modal-card {
+        .modal-card-body {
+          margin: 0;
+
+          > .column {
+            padding: 0;
+          }
+        }
+      }
+    }
   }
 </style>
