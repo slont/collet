@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{ 'is-active-modal': activeModal }">
     <transition name="slide-fade" mode="out-in">
       <router-view></router-view>
     </transition>
@@ -11,6 +11,7 @@
     name: 'app',
     created() {
       this.$moment.locale(this.$store.state.locale)
+      this.$store.commit('SET_MODAL_ACTIVE', false)
       this.$store.commit('SET_OG_TITLE', 'Cullet | 日常のメモをもっと楽しく')
       this.$store.commit('SET_OG_DESCRIPTION', '日常のメモを簡単に楽しく整理。テーマに合わせた文章や画像、SNS、ニュースなどをまとめてシェアできます。')
       this.$store.commit('SET_OG_IMAGE', 'https://www.cullet.me/static/img/cullet-logo_orange.png')

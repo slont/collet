@@ -54,6 +54,9 @@ Vue.use({
         },
         isMobile() {
           return 768 >= this.windowWidth
+        },
+        activeModal() {
+          return this.$store.state.activeModal
         }
       },
       async mounted() {

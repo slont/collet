@@ -23,6 +23,7 @@ export default new Vuex.Store({
     },
     activeHeader: true,
     activeFooter: true,
+    activeModal: false,
     ogTitle: '',
     ogDescription: '',
     ogImage: ''
@@ -127,6 +128,9 @@ export default new Vuex.Store({
     },
     'SET_FOOTER_ACTIVE'(state, active) {
       state.activeFooter = active
+    },
+    'SET_MODAL_ACTIVE'(state, active) {
+      state.activeModal = active
     },
     'SET_OG_TITLE'(state, ogTitle) {
       state.ogTitle = ogTitle

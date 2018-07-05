@@ -26,10 +26,12 @@
     methods: {
       open() {
         this.active = true
+        this.$store.commit('SET_MODAL_ACTIVE', true)
       },
       close() {
         this.$emit('close')
         this.active = false
+        this.$store.commit('SET_MODAL_ACTIVE', false)
       }
     }
   }

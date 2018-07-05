@@ -19,6 +19,7 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #index {
+    position: relative;
     height: 100vh;
     padding-top: $header-nav-height;
 
