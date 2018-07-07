@@ -15,7 +15,8 @@ import VueMoment from 'vue-moment'
 import VueAutosize from 'vue-autosize'
 import VueAnalytics from 'vue-analytics'
 import SocialSharing from 'vue-social-sharing'
-import Element from 'element-ui'
+import {DatePicker, Rate, Tag, Select, Option, Switch} from 'element-ui'
+import elLocale from 'element-ui/lib/locale'
 import messages from './locales'
 import validateConfig from '../config/validate'
 import Buefy from 'buefy'
@@ -28,15 +29,17 @@ Vue.config.productionTip = false
 Vue.use(Vuex)
 Vue.use(VueHead, {separator: ' | '})
 Vue.use(VueI18n)
+elLocale.use(messages[store.state.locale])
 const i18n = new VueI18n({locale: store.state.locale, messages})
 Vue.use(VeeValidate, Object.assign({}, validateConfig, {locale: store.state.locale}))
 Vue.use(VueAutosize)
 Vue.use(VueMoment)
 Vue.use(VueAnalytics, {id: 'UA-71892039-2', router})
 
-Vue.use(Buefy)
-Vue.use(Element, {
-  i18n: (key, value) => i18n.t(key, value)
+Vue.use(Buefy, {
+  defaultIconPack: 'fas',
+  defaultDateFormatter: date => date.toISOString(),
+  defaultTimeFormatter: () => 'HH:mm'
 })
 Vue.use(SocialSharing)
 
@@ -128,6 +131,12 @@ Vue.use({
 })
 
 Vue.use(VueCarousel)
+Vue.component(DatePicker.name, DatePicker)
+Vue.component(Rate.name, Rate)
+Vue.component(Tag.name, Tag)
+Vue.component(Select.name, Select)
+Vue.component(Option.name, Option)
+Vue.component(Switch.name, Switch)
 Vue.component(GuardButton.name, GuardButton)
 Vue.component(UserImage.name, UserImage)
 
