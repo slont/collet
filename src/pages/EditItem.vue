@@ -7,11 +7,9 @@
 
       <span class="modal-card-title title is-6 has-text-white">カレット編集</span>
 
-      <div class="template-checkbox field">
-        <input v-model="isTemplate" class="is-checkradio has-background-color is-white is-small" id="templateCheckbox" type="checkbox" :checked="isTemplate">
-        <label for="templateCheckbox">テンプレート登録</label>
-      </div>
-
+      <b-checkbox v-model="isTemplate">
+        テンプレート登録
+      </b-checkbox>
       <guard-button :click="save" class="ok-button is-success is-inverted is-outlined is-size-5">
         保存
       </guard-button>
@@ -322,8 +320,8 @@
         border-radius: 0;
       }
       .action-modal-header {
-        .template-checkbox {
-          margin-bottom: 0;
+        .b-checkbox {
+          margin-right: .5rem;
         }
       }
       .theme-header {
