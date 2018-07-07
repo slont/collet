@@ -1,11 +1,8 @@
 <template>
   <modal id="edit-temp-item" class="modal" ref="editTempItem">
     <header class="action-modal-header modal-card-head">
-      <span class="back-button icon is-size-3" @click="$router.go(-1)">
-        <i class="material-icons">arrow_back</i>
-      </span>
-
-      <span class="modal-card-title title is-6 has-text-white">カレット編集</span>
+      <b-icon class="back-button is-size-4" icon="arrow-left" @click.native="$router.go(-1)"/>
+      <span class="modal-card-title title is-6 has-text-white">メモカレット編集</span>
 
       <guard-button :click="save" class="ok-button is-success is-inverted is-outlined is-size-5">
         保存
@@ -25,9 +22,9 @@
       <div class="item-elements">
         <div v-for="(element, i) in item.elements" :key="i" class="field element-field flexbox">
           <div class="sort-buttons flexbox">
-            <a class="button up-button is-white" @click="upOrder(i)"><i class="material-icons">arrow_upward</i></a>
+            <b-icon icon="arrow-up" @click.native="upOrder(i)"/>
             <span class="element-order">{{ element.order + 1 }}</span>
-            <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
+            <b-icon icon="arrow-down" @click.native="downOrder(i)"/>
           </div>
 
           <text-element :params="element" v-if="'text' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
@@ -45,7 +42,8 @@
           <rating-element :params="element" v-else-if="'rating' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
           <switch-element :params="element" v-else-if="'switch' === element.type" @focus="onFocusInput" @blur="onBlurInput" editable/>
 
-          <span @click="removeElement(i)" class="delete-icon icon is-size-4 has-text-danger"><i class="far fa-times-circle"></i></span>
+          <b-icon pack="far" icon="times-circle" class="delete-icon is-small has-text-danger"
+                  @click.native="removeElement(i)"/>
         </div>
       </div>
     </div>
@@ -203,164 +201,151 @@
   #edit-temp-item {
     $button-count: 8;
 
-    > .modal-card {
-      display: flex;
-      flex-direction: column;
-      height: 95%;
-      width: 80%;
-      transition: width .3s, height .3s;
+    > .animation-content {
+      > .modal-card {
+        display: flex;
+        flex-direction: column;
 
-      .modal-card-head,
-      .modal-card-foot {
-        border-radius: 0;
-      }
-      .action-modal-header {
-        .template-checkbox {
-          margin-bottom: 0;
-        }
-      }
-      > .modal-card-body {
-        $sort-button-size: 2rem;
-        $margin-side: $sort-button-size + .5rem;
-        height: 100%;
-        padding: .5rem 0;
-        background-color: white;
-        overflow-y: scroll;
-        -webkit-overflow-scrolling : touch;
-        z-index: 0;
+        > .modal-card-body {
+          $sort-button-size: 2rem;
+          $margin-side: $sort-button-size + .5rem;
+          height: 100%;
+          padding: .5rem 0;
+          background-color: white;
+          overflow-y: scroll;
+          -webkit-overflow-scrolling : touch;
+          z-index: 0;
 
-        .theme-field {
-          .subtitle {
-            margin-bottom: 0;
-          }
-          .theme-dropdown {
-            width: 100%;
-
-            .dropdown-trigger {
+          .theme-field {
+            .subtitle {
+              margin-bottom: 0;
+            }
+            .theme-dropdown {
               width: 100%;
 
-              .button {
-                height: 1.75em;
-                max-width: 70%;
-                min-width: 300px;
-                padding: 0;
-                border-top: none;
-                border-left: none;
-                border-right: none;
+              .dropdown-trigger {
+                width: 100%;
 
-                :first-child {
-                  max-width: 95%;
-                  overflow: hidden;
-                }
-                .icon {
-                  margin-left: auto;
+                .button {
+                  height: 1.75em;
+                  max-width: 70%;
+                  min-width: 300px;
+                  padding: 0;
+                  border-top: none;
+                  border-left: none;
+                  border-right: none;
+
+                  :first-child {
+                    max-width: 95%;
+                    overflow: hidden;
+                  }
+                  .icon {
+                    margin-left: auto;
+                  }
                 }
               }
             }
           }
-        }
-        .item-name-content {
-          margin: 0 1rem;
+          .item-name-content {
+            margin: 0 1rem;
 
-          .item-name {
-            padding: 0;
-
-            .input {
-              border-top: none;
-              border-right: none;
-              border-left: none;
-              border-bottom-width: 2px;
-              border-radius: 0;
-              box-shadow: none;
-              height: $size-2;
-              margin-bottom: 0;
+            .item-name {
               padding: 0;
-              line-height: $size-2;
 
-              &::placeholder {
-                color: rgba($primary, .25);
+              .input {
+                border-top: none;
+                border-right: none;
+                border-left: none;
+                border-bottom-width: 2px;
+                border-radius: 0;
+                box-shadow: none;
+                height: $size-2;
+                margin-bottom: 0;
+                padding: 0;
+                line-height: $size-2;
+
+                &::placeholder {
+                  color: rgba($primary, .25);
+                }
               }
             }
           }
-        }
-        .item-elements {
-          .element-field {
-            justify-content: center;
-            min-height: 78px;
+          .item-elements {
+            .element-field {
+              justify-content: center;
+              min-height: 78px;
 
-            .sort-buttons {
-              flex-direction: column;
+              .sort-buttons {
+                flex-direction: column;
 
-              .button {
-                padding: 0;
-
-                .material-icons {
+                .icon {
+                  margin: .25rem;
                   color: gainsboro;
                 }
+                .element-order {
+                  color: darkgrey;
+                  text-align: center;
+                }
               }
-              .element-order {
-                font-size: .75em;
-                text-align: center;
+              .cl-element {
+                width: 100%;
+                padding: 0 .25rem;
               }
-            }
-            .cl-element {
-              width: 100%;
-              padding: 0 .25rem;
-            }
-            .delete-icon {
-              margin: 0 .25rem;
-            }
-            &:first-child {
-              .up-button {
-                visibility: hidden;
-                background-color: black;
+              .delete-icon {
+                margin: 0 .25rem;
               }
-            }
-            &:last-child {
-              .down-button {
-                visibility: hidden;
+              &:first-child {
+                .up-button {
+                  visibility: hidden;
+                  background-color: black;
+                }
+              }
+              &:last-child {
+                .down-button {
+                  visibility: hidden;
+                }
               }
             }
           }
         }
-      }
-      .modal-card-foot-expander {
-        background-color: white;
-        text-align: center;
-        box-shadow: $box-shadow;
-        z-index: 1;
-      }
-      .modal-card-foot.slider {
-        height: $element-button-size;
-        max-height: 0;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        border-radius: 0;
-        overflow: scroll;
-        -webkit-overflow-scrolling : touch;
-        transition: max-height .2s;
-
-        &.is-active {
-          max-height: $element-button-size;
+        .modal-card-foot-expander {
+          background-color: white;
+          text-align: center;
+          box-shadow: $box-shadow;
+          z-index: 1;
         }
-        .buttons {
-          flex-direction: row;
-          width: calc(#{$element-button-size} * #{$button-count} - #{$button-count - 1}px);
-          min-width: calc(#{$element-button-size} * #{$button-count} - #{$button-count - 1}px);
-          margin-bottom: 0;
+        .modal-card-foot.slider {
+          height: $element-button-size;
+          max-height: 0;
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          border-radius: 0;
+          overflow: scroll;
+          -webkit-overflow-scrolling : touch;
+          transition: max-height .2s;
 
-          .button {
+          &.is-active {
+            max-height: $element-button-size;
+          }
+          .buttons {
+            flex-direction: row;
+            width: calc(#{$element-button-size} * #{$button-count} - #{$button-count - 1}px);
+            min-width: calc(#{$element-button-size} * #{$button-count} - #{$button-count - 1}px);
             margin-bottom: 0;
+
+            .button {
+              margin-bottom: 0;
+            }
           }
         }
-      }
-      .modal-card-foot {
-        border-top: none;
+        .modal-card-foot {
+          border-top: none;
 
-        .checkbox {
-          font-size: $size-small;
-          margin-right: 1rem;
+          .checkbox {
+            font-size: $size-small;
+            margin-right: 1rem;
+          }
         }
       }
     }
