@@ -65,10 +65,9 @@
         </div>
 
         <div class="publication-field field">
-          <input v-model="publication" class="is-checkradio has-background-color is-info"
-                 id="publication" type="checkbox">
-          <label class="publication" :class="{ 'is-publication': publication }"
-                 for="publication" @click="publication = !publication">一般公開する</label>
+          <b-checkbox v-model="publication">
+            一般公開する
+          </b-checkbox>
         </div>
       </div>
     </div>

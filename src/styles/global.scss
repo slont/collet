@@ -1,6 +1,5 @@
 @import "constant";
 @import "~bulma";
-@import "~bulma-checkradio";
 @import "~bulma-switch";
 @import '~buefy/src/scss/buefy';
 @import "~element-ui/lib/theme-chalk/index.css";
@@ -148,9 +147,6 @@ body {
 .field {
   .label {
     color: $text-color-weak;
-  }
-  .is-checkradio[type="checkbox"] + label {
-    margin-left: 0;
   }
 }
 
