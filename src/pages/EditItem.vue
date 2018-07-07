@@ -11,10 +11,10 @@
         保存
       </guard-button>
     </header>
-    <header class="theme-header modal-card-head header-shadow" @click="openThemeSelectModal">
+    <header class="theme-header header-shadow" @click="openThemeSelectModal">
       <a class="text-color-base">
         <span class="theme-title is-size-6">{{ theme.title }}</span>
-        <span class="icon has-text-grey-light is-size-4"><i class="material-icons">arrow_drop_down</i></span>
+        <b-icon icon="chevron-down" size="is-small"/>
       </a>
     </header>
 
