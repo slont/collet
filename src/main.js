@@ -18,6 +18,7 @@ import SocialSharing from 'vue-social-sharing'
 import Element from 'element-ui'
 import messages from './locales'
 import validateConfig from '../config/validate'
+import Buefy from 'buefy'
 import VueCarousel from 'vue-carousel'
 import GuardButton from './components/GuardButton'
 import UserImage from './components/UserImage'
@@ -33,6 +34,7 @@ Vue.use(VueAutosize)
 Vue.use(VueMoment)
 Vue.use(VueAnalytics, {id: 'UA-71892039-2', router})
 
+Vue.use(Buefy)
 Vue.use(Element, {
   i18n: (key, value) => i18n.t(key, value)
 })

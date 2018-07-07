@@ -2,6 +2,7 @@
 @import "~bulma";
 @import "~bulma-checkradio";
 @import "~bulma-switch";
+@import '~buefy/src/scss/buefy';
 @import "~element-ui/lib/theme-chalk/index.css";
 @import "transition";
 
@@ -386,6 +387,10 @@ body {
   .item-action {
     color: $info;
   }
+}
+
+.notices .toast.is-top {
+  margin-top: 5rem;
 }
 
 @media screen and (min-width: 1088px) {

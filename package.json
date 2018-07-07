@@ -16,6 +16,7 @@
   "dependencies": {
     "blueimp-canvas-to-blob": "^3.14.0",
     "blueimp-load-image": "^2.19.0",
+    "buefy": "^0.6.6",
     "bulma": "^0.7.1",
     "bulma-checkradio": "^1.0.2",
     "bulma-switch": "^1.0.2",
