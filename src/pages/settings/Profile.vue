@@ -111,17 +111,15 @@
             this.$store.commit('SET_USER', this.user)
             this.id = this.user.id
             this.$router.push(`/u/${this.user.id}`)
-            this.$message({
-              showClose: true,
+            this.$toast.open({
               message: '保存されました',
-              type: 'success'
+              type: 'is-success'
             })
           }).catch(err => {
             console.log(err)
-            this.$message({
-              showClose: true,
+            this.$toast.open({
               message: err.message,
-              type: 'error'
+              type: 'is-danger'
             })
           })
         })

@@ -142,10 +142,9 @@
           })
 
           this.$emit('refresh')
-          this.$message({
-            showClose: true,
+          this.$toast.open({
             message: '保存されました',
-            type: 'success'
+            type: 'is-success'
           })
           this.close()
         })

@@ -109,10 +109,9 @@
           }
         }).catch(err => {
           console.log(err)
-          this.$message({
-            showClose: true,
+          this.$toast.open({
             message: 'データ取得に失敗しました',
-            type: 'error'
+            type: 'is-danger'
           })
         })
       },

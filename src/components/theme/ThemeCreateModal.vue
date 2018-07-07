@@ -127,10 +127,9 @@
           })
 
           this.$emit('refresh')
-          this.$message({
-            showClose: true,
+          this.$toast.open({
             message: '作成されました',
-            type: 'success'
+            type: 'is-success'
           })
           this.close()
         })

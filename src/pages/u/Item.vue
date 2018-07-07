@@ -212,10 +212,9 @@
           })
         }).catch(err => {
           console.log(err)
-          this.$message({
-            showClose: true,
+          this.$toast.open({
             message: 'データ取得に失敗しました',
-            type: 'error'
+            type: 'is-danger'
           })
         })
         new ThemeModel().findOne(this.themeId).then(res => {
@@ -239,10 +238,9 @@
           setTimeout(() => this.scrollToTop(300), 400)
         }).catch(err => {
           console.log(err)
-          this.$message({
-            showClose: true,
+          this.$toast.open({
             message: 'データ取得に失敗しました',
-            type: 'error'
+            type: 'is-danger'
           })
         })
       },

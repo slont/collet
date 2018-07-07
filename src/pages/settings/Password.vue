@@ -55,17 +55,15 @@
             password: this.password,
             newPassword: this.newPassword
           }).then(() => {
-            this.$message({
-              showClose: true,
+            this.$toast.open({
               message: '変更されました',
-              type: 'success'
+              type: 'is-success'
             })
           }).catch(err => {
             console.log(err)
-            this.$message({
-              showClose: true,
+            this.$toast.open({
               message: err.message,
-              type: 'error'
+              type: 'is-danger'
             })
           })
         })

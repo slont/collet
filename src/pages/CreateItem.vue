@@ -237,14 +237,16 @@
 
           this.isSaved = true
           this.cacheTheme()
-          this.$message({
-            showClose: true,
+          this.$toast.open({
             message: '作成されました',
-            type: 'success'
+            type: 'is-success'
           })
           this.$router.push(`/u/${this.user.id}/${this.theme.id}`)
           this.close()
-        }).catch(err => this.$message.error(err))
+        }).catch(err => this.$toast.open({
+          message: err,
+          type: 'is-danger'
+        }))
       },
       onFocusInput(e) {
         this.isActiveFooter = false

@@ -188,13 +188,15 @@
           })
 
           this.$emit('refresh')
-          this.$message({
-            showClose: true,
+          this.$toast.open({
             message: '作成されました',
-            type: 'success'
+            type: 'is-success'
           })
           this.close()
-        }).catch(err => this.$message.error(err))
+        }).catch(err => this.$toast.open({
+          message: err,
+          type: 'is-danger'
+        }))
       },
       reset() {
         Object.assign(this.$data, this.$options.data.call(this))

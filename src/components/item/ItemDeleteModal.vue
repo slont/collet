@@ -59,10 +59,9 @@
           throw new Error(err)
         })
 
-        this.$message({
-          showClose: true,
+        this.$toast.open({
           message: '削除されました',
-          type: 'success'
+          type: 'is-success'
         })
         this.close()
         this.$emit('refresh')

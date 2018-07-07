@@ -66,7 +66,10 @@
         this.selectedTheme = theme
         this.refresh().then(() => {
           this.$refs.themeSelectModal.open()
-        }).catch(err => this.$message.error(err))
+        }).catch(err => this.$toast.open({
+          message: err,
+          type: 'is-danger'
+        }))
       },
       close() {
         this.reset()

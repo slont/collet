@@ -146,10 +146,9 @@
           this.$refs.itemEditModal.open()
         }).catch(err => {
           console.log(err)
-          this.$message({
-            showClose: true,
-            message: 'データ取得に失敗しました',
-            type: 'error'
+          this.$toast.open({
+            message: `データ取得に失敗しました`,
+            type: 'is-danger'
           })
         })
       },
@@ -170,10 +169,9 @@
           })
 
           this.$emit('refresh')
-          this.$message({
-            showClose: true,
+          this.$toast.open({
             message: '保存されました',
-            type: 'success'
+            type: 'is-success'
           })
           this.close()
         })

@@ -202,10 +202,9 @@
           })
         }).catch(err => {
           console.log(err)
-          this.$message({
-            showClose: true,
+          this.$toast.open({
             message: 'データ取得に失敗しました',
-            type: 'error'
+            type: 'is-danger'
           })
           this.$router.replace('/')
         })
@@ -235,14 +234,16 @@
 
           this.isSaved = true
           this.cacheTheme()
-          this.$message({
-            showClose: true,
+          this.$toast.open({
             message: '更新されました',
-            type: 'success'
+            type: 'is-success'
           })
           this.$router.push(`/u/${this.user.id}/${this.theme.id}/${this.item.id}`)
           this.close()
-        }).catch(err => this.$message.error(err))
+        }).catch(err => this.$toast.open({
+          message: err,
+          type: 'is-danger'
+        }))
       },
       onFocusInput(e) {
         this.isActiveFooter = false
