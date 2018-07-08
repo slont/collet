@@ -143,6 +143,12 @@
       </div>
     </div>
 
+    <a @click.stop="$refs.itemCreateModal.open" v-if="loggedIn"
+       class="button button-create is-float is-primary circle is-hidden-mobile">
+      <i class="material-icons">add</i>
+    </a>
+
+    <item-create-modal ref="itemCreateModal"/>
     <theme-edit-modal ref="themeEditModal" @refresh="refresh"/>
   </div>
 </template>
@@ -152,12 +158,13 @@
   import UserModel from '@/models/User'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
   import ThemeCard from '@/components/theme/ThemeCard'
+  import ItemCreateModal from '@/components/item/ItemCreateModal'
   import ItemCard from '@/components/item/ItemCard'
   import ElementView from '@/components/element/ElementView'
   const SIZE = 12
 
   export default {
-    components: { ThemeCard, ItemCard, ThemeEditModal, ElementView },
+    components: {ThemeCard, ItemCard, ThemeEditModal, ItemCreateModal, ElementView},
     data() {
       return {
         topThemes: [],
@@ -440,6 +447,12 @@
       > div:not(:last-child) {
         margin-right: 3px;
       }
+    }
+
+    .button.is-float {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
     }
 
     @media screen and (min-width: 769px) {
