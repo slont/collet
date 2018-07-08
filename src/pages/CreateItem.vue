@@ -4,7 +4,7 @@
       <b-icon class="back-button is-size-4" icon="arrow-left" @click.native="$router.go(-1)"/>
       <span class="modal-card-title title is-6 has-text-white">カレット作成</span>
 
-      <b-checkbox v-model="isTemplate">
+      <b-checkbox v-model="isTemplate" class="is-size-7">
         テンプレート登録
       </b-checkbox>
       <guard-button :click="save" class="ok-button is-success is-inverted is-outlined is-size-5">
