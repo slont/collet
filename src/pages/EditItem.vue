@@ -7,6 +7,10 @@
       <b-checkbox v-model="isTemplate" class="is-size-7">
         テンプレート登録
       </b-checkbox>
+      <button @click.stop="$refs.itemDeleteModal.open(theme, item)"
+         class="button is-danger is-outlined is-size-5 is-hidden-tablet">
+        削除
+      </button>
       <guard-button :click="save" class="ok-button is-success is-inverted is-outlined is-size-5">
         保存
       </guard-button>

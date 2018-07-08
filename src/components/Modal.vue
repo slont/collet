@@ -64,8 +64,8 @@
 
       @media screen and (max-width: 768px) {
         > .modal-card {
-          height: 100vh !important;
-          width: 100vw !important;
+          height: 100vh;
+          width: 100vw;
           max-height: 100%;
           margin: 0;
 

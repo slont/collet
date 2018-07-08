@@ -64,7 +64,7 @@
     </div>
 
     <footer class="modal-card-foot has-right">
-      <a @click="$refs.itemDeleteModal.open(item)" class="button is-danger is-outlined is-left">削除</a>
+      <a @click="$refs.itemDeleteModal.open(theme, item)" class="button is-danger is-outlined is-left">削除</a>
 
       <b-checkbox v-model="isTemplate">
         テンプレート登録

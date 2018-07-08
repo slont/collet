@@ -4,10 +4,10 @@
       <b-icon class="back-button is-size-4 is-hidden-tablet" icon="arrow-left" @click.native="close"/>
       <span class="modal-card-title title is-6 has-text-white">テーマ編集</span>
 
-      <a @click.stop="$refs.themeDeleteModal.open(theme)"
-         class="button is-danger is-inverted is-outlined is-size-5 is-hidden-tablet">
+      <button @click.stop="$refs.themeDeleteModal.open(theme)"
+         class="button is-danger is-outlined is-size-5 is-hidden-tablet">
         削除
-      </a>
+      </button>
       <guard-button :click="ok" v-if="!loading"
                     class="ok-button is-success is-inverted is-outlined is-size-5 is-hidden-tablet">
         保存
