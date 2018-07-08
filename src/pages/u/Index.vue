@@ -52,12 +52,12 @@
       <items ref="child" @open-edit-modal="openEditModal" v-else/>
     </transition>
 
-    <a @click="$refs.themeCreateModal.open()" v-if="loggedIn"
+    <a @click.stop="$refs.itemCreateModal.open" v-if="loggedIn"
        class="button button-create is-float is-primary circle is-hidden-mobile">
       <i class="material-icons">add</i>
     </a>
 
-    <theme-create-modal ref="themeCreateModal" @refresh="refreshThemes"/>
+    <item-create-modal ref="itemCreateModal"/>
     <theme-edit-modal ref="themeEditModal" @refresh="refreshThemes"/>
   </div>
 </template>
@@ -65,14 +65,14 @@
 <script>
   import UserModel from '@/models/User'
   import ThemeCard from '@/components/theme/ThemeCard'
-  import ThemeCreateModal from '@/components/theme/ThemeCreateModal'
   import ThemeEditModal from '@/components/theme/ThemeEditModal'
+  import ItemCreateModal from '@/components/item/ItemCreateModal'
   import Items from './Items'
   import Themes from './Themes'
   import Favorites from './Favorites'
 
   export default {
-    components: { ThemeCard, ThemeCreateModal, ThemeEditModal, Items, Themes, Favorites },
+    components: {ThemeCard, ItemCreateModal, ThemeEditModal, Items, Themes, Favorites},
     data() {
       return {
         user: {
@@ -84,12 +84,8 @@
       }
     },
     computed: {
-      urlUserId() {
-        return this.$route.params.userId
-      },
-      isSelf() {
-        return this.$store.state.user.id === this.urlUserId
-      }
+      urlUserId: ({$route}) => $route.params.userId,
+      isSelf: ({$store, urlUserId}) => $store.state.user.id === urlUserId
     },
     watch: {
       '$route.params.userId': 'refresh'

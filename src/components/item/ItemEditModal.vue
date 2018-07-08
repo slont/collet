@@ -35,9 +35,9 @@
           <transition-group tag="div" name="element-list" class="item-elements">
             <div v-for="(element, i) in item.elements" :key="element.orderId" class="field element-field flexbox">
               <div class="sort-buttons flexbox">
-                <b-icon icon="arrow-up" @click.native="upOrder(i)"/>
+                <b-icon icon="arrow-up" class="clickable" @click.native="upOrder(i)"/>
                 <span class="element-order">{{ element.order + 1 }}</span>
-                <b-icon icon="arrow-down" @click.native="downOrder(i)"/>
+                <b-icon icon="arrow-down" class="clickable" @click.native="downOrder(i)"/>
               </div>
 
               <text-element :params="element" v-if="'text' === element.type" editable/>
@@ -55,7 +55,7 @@
               <rating-element :params="element" v-else-if="'rating' === element.type" editable/>
               <switch-element :params="element" v-else-if="'switch' === element.type" editable/>
 
-              <b-icon pack="far" icon="times-circle" class="delete-icon is-small has-text-danger"
+              <b-icon pack="far" icon="times-circle" class="delete-icon is-small has-text-danger clickable"
                       @click.native="removeElement(i)"/>
             </div>
           </transition-group>

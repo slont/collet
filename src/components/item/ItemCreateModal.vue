@@ -35,9 +35,9 @@
           <transition-group tag="div" name="element-list" class="item-elements">
             <div v-for="(element, i) in item.elements" :key="element.orderId" class="field element-field flexbox">
               <div class="sort-buttons flexbox">
-                <b-icon icon="arrow-up" @click.native="upOrder(i)"/>
+                <b-icon icon="arrow-up" class="clickable" @click.native="upOrder(i)"/>
                 <span class="element-order">{{ element.order + 1 }}</span>
-                <b-icon icon="arrow-down" @click.native="downOrder(i)"/>
+                <b-icon icon="arrow-down" class="clickable" @click.native="downOrder(i)"/>
               </div>
 
               <text-element :params="element" v-if="'text' === element.type" editable/>
@@ -55,7 +55,7 @@
               <rating-element :params="element" v-else-if="'rating' === element.type" editable/>
               <switch-element :params="element" v-else-if="'switch' === element.type" editable/>
 
-              <b-icon pack="far" icon="times-circle" class="delete-icon is-small has-text-danger"
+              <b-icon pack="far" icon="times-circle" class="delete-icon is-small has-text-danger clickable"
                       @click.native="removeElement(i)"/>
             </div>
           </transition-group>
@@ -76,6 +76,7 @@
 </template>
 
 <script>
+  import ThemeModel from '@/models/Theme'
   import TemplateModel from '@/models/Template'
   import ItemModel from '@/models/Item'
   import Modal from '@/components/Modal'
@@ -136,14 +137,30 @@
       themeId: ({$route}) => $route.params.themeId
     },
     methods: {
-      open(theme) {
-        this.refresh(theme)
+      open() {
+        if (this.$store.state.theme.id) {
+          Object.assign(this.theme, ThemeModel._deserialize(this.$store.state.theme))
+          if (this.$store.state.theme.templates[0] && this.$store.state.theme.templates[0].elements.length) {
+            this.item.elements = this.$store.state.theme.templates[0].elements.map(e => {
+              e.orderId = e.order
+              return e
+            })
+          }
+        }
+        this.refresh(this.$store.state.theme)
         this.$refs.itemCreateModal.open()
       },
-      refresh(theme) {
-        this.theme = theme
+      refresh(theme = {}) {
+        if (theme.id) {
+          this.theme = theme
+        } else {
+          new ThemeModel().findOne(this.themeId).then(res => {
+            this.theme = res.data
+          })
+        }
 
-        new TemplateModel(this.themeId).find({
+        const themeId = theme.id || this.themeId
+        new TemplateModel(themeId).find({
           p: 1,
           s: 20
         }).then(res => {
@@ -245,7 +262,7 @@
           .columns {
             .left-column {
               height: 100%;
-              max-width: $element-button-size;
+              max-width: calc(#{$element-button-size} + 1rem);
 
               .slider {
                 height: 100%;
@@ -345,7 +362,7 @@
             margin-right: .5rem;
           }
         }
-      } 
+      }
     }
   }
 </style>

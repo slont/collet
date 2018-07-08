@@ -9,11 +9,24 @@
 </template>
 
 <script>
+  import UserModel from '@/models/User'
   import HeaderNav from '@/components/HeaderNav'
   import FooterNav from '@/components/FooterNav'
 
   export default {
-    components: { HeaderNav, FooterNav }
+    components: { HeaderNav, FooterNav },
+    computed: {
+      user: ({$store}) => $store.state.user
+    },
+    created() {
+      if (this.user.id && !this.$store.state.theme.id) {
+        new UserModel().findThemes(this.user.id, {p: 1, s: 1, q: ''}).then(res => {
+          if (res.data.length) {
+            this.$store.dispatch('setTheme', res.data[0])
+          }
+        })
+      }
+    }
   }
 </script>
 
