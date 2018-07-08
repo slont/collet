@@ -1,10 +1,7 @@
 <template>
   <a class="element-button button is-info is-outlined">
-    <span class="fa-icon icon" v-if="icon && /^fa.+/.test(icon)">
+    <span class="fa-icon icon">
       <i class="fa-2x" :class="icon"></i>
-    </span>
-    <span class="icon" v-else-if="icon">
-      <i class="material-icons is-size-2">{{ icon }}</i>
     </span>
     <span class="element-label" v-if="label">{{ label }}</span>
 
@@ -39,10 +36,6 @@
 
     .icon:first-child:not(:last-child) {
       margin: .5em 0;
-    }
-    .material-icons {
-      height: 2.4rem;
-      line-height: 2.4rem;
     }
     .label {
       font-size: $size-8;

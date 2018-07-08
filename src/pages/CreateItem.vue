@@ -438,7 +438,7 @@
           z-index: 1;
         }
         .modal-card-foot.slider {
-          height: $element-button-size;
+          height: 3.5rem;
           max-height: 0;
           width: 100%;
           margin: 0;
@@ -449,7 +449,7 @@
           transition: max-height .2s;
 
           &.is-active {
-            max-height: $element-button-size;
+            max-height: 3.5rem;
           }
           .buttons {
             flex-direction: row;
