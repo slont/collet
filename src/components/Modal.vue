@@ -35,8 +35,7 @@
     > .animation-content {
       > .modal-card {
         .modal-card-head {
-          height: $header-nav-height;
-          padding: 1em;
+          height: 2.75rem;
           border: none;
           background-color: $main-color;
           color: white;
@@ -59,7 +58,7 @@
         }
         .modal-card-foot {
           background: white;
-          height: 4rem;
+          height: 3.25rem;
         }
       }
 

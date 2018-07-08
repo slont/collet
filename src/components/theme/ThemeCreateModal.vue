@@ -26,8 +26,8 @@
             <label class="label">タグ（オプショナル）</label>
 
             <div class="control tags flexbox">
-              <el-tag v-for="(tag, i) in theme.tags" :key="tag" type="warning" closable
-                      @close="$delete(theme.tags, i)">{{ tag }}</el-tag>
+              <el-tag v-for="(tag, i) in theme.tags" class="is-size-6" :key="tag" type="warning" closable
+                      @close="$delete(theme.tags, i)">#{{ tag }}</el-tag>
               <input v-model="inputVal" class="input-new-tag input"
                      @keyup.enter="confirmInput" @focus="$emit('focus')" @blur="onBlur"/>
             </div>
