@@ -6,7 +6,7 @@
 
     <div class="modal-card-body">
       <div class="columns is-gapless">
-        <div class="left-column column is-hidden-mobile">
+        <div class="left-column column">
           <div class="slider">
             <cl-buttons @add="addElement" class="is-centered"/>
           </div>
@@ -193,7 +193,9 @@
         this.close()
       },
       addElement(element) {
-        this.item.elements.push(element)
+        this.item.elements.push(Object.assign(element, {
+          orderId: `${this.item.elements.length}-${new Date().getTime()}`
+        }))
         this.setOrder()
         this.$nextTick(() => {
           const container = this.$el.querySelector('.main-column')
@@ -337,7 +339,7 @@
             margin-right: auto;
           }
           .checkbox {
-            margin-right: .25rem;
+            margin-right: .5rem;
           }
         }
       }
