@@ -1,5 +1,5 @@
 <template>
-  <element-button class="location-button" icon="location_on" label="Location"
+  <element-button class="location-button" icon="fas fa-map-marker-alt" label="Location"
                   @click.native="addElement">
   </element-button>
 </template>

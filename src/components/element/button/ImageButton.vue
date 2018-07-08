@@ -1,5 +1,5 @@
 <template>
-  <element-button class="image-button" icon="photo" label="Image"
+  <element-button class="image-button" icon="far fa-image" label="Image"
                   @click.native="addElement">
   </element-button>
 </template>

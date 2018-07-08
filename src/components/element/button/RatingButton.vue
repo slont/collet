@@ -1,8 +1,6 @@
 <template>
-  <element-button class="rating-button"
+  <element-button class="rating-button" icon="far fa-star" label="Rating"
                   @click.native="addElement">
-    <rating-icon/>
-    <span class="element-label">Rating</span>
   </element-button>
 </template>
 
