@@ -1,9 +1,7 @@
 <template>
   <modal id="theme-select-modal" class="modal" ref="themeSelectModal" @close="reset">
     <header class="top-header action-modal-header modal-card-head">
-      <span class="back-button icon is-size-3 is-hidden-tablet" @click="close">
-        <i class="material-icons">arrow_back</i>
-      </span>
+      <b-icon class="back-button is-size-4 is-hidden-tablet" icon="arrow-left" @click.native="close"/>
 
       <span class="modal-card-title title is-6 has-text-white">テーマ選択</span>
     </header>
