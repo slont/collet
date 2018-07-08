@@ -4,9 +4,7 @@
       <div class="column">
         <div class="field">
           <label class="label">テーマタイトル</label>
-          <div class="control">
-            {{ theme.name }}
-          </div>
+          <div class="control">{{ theme.title }}</div>
         </div>
 
         <div class="field">

@@ -1,80 +1,81 @@
 <template>
   <modal id="theme-edit-modal" class="modal" ref="themeEditModal" @close="reset">
     <header class="action-modal-header modal-card-head">
-      <span class="back-button icon is-size-3" @click="close">
-        <i class="material-icons">arrow_back</i>
-      </span>
-
+      <b-icon class="back-button is-size-4 is-hidden-tablet" icon="arrow-left" @click.native="close"/>
       <span class="modal-card-title title is-6 has-text-white">テーマ編集</span>
 
-      <guard-button :click="ok" class="ok-button is-success is-inverted is-outlined is-size-5"
-                    v-if="!loading">
+      <a @click.stop="$refs.themeDeleteModal.open(theme)"
+         class="button is-danger is-inverted is-outlined is-size-5 is-hidden-tablet">
+        削除
+      </a>
+      <guard-button :click="ok" v-if="!loading"
+                    class="ok-button is-success is-inverted is-outlined is-size-5 is-hidden-tablet">
         保存
       </guard-button>
     </header>
 
-    <div class="modal-card-body columns is-multiple">
-      <div class="column is-half-desktop">
-        <div class="field">
-          <label class="label">タイトル</label>
-          <div class="control">
-            <input v-model.trim="theme.title" class="input" type="text" placeholder="タイトル"
-                   name="title" :class="{ 'is-danger': errors.has('title') }" v-validate="'required|max:255'">
-            <span v-show="errors.has('title')" class="help is-danger">{{ errors.first('title') }}</span>
+    <div class="modal-card-body">
+      <div class="columns is-multiple">
+        <div class="column is-half-tablet">
+          <div class="field">
+            <label class="label">タイトル</label>
+            <div class="control">
+              <input v-model.trim="theme.title" class="input" type="text" placeholder="タイトル"
+                     name="title" :class="{ 'is-danger': errors.has('title') }" v-validate="'required|max:255'">
+              <span v-show="errors.has('title')" class="help is-danger">{{ errors.first('title') }}</span>
+            </div>
           </div>
-        </div>
 
-        <div class="field">
-          <label class="label">説明文</label>
-          <div class="control">
-            <textarea v-model="theme.description" v-autosize="theme.description" class="textarea" rows="2" placeholder="説明文"></textarea>
+          <div class="field tags-field">
+            <label class="label">タグ（オプショナル）</label>
+
+            <div class="control tags flexbox">
+              <el-tag v-for="(tag, i) in tags" :key="tag" type="warning" closable
+                      @close="$delete(tags, i)">{{ tag }}</el-tag>
+              <input v-model="inputVal" class="input-new-tag input"
+                     @keyup.enter="confirmInput" @focus="$emit('focus')" @blur="onBlur"/>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div class="column is-half-desktop">
-        <div class="field image-field">
-          <label class="label">メイン画像（オプショナル）</label>
-          <div class="control">
-            <div class="file is-boxed is-centered">
-              <label class="file-label">
-                <input @change="changeImage" class="file-input" type="file" name="resume" v-show="false">
-                <div class="file-view" v-if="theme.image">
-                  <img :src="theme.image" v-if="loading"/>
-                  <img :src="theme.image" :srcset="`${theme.image}_640w 640w`" v-else/>
-                  <a @click.stop.prevent="removeImage" class="delete"></a>
-                </div>
-                <div class="file-cta" v-else>
-                  <span class="icon is-size-1"><i class="material-icons">add</i></span>
-                </div>
-                <div class="control loading-mask is-size-1" :class="{ 'is-loading': loading }"></div>
-              </label>
+          <div class="field">
+            <label class="label">説明文（オプショナル）</label>
+            <div class="control">
+              <textarea v-model="theme.description" v-autosize="theme.description" class="textarea" rows="2" placeholder="説明文"></textarea>
             </div>
           </div>
         </div>
 
-        <div class="field tags-field">
-          <label class="label">タグ（オプショナル）</label>
-
-          <div class="control tags flexbox">
-            <el-tag v-for="(tag, i) in tags" :key="tag" type="warning" closable
-                    @close="$delete(tags, i)">{{ tag }}</el-tag>
-            <input v-model="inputVal" class="input-new-tag input"
-                   @keyup.enter="confirmInput" @focus="$emit('focus')" @blur="onBlur"/>
+        <div class="column is-half-tablet">
+          <div class="field image-field">
+            <label class="label">イメージ（オプショナル）</label>
+            <div class="control">
+              <div class="file is-boxed is-centered">
+                <label class="file-label">
+                  <input @change="changeImage" class="file-input" type="file" name="resume" v-show="false">
+                  <div class="file-view" v-if="theme.image">
+                    <img :src="theme.image" v-if="loading"/>
+                    <img :src="theme.image" :srcset="`${theme.image}_640w 640w`" v-else/>
+                    <a @click.stop.prevent="removeImage" class="delete"></a>
+                  </div>
+                  <div class="file-cta" v-else><b-icon class="back-button is-size-2" pack="far" icon="image"/></div>
+                  <div class="control loading-mask is-size-1" :class="{ 'is-loading': loading }"></div>
+                </label>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="publication-field field">
-          <b-checkbox v-model="publication">
-            一般公開する
-          </b-checkbox>
+          <div class="publication-field field">
+            <b-checkbox v-model="publication">
+              一般公開する
+            </b-checkbox>
+          </div>
         </div>
       </div>
     </div>
 
     <footer class="modal-card-foot has-right is-hidden-mobile">
       <span class="has-text-danger" v-if="errorMessage">{{ errorMessage }}</span>
-      <a @click="$refs.themeDeleteModal.open(theme)" class="button is-danger is-outlined is-left">削除</a>
+      <a @click.stop="$refs.themeDeleteModal.open(theme)" class="button is-danger is-outlined is-left">削除</a>
       <a @click="close" class="button">キャンセル</a>
       <guard-button :click="ok" class="is-info" :disabled="loading">保存</guard-button>
     </footer>
@@ -195,52 +196,33 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #theme-edit-modal {
-    > .modal-card {
-      .modal-card-body {
-        .image-field {
-          .file-view {
-            .delete {
-              position: absolute;
-              top: 5px;
-              right: 5px;
-              z-index: 10;
-            }
-          }
-        }
-        .tags-field {
-          .control {
-            flex-wrap: wrap;
-            margin-bottom: 0;
-
-            .input-new-tag {
-              width: auto;
-            }
-          }
-        }
-        .publication-field {
-          .publication:before {
-            border: 2px solid $info !important;
-          }
-          .publication:not(.is-publication):before {
-            background-color: white !important;
-            border: 2px solid darkgrey !important;
-          }
-        }
-      }
-      .modal-card-foot {
-        .is-left {
-          margin-right: auto;
-        }
-      }
-    }
-
-    @media screen and (max-width: 768px) {
+    > .animation-content {
       > .modal-card {
         .modal-card-body {
-          margin: 0;
+          .image-field {
+            .file-view {
+              .delete {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                z-index: 10;
+              }
+            }
+          }
+          .tags-field {
+            .control {
+              flex-wrap: wrap;
+              margin-bottom: 0;
 
-          > .column {
-            padding: 0;
+              .input-new-tag {
+                width: auto;
+              }
+            }
+          }
+        }
+        .modal-card-foot {
+          .is-left {
+            margin-right: auto;
           }
         }
       }

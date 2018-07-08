@@ -4,48 +4,21 @@
       <b-icon class="back-button is-size-4 is-hidden-tablet" icon="arrow-left" @click.native="close"/>
       <span class="modal-card-title title is-6 has-text-white">テーマ作成</span>
 
-      <guard-button :click="ok" class="ok-button is-success is-inverted is-outlined is-size-5 is-hidden-tablet"
-                    v-if="!loading">
+      <guard-button :click="ok" v-if="!loading"
+                    class="ok-button is-success is-inverted is-outlined is-size-5 is-hidden-tablet">
         作成
       </guard-button>
     </header>
 
     <div class="modal-card-body">
       <div class="columns is-multiple">
-        <div class="column is-half-desktop">
+        <div class="column is-half-tablet">
           <div class="field">
             <label class="label">タイトル</label>
             <div class="control">
               <input v-model.trim="theme.title" class="input" type="text" placeholder="タイトル"
                      name="title" :class="{ 'is-danger': errors.has('title') }" v-validate="'required|max:255'">
               <span v-show="errors.has('title')" class="help is-danger">{{ errors.first('title') }}</span>
-            </div>
-          </div>
-
-          <div class="field">
-            <label class="label">説明文（オプショナル）</label>
-            <div class="control">
-              <textarea v-model="theme.description" v-autosize="theme.description" class="textarea" rows="2" placeholder="説明文"></textarea>
-            </div>
-          </div>
-        </div>
-
-        <div class="column is-half-desktop">
-          <div class="field image-field">
-            <label class="label">メイン画像（オプショナル）</label>
-            <div class="control">
-              <div class="file is-boxed is-centered">
-                <label class="file-label">
-                  <input @change="changeImage" class="file-input" type="file" name="resume" v-show="false">
-                  <div class="file-view" v-if="theme.image">
-                    <img :src="theme.image" v-if="loading"/>
-                    <img :src="theme.image" :srcset="`${theme.image}_640w 640w`" v-else/>
-                    <a @click.stop.prevent="removeImage" class="delete"></a>
-                  </div>
-                  <div class="file-cta" v-else><b-icon class="back-button is-size-4" icon="plus"/></div>
-                  <div class="control loading-mask is-size-1" :class="{ 'is-loading': loading }"></div>
-                </label>
-              </div>
             </div>
           </div>
 
@@ -57,6 +30,33 @@
                       @close="$delete(theme.tags, i)">{{ tag }}</el-tag>
               <input v-model="inputVal" class="input-new-tag input"
                      @keyup.enter="confirmInput" @focus="$emit('focus')" @blur="onBlur"/>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">説明文（オプショナル）</label>
+            <div class="control">
+              <textarea v-model="theme.description" v-autosize="theme.description" class="textarea" rows="2" placeholder="説明文"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half-tablet">
+          <div class="field image-field">
+            <label class="label">イメージ（オプショナル）</label>
+            <div class="control">
+              <div class="file is-boxed is-centered">
+                <label class="file-label">
+                  <input @change="changeImage" class="file-input" type="file" name="resume" v-show="false">
+                  <div class="file-view" v-if="theme.image">
+                    <img :src="theme.image" v-if="loading"/>
+                    <img :src="theme.image" :srcset="`${theme.image}_640w 640w`" v-else/>
+                    <a @click.stop.prevent="removeImage" class="delete"></a>
+                  </div>
+                  <div class="file-cta" v-else><b-icon class="back-button is-size-2" pack="far" icon="image"/></div>
+                  <div class="control loading-mask is-size-1" :class="{ 'is-loading': loading }"></div>
+                </label>
+              </div>
             </div>
           </div>
 

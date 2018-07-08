@@ -50,9 +50,11 @@
           .title {
             margin-bottom: 0;
           }
-          .ok-button {
-            padding-right: .25rem;
+          .button {
             border: none;
+          }
+          :last-child {
+            padding-right: .25rem;
           }
         }
         .modal-card-foot {
@@ -68,7 +70,8 @@
           max-height: 100%;
           margin: 0;
 
-          .modal-card-head {
+          .modal-card-head,
+          .modal-card-foot {
             border-radius: 0;
           }
         }
