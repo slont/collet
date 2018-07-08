@@ -11,7 +11,7 @@
         保存
       </guard-button>
     </header>
-    <header class="theme-header header-shadow" @click="openThemeSelectModal">
+    <header class="theme-header header-shadow" @click.stop="$refs.themeSelectModal.open(theme)">
       <a class="text-color-base">
         <span class="theme-title is-size-6">{{ theme.title }}</span>
         <b-icon icon="chevron-down" size="is-small"/>
@@ -279,12 +279,6 @@
         this.item.elements.splice(i, 1, this.item.elements[i + 1])
         this.item.elements.splice(i + 1, 1, element)
         this.setOrder()
-      },
-      openThemeSelectModal() {
-        this.$refs.themeSelectModal.open(this.theme)
-      },
-      openDeleteModal() {
-        this.$refs.itemDeleteModal.open(this.theme, this.item)
       },
       callbackDelete() {
         this.isSaved = true
