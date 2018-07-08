@@ -1,6 +1,6 @@
 {
   "title": "Cullet",
-  "views": {
+  "pages": {
     "index": {},
     "confirm": {
       "pleaseInputYourName": "Can you input your name",
@@ -8,7 +8,10 @@
     },
     "signup": {
       "email": "Email",
-      "password": "Password"
+      "userId": "User ID",
+      "password": "Password",
+      "inputPinCode": "Input PIN code",
+      "invalidCode": "Invalid code"
     },
     "signin": {
       "email": "Email",
@@ -23,6 +26,11 @@
     "signin": "Sign In"
   },
   "formats": {},
+  "models": {
+    "theme": {
+      "defaultTitle": "My Memo"
+    }
+  },
   "attributes": {
     "password": "Password",
     "email": "Email",

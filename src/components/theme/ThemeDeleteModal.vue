@@ -4,9 +4,7 @@
       <div class="column">
         <div class="field">
           <label class="label">テーマタイトル</label>
-          <div class="control">
-            {{ theme.name }}
-          </div>
+          <div class="control">{{ theme.title }}</div>
         </div>
 
         <div class="field">
@@ -56,10 +54,9 @@
         })
 
         this.$emit('refresh')
-        this.$message({
-          showClose: true,
+        this.$toast.open({
           message: '削除されました',
-          type: 'success'
+          type: 'is-success'
         })
         this.close()
       },

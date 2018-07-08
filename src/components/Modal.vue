@@ -1,35 +1,27 @@
 <template>
-  <div class="modal" :class="{ 'is-active': active, 'has-backdrop': backdrop }">
-    <div class="backdrop" @click="close"></div>
-    <div @click="close" class="modal-background"></div>
+  <b-modal :active.sync="active" scroll="keep" has-modal-card @close="close">
     <div class="modal-card">
       <slot></slot>
     </div>
-    <a @click="close" class="button modal-close is-large" aria-label="close" v-if="deletable"></a>
-  </div>
+  </b-modal>
 </template>
 
 <script>
   export default {
-    props: {
-      backdrop: {
-        type: Boolean,
-        default: false
-      }
-    },
     data() {
       return {
-        active: false,
-        deletable: false
+        active: false
       }
     },
     methods: {
       open() {
         this.active = true
+        this.$store.commit('SET_MODAL_ACTIVE', true)
       },
       close() {
         this.$emit('close')
         this.active = false
+        this.$store.commit('SET_MODAL_ACTIVE', false)
       }
     }
   }
@@ -37,37 +29,55 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .modal {
-    .modal-card-head {
-      background: white;
-    }
-    .modal-card-foot {
-      background: white;
-      height: 4rem;
-    }
-    .backdrop {
+    .modal-close {
       display: none;
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 100vw;
     }
-    .has-backdrop {
-      .backdrop {
-        display: block;
-      }
-    }
+    > .animation-content {
+      > .modal-card {
+        .modal-card-head {
+          height: 2.75rem;
+          border: none;
+          background-color: $main-color;
+          color: white;
 
-    @media screen and (max-width: 768px) {
-      .modal-card {
-        height: 100vh !important;
-        width: 100vw !important;
-        max-height: 100%;
-        margin: 0;
+          .b-checkbox {
+            margin-right: .5rem;
+          }
+          .back-button {
+            margin-right: .5em;
+          }
+          .title {
+            margin-bottom: 0;
+          }
+          .button {
+            border: none;
+          }
+          :last-child {
+            padding-right: .25rem;
+          }
+        }
+        .modal-card-foot {
+          background: white;
+          height: 3.25rem;
+        }
       }
-      .modal-close:before,
-      .modal-close:after{
-        background-color: $label-color;
+
+      @media screen and (max-width: 768px) {
+        > .modal-card {
+          height: 100vh;
+          width: 100vw;
+          max-height: 100%;
+          margin: 0;
+
+          .modal-card-head,
+          .modal-card-foot {
+            border-radius: 0;
+          }
+        }
+        .modal-close:before,
+        .modal-close:after{
+          background-color: $label-color;
+        }
       }
     }
   }

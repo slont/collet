@@ -45,40 +45,16 @@
 </template>
 
 <script>
-  import UserModel from '@/models/User'
   import ThemeCreateModal from '@/components/theme/ThemeCreateModal'
   import ItemCreateModal from '@/components/item/ItemCreateModal'
 
   export default {
-    components: { ThemeCreateModal, ItemCreateModal },
-    data() {
-      return {
-        theme: {
-          id: ''
-        }
-      }
-    },
+    components: {ThemeCreateModal, ItemCreateModal},
     computed: {
-      activeFooter() {
-        return this.$store.state.activeFooter
-      },
-      user() {
-        return this.$store.state.user
-      }
-    },
-    created() {
-      this.fetchThemes()
+      activeFooter: ({$store}) => $store.state.activeFooter,
+      user: ({$store}) => $store.state.user
     },
     methods: {
-      fetchThemes() {
-        if (this.user.id && !this.$store.state.theme.id) {
-          new UserModel().findThemes(this.user.id, {p: 1, s: 1, q: ''}).then(res => {
-            if (res.data.length) {
-              this.$store.dispatch('setTheme', res.data[0])
-            }
-          })
-        }
-      },
       onClickAdd() {
         if (this.$store.state.theme.id) {
           this.$router.push(`/m/createItem/${this.$store.state.theme.id}`)

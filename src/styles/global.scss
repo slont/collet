@@ -1,7 +1,7 @@
 @import "constant";
 @import "~bulma";
-@import "~bulma-checkradio";
 @import "~bulma-switch";
+@import '~buefy/src/scss/buefy';
 @import "~element-ui/lib/theme-chalk/index.css";
 @import "transition";
 
@@ -20,32 +20,6 @@ body {
   line-height: 1.25;
 }
 
-.modal {
-  .modal-card-head {
-    &.action-modal-header {
-      height: $header-nav-height;
-      padding: 1em;
-      color: white;
-      background-color: $main-color;
-      border: none;
-
-      .back-button {
-        margin-right: .5em;
-      }
-      .title {
-        margin-bottom: 0;
-      }
-      .ok-button {
-        padding-right: .25rem;
-        border: none;
-      }
-    }
-  }
-  .modal-background {
-    max-width: 100vw;
-  }
-}
-
 .container {
   width: 100vw;
   max-width: 100vw;
@@ -62,6 +36,10 @@ body {
 
   i {
     font-size: 1em;
+
+    svg {
+      height: 1em;
+    }
   }
 }
 
@@ -75,6 +53,7 @@ body {
 
 .button {
   transition: color .2s ease, background-color .2s ease;
+  font-weight: bold;
 
   &.is-float {
     box-shadow: 0 1px 5px rgba(0, 0, 0, .2), 0 2px 2px rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .12);
@@ -127,14 +106,21 @@ body {
       border-width: 4px;
     }
   }
+
+  &.has-icons-left .icon,
+  &.has-icons-right .icon {
+    height: 2em;
+    width: 2em;
+
+    i {
+      font-size: .85em;
+    }
+  }
 }
 
 .field {
   .label {
     color: $text-color-weak;
-  }
-  .is-checkradio[type="checkbox"] + label {
-    margin-left: 0;
   }
 }
 
@@ -156,11 +142,11 @@ body {
   border-radius: 5px;
   box-shadow: 0 3px 0 rgba(10, 10, 10, 0.1);
 
-  :first-child {
+  > :first-child {
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
   }
-  :last-child {
+  > :last-child {
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
   }
@@ -201,6 +187,10 @@ body {
   }
 }
 
+.file.is-boxed .file-cta {
+  padding: 2em 5em;
+}
+
 .media {
   .media-content {
     width: 100%;
@@ -234,6 +224,13 @@ body {
 .fullwidth {
   width: 100%;
 }
+.fullheight {
+  height: 100%;
+}
+
+.bg-white {
+  background-color: white;
+}
 
 .divider-vertical {
   height: 100%;
@@ -257,7 +254,7 @@ body {
 }
 
 .circle {
-  border-radius: 50%;
+  border-radius: 50% !important;
   overflow: hidden;
 }
 
@@ -308,7 +305,7 @@ body {
   height: 2em;
   padding: 0 .5em;
   margin-bottom: .25rem;
-  line-height: 1.8em;
+  line-height: 2em;
 }
 .tags {
   :not(:last-child) {
@@ -350,7 +347,7 @@ body {
     overflow: hidden;
 
     img {
-      height: 20rem;
+      max-height: 20rem;
       max-width: initial;
     }
   }
@@ -363,7 +360,10 @@ body {
     color: darkgrey;
 
     .icon {
-      font-size: $size-5;
+      font-size: $size-4;
+    }
+    &.edit-action {
+      margin-right: 0;
     }
   }
   .favorite-action {
@@ -376,8 +376,18 @@ body {
   .item-action {
     color: $info;
   }
-  .edit-action {
-    margin-right: 0;
+}
+
+.notices .toast.is-top {
+  margin-top: 5rem;
+}
+
+.b-checkbox.checkbox {
+  &:hover {
+    color: currentColor;
+  }
+  input[type=checkbox] + .check {
+    border: 1px solid currentColor;
   }
 }
 

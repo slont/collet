@@ -2,13 +2,13 @@
   <nav id="header-nav" class="navbar is-fixed-top" :class="{ 'is-active': activeHeader }">
     <div class="container">
       <div class="navbar-brand">
-        <div class="navbar-item logo" @click="$router.push(`/`)">
+        <div class="navbar-item logo" @click="scrollTop">
           <img class="cullet-logo" src="/static/img/cullet-logo_orange.png" alt="Colette">
         </div>
 
         <div class="navbar-item field search-field is-hidden-tablet">
           <div class="control has-icons-right">
-            <input v-model="query" class="input is-rounded"
+            <input v-model.trim="query" class="input is-rounded"
                    placeholder="キーワード検索" @input="search"/>
             <span class="icon is-small is-right"><i class="fas fa-search"></i></span>
           </div>
@@ -73,11 +73,14 @@
       }
     },
     computed: {
-      activeHeader() {
-        return this.$store.state.activeHeader
-      },
-      user() {
-        return this.$store.state.user
+      activeHeader: ({$store}) => $store.state.activeHeader,
+      user: ({$store}) => $store.state.user
+    },
+    watch: {
+      '$route.query.q'(e) {
+        if (null == e) return
+
+        this.query = e
       }
     },
     methods: {
@@ -85,17 +88,19 @@
         const path = /^\/s\/.*/.test(this.$route.path) ? this.$route.path : '/s/themes'
         this.$router.push({
           path: path,
-          query: {
-            p: 0,
-            s: 20,
-            q: this.query
-          }
+          query: {p: 1, s: 20, q: this.query}
         })
       },
       signout() {
         this.$store.dispatch('signout').then(() => {
           this.$router.push('/')
         })
+      },
+      scrollTop() {
+        if (/^\/$/.test(this.$route.path)) {
+          window.document.querySelector('#index > .container').scrollTop = 0
+        }
+        this.$router.push(`/`)
       }
     }
   }
@@ -126,10 +131,14 @@
           padding-right: .5em;
 
           .control {
-            width: 180px;
-
             .input {
+              width: 180px;
               border: 1px solid $main-color;
+              transition: width .2s ease;
+
+              &:focus {
+                width: 240px;
+              }
             }
           }
         }

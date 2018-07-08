@@ -1,9 +1,7 @@
 <template>
   <modal id="theme-select-modal" class="modal" ref="themeSelectModal" @close="reset">
     <header class="top-header action-modal-header modal-card-head">
-      <span class="back-button icon is-size-3" @click="close">
-        <i class="material-icons">arrow_back</i>
-      </span>
+      <b-icon class="back-button is-size-4 is-hidden-tablet" icon="arrow-left" @click.native="close"/>
 
       <span class="modal-card-title title is-6 has-text-white">テーマ選択</span>
     </header>
@@ -12,7 +10,7 @@
       <aside class="theme-menu menu">
         <ul class="menu-list">
           <li class="create-item" @click="openThemeCreateModal">
-            <a class="button is-primary is-outlined is-size-5">
+            <a class="button is-primary is-outlined is-rounded is-size-5">
               <span>テーマ新規作成</span>
             </a>
             <div class="divider"></div>
@@ -24,11 +22,10 @@
               <span class="selected-icon icon is-size-4">
                 <i class="fas fa-check text-color-main" v-show="selectedTheme.id === theme.id"></i>
               </span>
+              <span class="private-icon icon is-size-5 text-color-weak" v-if="theme.private"><i class="fas fa-lock fa-fw"></i></span>
               <span class="theme-title is-size-6 has-text-weight-bold">{{ theme.title }}</span>
-              <span class="icon has-text-success is-size-4" v-if="theme.private"><i class="fas fa-lock"></i></span>
-              <span class="item-count text-color-weak">({{ theme.itemCount }})</span>
+              <span class="item-count tag is-success is-rounded">{{ theme.itemCount }}</span>
             </a>
-            <div class="divider"></div>
           </li>
         </ul>
       </aside>
@@ -66,7 +63,10 @@
         this.selectedTheme = theme
         this.refresh().then(() => {
           this.$refs.themeSelectModal.open()
-        }).catch(err => this.$message.error(err))
+        }).catch(err => this.$toast.open({
+          message: err,
+          type: 'is-danger'
+        }))
       },
       close() {
         this.reset()
@@ -94,48 +94,68 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #theme-select-modal {
-    > .modal-card {
-      .modal-card-body {
-        margin-bottom: 0;
-        padding: 1rem;
+    > .animation-content {
+      > .modal-card {
+        > .modal-card-body {
+          .current-theme {
+            .subtitle {
+              margin-bottom: 0;
+            }
+          }
+          .search-field {
+            .subtitle {
+              margin-bottom: 0;
+            }
+          }
+          .create-item a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+          }
+          .theme-item {
+            border-bottom: $border-style;
 
-        .current-theme {
-          .subtitle {
-            margin-bottom: 0;
-          }
-        }
-        .search-field {
-          .subtitle {
-            margin-bottom: 0;
-          }
-        }
-        .create-item a {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .theme-item a {
-          display: flex;
-          align-items: center;
-          padding-left: 0;
+            a {
+              display: flex;
+              align-items: center;
+              padding: 1rem 0;
 
-          .selected-icon {
-            min-width: 32px;
-            margin-right: .5rem;
+              .selected-icon {
+                min-width: 32px;
+                margin-right: .25rem;
+              }
+              .private-icon {
+                margin-right: .5rem;
+                color: gainsboro;
+              }
+              .item-count {
+                min-width: 32px;
+                height: 1.5em;
+                margin-left: auto;
+              }
+              .theme-title {
+                margin-right: .25rem;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+              }
+            }
           }
-          .item-count {
-            min-width: 32px;
-            text-align: right;
-          }
-          .theme-title + .icon,
-          .theme-title + .item-count {
-            margin-left: auto;
+          .divider {
+            margin: .5em 0 0;
+            height: 1px;
+            background-color: $border;
           }
         }
-        .divider {
-          margin: .5em 0;
-          height: 1px;
-          background-color: $border;
+      }
+
+      @media screen and (min-width: 769px) {
+        > .modal-card {
+          > .modal-card-body {
+            border-bottom-right-radius: $radius-large;
+            border-bottom-left-radius: $radius-large;
+          }
         }
       }
     }

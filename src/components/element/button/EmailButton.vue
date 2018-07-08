@@ -1,5 +1,5 @@
 <template>
-  <element-button class="email-button" icon="email" label="Email"
+  <element-button class="email-button" icon="fas fa-envelope" label="Email"
                   @click.native="addElement">
   </element-button>
 </template>

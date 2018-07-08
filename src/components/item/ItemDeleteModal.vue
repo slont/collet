@@ -10,7 +10,7 @@
         </div>
 
         <div class="field">
-          <div class="control is-danger">
+          <div class="control has-text-danger">
             本当に削除しますか？
           </div>
         </div>
@@ -59,10 +59,9 @@
           throw new Error(err)
         })
 
-        this.$message({
-          showClose: true,
+        this.$toast.open({
           message: '削除されました',
-          type: 'success'
+          type: 'is-success'
         })
         this.close()
         this.$emit('refresh')
@@ -77,16 +76,24 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #item-delete-modal {
-    .modal-card {
-      top: 33%;
-      left: 0;
-      position: fixed;
+    > .animation-content {
+      > .modal-card {
+        .modal-card-body {
+          max-height: 140px;
+          border-top-right-radius: $radius-large;
+          border-top-left-radius: $radius-large;
+        }
+      }
 
-      .modal-card-body {
-        max-height: 140px;
+      @media screen and (max-width: 768px) {
+        > .modal-card {
+          height: initial;
+          width: initial;
 
-        .is-danger {
-          color: $danger;
+          .modal-card-foot {
+            border-bottom-right-radius: $radius-large;
+            border-bottom-left-radius: $radius-large;
+          }
         }
       }
     }

@@ -66,5 +66,20 @@
     .buttons-label:not(:first-child) {
       margin-top: 1.5em;
     }
+
+    @media screen and (max-width: 768px) {
+      .element-button.button {
+        height: 3.5rem;
+        border: none;
+
+        .icon {
+          margin: 0 !important;
+
+          i {
+            font-size: $size-7;
+          }
+        }
+      }
+    }
   }
 </style>

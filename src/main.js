@@ -8,14 +8,18 @@ import App from './App'
 import store from './store'
 import router from './router'
 import Vuex from 'vuex'
+import VueHead from 'vue-head'
 import VeeValidate from 'vee-validate'
 import VueI18n from 'vue-i18n'
 import VueMoment from 'vue-moment'
 import VueAutosize from 'vue-autosize'
+import VueAnalytics from 'vue-analytics'
 import SocialSharing from 'vue-social-sharing'
-import Element from 'element-ui'
+import {DatePicker, Rate, Tag, Select, Option, Switch} from 'element-ui'
+import elLocale from 'element-ui/lib/locale'
 import messages from './locales'
 import validateConfig from '../config/validate'
+import Buefy from 'buefy'
 import VueCarousel from 'vue-carousel'
 import GuardButton from './components/GuardButton'
 import UserImage from './components/UserImage'
@@ -23,19 +27,19 @@ import UserImage from './components/UserImage'
 Vue.config.productionTip = false
 
 Vue.use(Vuex)
+Vue.use(VueHead, {separator: ' | '})
 Vue.use(VueI18n)
-
-Vue.use(VeeValidate, Object.assign({}, validateConfig, {
-  locale: store.state.locale
-}))
+elLocale.use(messages[store.state.locale])
+const i18n = new VueI18n({locale: store.state.locale, messages})
+Vue.use(VeeValidate, Object.assign({}, validateConfig, {locale: store.state.locale}))
 Vue.use(VueAutosize)
 Vue.use(VueMoment)
-const i18n = new VueI18n({
-  locale: store.state.locale,
-  messages
-})
-Vue.use(Element, {
-  i18n: (key, value) => i18n.t(key, value)
+Vue.use(VueAnalytics, {id: 'UA-71892039-2', router})
+
+Vue.use(Buefy, {
+  defaultIconPack: 'fas',
+  defaultDateFormatter: date => date.toISOString(),
+  defaultTimeFormatter: () => 'HH:mm'
 })
 Vue.use(SocialSharing)
 
@@ -55,6 +59,9 @@ Vue.use({
         },
         isMobile() {
           return 768 >= this.windowWidth
+        },
+        activeModal() {
+          return this.$store.state.activeModal
         }
       },
       async mounted() {
@@ -124,6 +131,12 @@ Vue.use({
 })
 
 Vue.use(VueCarousel)
+Vue.component(DatePicker.name, DatePicker)
+Vue.component(Rate.name, Rate)
+Vue.component(Tag.name, Tag)
+Vue.component(Select.name, Select)
+Vue.component(Option.name, Option)
+Vue.component(Switch.name, Switch)
 Vue.component(GuardButton.name, GuardButton)
 Vue.component(UserImage.name, UserImage)
 

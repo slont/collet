@@ -1,8 +1,12 @@
 <template>
   <modal id="item-create-modal" class="modal" :class="`page-${pageIndex}`" ref="itemCreateModal" @close="reset">
+    <header class="action-modal-header modal-card-head">
+      <span class="modal-card-title title is-6 has-text-white">カレット作成</span>
+    </header>
+
     <div class="modal-card-body">
       <div class="columns is-gapless">
-        <div class="left-column column is-hidden-mobile">
+        <div class="left-column column">
           <div class="slider">
             <cl-buttons @add="addElement" class="is-centered"/>
           </div>
@@ -10,47 +14,30 @@
 
         <div class="main-column column">
           <div class="theme-dropdown dropdown">
-            <div class="dropdown-trigger" @click="openThemeSelectModal">
-              <a class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+            <div class="dropdown-trigger" @click.stop="$refs.themeSelectModal.open(theme)">
+              <a class="button is-small text-color-base fullwidth">
                 <span>{{ theme.title }}</span>
-                <span class="icon is-small"><i class="material-icons">arrow_drop_down</i></span>
+                <b-icon icon="chevron-down" size="is-small"/>
               </a>
             </div>
           </div>
 
-          <div class="template-tabs tabs is-boxed is-small" v-if="templates.length">
-            <ul>
-              <li v-for="(template, i) in templates"
-                  :class="{ 'is-active': selectedTemplateNo === i }" @click="changeTemplate(i)">
-                <a><span>{{ `テンプレート ${i + 1}` }}</span></a>
-              </li>
-              <li :class="{ 'is-active': selectedTemplateNo === -1 }" @click="changeTemplate(-1)">
-                <a><span>白紙</span></a>
-              </li>
-            </ul>
-          </div>
-
-          <article class="media">
-            <div class="media-content">
-              <div class="content">
-                <div class="field">
-                  <div class="item-name control">
-                    <input v-model.trim="item.name" class="input title is-3" type="text" placeholder="Cullet Name"
-                           name="itemName"
-                           v-validate="'required'" :class="{ 'is-danger': errors.has('itemName') }">
-                    <span v-show="errors.has('itemName')" class="help is-danger">{{ errors.first('itemName') }}</span>
-                  </div>
-                </div>
+          <div class="item-name-content content">
+            <div class="field">
+              <div class="item-name control">
+                <input v-model.trim="item.name" class="input title is-4 is-primary text-color-main" type="text" placeholder="Cullet Name"
+                       name="culletName" v-validate="'required'" :class="{ 'is-danger': errors.has('culletName') }">
+                <span v-show="errors.has('culletName')" class="help is-danger">{{ errors.first('culletName') }}</span>
               </div>
             </div>
-          </article>
+          </div>
 
-          <div class="item-elements">
-            <div v-for="(element, i) in item.elements" :key="i" class="field element-field flexbox">
+          <transition-group tag="div" name="element-list" class="item-elements">
+            <div v-for="(element, i) in item.elements" :key="element.orderId" class="field element-field flexbox">
               <div class="sort-buttons flexbox">
-                <a class="button up-button is-white" @click="upOrder(i)"><i class="material-icons">arrow_upward</i></a>
+                <b-icon icon="arrow-up" class="clickable" @click.native="upOrder(i)"/>
                 <span class="element-order">{{ element.order + 1 }}</span>
-                <a class="button down-button is-white" @click="downOrder(i)"><i class="material-icons">arrow_downward</i></a>
+                <b-icon icon="arrow-down" class="clickable" @click.native="downOrder(i)"/>
               </div>
 
               <text-element :params="element" v-if="'text' === element.type" editable/>
@@ -68,18 +55,18 @@
               <rating-element :params="element" v-else-if="'rating' === element.type" editable/>
               <switch-element :params="element" v-else-if="'switch' === element.type" editable/>
 
-              <a @click="removeElement(i)" class="delete"></a>
+              <b-icon pack="far" icon="times-circle" class="delete-icon is-small has-text-danger clickable"
+                      @click.native="removeElement(i)"/>
             </div>
-          </div>
+          </transition-group>
         </div>
       </div>
     </div>
 
     <footer class="modal-card-foot has-right">
-      <label class="checkbox">
-        <input v-model="isTemplate" type="checkbox">
+      <b-checkbox v-model="isTemplate">
         テンプレート登録
-      </label>
+      </b-checkbox>
       <a @click="close" class="button">キャンセル</a>
       <guard-button :click="ok" class="is-info">作成</guard-button>
     </footer>
@@ -89,6 +76,7 @@
 </template>
 
 <script>
+  import ThemeModel from '@/models/Theme'
   import TemplateModel from '@/models/Template'
   import ItemModel from '@/models/Item'
   import Modal from '@/components/Modal'
@@ -146,25 +134,42 @@
       }
     },
     computed: {
-      themeId() {
-        return this.theme.id || this.$route.params.themeId
-      }
+      themeId: ({$route}) => $route.params.themeId
     },
     methods: {
-      open(theme) {
-        this.refresh(theme)
+      open() {
+        if (this.$store.state.theme.id) {
+          Object.assign(this.theme, ThemeModel._deserialize(this.$store.state.theme))
+          if (this.$store.state.theme.templates[0] && this.$store.state.theme.templates[0].elements.length) {
+            this.item.elements = this.$store.state.theme.templates[0].elements.map(e => {
+              e.orderId = e.order
+              return e
+            })
+          }
+        }
+        this.refresh(this.$store.state.theme)
         this.$refs.itemCreateModal.open()
       },
-      refresh(theme) {
-        this.theme = theme
+      refresh(theme = {}) {
+        if (theme.id) {
+          this.theme = theme
+        } else {
+          new ThemeModel().findOne(this.themeId).then(res => {
+            this.theme = res.data
+          })
+        }
 
-        new TemplateModel(this.themeId).find({
+        const themeId = theme.id || this.themeId
+        new TemplateModel(themeId).find({
           p: 1,
           s: 20
         }).then(res => {
           if (res.data.length) {
             this.templates = res.data
-            this.item.elements = this.templates[0].elements
+            this.item.elements = this.templates[0].elements.map(e => {
+              e.orderId = e.order
+              return e
+            })
           } else {
             this.templates = []
             this.item.elements = []
@@ -188,13 +193,15 @@
           })
 
           this.$emit('refresh')
-          this.$message({
-            showClose: true,
+          this.$toast.open({
             message: '作成されました',
-            type: 'success'
+            type: 'is-success'
           })
           this.close()
-        }).catch(err => this.$message.error(err))
+        }).catch(err => this.$toast.open({
+          message: err,
+          type: 'is-danger'
+        }))
       },
       reset() {
         Object.assign(this.$data, this.$options.data.call(this))
@@ -209,7 +216,9 @@
         }
       },
       addElement(element) {
-        this.item.elements.push(element)
+        this.item.elements.push(Object.assign(element, {
+          orderId: `${this.item.elements.length}-${new Date().getTime()}`
+        }))
         this.setOrder()
         this.$nextTick(() => {
           const container = this.$el.querySelector('.main-column')
@@ -238,9 +247,6 @@
         this.item.elements.splice(i, 1, this.item.elements[i + 1])
         this.item.elements.splice(i + 1, 1, element)
         this.setOrder()
-      },
-      openThemeSelectModal() {
-        this.$refs.themeSelectModal.open(this.theme)
       }
     }
   }
@@ -248,224 +254,112 @@
 
 <style lang="scss" rel="stylesheet/scss">
   #item-create-modal {
-    $button-count: 9;
+    $button-count: 8;
 
-    > .modal-card {
-      display: flex;
-      flex-direction: column;
-      height: 95%;
-      width: 80%;
-      transition: width .3s, height .3s;
-
-      .modal-card-body {
-        height: 100%;
-        padding-bottom: 0;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-
-        .columns {
-          height: 100%;
-
-          .left-column {
-            height: 100%;
-            max-width: $element-button-size;
-
-            .slider {
+    > .animation-content {
+      > .modal-card {
+        .modal-card-body {
+          .columns {
+            .left-column {
               height: 100%;
-              width: 100%;
-              padding: 0;
+              max-width: calc(#{$element-button-size} + 1rem);
+
+              .slider {
+                height: 100%;
+                width: 100%;
+                padding: 0;
+                overflow-y: scroll;
+                -webkit-overflow-scrolling : touch;
+
+                > .buttons {
+                  flex-direction: column;
+                  width: $element-button-size;
+
+                  .button:not(:last-child) {
+                    margin-right: 0;
+                    margin-bottom: -1px;
+                  }
+                  .subtitle {
+                    margin-bottom: .5em;
+                    color: grey;
+                  }
+                  .buttons-label:not(:first-child) {
+                    margin-top: 1.5em;
+                  }
+                }
+              }
+            }
+            .main-column {
+              $sort-button-size: 2rem;
+              $margin-side: $sort-button-size + .5rem;
+              background-color: white;
               overflow-y: scroll;
               -webkit-overflow-scrolling : touch;
+              z-index: 0;
 
-              > .buttons {
-                flex-direction: column;
-                width: $element-button-size;
-
-                .button:not(:last-child) {
-                  margin-right: 0;
-                  margin-bottom: -1px;
-                }
-                .subtitle {
-                  margin-bottom: .5em;
-                  color: grey;
-                }
-                .buttons-label:not(:first-child) {
-                  margin-top: 1.5em;
-                }
-              }
-            }
-          }
-          .main-column {
-            $sort-button-size: 2rem;
-            $margin-side: $sort-button-size + .5rem;
-            padding: 0 0 1.5rem 3rem !important;
-            background-color: white;
-            overflow-y: scroll;
-            -webkit-overflow-scrolling : touch;
-            z-index: 0;
-
-            .theme-dropdown {
-              width: 100%;
-
-              .dropdown-trigger {
-                width: 100%;
-
-                .button {
-                  max-width: 70%;
-
-                  :first-child {
-                    max-width: 95%;
-                    overflow: hidden;
-                  }
-                  .icon {
-                    margin-left: auto;
-                  }
-                }
-              }
-            }
-            .template-tabs {
-              margin-bottom: 1rem;
-
-              ul {
-                border-bottom: none;
-
-                > a {
-                  margin-top: 0;
-                }
-              }
-            }
-            .item-name {
-              padding: 0;
-              margin-bottom: 1rem;
-
-              .input {
-                border-top: none;
-                border-right: none;
-                border-left: none;
-                border-bottom-width: 2px;
-                border-radius: 0;
-                box-shadow: none;
-                height: 3rem;
-                margin-bottom: 0;
+              .item-name {
                 padding: 0;
-                line-height: 3rem;
+
+                .input {
+                  border-top: none;
+                  border-right: none;
+                  border-left: none;
+                  border-bottom-width: 2px;
+                  border-radius: 0;
+                  box-shadow: none;
+                  height: $size-2;
+                  margin-bottom: 0;
+                  padding: 0;
+                  line-height: $size-2;
+
+                  &::placeholder {
+                    color: rgba($primary, .25);
+                  }
+                }
               }
-            }
-            .item-elements {
-              margin-left: -$margin-side;
-              margin-right: -$margin-side;
+              .item-elements {
+                .element-field {
+                  justify-content: center;
+                  min-height: 78px;
 
-              .element-field {
-                .sort-buttons {
-                  flex: .025;
-                  flex-direction: column;
+                  .sort-buttons {
+                    flex-direction: column;
 
-                  .button {
-                    width: 2rem;
-                    border: none;
-
-                    .material-icons {
+                    .icon {
+                      margin: .25rem;
                       color: gainsboro;
                     }
+                    .element-order {
+                      color: darkgrey;
+                      text-align: center;
+                    }
                   }
-                  .element-order {
-                    font-size: .75em;
-                    color: darkgrey;
-                    text-align: center;
+                  .cl-element {
+                    flex: 1;
+                    padding: 0 .25rem;
                   }
-                }
-                .cl-element {
-                  flex: .9;
-                  padding: 0 .5rem;
-                }
-                .delete {
-                  flex: .05;
-                }
-                &:first-child {
-                  .up-button {
-                    visibility: hidden;
-                    background-color: black;
+                  .delete-icon {
+                    margin: 0 .25rem;
                   }
-                }
-                &:last-child {
-                  .down-button {
-                    visibility: hidden;
+                  &:first-child {
+                    .up-button {
+                      visibility: hidden;
+                      background-color: black;
+                    }
                   }
-                }
-                &:not(:last-child) {
-                  margin-bottom: .25rem;
-                }
-              }
-            }
-          }
-          .right-column {
-            max-width: 256px;
-
-            .image-field {
-              .field-body {
-                width: 192px;
-                display: flex;
-                flex-direction: column;
-
-                .file-view {
-                  .delete {
-                    position: absolute;
-                    top: 5px;
-                    right: 5px;
-                    z-index: 10;
-                  }
-                  + .file {
-                    position: absolute;
-                    top: 0;
-                    opacity: .7;
+                  &:last-child {
+                    .down-button {
+                      visibility: hidden;
+                    }
                   }
                 }
               }
             }
           }
         }
-      }
-      .modal-card-body.slider {
-        height: $element-button-size + 1rem;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        border-radius: 0;
-        overflow: scroll;
-        -webkit-overflow-scrolling : touch;
-
-        .buttons {
-          width: $element-button-size * $button-count;
-
-          .el-button {
-            margin-bottom: 0;
-          }
-        }
-      }
-      .modal-card-foot {
-        .checkbox {
-          font-size: $size-small;
-          margin-right: 1rem;
-        }
-      }
-      @media screen and (max-width: 768px) {
-        .modal-card-body {
-          padding-left: 0;
-          padding-right: 0;
-
-          .columns .main-column {
-            margin-bottom: 1rem;
-            padding: 0 2.75rem !important;
-
-            > .dropdown,
-            > .tabs,
-            > .media {
-              margin-left: -1.5rem;
-              margin-right: -1.5rem;
-            }
-          }
-          .buttons .button {
-            margin-bottom: 0;
+        .modal-card-foot {
+          .checkbox {
+            margin-right: .5rem;
           }
         }
       }

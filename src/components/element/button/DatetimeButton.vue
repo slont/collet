@@ -1,5 +1,5 @@
 <template>
-  <element-button class="datetime-button" icon="schedule" label="DateTime"
+  <element-button class="datetime-button" icon="far fa-clock" label="DateTime"
                   @click.native="addElement('datetime')"></element-button>
 </template>
 

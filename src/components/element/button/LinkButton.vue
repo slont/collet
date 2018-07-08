@@ -1,5 +1,5 @@
 <template>
-  <element-button class="link-button" icon="link" label="Link"
+  <element-button class="link-button" icon="fas fa-link" label="Link"
                   @click.native="addElement">
   </element-button>
 </template>

@@ -7,7 +7,27 @@ export default class Auth extends Base {
     super('')
   }
 
-  signup(body) {
+  confirmEmail(body = {}) {
+    return this.postProcess(fetch(`${this.endpoint}/confirmEmail`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+      headers: Base.getHeaders(),
+      body: JSON.stringify(body)
+    }))
+  }
+
+  confirmCode(body = {}) {
+    return this.postProcess(fetch(`${this.endpoint}/confirmCode`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+      headers: Base.getHeaders(),
+      body: JSON.stringify(body)
+    }))
+  }
+
+  signup(body = {}) {
     return this.postProcess(fetch(`${this.endpoint}/signup`, {
       method: 'POST',
       mode: 'cors',
@@ -17,7 +37,7 @@ export default class Auth extends Base {
     }))
   }
 
-  signin(body) {
+  signin(body = {}) {
     return this.postProcess(fetch(`${this.endpoint}/signin`, {
       method: 'POST',
       mode: 'cors',
@@ -27,7 +47,7 @@ export default class Auth extends Base {
     }))
   }
 
-  signinTwitter(body) {
+  signinTwitter(body = {}) {
     return this.postProcess(fetch(`${this.endpoint}/signin/twitter`, {
       method: 'POST',
       mode: 'cors',
@@ -38,7 +58,7 @@ export default class Auth extends Base {
     }))
   }
 
-  callback(body) {
+  callback(body = {}) {
     return this.postProcess(fetch(`${this.endpoint}/callback?${qs.stringify(body)}`, {
       method: 'GET',
       mode: 'cors',
@@ -61,7 +81,7 @@ export default class Auth extends Base {
     }))
   }
 
-  confirm(body) {
+  confirm(body = {}) {
     return this.postProcess(fetch(`${this.endpoint}/confirm`, {
       method: 'POST',
       mode: 'cors',
@@ -85,7 +105,7 @@ export default class Auth extends Base {
     }
   }
 
-  static _deserialize(json) {
+  static _deserialize(json = {}) {
     return Object.assign({}, json, {
       user: (json.user && new User().deserialize(json.user)) || {}
     })
