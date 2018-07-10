@@ -105,6 +105,11 @@
       .media-left {
         height: 40px;
         width: 40px;
+
+        .image {
+          height: 40px;
+          width: 40px;
+        }
       }
     }
 

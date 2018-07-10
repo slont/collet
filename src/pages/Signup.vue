@@ -131,7 +131,7 @@
           email: this.email
         }).then(() => {
           this.isLoading = false
-          this.pageIndex++
+          this.pageIndex = 1
         }).catch(err => {
           this.isLoading = false
           this.errorMessage = err.message
@@ -151,7 +151,7 @@
           pinCode: this.pinCode
         }).then(res => {
           this.isLoading = false
-          this.pageIndex++
+          this.pageIndex = 2
         }).catch(() => {
           this.isLoading = false
           this.errorMessage = this.$t('pages.signup.invalidCode')
