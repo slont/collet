@@ -120,7 +120,7 @@
     background-color: white;
 
     .theme-image {
-      height: 11rem;
+      height: 10rem;
     }
     .add-item-button,
     .add-button {
@@ -157,6 +157,7 @@
 
         .theme-tags {
           justify-content: flex-end;
+          max-height: 2.75rem;
           margin-bottom: 0;
           color: white;
 
