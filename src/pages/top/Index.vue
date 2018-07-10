@@ -15,7 +15,7 @@
 
           <div class="media">
             <div class="media-content">
-              <router-link to="tempItem" class="item-title subtitle text-color-strong is-size-5 has-text-weight-bold">
+              <router-link to="tempItem" class="item-title subtitle text-color-strong is-size-6 has-text-weight-bold">
                 {{ tempItem.name }}
               </router-link>
 
@@ -272,6 +272,8 @@
       }
     }
     .updated-cullet {
+      padding: .5rem;
+
       .updated-at {
         min-width: 54px;
 
@@ -324,8 +326,6 @@
         flex: 1;
 
         .content {
-          margin-top: .5rem;
-
           > :not(:last-child) {
             margin-bottom: 1.5em;
           }
@@ -420,7 +420,7 @@
               .file-view {
                 display: flex;
                 align-items: center;
-                max-height: 24em;
+                max-height: 20em;
                 margin: 0;
                 overflow: hidden;
               }

@@ -281,7 +281,7 @@
                 .file-view {
                   display: flex;
                   align-items: center;
-                  max-height: 24em;
+                  max-height: 20em;
                   margin: 0;
                   overflow: hidden;
                 }

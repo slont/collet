@@ -329,7 +329,7 @@ body {
 .images-divided-2 {
   display: flex;
   overflow: hidden;
-  max-height: 20rem;
+  max-height: 18rem;
   border-radius: 5px;
   background-color: $text-color;
 
@@ -347,7 +347,7 @@ body {
     overflow: hidden;
 
     img {
-      max-height: 20rem;
+      max-height: 18rem;
       max-width: initial;
     }
   }
