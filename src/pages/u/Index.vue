@@ -22,7 +22,7 @@
           </div>
         </div>
       </article>
-      <div class="tabs is-centered">
+      <div class="tabs">
         <ul>
           <router-link :to="`/u/${urlUserId}`" class="cullet-tab" tag="li" exact>
             <a class="has-text-centered">
@@ -148,8 +148,8 @@
           margin-bottom: -1.75rem;
 
           .image {
-            height: 5rem;
-            width: 5rem;
+            height: 5.5rem;
+            width: 5.5rem;
             border: 5px solid #ebeded;
           }
         }
@@ -171,6 +171,8 @@
         margin-right: auto;
 
         > ul {
+          padding-right: 1rem;
+          justify-content: center;
           border-bottom-color: transparent;
 
           li {
@@ -200,6 +202,13 @@
     @media screen and (max-width: 768px) {
       &.container {
         height: calc(100vh - #{$header-nav-height + $footer-nav-height});
+      }
+      .userpage-header {
+        .tabs {
+          > ul {
+            justify-content: flex-end;
+          }
+        }
       }
     }
   }

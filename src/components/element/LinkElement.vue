@@ -158,6 +158,10 @@
             overflow: hidden;
           }
         }
+        .site-name {
+          height: 1.125em;
+          overflow: hidden;
+        }
       }
     }
     .value {
