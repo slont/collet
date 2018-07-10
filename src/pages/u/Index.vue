@@ -178,7 +178,7 @@
           li {
             a {
               flex-direction: column;
-              line-height: .7;
+              line-height: .65;
               border-bottom-width: 0;
 
               .label-name {
@@ -186,7 +186,7 @@
                 font-weight: bold;
               }
               .label-count {
-                font-size: $size-5;
+                font-size: 1.125rem;
                 font-weight: bold;
               }
             }
