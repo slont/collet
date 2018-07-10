@@ -13,17 +13,11 @@
         <figure class="image flexbox"><img :src="imageSrc" alt=""></figure>
         <div class="card-content">
           <div class="content">
-            <h5 class="subtitle is-5 has-text-weight-bold">{{ title }}</h5>
-            <p class="description is-size-6">{{ description }}</p>
+            <h5 class="subtitle is-6 has-text-weight-bold">{{ title }}</h5>
+            <p class="description is-size-7">{{ description }}</p>
           </div>
 
-          <nav class="level is-mobile">
-            <div class="level-left fullwidth">
-              <div class="level-item fullwidth">
-                <p class="subtitle is-size-8 has-text-grey">{{ siteName }}</p>
-              </div>
-            </div>
-          </nav>
+          <p class="site-name is-size-8 has-text-grey fullwidth has-text-centered">{{ siteName }}</p>
         </div>
       </div>
 
@@ -126,8 +120,8 @@
     }
     .link-card {
       display: flex;
-      max-width: 520px;
-      max-height: 8rem;
+      max-width: 32rem;
+      max-height: 6rem;
       padding: 0;
       margin: auto;
       cursor: pointer;
@@ -146,18 +140,21 @@
         }
       }
       .card-content {
+        display: flex;
+        flex-direction: column;
         flex: 1;
+        padding: .5rem;
 
         .content {
-          margin-bottom: .5em !important;
+          margin-bottom: auto;
 
           .subtitle {
-            max-height: 2.25em;
+            max-height: 2.125em;
             margin-bottom: .5em !important;
             overflow: hidden;
           }
           .description {
-            max-height: 2.25em;
+            max-height: 2.5em;
             overflow: hidden;
           }
         }
@@ -167,28 +164,6 @@
       color: $link;
       text-decoration: underline;
       word-wrap: break-word;
-    }
-
-    @media screen and (min-width: 769px) {
-      .link-card {
-        flex-direction: column;
-        max-height: 20rem;
-
-        .image {
-          max-width: 100%;
-          border-radius: 5px 5px 0 0;
-
-          img {
-            height: initial;
-            width: 100%;
-          }
-        }
-      }
-    }
-
-    @media screen and (max-width: 768px) {
-      .link-card {
-      }
     }
   }
 </style>

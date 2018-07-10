@@ -114,7 +114,7 @@
                     </div>
                   </div>
 
-                  <div class="item-title text-color-strong is-size-4 has-text-weight-bold clickable">
+                  <div class="item-title text-color-strong is-size-5 has-text-weight-bold clickable">
                     {{ item.name }}
                   </div>
 

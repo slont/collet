@@ -383,8 +383,25 @@
           }
         }
         .item-elements {
-          .element-field:not(:last-child) {
-            margin-bottom: 2em;
+          .element-field {
+            &:not(:last-child) {
+              margin-bottom: 2em;
+            }
+            .link-card {
+              flex-direction: column;
+              max-height: 24rem;
+
+              .image {
+                max-width: 100%;
+                max-height: 16rem;
+                border-radius: 5px 5px 0 0;
+
+                img {
+                  height: initial;
+                  width: 100%;
+                }
+              }
+            }
           }
         }
       }
@@ -474,6 +491,20 @@
 
     @media screen and (max-width: 768px) {
       height: calc(100vh - #{$header-nav-height + $footer-nav-height});
+
+      .cullet-container {
+        .cullet-content {
+          .item-elements {
+            .element-field {
+              .link-card {
+                .image {
+                  max-height: 10rem;
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
     .show-next-enter-active, .show-next-leave-active,
