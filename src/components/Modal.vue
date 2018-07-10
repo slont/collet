@@ -42,6 +42,7 @@
 
           .b-checkbox {
             margin-right: .5rem;
+            margin-left: auto;
           }
           .back-button {
             margin-right: .5em;

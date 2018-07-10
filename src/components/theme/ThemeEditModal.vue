@@ -5,7 +5,7 @@
       <span class="modal-card-title title is-6 has-text-white">テーマ編集</span>
 
       <button @click.stop="$refs.themeDeleteModal.open(theme)"
-         class="button is-danger is-outlined is-size-5 is-hidden-tablet">
+              class="delete-button button is-danger is-outlined is-size-5 is-hidden-tablet">
         削除
       </button>
       <guard-button :click="ok" v-if="!loading"

@@ -2,13 +2,13 @@
   <modal id="edit-item" class="modal" ref="editItem">
     <header class="action-modal-header modal-card-head">
       <b-icon class="back-button is-size-4" icon="arrow-left" @click.native="$router.go(-1)"/>
-      <span class="modal-card-title title is-6 has-text-white">カレット編集</span>
+      <span class="modal-card-title title is-6 has-text-white is-hidden-mobile">カレット編集</span>
 
       <b-checkbox v-model="isTemplate" class="is-size-7">
         テンプレート登録
       </b-checkbox>
       <button @click.stop="$refs.itemDeleteModal.open(theme, item)"
-         class="button is-danger is-outlined is-size-5 is-hidden-tablet">
+              class="delete-button button is-danger is-outlined is-size-5 is-hidden-tablet">
         削除
       </button>
       <guard-button :click="save" class="ok-button is-success is-inverted is-outlined is-size-5">
